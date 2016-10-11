@@ -205,6 +205,14 @@ else
 
     vnoremap ß :s//g<LEFT><LEFT>
   elseif has('unix')
+    nnoremap ∆ 5<C-E>
+    nnoremap ˚ 5<C-Y>
+    vnoremap ∆ 5<C-E>
+    vnoremap ˚ 5<C-Y>
+
+    nnoremap ß :s//g<LEFT><LEFT>
+    vnoremap ß :s//g<LEFT><LEFT>
+
     nnoremap <Esc>j 5<C-E>
     nnoremap <Esc>k 5<C-Y>
     vnoremap <Esc>j 5<C-E>
