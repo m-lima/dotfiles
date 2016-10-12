@@ -1,0 +1,78 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+set encoding=utf-8
+set guifont=Inconsolata-g_for_Powerline:h8
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'szw/vim-tags'
+Plugin 'kien/ctrlp.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+""""""""""""""""""""
+" Plugin configs
+""""""""""""""""""""
+
+" Airline
+let g:airline_powerline_fonts = 1
+
+" Vim-tags
+"let g:vim_tags_auto_generate = 0
+
+" Fugitive
+let g:fugitive_git_executable = 'C:\Users\mflim_000\AppData\Local\GitHub\Portab~1\cmd\git.exe'
+
+""""""""""""""""""""
+" Vim config
+""""""""""""""""""""
+
+syntax enable
+set autoindent
+set backspace=indent,eol,start
+set clipboard=unnamed
+set incsearch
+set hlsearch
+
+set laststatus=2
+
+let mapleader = ","
+let g:mapleader = ","
+"set shell=powershell
+"set shellcmdflag=-command
+"set shell=C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+
+""""""""""""""""""""
+" Mapping config
+""""""""""""""""""""
+
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
+inoremap <C-j> <Esc>:m .+1<CR>==gi
+inoremap <C-k> <Esc>:m .-2<CR>==gi
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
+
+nnoremap <C-l> :delete<CR>:put!<CR>:put<CR>==
+inoremap <C-l> <Esc>:delete<CR>:put!<CR>:put<CR>==gi
+vnoremap <C-l> :delete<CR>:put!<CR>:put<CR>v=v
+
+nnoremap <C-S-j> :delete<CR>:put!<CR>:put!<CR>==
+"nnoremap <C-S-k> :delete<CR>:put!<CR>:put<CR>== 
+"inoremap <S-C-j> <Esc>:m .+1<CR>==gi
+"inoremap <S-C-k> <Esc>:m .-2<CR>==gi
+"vnoremap <C-J> :delete<CR>:put!<CR>:put!<CR>gv=gv
+"vnoremap <C-K> :delete<CR>:put!<CR>:put<CR>gv=gv 
+
+

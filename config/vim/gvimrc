@@ -1,0 +1,5 @@
+syntax on
+colorscheme evening
+au GUIEnter * simalt ~x
+"set guioptions-=m
+set go-=T
