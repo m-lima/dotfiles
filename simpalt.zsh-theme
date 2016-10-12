@@ -52,10 +52,32 @@ prompt_segment() {
   [[ -n $3 ]] && echo -n $3
 }
 
+prompt_segment_small() {
+  local bg fg
+  [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
+  if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
+    echo -n "%{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%}"
+  else
+    echo -n "%{$bg%}%{$fg%}"
+  fi
+  CURRENT_BG=$1
+}
+
 # End the prompt, closing any open segments
 prompt_end() {
   if [[ -n $CURRENT_BG ]]; then
     echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
+  else
+    echo -n "%{%k%}"
+  fi
+  echo -n "%{%f%}"
+  CURRENT_BG=''
+}
+
+# End the prompt, closing any open segments
+prompt_end_small() {
+  if [[ -n $CURRENT_BG ]]; then
+    echo -n "%{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
   else
     echo -n "%{%k%}"
   fi
@@ -82,32 +104,41 @@ prompt_git() {
     ZSH_THEME_GIT_PROMPT_DIRTY='±'
     dirty=$(parse_git_dirty)
     ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
-
-    if [ -f "$LPWD" ]; then
-      if [[ -n $dirty ]]; then
-        prompt_segment yellow black
-      else
-        prompt_segment green black
-      fi
-      echo -n "${ref/refs\/heads\// }$dirty"
+    if [[ -n $dirty ]]; then
+      prompt_segment yellow black
     else
-      if [[ -n $dirty ]]; then
-        prompt_segment black yellow
-        echo -n "${${ref/refs\/heads\//}/master/}$dirty"
-      else
-        prompt_segment black green
-        echo -n ""
-      fi
+      prompt_segment green black
     fi
+    echo -n "${ref/refs\/heads\// }$dirty"
+  fi
+}
+
+prompt_git_small() {
+  local ref dirty
+  if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
+    dirty=$(parse_git_dirty)
+    if [[ -n $dirty ]]; then
+      prompt_segment_small yellow
+    else
+      prompt_segment_small green
+    fi
+  else
+    prompt_segment_small blue
   fi
 }
 
 # Dir: current working directory
 prompt_dir() {
-  if [ -f "$LPWD" ]; then
-    prompt_segment blue black '%~'
-  fi
+  prompt_segment blue black '%~'
   # echo $(pwd | sed -e "s,^$HOME,~," | sed "s@\(.\)[^/]*/@\1/@g")
+}
+
+prompt_dir_small() {
+  if [[ "$PWD" != "$HOME" ]]; then
+    prompt_segment black default "$(basename $PWD)"
+  else
+    prompt_segment black default "~"
+  fi
 }
 
 # Status:
@@ -127,16 +158,23 @@ prompt_status() {
 ## Main prompt
 build_prompt() {
   RETVAL=$?
-  prompt_status
-  prompt_context
-  prompt_dir
-  prompt_git
-  prompt_end
-
   if [ -f "$LPWD" ]; then
-    rm "$LPWD"
+    prompt_status
+    prompt_context
+    prompt_dir
+    prompt_git
+    prompt_end
+
+    if [ -f "$LPWD" ]; then
+      rm "$LPWD"
+    fi
+  else
+    prompt_status
+    prompt_context
+    prompt_dir_small
+    prompt_git_small
+    prompt_end_small
   fi
-  export BLA=$RANDOM
 }
 
 PROMPT='%{%f%b%k%}$(build_prompt) '
