@@ -136,6 +136,7 @@ build_prompt() {
   if [ -f "$LPWD" ]; then
     rm "$LPWD"
   fi
+  export BLA=$RANDOM
 }
 
 PROMPT='%{%f%b%k%}$(build_prompt) '
