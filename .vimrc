@@ -52,6 +52,9 @@ let g:airline_theme='badwolf'
 " Vim-tags
 " let g:vim_tags_auto_generate = 0
 
+" let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+
 " Fugitive
 if has('win32')
   let g:fugitive_git_executable = 'C:\Users\mflim_000\AppData\Local\GitHub\Portab~1\cmd\git.exe'
@@ -95,9 +98,6 @@ set smarttab
 set scrolloff=4
 
 set timeoutlen=400
-
-" let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
 if has('win32')
   if !has("gui_running")
