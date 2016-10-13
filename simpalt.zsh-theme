@@ -116,11 +116,15 @@ prompt_git() {
 prompt_git_small() {
   local ref dirty
   if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
-    dirty=$(parse_git_dirty)
-    if [[ -n $dirty ]]; then
-      prompt_segment_small yellow
+    if [ $(git symbolic-ref HEAD 2> /dev/null) ]; then
+      dirty=$(parse_git_dirty)
+      if [[ -n $dirty ]]; then
+        prompt_segment_small yellow
+      else
+        prompt_segment_small green
+      fi
     else
-      prompt_segment_small green
+      prompt_segment_small red
     fi
   else
     prompt_segment_small blue
