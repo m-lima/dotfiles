@@ -78,7 +78,7 @@ else
 fi
 
 echo -n "[34mChecking ZSH.. [[m"
-if [[ "$SHELL" == "/bin/zsh" ]]
+if [[ "$SHELL" == */zsh ]]
 then
   echo "[32mOK[34m][m"
 else
