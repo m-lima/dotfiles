@@ -27,7 +27,10 @@ function install {
   if [[ "$INSTALL" == "true" ]]
   then
     $2
+    return $?
   fi
+
+  return 1
 }
 
 function createSymlink {
@@ -104,6 +107,12 @@ else
   echo "[31mFAIL[34m][m"
   echo "[34mInstalling Oh My ZSH..[m"
   install "Oh My ZSH" "curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
+
+  if [ $? ]
+  then
+    echo "[31mCould not install Oh My ZSH![m"
+    exit
+  fi
   echo "[32mDone![m"
 fi
 
