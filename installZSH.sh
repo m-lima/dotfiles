@@ -14,10 +14,26 @@ function fullPath {
   echo $RESULT
 }
 
+function install {
+  local INSTALL=true
+
+  read -p "Install $1? [Y/n] " INPUT
+  case $INPUT in
+    [Nn] )
+      INSTALL=false
+      ;;
+  esac
+
+  if [[ "$INSTALL" == "true" ]]
+  then
+    $2
+  fi
+}
+
 function createSymlink {
   local OVERWRITE=false
 
-  if [ -f "$1" ]
+  if [ -f "$2$1" ]
   then
     read -p "~/$1 already exists. Overwrite? [y/N] " INPUT
     case $INPUT in
@@ -37,7 +53,7 @@ function createSymlink {
 
 BASE_DIR=$(dirname $(fullPath $0))
 LAST_DIR=`pwd`
-cd $HOME
+pushd $HOME &> /dev/null
 
 # Install ZSH
 if [ $(command -v apt-get) ]
@@ -58,7 +74,7 @@ else
   else
     echo "[31mFAIL[34m][m"
     echo "[34mInstalling ZSH..[m"
-    $PACKAGE_MANAGER install zsh
+    install ZSH "$PACKAGE_MANAGER install zsh"
 
     if [ $? ]
     then
@@ -87,7 +103,7 @@ then
 else
   echo "[31mFAIL[34m][m"
   echo "[34mInstalling Oh My ZSH..[m"
-  curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
+  install "Oh My ZSH" "curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
   echo "[32mDone![m"
 fi
 
@@ -99,7 +115,7 @@ then
 else
   echo "[31mFAIL[34m][m"
   echo "[34mInstalling Vim..[m"
-  $PACKAGE_MANAGER install vim
+  install Vim "$PACKAGE_MANAGER install vim"
 
   if [ $? ]
   then
@@ -116,7 +132,7 @@ then
 else
   echo "[31mFAIL[34m][m"
   echo "[34mInstalling Vundle..[m"
-  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  install Vundle "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim"
 
   if [ $? ]
   then
@@ -134,4 +150,4 @@ createSymlink ".vimrc"
 createSymlink ".tmux.conf"
 createSymlink simpalt.zsh-theme .oh-my-zsh/themes/
 
-popd
+popd &> /dev/null
