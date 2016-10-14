@@ -31,8 +31,7 @@ function createSymlink {
 
   if [[ "$OVERWRITE" == "true" ]]
   then
-    #############
-    echo "ln -s $BASE_DIR/$1 $2"
+    ln -s $BASE_DIR/$1 $2
   fi
 }
 
@@ -41,69 +40,97 @@ LAST_DIR=`pwd`
 cd $HOME
 
 # Install ZSH
-which apt-get &> /dev/null
-if [ $? ]
+if [ $(command -v apt-get) ]
 then
   PACKAGE_MANAGER="sudo apt-get"
 else
   PACKAGE_MANAGER="brew"
 fi
 
-echo -n -e "\e[34mChecking ZSH.. [\e[m"
-which zsh &> /dev/null
-if [ $? ]
+echo -n "[34mChecking ZSH.. [[m"
+if [[ "$SHELL" == "/bin/zsh" ]]
 then
-  echo -e "OK\e[34m]\e[m"
+  echo "[32mOK[34m][m"
 else
-  echo -e "\e[31mFAIL\e[34m]\e[m"
-  echo -e "\e[34mInstalling ZSH..\e[m"
-  #############
-  echo "$PACKAGE_MANAGER install zsh"
+  if [ $(command -v zsh) ]
+  then
+    echo "[32mOK[34m][m"
+  else
+    echo "[31mFAIL[34m][m"
+    echo "[34mInstalling ZSH..[m"
+    $PACKAGE_MANAGER install zsh
+
+    if [ $? ]
+    then
+      echo "[31mCould not install ZSH![m"
+      exit
+    fi
+    echo "[32mDone![m"
+  fi
+
+  echo "[34mSetting as main shell..[m"
+  chsh -s $(which zsh)
 
   if [ $? ]
   then
-    echo -e "\e[31mCould not install ZSH!\e[m"
+    echo "[31mCould not set the main shell![m"
     exit
   fi
-  echo -e "\e[32mDone!\e[m"
+  echo "[32mDone![m"
 fi
-
-echo -e "\e[34mSetting as main shell..\e[m"
-#############
-echo "chsh -s $(which zsh)"
-
-if [ $? ]
-then
-  echo -e "\e[31mCould not set the main shell!\e[m"
-  exit
-fi
-echo -e "\e[32mDone!\e[m"
 
 ## Oh My ZSH
-echo -n -e "\e[34mChecking Oh My ZSH.. [\e[m"
-if [ -f .oh-my-zsh ]
+echo -n "[34mChecking Oh My ZSH.. [[m"
+if [ -d .oh-my-zsh ]
 then
-  echo -e "OK\e[34m]\e[m"
+  echo "[32mOK[34m][m"
 else
-  echo -e "\e[31mFAIL\e[34m]\e[m"
-  echo -e "\e[34mInstalling Oh My ZSH..\e[m"
-  #############
-  echo "curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
-  echo -e "\e[32mDone!\e[m"
+  echo "[31mFAIL[34m][m"
+  echo "[34mInstalling Oh My ZSH..[m"
+  curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
+  echo "[32mDone![m"
+fi
+
+## Vim/Vundle
+echo -n "[34mChecking Vim.. [[m"
+if [ $(command -v vim) ]
+then
+  echo "[32mOK[34m][m"
+else
+  echo "[31mFAIL[34m][m"
+  echo "[34mInstalling Vim..[m"
+  $PACKAGE_MANAGER install vim
+
+  if [ $? ]
+  then
+    echo "[31mCould not install Vim![m"
+    exit
+  fi
+  echo "[32mDone![m"
+fi
+
+echo -n "[34mChecking Vundle.. [[m"
+if [ -d .vim/bundle/Vundle.vim ]
+then
+  echo "[32mOK[34m][m"
+else
+  echo "[31mFAIL[34m][m"
+  echo "[34mInstalling Vundle..[m"
+  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+  if [ $? ]
+  then
+    echo "[31mCould not install Vundle![m"
+    exit
+  fi
+  echo "[32mDone![m"
 fi
 
 # Make symlinks
-echo -e "\e[34mMaking symlinks\e[m"
+echo "[34mMaking symlinks[m"
 createSymlink ".aliasrc"
 createSymlink ".zshrc"
 createSymlink ".vimrc"
 createSymlink simpalt.zsh-theme .oh-my-zsh/themes/
 
-# ## Downloading dotfiles
-# echo -e "\e[34mSetando the colors and the plugins..\e[m"
-# sed -i 's~ZSH_THEME="robbyrussell"~ZSH_THEME="simpalt"~' ~/.zshrc
-# echo "alias bd='cd -'" >> ~/.zshrc
-# echo "alias vd='cd ..'" >> ~/.zshrc
-
-# echo -e "\e[32mDone!\e[m"
-# echo -e "\e[32mAgora sai desse terminal, que da proxima vez que vc abrir o terminal, o ZSH vai aparecer\e[m"
+popd
