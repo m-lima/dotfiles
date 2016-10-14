@@ -33,6 +33,17 @@ function install {
   return 1
 }
 
+function checkContinue {
+  read -p "Continue? [yN] " INPUT
+  case $INPUT in
+    [Yy] )
+      return 0;
+      ;;
+  esac
+
+  exit
+}
+
 function createSymlink {
   local OVERWRITE=false
 
@@ -82,9 +93,10 @@ else
     if [ $? ]
     then
       echo "[31mCould not install ZSH![m"
-      exit
+      checkContinue
+    else
+      echo "[32mDone![m"
     fi
-    echo "[32mDone![m"
   fi
 
   echo "[34mSetting as main shell..[m"
@@ -93,9 +105,10 @@ else
   if [ $? ]
   then
     echo "[31mCould not set the main shell![m"
-    exit
+    checkContinue
+  else
+    echo "[32mDone![m"
   fi
-  echo "[32mDone![m"
 fi
 
 ## Oh My ZSH
@@ -111,9 +124,10 @@ else
   if [ $? ]
   then
     echo "[31mCould not install Oh My ZSH![m"
-    exit
+    checkContinue
+  else
+    echo "[32mDone![m"
   fi
-  echo "[32mDone![m"
 fi
 
 ## Vim/Vundle
@@ -129,9 +143,10 @@ else
   if [ $? ]
   then
     echo "[31mCould not install Vim![m"
-    exit
+    checkContinue
+  else
+    echo "[32mDone![m"
   fi
-  echo "[32mDone![m"
 fi
 
 echo -n "[34mChecking Vundle.. [[m"
@@ -146,9 +161,10 @@ else
   if [ $? ]
   then
     echo "[31mCould not install Vundle![m"
-    exit
+    checkContinue
+  else
+    echo "[32mDone![m"
   fi
-  echo "[32mDone![m"
 fi
 
 # Make symlinks
