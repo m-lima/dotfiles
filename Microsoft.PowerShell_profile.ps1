@@ -42,6 +42,10 @@ function gsb {
   git status -sb
 }
 
+function pw {
+  $GLOBAL:fullPrompt = true
+}
+
 function BackOneDir {
   $GLOBAL:addToStack = $false
   if ($GLOBAL:dirStack.Count) {
@@ -67,19 +71,22 @@ function prompt {
   }
   Write-Host $initial -NoNewline -BackgroundColor "Black"
 
-  ($isGit = git rev-parse --is-inside-work-tree) | out-null
-  if ($isGit -eq "true") {
-    ($status = git status --porcelain) | out-null
-    if ($status.length -gt 0) {
-      $backColor = "DarkYellow"
-    } else {
-      $backColor = "DarkGreen"
-    }
-    Write-Host -NoNewline $separator -ForegroundColor "Black" -BackgroundColor $backColor
-    Write-Host -NoNewline $separator -ForegroundColor $backColor
+  if ($GLOBAL:fullPrompt) {
   } else {
-    Write-Host -NoNewline $separator -BackgroundColor "DarkBlue" -ForegroundColor "Black"
-    Write-Host -NoNewline $separator -ForegroundColor "DarkBlue"
+    ($isGit = git rev-parse --is-inside-work-tree) | out-null
+    if ($isGit -eq "true") {
+      ($status = git status --porcelain) | out-null
+      if ($status.length -gt 0) {
+        $backColor = "DarkYellow"
+      } else {
+        $backColor = "DarkGreen"
+      }
+      Write-Host -NoNewline $separator -ForegroundColor "Black" -BackgroundColor $backColor
+      Write-Host -NoNewline $separator -ForegroundColor $backColor
+    } else {
+      Write-Host -NoNewline $separator -BackgroundColor "DarkBlue" -ForegroundColor "Black"
+      Write-Host -NoNewline $separator -ForegroundColor "DarkBlue"
+    }
   }
 
   $GLOBAL:nowPath = (Get-Location).Path
