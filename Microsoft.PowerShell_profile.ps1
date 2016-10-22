@@ -27,7 +27,7 @@ function ee {
   ii .
 }
 
-function octg {
+function oct {
   pushd "$env:LOCALAPPDATA/scoop/apps/octave/4.0.3/bin"
   ./octave.exe -i --no-gui
   popd
