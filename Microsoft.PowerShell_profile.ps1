@@ -38,6 +38,10 @@ function cpwd {
   $pwd.path.ToLower() | clip
 }
 
+function gsb {
+  git status -sb
+}
+
 function BackOneDir {
   $GLOBAL:addToStack = $false
   if ($GLOBAL:dirStack.Count) {
@@ -95,7 +99,7 @@ $GLOBAL:addToStack = $true
 $GLOBAL:gitActive = $false
 
 #Modules
-Import-Module "PowerTab" -ArgumentList "${env:USERPROFILE}\Documents\WindowsPowerShell\PowerTabConfig.xml" | out-null
+Import-Module "PowerTab" -ArgumentList "${env:USERPROFILE}\Documents\WindowsPowerShell\PowerTabConfig.xml" 2> out-null
 
 ### Alias
 
