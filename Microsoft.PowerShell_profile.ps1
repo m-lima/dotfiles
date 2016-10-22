@@ -55,12 +55,13 @@ function def($word) {
 
 function prompt {
   $separator = ""
-  Write-Host -NoNewline " Њ "
-  if ($env:HOME -eq $(Get-Location).Path) {
-    Write-Host "~" -NoNewLine
+  $initial = " Њ "
+  if ($env:USERPROFILE -eq $(Get-Location).Path) {
+    $initial += "~"
   } else {
-    Write-Host $(Split-Path $PWD -Leaf) -NoNewLine
+    $initial += $(Split-Path $PWD -Leaf)
   }
+  Write-Host $initial -NoNewline -BackgroundColor "Black"
 
   ($isGit = git rev-parse --is-inside-work-tree) | out-null
   if ($isGit -eq "true") {
@@ -94,17 +95,18 @@ $GLOBAL:addToStack = $true
 $GLOBAL:gitActive = $false
 
 #Modules
-Import-Module "PowerTab" -ArgumentList "D:\Users\Marcelo\Documents\WindowsPowerShell\PowerTabConfig.xml"
+Import-Module "PowerTab" -ArgumentList "${env:USERPROFILE}\Documents\WindowsPowerShell\PowerTabConfig.xml" | out-null
 
-#Alias
+### Alias
+
+# Editors
 set-alias gvim "${env:ProgramFiles(x86)}\Vim\vim80\gvim.exe"
-set-alias npd "${env:ProgramFiles(x86)}\Notepad++\notepad++.exe"
 set-alias vi "${env:ProgramFiles(x86)}\Vim\vim80\vim.exe"
+set-alias npd "${env:ProgramFiles(x86)}\Notepad++\notepad++.exe"
 
-set-alias whr "where.exe"
+# Commands
+set-alias gurl "${env:LOCALAPPDATA}/scoop/shims/curl.exe"
+
+# Functions
 set-alias bd BackOneDir
-#set-alias fd "${env:USERPROFILE}\AppData\Local\GitHub\Portab~1\usr\bin\find.exe"
-
-#set-alias git activateGit
 set-alias cl activateVS
-
