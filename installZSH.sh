@@ -88,9 +88,8 @@ else
   else
     echo "[31mFAIL[34m][m"
     echo "[34mInstalling ZSH..[m"
-    install ZSH "$PACKAGE_MANAGER install zsh"
 
-    if [ $? ]
+    if [ $(install ZSH "$PACKAGE_MANAGER install zsh") ]
     then
       echo "[31mCould not install ZSH![m"
       checkContinue
@@ -100,9 +99,8 @@ else
   fi
 
   echo "[34mSetting as main shell..[m"
-  chsh -s $(which zsh)
 
-  if [ $? ]
+  if [ $(chsh -s $(which zsh)) ]
   then
     echo "[31mCould not set the main shell![m"
     checkContinue
@@ -119,9 +117,8 @@ then
 else
   echo "[31mFAIL[34m][m"
   echo "[34mInstalling Oh My ZSH..[m"
-  install "Oh My ZSH" "curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
 
-  if [ $? ]
+  if [ $(install "Oh My ZSH" "curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh") ]
   then
     echo "[31mCould not install Oh My ZSH![m"
     checkContinue
@@ -138,9 +135,8 @@ then
 else
   echo "[31mFAIL[34m][m"
   echo "[34mInstalling Vim..[m"
-  install Vim "$PACKAGE_MANAGER install vim"
 
-  if [ $? ]
+  if [ $(install Vim "$PACKAGE_MANAGER install vim") ]
   then
     echo "[31mCould not install Vim![m"
     checkContinue
@@ -156,9 +152,8 @@ then
 else
   echo "[31mFAIL[34m][m"
   echo "[34mInstalling Vundle..[m"
-  install Vundle "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim"
 
-  if [ $? ]
+  if [ $(install Vundle "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim") ]
   then
     echo "[31mCould not install Vundle![m"
     checkContinue

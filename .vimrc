@@ -21,7 +21,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kana/vim-textobj-user'
 " Plugin 'justmao945/vim-clang'
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
 
 " Compose
 " Plugin 'szw/vim-tags'
