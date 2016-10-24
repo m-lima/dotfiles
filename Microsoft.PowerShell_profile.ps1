@@ -106,7 +106,7 @@ $GLOBAL:addToStack = $true
 $GLOBAL:gitActive = $false
 
 #Modules
-Import-Module "PowerTab" -ArgumentList "${env:USERPROFILE}\Documents\WindowsPowerShell\PowerTabConfig.xml" 2> out-null
+Import-Module "PowerTab" -ArgumentList "${env:USERPROFILE}\Documents\WindowsPowerShell\PowerTabConfig.xml" 2> $null
 
 ### Alias
 
