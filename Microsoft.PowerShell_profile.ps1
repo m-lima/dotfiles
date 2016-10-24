@@ -43,7 +43,7 @@ function gsb {
 }
 
 function pw {
-  $GLOBAL:fullPrompt = true
+  $GLOBAL:fullPrompt = $true
 }
 
 function BackOneDir {
@@ -55,24 +55,32 @@ function BackOneDir {
 }
 
 function def($word) {
-  $word = "http://google-dictionary.so8848.com/meaning?word=" + $word
-  $result = Invoke-WebRequest $word
-  $out = $result.AllElements | Where Class -EQ "std" | Select -ExpandProperty innerText
-  Write-Host $out -ForegroundColor Green
+  $word = "dict://dict.org/d:" + $word
+  $previousColor = $Host.UI.RawUI.ForegroundColor
+  $Host.UI.RawUI.ForegroundColor = "Green"
+  gurl $word 2> $null | grep -v '^[0-9][0-9][0-9] '
+  $Host.UI.RawUI.ForegroundColor = $previousColor
 }
 
 function prompt {
   $separator = ""
   $initial = " Њ "
-  if ($env:USERPROFILE -eq $(Get-Location).Path) {
-    $initial += "~"
-  } else {
-    $initial += $(Split-Path $PWD -Leaf)
-  }
-  Write-Host $initial -NoNewline -BackgroundColor "Black"
-
   if ($GLOBAL:fullPrompt) {
+    if ($env:USERPROFILE -eq $(Get-Location).Path) {
+      $initial += "~"
+    } else {
+      $initial += $(Get-Location).Path
+    }
+    Write-Host $initial -NoNewline -BackgroundColor "Black"
+    $GLOBAL:fullPrompt = $false
   } else {
+    if ($env:USERPROFILE -eq $(Get-Location).Path) {
+      $initial += "~"
+    } else {
+      $initial += $(Split-Path $PWD -Leaf)
+    }
+    Write-Host $initial -NoNewline -BackgroundColor "Black"
+
     ($isGit = git rev-parse --is-inside-work-tree) | out-null
     if ($isGit -eq "true") {
       ($status = git status --porcelain) | out-null
@@ -106,7 +114,7 @@ $GLOBAL:addToStack = $true
 $GLOBAL:gitActive = $false
 
 #Modules
-Import-Module "PowerTab" -ArgumentList "${env:USERPROFILE}\Documents\WindowsPowerShell\PowerTabConfig.xml" 2> out-null
+Import-Module "PowerTab" -ArgumentList "${env:USERPROFILE}\Documents\WindowsPowerShell\PowerTabConfig.xml" 2> $null
 
 ### Alias
 
