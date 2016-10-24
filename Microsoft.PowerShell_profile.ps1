@@ -43,7 +43,7 @@ function gsb {
 }
 
 function pw {
-  $GLOBAL:fullPrompt = true
+  $GLOBAL:fullPrompt = $true
 }
 
 function BackOneDir {
@@ -64,17 +64,53 @@ function def($word) {
 function prompt {
   $separator = ""
   $initial = " Њ "
-  if ($env:USERPROFILE -eq $(Get-Location).Path) {
-    $initial += "~"
-  } else {
-    $initial += $(Split-Path $PWD -Leaf)
-  }
-  Write-Host $initial -NoNewline -BackgroundColor "Black"
-
   if ($GLOBAL:fullPrompt) {
-  } else {
+    Write-HOst -NoNewline $initial -BackgroundColor "Black"
+    Write-Host -NoNewline $separator -ForegroundColor "Black" -BackgroundColor "DarkBlue"
+    $location = " " + $(Get-Location).ToString() + " "
+    Write-Host $location.Replace("C:\Users\mflim_000", "~") -NoNewLine -ForegroundColor "Black" -BackgroundColor "DarkBlue"
+
     ($isGit = git rev-parse --is-inside-work-tree) | out-null
     if ($isGit -eq "true") {
+      ($status = git status --porcelain) | out-null
+      ($ref = git symbolic-ref HEAD) | out-null
+      if (!$ref) {
+        ($ref = "➦ " + $(git show-ref --head -s --abbrev | head -n1)) | out-null
+      }
+      $gitLine = "  " + $ref + " ±"
+      if ($status.length -gt 0) {
+        $backColor = "DarkYellow"
+      } else {
+        $backColor = "DarkGreen"
+      }
+      Write-Host -NoNewline $separator -ForegroundColor "DarkBlue" -BackgroundColor $backColor
+      Write-Host -NoNewline $gitLine -ForegroundColor "Black" -BackgroundColor $backColor
+      Write-Host -NoNewline $separator -ForegroundColor $backColor
+    } else {
+      Write-Host -NoNewline $separator -ForegroundColor "DarkBlue"
+    }
+
+    $GLOBAL:fullPrompt = $false
+
+  } else {
+    if ($env:USERPROFILE -eq $(Get-Location).Path) {
+      $initial += "~"
+    } else {
+      $initial += $(Split-Path $PWD -Leaf)
+    }
+    Write-Host $initial -NoNewline -BackgroundColor "Black"
+
+    ($isGit = git rev-parse --is-inside-work-tree) | out-null
+    if ($isGit -eq "true") {
+
+      # Not on master
+      ($ref = git symbolic-ref HEAD) | out-null
+      if (!$ref) {
+        Write-Host -NoNewline $separator -ForegroundColor "Black" -BackgroundColor "Red"
+        Write-Host -NoNewline $separator -ForegroundColor "Red"
+      }
+
+      # Git status
       ($status = git status --porcelain) | out-null
       if ($status.length -gt 0) {
         $backColor = "DarkYellow"
