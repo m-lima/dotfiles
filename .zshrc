@@ -83,3 +83,13 @@ export PATH="$HOME"/bin:$PATH
 export COMPUTER_SYMBOL=φ
 
 source "$HOME"/.aliasrc
+
+function def {
+  if [ "$1" ]
+  then
+    word="dict://dict.org/d:"$1
+    return=$(curl $word 2> /dev/null | grep -v '[0-9][0-9][0-9] ')
+    echo -e "\e[32m$return\e[m"
+  fi
+}
+

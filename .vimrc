@@ -53,7 +53,7 @@ let g:airline_theme='badwolf'
 " let g:vim_tags_auto_generate = 0
 
 " let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+" let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
 " Fugitive
 " if has('win32')

@@ -55,10 +55,11 @@ function BackOneDir {
 }
 
 function def($word) {
-  $word = "http://google-dictionary.so8848.com/meaning?word=" + $word
-  $result = Invoke-WebRequest $word
-  $out = $result.AllElements | Where Class -EQ "std" | Select -ExpandProperty innerText
-  Write-Host $out -ForegroundColor Green
+  $word = "dict://dict.org/d:" + $word
+  $previousColor = $Host.UI.RawUI.ForegroundColor
+  $Host.UI.RawUI.ForegroundColor = "Green"
+  gurl $word 2> $null | grep -v '^[0-9][0-9][0-9] '
+  $Host.UI.RawUI.ForegroundColor = $previousColor
 }
 
 function prompt {
@@ -92,6 +93,15 @@ function prompt {
 
     $GLOBAL:fullPrompt = $false
 
+=======
+    if ($env:USERPROFILE -eq $(Get-Location).Path) {
+      $initial += "~"
+    } else {
+      $initial += $(Get-Location).Path
+    }
+    Write-Host $initial -NoNewline -BackgroundColor "Black"
+    $GLOBAL:fullPrompt = $false
+>>>>>>> 572167dd21350e26ed7e5155a822e469ddd3d8ee
   } else {
     if ($env:USERPROFILE -eq $(Get-Location).Path) {
       $initial += "~"
@@ -142,7 +152,7 @@ $GLOBAL:addToStack = $true
 $GLOBAL:gitActive = $false
 
 #Modules
-Import-Module "PowerTab" -ArgumentList "${env:USERPROFILE}\Documents\WindowsPowerShell\PowerTabConfig.xml" 2> out-null
+Import-Module "PowerTab" -ArgumentList "${env:USERPROFILE}\Documents\WindowsPowerShell\PowerTabConfig.xml" 2> $null
 
 ### Alias
 
