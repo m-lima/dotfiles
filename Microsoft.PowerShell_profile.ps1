@@ -76,9 +76,12 @@ function prompt {
       ($status = git status --porcelain) | out-null
       ($ref = git symbolic-ref HEAD) | out-null
       if (!$ref) {
-        ($ref = "➦ " + $(git show-ref --head -s --abbrev | head -n1)) | out-null
+        $ref = "➦ "
+        ($ref += git show-ref --head -s --abbrev | select -First 1) | out-null
+      } else {
+        $ref = $ref.Replace("refs/heads/", "")
       }
-      $gitLine = "  " + $ref + " ±"
+      $gitLine = "  " + $ref + " ± "
       if ($status.length -gt 0) {
         $backColor = "DarkYellow"
       } else {
@@ -106,8 +109,7 @@ function prompt {
       # Not on master
       ($ref = git symbolic-ref HEAD) | out-null
       if (!$ref) {
-        Write-Host -NoNewline $separator -ForegroundColor "Black" -BackgroundColor "Red"
-        Write-Host -NoNewline $separator -ForegroundColor "Red"
+        Write-Host -NoNewline " " -BackgroundColor "Black"
       }
 
       # Git status
@@ -117,6 +119,7 @@ function prompt {
       } else {
         $backColor = "DarkGreen"
       }
+
       Write-Host -NoNewline $separator -ForegroundColor "Black" -BackgroundColor $backColor
       Write-Host -NoNewline $separator -ForegroundColor $backColor
     } else {
