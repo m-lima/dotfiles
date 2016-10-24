@@ -117,7 +117,7 @@ prompt_git_small() {
   local ref dirty
   if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
     if [ ! $(git symbolic-ref HEAD 2> /dev/null) ]; then
-      prompt_segment_small red
+      prompt_segment black default ""
     fi
     dirty=$(parse_git_dirty)
     if [[ -n $dirty ]]; then
