@@ -1,0 +1,151 @@
+﻿function touch {
+	ni -type file $args
+}
+
+function activateVS {
+	Remove-Item alias:\cl
+	#Set environment variables for Visual Studio Command Prompt
+	pushd 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC'
+	cmd /c "vcvarsall.bat x64&set" |
+	foreach {
+	  if ($_ -match "=") {
+		$v = $_.split("="); set-item -force -path "ENV:\$($v[0])"  -value "$($v[1])"
+	  }
+	}
+	popd
+	Write-Host "Visual Studio 2015 Command Prompt variables set" -ForegroundColor Yellow
+	if ($args.count 2> $null) {
+		cl $args
+	}
+}
+
+function activateGit {
+	Remove-Item alias:\git
+	. (Resolve-Path "$env:LOCALAPPDATA\GitHub\shell.ps1")
+	Import-Module $env:github_posh_git\posh-git.psm1
+	$GLOBAL:gitActive = $true
+	Write-Host "Git Command Prompt variables set" -ForegroundColor Yellow
+	if ($args.count 2> $null) {
+		git $args
+	}
+}
+
+function ee {
+	ii .
+}
+
+function BackOneDir {
+	$GLOBAL:addToStack = $false
+	if ($GLOBAL:dirStack.Count) {
+		$lastDir = $GLOBAL:dirStack.Pop()
+		cd $lastDir
+	}
+}
+
+function def($word) {
+	$word = "http://google-dictionary.so8848.com/meaning?word=" + $word
+	$result = Invoke-WebRequest $word
+	$out = $result.AllElements | Where Class -EQ "std" | Select -ExpandProperty innerText
+	Write-Host $out -ForegroundColor Green
+}
+
+<#function prompt
+{
+	#Original
+	#"PS $($executionContext.SessionState.Path.CurrentLocation)$('>' * ($nestedPromptLevel + 1)) "
+
+	#Like my linux server
+	#$color = 4
+	#Write-Host ($([System.Environment]::UserName) + "@" + $([System.Environment]::MachineName)) -NoNewLine -ForegroundColor "Red"
+	#Write-Host ("mflima@" + $([System.Environment]::MachineName).ToLower()) -NoNewLine -ForegroundColor "Green"
+	Write-Host -NoNewline " XP " -BackgroundColor "Green"
+	Write-Host ":" -NoNewLine
+	$location = $(Get-Location).ToString()
+	Write-Host $location.Replace("C:\Users\mflim_000", "~") -NoNewLine -ForegroundColor "Blue"
+	
+	Write-VcsStatus
+	#$gitBranch = $(git branch 2> $null)
+	#if (git branch 2> $null) {
+#		Write-Host (" [" + $gitBranch.Substring(2) + "]") -NoNewLine -ForegroundColor "Red"
+#	}
+	return "> "
+	
+	#Simple
+	#$color = 4
+	#Write-Host $(Get-Location) -NoNewLine -ForegroundColor $Color
+	#Write-Host ">" -NoNewLine
+	#return " "
+}#>
+
+function prompt {
+	$separator = ""
+	Write-Host -NoNewline " π " -BackgroundColor "Black"
+	Write-Host -NoNewline $separator -ForegroundColor "Black" -BackgroundColor "DarkBlue"
+	$location = " " + $(Get-Location).ToString() + " "
+	Write-Host $location.Replace("C:\Users\mflim_000", "~") -NoNewLine -ForegroundColor "Black" -BackgroundColor "DarkBlue"
+
+	if ($GLOBAL:gitActive) {
+		$status = Get-GitStatus
+
+		if ($status) {
+		  if ($status.HasWorking) {
+			$backColor = "DarkYellow"
+			if ($status.HasUntracked) {
+			  $gitLine = "  " + $status.Branch + " ±" + $status.Working.Length + "! "
+			} else {
+			  $gitLine = "  " + $status.Branch + " ±" + $status.Working.Length + " "
+			}
+		  } else {
+			$backColor = "DarkGreen"
+			$gitLine = "  " + $status.Branch + " "
+		  }
+		  Write-Host -NoNewline $separator -ForegroundColor "DarkBlue" -BackgroundColor $backColor
+		  Write-Host -NoNewline $gitLine -ForegroundColor "Black" -BackgroundColor $backColor
+		  Write-Host -NoNewline $separator -ForegroundColor $backColor
+		} else {
+		  Write-Host -NoNewline $separator -ForegroundColor "DarkBlue"
+		}
+	} else {
+		Write-Host -NoNewline $separator -ForegroundColor "DarkBlue"
+	}
+	
+	$GLOBAL:nowPath = (Get-Location).Path
+    if (($nowPath -ne $oldDir) -AND $GLOBAL:addToStack) {
+        $GLOBAL:dirStack.Push($oldDir)
+        $GLOBAL:oldDir = $nowPath
+    }
+    $GLOBAL:AddToStack = $true
+	
+	return " "
+}
+
+
+#BackDir variables
+[System.Collections.Stack]$GLOBAL:dirStack = @()
+$GLOBAL:oldDir = ''
+$GLOBAL:addToStack = $true
+$GLOBAL:gitActive = $false
+
+#Modules
+Import-Module PowerTab
+
+#Alias
+set-alias gvim "${env:ProgramFiles(x86)}\Vim\vim74\gvim.exe"
+set-alias nano "${env:USERPROFILE}\Bin\Nano\nano-2.4.2-win32\nano.exe"
+set-alias npd "${env:ProgramFiles(x86)}\Notepad++\notepad++.exe"
+
+set-alias whr "where.exe"
+set-alias bd BackOneDir
+set-alias ss c:\cygwin64\bin\ssh.exe
+#set-alias ss C:\Users\mflim_000\AppData\Local\scoop\shims\ssh.exe
+set-alias fd "${env:USERPROFILE}\AppData\Local\GitHub\Portab~1\usr\bin\find.exe"
+set-alias vi "${env:USERPROFILE}\AppData\Local\GitHub\Portab~1\usr\bin\vim.exe"
+
+set-alias git activateGit
+set-alias cl activateVS
+
+set-alias gurl C:\Users\mflim_000\AppData\Local\scoop\shims\curl.exe
+
+#clear
+
+# C:\Users\mflim_000\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin

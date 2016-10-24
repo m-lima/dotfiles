@@ -56,9 +56,9 @@ let g:airline_theme='badwolf'
 " let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
 " Fugitive
-if has('win32')
-  let g:fugitive_git_executable = 'C:\Users\mflim_000\AppData\Local\GitHub\Portab~1\cmd\git.exe'
-endif
+" if has('win32')
+  " let g:fugitive_git_executable = 'C:\Users\mflim_000\AppData\Local\GitHub\Portab~1\cmd\git.exe'
+" endif
 
 """"""""""""""""""""
 " Vim config
@@ -101,8 +101,8 @@ set timeoutlen=400
 
 if has('win32')
   if !has("gui_running")
-    set term=pcansi
-    set t_Co=256
+    " set term=pcansi
+    " set t_Co=256
   endif
 
   " set shell=powershell
