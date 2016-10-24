@@ -92,16 +92,6 @@ function prompt {
     }
 
     $GLOBAL:fullPrompt = $false
-
-=======
-    if ($env:USERPROFILE -eq $(Get-Location).Path) {
-      $initial += "~"
-    } else {
-      $initial += $(Get-Location).Path
-    }
-    Write-Host $initial -NoNewline -BackgroundColor "Black"
-    $GLOBAL:fullPrompt = $false
->>>>>>> 572167dd21350e26ed7e5155a822e469ddd3d8ee
   } else {
     if ($env:USERPROFILE -eq $(Get-Location).Path) {
       $initial += "~"
