@@ -83,7 +83,7 @@ function prompt {
       }
       if ($status.length -gt 0) {
         $backColor = "DarkYellow"
-        $gitLine = "  " + $ref + " ± "
+        $gitLine = "  " + $ref + "± "
       } else {
         $backColor = "DarkGreen"
         $gitLine = "  " + $ref + " "
