@@ -81,11 +81,12 @@ function prompt {
       } else {
         $ref = $ref.Replace("refs/heads/", "")
       }
-      $gitLine = "  " + $ref + " ± "
       if ($status.length -gt 0) {
         $backColor = "DarkYellow"
+        $gitLine = "  " + $ref + " ± "
       } else {
         $backColor = "DarkGreen"
+        $gitLine = "  " + $ref + " "
       }
       Write-Host -NoNewline $separator -ForegroundColor "DarkBlue" -BackgroundColor $backColor
       Write-Host -NoNewline $gitLine -ForegroundColor "Black" -BackgroundColor $backColor
