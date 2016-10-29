@@ -99,6 +99,9 @@ set scrolloff=4
 
 set timeoutlen=400
 
+highlight OverLength ctermbg=darkred ctermfg=white guibg=#A00000
+match OverLength /\%81v.\+/
+
 """"""""""""""""""""
 " Functions
 """"""""""""""""""""
