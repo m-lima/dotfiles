@@ -160,3 +160,15 @@ set-alias gurl "${env:LOCALAPPDATA}/scoop/shims/curl.exe"
 # Functions
 set-alias bd BackOneDir
 set-alias cl activateVS
+
+###########
+# Examples
+#
+## Count source lines in CXX Git project
+# $total = 0
+# gci = src\* -R -Include "*.cpp","*.hpp" -Exclude "WlopSimplifyVerbose.hpp" | `
+# foreach {
+#   echo $_.FullName
+#   $total = $(cat $_.FullName | wc -l)
+# }
+# echo $total
