@@ -57,7 +57,7 @@ let g:airline_theme='badwolf'
 
 " Fugitive
 " if has('win32')
-  " let g:fugitive_git_executable = 'C:\Users\mflim_000\AppData\Local\GitHub\Portab~1\cmd\git.exe'
+" let g:fugitive_git_executable = 'C:\Users\mflim_000\AppData\Local\GitHub\Portab~1\cmd\git.exe'
 " endif
 
 """"""""""""""""""""
@@ -99,32 +99,9 @@ set scrolloff=4
 
 set timeoutlen=400
 
-if has('win32')
-  if !has("gui_running")
-    " set term=pcansi
-    " set t_Co=256
-  endif
-
-  " set shell=powershell
-  " set shellcmdflag=-command
-  " set shell=C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
-else
-  " if has('macunix')
-  " elseif has('unix')
-  " endif
-endif
-
 """"""""""""""""""""
 " Functions
 """"""""""""""""""""
-
-" function! NumberToggle()
-"   if(&relativenumber == 1)
-"     set number
-"   else
-"     set relativenumber
-"   endif
-" endfunc
 
 function! s:DiffWithSaved()
   let filetype=&ft
@@ -135,29 +112,13 @@ function! s:DiffWithSaved()
 endfunction
 com! DiffSaved call s:DiffWithSaved()
 
+function! s:HighLightColumn()
+endfunction
+com! DiffSaved call s:HighLightColumn()
+
 """"""""""""""""""""
 " Mapping config
 """"""""""""""""""""
-
-" nnoremap <C-j> :m .+1<CR>==
-" nnoremap <C-k> :m .-2<CR>==
-" inoremap <C-j> <Esc>:m .+1<CR>==gi
-" inoremap <C-k> <Esc>:m .-2<CR>==gi
-" vnoremap <C-j> :m '>+1<CR>gv=gv
-" vnoremap <C-k> :m '<-2<CR>gv=gv
-
-" nnoremap <C-l> :delete<CR>:put!<CR>:put<CR>==
-" inoremap <C-l> <Esc>:delete<CR>:put!<CR>:put<CR>==gi
-" vnoremap <C-l> :delete<CR>:put!<CR>:put<CR>v=v
-
-" nnoremap <C-S-j> :delete<CR>:put!<CR>:put!<CR>==
-" nnoremap <C-S-k> :delete<CR>:put!<CR>:put<CR>== 
-" inoremap <S-C-j> <Esc>:m .+1<CR>==gi
-" inoremap <S-C-k> <Esc>:m .-2<CR>==gi
-" vnoremap <C-J> :delete<CR>:put!<CR>:put!<CR>gv=gv
-" vnoremap <C-K> :delete<CR>:put!<CR>:put<CR>gv=gv 
-
-" nnoremap <C-n> :call NumberToggle()<CR>
 
 nnoremap ; :
 nnoremap : ;
@@ -235,21 +196,21 @@ endif
 """"""""""""""""""""
 
 " NerdTree
-  nmap <Leader>n ;NERDTreeToggle<CR>
+nmap <Leader>n ;NERDTreeToggle<CR>
 
-  " Quit if only NERDTree is left
-  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Quit if only NERDTree is left
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-  " Open NERDTree if no file is specified
-  autocmd StdinReadPre * let s:std_in=1
-  autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" Open NERDTree if no file is specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " Dragging Visuals
-  vmap <expr> <LEFT> DVB_Drag('left')
-  vmap <expr> <RIGHT> DVB_Drag('right')
-  vmap <expr> <UP> DVB_Drag('up')
-  vmap <expr> <DOWN> DVB_Drag('down')
-  vmap <expr> D DVB_Duplicate()
+vmap <expr> <LEFT> DVB_Drag('left')
+vmap <expr> <RIGHT> DVB_Drag('right')
+vmap <expr> <UP> DVB_Drag('up')
+vmap <expr> <DOWN> DVB_Drag('down')
+vmap <expr> D DVB_Duplicate()
 
 """"""""""""""""""""
 " Tips
