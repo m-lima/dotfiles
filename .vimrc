@@ -100,7 +100,7 @@ set scrolloff=4
 set timeoutlen=400
 
 highlight OverLength ctermbg=darkred ctermfg=white guibg=#A00000
-match OverLength /\%81v.\+/
+let g:HighlightingColumn=0
 
 """"""""""""""""""""
 " Functions
@@ -115,9 +115,15 @@ function! s:DiffWithSaved()
 endfunction
 com! DiffSaved call s:DiffWithSaved()
 
-function! s:HighLightColumn()
+function! HighlightColumn()
+  if g:HighlightingColumn
+    let g:HighlightingColumn = 0
+    match OverLength //
+  else
+    let g:HighlightingColumn = 1
+    match OverLength /\%81v.\+/
+  endif
 endfunction
-com! DiffSaved call s:HighLightColumn()
 
 """"""""""""""""""""
 " Mapping config
@@ -136,7 +142,7 @@ vnoremap <C-\> \
 nnoremap yp Yp
 
 nnoremap <Leader>h :noh<CR>
-
+nnoremap <Leader>c :call HighlightColumn()<CR>
 nnoremap <Leader>z :let &scrolloff=999-&scrolloff<CR>
 
 noremap <C-E> 3<C-E>
