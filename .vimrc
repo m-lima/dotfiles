@@ -25,8 +25,8 @@ Plugin 'kana/vim-textobj-user'
 
 " Compose
 " Plugin 'szw/vim-tags'
-Plugin 'tpope/vim-surround'
-Plugin 'gavinbeatty/dragvisuals.vim'
+Plugin 'tpope/vim-surround'       " s
+" Plugin 'gavinbeatty/dragvisuals.vim'
 
 " Verbs
 Plugin 'tpope/vim-commentary'     " gc
@@ -99,7 +99,7 @@ set scrolloff=4
 
 set timeoutlen=400
 
-highlight OverLength ctermbg=darkred ctermfg=white guibg=#A00000
+highlight OverLength ctermbg=darkred guibg=#A00000
 let g:HighlightingColumn=0
 
 """"""""""""""""""""
