@@ -110,15 +110,19 @@ function prompt {
       # Not on master
       ($ref = git symbolic-ref HEAD) | out-null
       if (!$ref) {
-        Write-Host -NoNewline " " -BackgroundColor "Black"
-      }
-
-      # Git status
-      ($status = git status --porcelain) | out-null
-      if ($status.length -gt 0) {
-        $backColor = "DarkYellow"
+        $backColor = "DarkRed"
       } else {
-        $backColor = "DarkGreen"
+        if ($ref -ne "refs/heads/master") {
+          Write-Host -NoNewline " " -BackgroundColor "Black"
+        }
+
+        # Git status
+        ($status = git status --porcelain) | out-null
+        if ($status.length -gt 0) {
+          $backColor = "DarkYellow"
+        } else {
+          $backColor = "DarkGreen"
+        }
       }
 
       Write-Host -NoNewline $separator -ForegroundColor "Black" -BackgroundColor $backColor

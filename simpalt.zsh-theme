@@ -116,14 +116,19 @@ prompt_git() {
 prompt_git_small() {
   local ref dirty
   if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
-    if [ ! $(git symbolic-ref HEAD 2> /dev/null) ]; then
-      prompt_segment black default ""
-    fi
-    dirty=$(parse_git_dirty)
-    if [[ -n $dirty ]]; then
-      prompt_segment_small yellow
+    ref=$(git symbolic-ref HEAD 2> /dev/null)
+    if [ ! $ref ]; then
+      prompt_segment_small red
     else
-      prompt_segment_small green
+      if [[ "refs/heads/master" != "$ref" ]]; then
+        prompt_segment black default ""
+      fi
+      dirty=$(parse_git_dirty)
+      if [[ -n $dirty ]]; then
+        prompt_segment_small yellow
+      else
+        prompt_segment_small green
+      fi
     fi
   else
     prompt_segment_small blue
