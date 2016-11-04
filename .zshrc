@@ -80,8 +80,8 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 export PATH="$HOME"/bin:$PATH
-export COMPUTER_SYMBOL=φ
 
+source "$HOME"/.zshrc.local
 source "$HOME"/.aliasrc
 
 function def {
