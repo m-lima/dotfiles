@@ -1,4 +1,7 @@
-﻿function touch {
+﻿# Load computer identifying symbol
+. $ENV:HOME\Documents\WindowsPowerShell\ComputerSymbol.ps1
+
+function touch {
   ni -type file $args
 }
 
@@ -64,7 +67,7 @@ function def($word) {
 
 function prompt {
   $separator = ""
-  $initial = " Њ "
+  $initial = " $([char]$symbol) "
   if ($GLOBAL:fullPrompt) {
     Write-HOst -NoNewline $initial -BackgroundColor "Black"
     Write-Host -NoNewline $separator -ForegroundColor "Black" -BackgroundColor "DarkBlue"
