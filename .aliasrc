@@ -1,3 +1,4 @@
 alias ccat='colorize'
 alias bd='cd - > /dev/null'
 alias vd='cd ..'
+alias mud='telnet www.ateraan.com 4002'
