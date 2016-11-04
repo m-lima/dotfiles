@@ -161,6 +161,7 @@ set-alias npd "${env:ProgramFiles(x86)}\Notepad++\notepad++.exe"
 
 # Commands
 set-alias gurl "${env:LOCALAPPDATA}/scoop/shims/curl.exe"
+set-alias whr where.exe
 
 # Functions
 set-alias bd BackOneDir
