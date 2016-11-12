@@ -58,11 +58,13 @@ function BackOneDir {
 }
 
 function def($word) {
-  $word = "dict://dict.org/d:" + $word
-  $previousColor = $Host.UI.RawUI.ForegroundColor
-  $Host.UI.RawUI.ForegroundColor = "Green"
-  gurl $word 2> $null | grep -v '^[0-9][0-9][0-9] '
-  $Host.UI.RawUI.ForegroundColor = $previousColor
+  if ($word -ne $null -and $word -ne '') {
+    $word = "dict://dict.org/d:" + $word
+    $previousColor = $Host.UI.RawUI.ForegroundColor
+    $Host.UI.RawUI.ForegroundColor = "Green"
+    gurl $word 2> $null | sls -pattern '^[0-9][0-9][0-9] ' -notmatch
+    $Host.UI.RawUI.ForegroundColor = $previousColor
+  }
 }
 
 function prompt {
