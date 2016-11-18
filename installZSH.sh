@@ -167,6 +167,7 @@ echo "[34mMaking symlinks[m"
 createSymlink ".aliasrc"
 createSymlink ".zshrc"
 createSymlink ".vimrc"
+createSymlink ".vimrc.base"
 createSymlink ".tmux.conf"
 createSymlink simpalt.zsh-theme .oh-my-zsh/themes/
 
