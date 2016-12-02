@@ -69,8 +69,10 @@ source ~/.vimrc.base
 """"""""""""""""""""
 " Vim config
 """"""""""""""""""""
+
 highlight OverLength ctermbg=darkred guibg=#A00000
 let g:HighlightingColumn=0
+
 
 """"""""""""""""""""
 " Functions
@@ -98,6 +100,7 @@ endfunction
 """"""""""""""""""""
 " Mapping config
 """"""""""""""""""""
+
 nnoremap <Leader>c :call HighlightColumn()<CR>
 
 """"""""""""""""""""

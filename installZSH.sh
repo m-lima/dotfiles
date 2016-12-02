@@ -44,15 +44,15 @@ function checkContinue {
   exit
 }
 
-function createSymlink {
+function installFile {
   local OVERWRITE=false
 
-  if [ -f "$2$1" ]
+  if [ -f "$3$2" ]
   then
-    read -p "~/$1 already exists. Overwrite? [y/N] " INPUT
+    read -p "$3$2 already exists. Overwrite? [y/N] " INPUT
     case $INPUT in
       [Yy] )
-        rm "~/$1"
+        rm "$3$2"
         OVERWRITE=true
         ;;
     esac
@@ -62,7 +62,15 @@ function createSymlink {
 
   if [[ "$OVERWRITE" == "true" ]]
   then
-    ln -s $BASE_DIR/$1 $2
+    if [[ "$1" == "s" ]]
+    then
+      ln -s $BASE_DIR/$2 $3
+    else
+      if [[ "$1" == "c" ]]
+      then
+        cp $BASE_DIR/$2 .
+      fi
+    fi
   fi
 }
 
@@ -73,7 +81,13 @@ pushd $HOME &> /dev/null
 # Install ZSH
 if [ $(command -v apt-get) ]
 then
-  PACKAGE_MANAGER="sudo apt-get"
+  PACKAGE_MANAGER="sudo apt-get -y"
+  read -p "Update apt-get? [y/N] " INPUT
+  case $INPUT in
+    [Yy] )
+      sudo apt-get update
+      ;;
+  esac
 else
   PACKAGE_MANAGER="brew"
 fi
@@ -137,7 +151,7 @@ else
   echo "[31mFAIL[34m][m"
   echo "[34mInstalling Vim..[m"
 
-  if [ $(install Vim "$PACKAGE_MANAGER -y install vim") ]
+  if [ $(install Vim "$PACKAGE_MANAGER install vim") ]
   then
     echo "[31mCould not install Vim![m"
     checkContinue
@@ -154,7 +168,7 @@ else
   echo "[31mFAIL[34m][m"
   echo "[34mInstalling Vundle..[m"
 
-  if [ $(install Vundle "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim") ]
+  if [ $(install Vundle "git clone https://github.com/VundleVim/Vundle.vim.git .vim/bundle/Vundle.vim") ]
   then
     echo "[31mCould not install Vundle![m"
     checkContinue
@@ -165,11 +179,12 @@ fi
 
 # Make symlinks
 echo "[34mMaking symlinks[m"
-createSymlink ".aliasrc"
-createSymlink ".zshrc"
-createSymlink ".vimrc"
-createSymlink ".vimrc.base"
-createSymlink ".tmux.conf"
-createSymlink simpalt.zsh-theme .oh-my-zsh/themes/
+installFile s ".aliasrc"
+installFile s ".zshrc"
+installFile s ".vimrc"
+installFile s ".vimrc.base"
+installFile s ".tmux.conf"
+installFile s simpalt.zsh-theme .oh-my-zsh/themes/
+installFile c ".zshrc.local"
 
 popd &> /dev/null
