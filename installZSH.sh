@@ -52,6 +52,7 @@ function createSymlink {
     read -p "~/$1 already exists. Overwrite? [y/N] " INPUT
     case $INPUT in
       [Yy] )
+        rm "~/$1"
         OVERWRITE=true
         ;;
     esac
@@ -136,7 +137,7 @@ else
   echo "[31mFAIL[34m][m"
   echo "[34mInstalling Vim..[m"
 
-  if [ $(install Vim "$PACKAGE_MANAGER install vim") ]
+  if [ $(install Vim "$PACKAGE_MANAGER -y install vim") ]
   then
     echo "[31mCould not install Vim![m"
     checkContinue
