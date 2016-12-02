@@ -68,7 +68,7 @@ function installFile {
     else
       if [[ "$1" == "c" ]]
       then
-        cp $BASE_DIR/$2 .
+        cp $BASE_DIR/$2 $3
       fi
     fi
   fi
@@ -185,6 +185,6 @@ installFile s ".vimrc"
 installFile s ".vimrc.base"
 installFile s ".tmux.conf"
 installFile s simpalt.zsh-theme .oh-my-zsh/themes/
-installFile c ".zshrc.local"
+installFile c ".zshrc.local" ./
 
 popd &> /dev/null
