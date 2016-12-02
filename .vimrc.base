@@ -53,9 +53,9 @@ vnoremap <C-\> \
 
 nnoremap yp Yp
 
-nnoremap <Leader>h :noh<CR>
+nnoremap <silent> <Leader>h :noh<CR>
 
-nnoremap <Leader>z :let &scrolloff=999-&scrolloff<CR>
+nnoremap <silent> <Leader>z :let &scrolloff=999-&scrolloff<CR>
 
 noremap <C-E> 3<C-E>
 noremap <C-Y> 3<C-Y>

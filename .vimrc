@@ -109,6 +109,7 @@ nnoremap <Leader>c :call HighlightColumn()<CR>
 
 " NerdTree
 nmap <Leader>n ;NERDTreeToggle<CR>
+let NERDTreeMapOpenInTab='<CR>'
 
 " Quit if only NERDTree is left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
