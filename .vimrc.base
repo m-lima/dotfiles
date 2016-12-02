@@ -68,6 +68,11 @@ noremap fj <C-W>j
 noremap fk <C-W>k
 noremap fl <C-W>l
 
+nnoremap H ^
+vnoremap H ^
+nnoremap L $
+vnoremap L $
+
 if has('win32')
   nnoremap <M-j> 5<C-E>
   nnoremap <M-k> 5<C-Y>
