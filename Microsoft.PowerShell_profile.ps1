@@ -164,7 +164,7 @@ Import-Module "PowerTab" -ArgumentList "${env:USERPROFILE}\Documents\WindowsPowe
 ### Alias
 
 # Editors
-set-alias gvim "${env:ProgramFiles(x86)}\Vim\vim80\gvim.exe"
+set-alias gvi "${env:ProgramFiles(x86)}\Vim\vim80\gvim.exe"
 set-alias vi "${env:ProgramFiles(x86)}\Vim\vim80\vim.exe"
 set-alias npd "${env:ProgramFiles(x86)}\Notepad++\notepad++.exe"
 
