@@ -53,15 +53,25 @@ vnoremap <C-\> \
 
 nnoremap yp Yp
 
-nnoremap <Leader>h :noh<CR>
+nnoremap <silent> <Leader>h :noh<CR>
 
-nnoremap <Leader>z :let &scrolloff=999-&scrolloff<CR>
+nnoremap <silent> <Leader>z :let &scrolloff=999-&scrolloff<CR>
 
 noremap <C-E> 3<C-E>
 noremap <C-Y> 3<C-Y>
 
 nnoremap <CR> o<Esc>
 nnoremap \| O<Esc>
+
+noremap fh <C-W>h
+noremap fj <C-W>j
+noremap fk <C-W>k
+noremap fl <C-W>l
+
+nnoremap H ^
+vnoremap H ^
+nnoremap L $
+vnoremap L $
 
 if has('win32')
   nnoremap <M-j> 5<C-E>

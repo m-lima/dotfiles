@@ -69,8 +69,10 @@ source ~/.vimrc.base
 """"""""""""""""""""
 " Vim config
 """"""""""""""""""""
+
 highlight OverLength ctermbg=darkred guibg=#A00000
 let g:HighlightingColumn=0
+
 
 """"""""""""""""""""
 " Functions
@@ -98,6 +100,7 @@ endfunction
 """"""""""""""""""""
 " Mapping config
 """"""""""""""""""""
+
 nnoremap <Leader>c :call HighlightColumn()<CR>
 
 """"""""""""""""""""
@@ -106,6 +109,7 @@ nnoremap <Leader>c :call HighlightColumn()<CR>
 
 " NerdTree
 nmap <Leader>n ;NERDTreeToggle<CR>
+let NERDTreeMapOpenInTab='<CR>'
 
 " Quit if only NERDTree is left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
