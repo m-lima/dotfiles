@@ -5,8 +5,12 @@ function touch {
   ni -type file $args
 }
 
-function vd {
+function fd {
   cd "${env:USERPROFILE}"
+}
+
+function vd {
+  cd ..
 }
 
 function activateVS {
