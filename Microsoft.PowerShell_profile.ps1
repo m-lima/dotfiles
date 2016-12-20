@@ -163,6 +163,7 @@ Import-Module "PowerTab" -ArgumentList "${env:USERPROFILE}\Documents\WindowsPowe
 set-alias gvim "${env:ProgramFiles(x86)}\Vim\vim80\gvim.exe"
 set-alias vi "${env:ProgramFiles(x86)}\Vim\vim80\vim.exe"
 set-alias npd "${env:ProgramFiles(x86)}\Notepad++\notepad++.exe"
+set-alias em "${env:USERPROFILE}\Bin\Emacs\bin\emacs.exe"
 
 # Commands
 set-alias gurl "${env:LOCALAPPDATA}/scoop/shims/curl.exe"
