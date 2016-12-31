@@ -1,10 +1,11 @@
-export COMPUTER_SYMBOL='§'
+# export COMPUTER_SYMBOL='§'
 # export COMPUTER_SYMBOL='φ'
 # export COMPUTER_SYMBOL='π'
 # export COMPUTER_SYMBOL='Њ'
 # export COMPUTER_SYMBOL='☧'
 # export COMPUTER_SYMBOL='ɳ'
 # export COMPUTER_SYMBOL='✝'
+export COMPUTER_SYMBOL='☢'
 
 ##
 ## Bash on Windows requires this
