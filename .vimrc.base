@@ -63,10 +63,10 @@ noremap <C-Y> 3<C-Y>
 nnoremap <CR> o<Esc>
 nnoremap \| O<Esc>
 
-noremap fh <C-W>h
-noremap fj <C-W>j
-noremap fk <C-W>k
-noremap fl <C-W>l
+noremap gh <C-W>h
+noremap gj <C-W>j
+noremap gk <C-W>k
+noremap gl <C-W>l
 
 nnoremap H ^
 vnoremap H ^
