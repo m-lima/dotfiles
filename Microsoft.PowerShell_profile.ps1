@@ -45,6 +45,11 @@ function cpwd {
   $pwd.path.ToLower() | clip
 }
 
+function ppwd {
+  $clipPath = $(Get-Clipboard -Raw -Format Text -TextFormatType Text)
+  cd $clipPath.Substring(1, $clipPath.Length - 3)
+}
+
 function gsb {
   git status -sb
 }
