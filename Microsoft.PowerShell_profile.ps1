@@ -13,6 +13,20 @@ function vd {
   cd ..
 }
 
+function corn {
+  param(
+    [Parameter(Mandatory=$true)][string]$action,
+    [string]$params = "",
+    [string]$url = "localhost",
+    [int]$port = 8008,
+    [string]$user = "popcorn",
+    [string]$pass = "popcorn",
+    [switch]$trace
+  )
+
+  gurl $(if($trace) {'--trace-ascii'}) $(if($trace) {'-'}) -u ${user}:${pass} -d $('{ \"jsonrpc\": \"2.0\", \"method\": \"' + ${action} + '\", \"params\": { ' + ${params} + ' }, \"id\": 3 }') http://${url}:${port}
+}
+
 function activateVS {
   Remove-Item alias:\cl
   #Set environment variables for Visual Studio Command Prompt
