@@ -85,6 +85,11 @@ export TERM=xterm-256color
 source "$HOME"/.zshrc.local
 source "$HOME"/.aliasrc
 
+if [[ $string == *"My long"* ]]; then
+  alias cpwd='pwd | pbcopy'
+  alias ppwd='cd $(pbpaste)'
+fi
+
 function def {
   if [ "$1" ]
   then
