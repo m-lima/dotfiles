@@ -88,6 +88,14 @@ source "$HOME"/.aliasrc
 if [[ $string == *"My long"* ]]; then
   alias cpwd='pwd | pbcopy'
   alias ppwd='cd $(pbpaste)'
+else
+  if [ $(command -v xclip) ]; then
+    alias cpwd='pwd |  xclip'
+    alias ppwd='cd $(xclip -o)'
+  else
+    alias cpwd='pwd > ~/.pwd_buffer'
+    alias ppwd='cd $(cat ~/.pwd_buffer) 2> /dev/null'
+  fi
 fi
 
 function def {
