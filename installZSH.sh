@@ -64,14 +64,16 @@ function installFile {
   then
     if [[ "$1" == "s" ]]
     then
-      ln -s $BASE_DIR/$2 $3
+      return $(ln -s $BASE_DIR/$2 $3)
     else
       if [[ "$1" == "c" ]]
       then
-        cp $BASE_DIR/$2 $3
+        return $(cp $BASE_DIR/$2 $3)
       fi
     fi
   fi
+
+  return 1
 }
 
 BASE_DIR=$(dirname $(fullPath $0))
@@ -113,15 +115,21 @@ else
     fi
   fi
 
-  echo "[34mSetting as main shell..[m"
+  read -p "Set ZSH as main shell (Skip if running Bash on Windows)? [y/N] " INPUT
+  case $INPUT in
+    [Yy] )
+      echo "[34mSetting as main shell..[m"
 
-  if [ $(chsh -s $(which zsh)) ]
-  then
-    echo "[31mCould not set the main shell![m"
-    checkContinue
-  else
-    echo "[32mDone![m"
-  fi
+      if [ $(chsh -s $(which zsh)) ]
+      then
+        echo "[31mCould not set the main shell![m"
+        checkContinue
+      else
+        echo "[32mDone![m"
+      fi
+      ;;
+  esac
+
 fi
 
 ## Oh My ZSH
@@ -186,6 +194,9 @@ installFile s ".vimrc.base"
 installFile s ".tmux.conf"
 installFile s simpalt.zsh-theme .oh-my-zsh/themes/
 echo "[34mCopying files[m"
-installFile c ".zshrc.local" ./
+if installFile c ".zshrc.local" ./
+then
+  vi .zshrc.local
+fi
 
 popd &> /dev/null
