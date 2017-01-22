@@ -10,10 +10,6 @@ export COMPUTER_SYMBOL='§'
 ##
 ## Bash on Windows requires this
 ##
-# if [ $TERM = "xterm" ]
-# then
-#   export TERM=xterm-256color
-# fi
 
 # alias fdd='cd /mnt/c/Users/mflim_000/'
 # alias mkdir='mkdir -m 755'
