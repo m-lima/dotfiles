@@ -185,6 +185,7 @@ installFile s ".vimrc"
 installFile s ".vimrc.base"
 installFile s ".tmux.conf"
 installFile s simpalt.zsh-theme .oh-my-zsh/themes/
+echo "[34mCopying files[m"
 installFile c ".zshrc.local" ./
 
 popd &> /dev/null
