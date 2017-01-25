@@ -5,6 +5,7 @@ export COMPUTER_SYMBOL='§'
 # export COMPUTER_SYMBOL='☧'
 # export COMPUTER_SYMBOL='ɳ'
 # export COMPUTER_SYMBOL='✝'
+# export COMPUTER_SYMBOL='#'
 # export COMPUTER_SYMBOL='☢'
 
 ##
