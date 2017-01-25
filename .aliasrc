@@ -3,3 +3,17 @@ alias bd='cd - > /dev/null'
 alias vd='cd ..'
 alias fd='cd ~'
 alias mud='telnet www.ateraan.com 4002'
+
+if [[ $string == *"My long"* ]]; then
+  alias cpwd='pwd | pbcopy'
+  alias ppwd='cd $(pbpaste)'
+  alias vim=/usr/local/Cellar/vim/8.0.0002/bin/vim
+else
+  if [ $(command -v xclip) ]; then
+    alias cpwd='pwd |  xclip'
+    alias ppwd='cd $(xclip -o)'
+  else
+    alias cpwd='pwd > ~/.pwd_buffer'
+    alias ppwd='cd $(cat ~/.pwd_buffer) 2> /dev/null'
+  fi
+fi
