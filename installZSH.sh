@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# TODO
+# git submodule
+# Generate tmux-powerlinerc
+# Edit tmux-powerlinerc with sed (spotify and theme)
+# Symlink tmux simpalt.sh theme
+# Make simpalt.sh pretty
+
 function fullPath {
   TARGET_FILE=$1
 
