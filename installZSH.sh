@@ -191,9 +191,16 @@ installFile s ".aliasrc"
 installFile s ".zshrc"
 installFile s ".vimrc"
 installFile s ".vimrc.base"
-installFile s ".tmux.conf"
 installFile s simpalt.zsh-theme .oh-my-zsh/themes/
+
 echo "[34mCopying files[m"
+
+if installFile c ".tmux.conf" ./
+then
+  echo "set-option -g status-left \"#($BASE_DIR/tmux-powerline/powerline.sh left)\"" >> .tmux.conf
+  echo "set-option -g status-right \"#($BASE_DIR/tmux-powerline/powerline.sh right)\"" >> .tmux.conf
+fi
+
 if installFile c ".zshrc.local" ./
 then
   vi .zshrc.local
