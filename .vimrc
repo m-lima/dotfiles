@@ -48,6 +48,7 @@ filetype plugin indent on    " required
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline_theme='badwolf'
+set noshowmode
 
 " Vim-tags
 " let g:vim_tags_auto_generate = 0
