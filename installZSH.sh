@@ -2,7 +2,7 @@
 
 # TODO
 # [O] git submodule
-# [X] Generate tmux-powerlinerc
+# [O] Generate tmux-powerlinerc
 # [O] Edit tmux-powerlinerc with sed (spotify and theme)
 # [X] Symlink tmux simpaltmux.sh theme
 # [ ] Make simpaltmux.sh pretty
