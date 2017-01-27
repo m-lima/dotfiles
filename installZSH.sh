@@ -160,7 +160,7 @@ fi
 echo -n "[34mChecking TMUX.. [[m"
 if [ $(command -v tmux) ]
 then
-  echo "[32mOK[34m][m"
+  echo "[32mOK[34m][m"
 else
   echo "[31mFAIL[34m][m"
   echo "[34mInstalling TMUX..[m"
