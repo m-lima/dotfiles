@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # TODO
-# git submodule
-# Generate tmux-powerlinerc
-# Edit tmux-powerlinerc with sed (spotify and theme)
-# Symlink tmux simpalt.sh theme
-# Make simpalt.sh pretty
+# [O] git submodule
+# [X] Generate tmux-powerlinerc
+# [O] Edit tmux-powerlinerc with sed (spotify and theme)
+# [X] Symlink tmux simpaltmux.sh theme
+# [ ] Make simpaltmux.sh pretty
 
 function fullPath {
   TARGET_FILE=$1
@@ -84,7 +84,6 @@ function installFile {
 }
 
 BASE_DIR=$(dirname $(fullPath $0))
-LAST_DIR=`pwd`
 pushd $HOME &> /dev/null
 
 # Install ZSH
@@ -155,6 +154,43 @@ else
   else
     echo "[32mDone![m"
   fi
+fi
+
+## TMUX
+echo -n "[34mChecking TMUX.. [[m"
+if [ $(command -v tmux) ]
+then
+  echo "[32mOK[34m][m"
+else
+  echo "[31mFAIL[34m][m"
+  echo "[34mInstalling TMUX..[m"
+
+  if [ $(install TMUX "$PACKAGE_MANAGER install tmux") ]
+  then
+    echo "[31mCould not install TMUX![m"
+    checkContinue
+  else
+    echo "[32mDone![m"
+  fi
+fi
+
+## TMUX Powerline
+echo -n "[34mChecking TMUX Powerline.. [[m"
+if [ -f .tmux-powerlinerc ]
+then
+  echo "[32mOK[34m][m"
+else
+  echo "[31mFAIL[34m][m"
+  echo "[34mGenerating tmux-powerlinerc..[m"
+
+  cd $BASE_DIR &> /dev/null
+  git submodule update --init --recursive
+  tmux-powerline/generate_rc.sh
+  cd $HOME &> /dev/null
+  sed -i "s~export TMUX_POWERLINE_THEME=\"default\"~export TMUX_POWERLINE_THEME=\"simpaltmux\"" .tmux-powerlinerc
+  sed -i "s~export TMUX_POWERLINE_DIR_USER_THEMES=\"\"~TMUX_POWERLINE_DIR_USER_THEMES=\"$BASE_DIR\"" .tmux-powerlinerc
+  sed -i "s~export TMUX_POWERLINE_SEG_NOW_PLAYING_MUSIC_PLAYER=\"\"~export TMUX_POWERLINE_SEG_NOW_PLAYING_MUSIC_PLAYER=\"spotify\"" .tmux-powerlinerc
+  echo "[32mDone![m"
 fi
 
 ## Vim/Vundle

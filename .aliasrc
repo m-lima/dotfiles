@@ -3,6 +3,7 @@ alias bd='cd - > /dev/null'
 alias vd='cd ..'
 alias fd='cd ~'
 alias mud='telnet www.ateraan.com 4002'
+alias gsu='git submodule update --init --recursive'
 
 if [[ $string == *"My long"* ]]; then
   alias cpwd='pwd | pbcopy'
