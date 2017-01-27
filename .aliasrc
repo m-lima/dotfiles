@@ -4,6 +4,7 @@ alias vd='cd ..'
 alias fd='cd ~'
 alias mud='telnet www.ateraan.com 4002'
 alias gsu='git submodule update --init --recursive'
+alias ghelp='cat ~/.oh-my-zsh/plugins/git/git.plugin.zsh'
 
 if [[ $string == *"My long"* ]]; then
   alias cpwd='pwd | pbcopy'
