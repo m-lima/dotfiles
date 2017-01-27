@@ -185,12 +185,12 @@ else
 
   cd $BASE_DIR &> /dev/null
   git submodule update --init --recursive
-  tmux-powerline/generate_rc.sh
+  tmux-powerline/generate_rc.sh > /dev/null
   cd $HOME &> /dev/null
   mv .tmux-powerlinerc.default .tmux-powerlinerc
-  sed -i "s~export TMUX_POWERLINE_THEME=\"default\"~export TMUX_POWERLINE_THEME=\"simpaltmux\"" .tmux-powerlinerc
-  sed -i "s~export TMUX_POWERLINE_DIR_USER_THEMES=\"\"~TMUX_POWERLINE_DIR_USER_THEMES=\"$BASE_DIR\"" .tmux-powerlinerc
-  sed -i "s~export TMUX_POWERLINE_SEG_NOW_PLAYING_MUSIC_PLAYER=\"\"~export TMUX_POWERLINE_SEG_NOW_PLAYING_MUSIC_PLAYER=\"spotify\"" .tmux-powerlinerc
+  sed -i "s~export TMUX_POWERLINE_THEME=\"default\"~export TMUX_POWERLINE_THEME=\"simpaltmux\"~" .tmux-powerlinerc
+  sed -i "s~export TMUX_POWERLINE_DIR_USER_THEMES=\"\"~TMUX_POWERLINE_DIR_USER_THEMES=\"$BASE_DIR\"~" .tmux-powerlinerc
+  sed -i "s~export TMUX_POWERLINE_SEG_NOW_PLAYING_MUSIC_PLAYER=\"\"~export TMUX_POWERLINE_SEG_NOW_PLAYING_MUSIC_PLAYER=\"spotify\"~" .tmux-powerlinerc
   echo "[32mDone![m"
 fi
 
