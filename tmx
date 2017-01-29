@@ -13,11 +13,11 @@ then
     while true
     do
       tput -Txterm reset
-      echo -e "\e[31mOnly main session exists\e[m"
+      echo -e "[31mOnly main session exists[m"
       echo "What do you whish to do?"
-      echo -e "[\e[33mA\e[m]ttach to main"
-      echo -e "[\e[33mN\e[m]ame new session"
-      echo -e "[\e[33mE\e[m]xit?"
+      echo -e "[[33mA[m]ttach to main"
+      echo -e "[[33mN[m]ame new session"
+      echo -e "[[33mE[m]xit?"
       read -p "Choice: " input
       case $input in
         [Aa]* )
@@ -26,16 +26,16 @@ then
           exit
           ;;
         [Nn]* )
-          echo -e "Current sessions:\e[32m"
+          echo -e "Current sessions:[32m"
           tmux list-sessions
-          echo -e -n "\e[m"
+          echo -e -n "[m"
           read -p "Name of the session: " name
           if tmux new-session -s $name
           then
             tput -Txterm reset
             exit
           else
-            echo -e "\e[31mUnable to create\e[m"
+            echo -e "[31mUnable to create[m"
           fi
           ;;
         [Ee]* )
@@ -48,14 +48,14 @@ then
     while true
     do
       tput -Txterm reset
-      echo -e "\e[31mSeveral sessions found\e[m"
+      echo -e "[31mSeveral sessions found[m"
       echo "What do you whish to do?"
-      echo -e "[\e[33mC\e[m]onnect to main"
-      echo -e "[\e[33mN\e[m]ame new session"
-      echo -e "[\e[33mA\e[m]ttach to last"
-      echo -e "[\e[33mP\e[m]ick session"
-      echo -e "[\e[33mL\e[m]og normally"
-      echo -e "[\e[33mE\e[m]xit?"
+      echo -e "[[33mC[m]onnect to main"
+      echo -e "[[33mN[m]ame new session"
+      echo -e "[[33mA[m]ttach to last"
+      echo -e "[[33mP[m]ick session"
+      echo -e "[[33mL[m]og normally"
+      echo -e "[[33mE[m]xit?"
       read -p "Choice: " input
 
       case $input in
@@ -65,16 +65,16 @@ then
           exit
           ;;
         [Nn]* )
-          echo -e "Current sessions:\e[32m"
+          echo -e "Current sessions:[32m"
           tmux list-sessions
-          echo -e -n "\e[m"
+          echo -e -n "[m"
           read -p "Name of the session: " name
           if tmux new-session -s $name
           then
             tput -Txterm reset
             exit
           else
-            echo -e "\e[31mUnable to create\e[m"
+            echo -e "[31mUnable to create[m"
           fi
           ;;
         [Aa]* )
@@ -87,20 +87,20 @@ then
             tput -Txterm reset
             exit
           else
-            echo -e "\e[31mUnable to attach\e[m"
+            echo -e "[31mUnable to attach[m"
           fi
           ;;
         [Pp]* )
-          echo -e "Current sessions:\e[32m"
+          echo -e "Current sessions:[32m"
           tmux list-sessions
-          echo -e -n "\e[m"
+          echo -e -n "[m"
           read -p "Name of the session: " name
           if tmux attach -t $name
           then
             tput -Txterm reset
             exit
           else
-            echo -e "\e[31mUnable to attach\e[m"
+            echo -e "[31mUnable to attach[m"
           fi
           ;;
         [Ll]* )
@@ -120,14 +120,14 @@ else
     while true
     do
       tput -Txterm reset
-      echo -e "\e[31mMain session not found\e[m"
+      echo -e "[31mMain session not found[m"
       echo "What do you whish to do?"
-      echo -e "[\e[33mC\e[m]reate main"
-      echo -e "[\e[33mN\e[m]ame new session"
-      echo -e "[\e[33mA\e[m]ttach to last"
-      echo -e "[\e[33mP\e[m]ick session"
-      echo -e "[\e[33mL\e[m]og normally"
-      echo -e "[\e[33mE\e[m]xit?"
+      echo -e "[[33mC[m]reate main"
+      echo -e "[[33mN[m]ame new session"
+      echo -e "[[33mA[m]ttach to last"
+      echo -e "[[33mP[m]ick session"
+      echo -e "[[33mL[m]og normally"
+      echo -e "[[33mE[m]xit?"
       read -p "Choice: " input
 
       case $input in
@@ -137,16 +137,16 @@ else
           exit
           ;;
         [Nn]* )
-          echo -e "Current sessions:\e[32m"
+          echo -e "Current sessions:[32m"
           tmux list-sessions
-          echo -e -n "\e[m"
+          echo -e -n "[m"
           read -p "Name of the session: " name
           if tmux new-session -s $name
           then
             tput -Txterm reset
             exit
           else
-            echo -e "\e[31mUnable to create\e[m"
+            echo -e "[31mUnable to create[m"
           fi
           ;;
         [Aa]* )
@@ -159,20 +159,20 @@ else
             tput -Txterm reset
             exit
           else
-            echo -e "\e[31mUnable to attach\e[m"
+            echo -e "[31mUnable to attach[m"
           fi
           ;;
         [Pp]* )
-          echo -e "Current sessions:\e[32m"
+          echo -e "Current sessions:[32m"
           tmux list-sessions
-          echo -e -n "\e[m"
+          echo -e -n "[m"
           read -p "Name of the session: " name
           if tmux attach -t $name
           then
             tput -Txterm reset
             exit
           else
-            echo -e "\e[31mUnable to attach\e[m"
+            echo -e "[31mUnable to attach[m"
           fi
           ;;
         [Ll]* )
@@ -189,12 +189,12 @@ else
     while true
     do
       tput -Txterm reset
-      echo -e "\e[31mNo sessions found\e[m"
+      echo -e "[31mNo sessions found[m"
       echo "What do you whish to do?"
-      echo -e "[\e[33mC\e[m]reate main"
-      echo -e "[\e[33mN\e[m]ame new session"
-      echo -e "[\e[33mL\e[m]og normally"
-      echo -e "[\e[33mE\e[m]xit?"
+      echo -e "[[33mC[m]reate main"
+      echo -e "[[33mN[m]ame new session"
+      echo -e "[[33mL[m]og normally"
+      echo -e "[[33mE[m]xit?"
       read -p "Choice: " input
 
       case $input in
@@ -210,7 +210,7 @@ else
             tput -Txterm reset
             exit
           else
-            echo -e "\e[31mUnable to create\e[m"
+            echo -e "[31mUnable to create[m"
           fi
           ;;
         [Ll]* )

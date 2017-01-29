@@ -44,7 +44,7 @@ function install {
 }
 
 function checkContinue {
-  read -p "Continue? [yN] " INPUT
+  read -p "Continue? [y/N] " INPUT
   case $INPUT in
     [Yy] )
       return 0;
@@ -182,8 +182,20 @@ echo -n "[34mChecking TMUX Powerline.. [[m"
 if [ -f .tmux-powerlinerc ]
 then
   echo "[32mOK[34m][m"
+  FORCE=false
+  read -p "Force generation? [y/N] " INPUT
+  case $INPUT in
+    [Yy] )
+      FORCE=true
+      ;;
+  esac
 else
   echo "[31mFAIL[34m][m"
+  FORCE=true
+fi
+
+if [[ "$FORCE" == "true" ]]
+then
   echo "[34mGenerating tmux-powerlinerc..[m"
 
   cd $BASE_DIR &> /dev/null
@@ -191,9 +203,7 @@ else
   tmux-powerline/generate_rc.sh > /dev/null
   cd $HOME &> /dev/null
   mv .tmux-powerlinerc.default .tmux-powerlinerc
-  sed -i "s~export TMUX_POWERLINE_THEME=\"default\"~export TMUX_POWERLINE_THEME=\"simpaltmux\"~" .tmux-powerlinerc
-  sed -i "s~export TMUX_POWERLINE_DIR_USER_THEMES=\"\"~TMUX_POWERLINE_DIR_USER_THEMES=\"$BASE_DIR\"~" .tmux-powerlinerc
-  sed -i "s~export TMUX_POWERLINE_SEG_NOW_PLAYING_MUSIC_PLAYER=\"\"~export TMUX_POWERLINE_SEG_NOW_PLAYING_MUSIC_PLAYER=\"spotify\"~" .tmux-powerlinerc
+  sed -i .bak "s~export TMUX_POWERLINE_THEME=\"default\"~export TMUX_POWERLINE_THEME=\"simpaltmux\"~; s~export TMUX_POWERLINE_DIR_USER_THEMES=\"\"~TMUX_POWERLINE_DIR_USER_THEMES=\"$BASE_DIR\"~; s~export TMUX_POWERLINE_SEG_NOW_PLAYING_MUSIC_PLAYER=\"\"~export TMUX_POWERLINE_SEG_NOW_PLAYING_MUSIC_PLAYER=\"spotify\"~" .tmux-powerlinerc
   echo "[32mDone![m"
 fi
 
