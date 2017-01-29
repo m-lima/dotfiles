@@ -23,11 +23,11 @@ TMUX_POWERLINE_DEFAULT_RIGHTSIDE_SEPARATOR=${TMUX_POWERLINE_DEFAULT_RIGHTSIDE_SE
 
 if [ -z $TMUX_POWERLINE_LEFT_STATUS_SEGMENTS ]; then
 	TMUX_POWERLINE_LEFT_STATUS_SEGMENTS=(
-		"tmux_session_info 154 232" \
+		"tmux_session_info 38 232" \
 		#"hostname 33 0" \
 		#"ifstat 30 255" \
 		#"ifstat_sys 30 255" \
-		"load 238 222" \
+		"load 24 255" \
 		# "lan_ip 24 255 ${TMUX_POWERLINE_SEPARATOR_RIGHT_THIN}" \
 		# "wan_ip 24 255" \
 		#"vcs_branch 29 88" \
@@ -41,7 +41,7 @@ fi
 if [ -z $TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS ]; then
 	TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS=(
 		#"earthquake 3 0" \
-		# "pwd 89 255" \
+		#"pwd 89 255" \
 		#"mailcount 9 255" \
 		"now_playing 234 37" \
 		#"cpu 240 136" \
@@ -51,9 +51,9 @@ if [ -z $TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS ]; then
 		#"weather 37 255" \
 		#"rainbarf 0 ${TMUX_POWERLINE_DEFAULT_FOREGROUND_COLOR}" \
 		#"xkb_layout 125 117" \
-		"date_day 235 136" \
-		"date 235 136 ${TMUX_POWERLINE_SEPARATOR_LEFT_THIN}" \
-		"time 235 136 ${TMUX_POWERLINE_SEPARATOR_LEFT_THIN}" \
+		"date_day 238 73" \
+		"date 238 73 ${TMUX_POWERLINE_SEPARATOR_LEFT_THIN}" \
+		"time 238 73 ${TMUX_POWERLINE_SEPARATOR_LEFT_THIN}" \
 		#"utc_time 235 136 ${TMUX_POWERLINE_SEPARATOR_LEFT_THIN}" \
 	)
 fi

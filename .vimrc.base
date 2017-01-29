@@ -7,7 +7,7 @@ set autoindent
 set smartindent
 
 set backspace=indent,eol,start
-set clipboard=unnamed
+" set clipboard=unnamed
 
 set incsearch
 set ignorecase

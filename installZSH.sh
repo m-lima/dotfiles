@@ -5,10 +5,11 @@
 # [O] Generate tmux-powerlinerc
 # [O] Edit tmux-powerlinerc with sed (spotify and theme)
 # [O] Symlink tmux simpaltmux.sh theme
-# [ ] Make simpaltmux.sh pretty
+# [O] Make simpaltmux.sh pretty
 # [O] Split .tmux.conf into shared and local
 # [ ] Ask if force regenerate tmux-powerlinerc
 # [O] Ask if force regenerate tmux.conf.local
+# [ ] Add roll to TMUX powerline
 
 function fullPath {
   TARGET_FILE=$1
