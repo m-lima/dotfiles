@@ -6,6 +6,7 @@
 # [O] Edit tmux-powerlinerc with sed (spotify and theme)
 # [X] Symlink tmux simpaltmux.sh theme
 # [ ] Make simpaltmux.sh pretty
+# [ ] Split .tmux.conf into shared and local
 
 function fullPath {
   TARGET_FILE=$1
