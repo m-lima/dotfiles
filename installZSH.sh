@@ -253,7 +253,7 @@ installFile s ".aliasrc"
 installFile s ".zshrc"
 installFile s ".vimrc"
 installFile s ".vimrc.base"
-installFile s "startTMUX.sh" bin/tmx
+installFile s "tmx" bin/
 installFile s simpalt.zsh-theme .oh-my-zsh/themes/
 
 echo "[34mCopying files[m"
