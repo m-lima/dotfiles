@@ -260,6 +260,7 @@ echo "[34mCopying files[m"
 
 if installFile c ".tmux.conf" ./
 then
+  echo "set-option -g default-shell $(which zsh)" >> .tmux.conf
   echo "set-option -g status-left \"#($BASE_DIR/tmux-powerline/powerline.sh left)\"" >> .tmux.conf
   echo "set-option -g status-right \"#($BASE_DIR/tmux-powerline/powerline.sh right)\"" >> .tmux.conf
 fi
