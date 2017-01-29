@@ -229,12 +229,31 @@ else
   fi
 fi
 
+# Create ~/bin
+echo -n "[34mChecking bin folder.. [[m"
+if [ -d bin ]
+then
+  echo "[32mOK[34m][m"
+else
+  echo "[31mFAIL[34m][m"
+  echo "[34mCreating folder..[m"
+
+  if [ mkdir bin &> /dev/null ]
+  then
+    echo "[31mCould not create bin folder![m"
+    checkContinue
+  else
+    echo "[32mDone![m"
+  fi
+fi
+
 # Make symlinks
 echo "[34mMaking symlinks[m"
 installFile s ".aliasrc"
 installFile s ".zshrc"
 installFile s ".vimrc"
 installFile s ".vimrc.base"
+installFile s "startTMUX.sh" bin/tmx
 installFile s simpalt.zsh-theme .oh-my-zsh/themes/
 
 echo "[34mCopying files[m"
