@@ -1,9 +1,11 @@
 ﻿# Load computer identifying symbol
 . $ENV:HOME\Documents\WindowsPowerShell\ComputerSymbol.ps1
 
-function touch {
-  ni -type file $args
-}
+###########################
+# Function Aliases
+###########################
+
+## Navigation
 
 function fd {
   cd "${env:USERPROFILE}"
@@ -20,6 +22,49 @@ function vd {
   }
 
   cd $back
+}
+
+function cpwd {
+#  pwd | head -4 | tail -1 | clip
+  $pwd.path.ToLower() | clip
+}
+
+function ppwd {
+  $clipPath = $(Get-Clipboard -Raw -Format Text -TextFormatType Text)
+  cd $clipPath.Substring(1, $clipPath.Length - 3)
+}
+
+function BackOneDir {
+  $GLOBAL:addToStack = $false
+  if ($GLOBAL:dirStack.Count) {
+    $lastDir = $GLOBAL:dirStack.Pop()
+    cd $lastDir
+  }
+}
+
+## Short-hands
+function touch {
+  ni -type file $args
+}
+
+function ee {
+  ii .
+}
+
+function oct {
+  pushd "$env:LOCALAPPDATA/scoop/apps/octave/4.0.3/bin"
+  ./octave.exe -i --no-gui
+  popd
+}
+
+function def($word) {
+  if ($word -ne $null -and $word -ne '') {
+    $word = "dict://dict.org/d:" + $word
+    $previousColor = $Host.UI.RawUI.ForegroundColor
+    $Host.UI.RawUI.ForegroundColor = "Green"
+    gurl $word 2> $null | sls -pattern '^[0-9][0-9][0-9] ' -notmatch
+    $Host.UI.RawUI.ForegroundColor = $previousColor
+  }
 }
 
 function corn {
@@ -53,52 +98,53 @@ function activateVS {
   }
 }
 
-function ee {
-  ii .
-}
-
-function oct {
-  pushd "$env:LOCALAPPDATA/scoop/apps/octave/4.0.3/bin"
-  ./octave.exe -i --no-gui
-  popd
-}
-
-function cpwd {
-#  pwd | head -4 | tail -1 | clip
-  $pwd.path.ToLower() | clip
-}
-
-function ppwd {
-  $clipPath = $(Get-Clipboard -Raw -Format Text -TextFormatType Text)
-  cd $clipPath.Substring(1, $clipPath.Length - 3)
-}
-
+## Git
 function gsb {
   git status -sb
+}
+
+function gp {
+  git push $args
+}
+
+function gl {
+  git pull $args
+}
+
+function gco {
+  git checkout $args
+}
+
+function gsu {
+  git submodule update --init --recursive $args
 }
 
 function pw {
   $GLOBAL:fullPrompt = $true
 }
 
-function BackOneDir {
-  $GLOBAL:addToStack = $false
-  if ($GLOBAL:dirStack.Count) {
-    $lastDir = $GLOBAL:dirStack.Pop()
-    cd $lastDir
-  }
-}
+###########################
+# Aliases
+###########################
+# Editors
+set-alias gvi "${env:ProgramFiles(x86)}\Vim\vim80\gvim.exe"
+set-alias vi "${env:ProgramFiles(x86)}\Vim\vim80\vim.exe"
+set-alias npd "${env:ProgramFiles(x86)}\Notepad++\notepad++.exe"
+set-alias em "${env:USERPROFILE}\Bin\Emacs\bin\emacs.exe"
 
-function def($word) {
-  if ($word -ne $null -and $word -ne '') {
-    $word = "dict://dict.org/d:" + $word
-    $previousColor = $Host.UI.RawUI.ForegroundColor
-    $Host.UI.RawUI.ForegroundColor = "Green"
-    gurl $word 2> $null | sls -pattern '^[0-9][0-9][0-9] ' -notmatch
-    $Host.UI.RawUI.ForegroundColor = $previousColor
-  }
-}
+# Commands
+set-alias gurl "${env:LOCALAPPDATA}/scoop/shims/curl.exe"
+set-alias whr where.exe
+set-alias tlt "${env:LOCALAPPDATA}/scoop/shims/telnet.exe"
+set-alias l ls
 
+# Functions
+set-alias bd BackOneDir
+set-alias cl activateVS
+
+###########################
+# Prompt
+###########################
 function prompt {
   $separator = ""
   $initial = " $([char]$symbol) "
@@ -106,7 +152,7 @@ function prompt {
     Write-HOst -NoNewline $initial -BackgroundColor "Black"
     Write-Host -NoNewline $separator -ForegroundColor "Black" -BackgroundColor "DarkBlue"
     $location = " " + $(Get-Location).ToString() + " "
-    Write-Host $location.Replace("C:\Users\mflim_000", "~") -NoNewLine -ForegroundColor "Black" -BackgroundColor "DarkBlue"
+    Write-Host $location.Replace($HOME, "~") -NoNewLine -ForegroundColor "Black" -BackgroundColor "DarkBlue"
 
     ($isGit = git rev-parse --is-inside-work-tree) | out-null
     if ($isGit -eq "true") {
@@ -188,23 +234,6 @@ $GLOBAL:gitActive = $false
 
 #Modules
 Import-Module "PowerTab" -ArgumentList "${env:USERPROFILE}\Documents\WindowsPowerShell\PowerTabConfig.xml" 2> $null
-
-### Alias
-
-# Editors
-set-alias gvi "${env:ProgramFiles(x86)}\Vim\vim80\gvim.exe"
-set-alias vi "${env:ProgramFiles(x86)}\Vim\vim80\vim.exe"
-set-alias npd "${env:ProgramFiles(x86)}\Notepad++\notepad++.exe"
-set-alias em "${env:USERPROFILE}\Bin\Emacs\bin\emacs.exe"
-
-# Commands
-set-alias gurl "${env:LOCALAPPDATA}/scoop/shims/curl.exe"
-set-alias whr where.exe
-set-alias tlt "${env:LOCALAPPDATA}/scoop/shims/telnet.exe"
-
-# Functions
-set-alias bd BackOneDir
-set-alias cl activateVS
 
 ###########
 # Examples

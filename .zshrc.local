@@ -7,12 +7,3 @@ export COMPUTER_SYMBOL='§'
 # export COMPUTER_SYMBOL='✝'
 # export COMPUTER_SYMBOL='#'
 # export COMPUTER_SYMBOL='☢'
-
-##
-## Bash on Windows requires this
-##
-
-# alias fdd='cd /mnt/c/Users/mflim_000/'
-# alias mkdir='mkdir -m 755'
-
-# R=/mnt/c/Users/mflim_000
