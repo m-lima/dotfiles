@@ -106,7 +106,7 @@ function prompt {
     Write-HOst -NoNewline $initial -BackgroundColor "Black"
     Write-Host -NoNewline $separator -ForegroundColor "Black" -BackgroundColor "DarkBlue"
     $location = " " + $(Get-Location).ToString() + " "
-    Write-Host $location.Replace("C:\Users\mflim_000", "~") -NoNewLine -ForegroundColor "White" -BackgroundColor "DarkBlue"
+    Write-Host $location.Replace("C:\Users\mflim_000", "~") -NoNewLine -ForegroundColor "Black" -BackgroundColor "DarkBlue"
 
     ($isGit = git rev-parse --is-inside-work-tree) | out-null
     if ($isGit -eq "true") {
