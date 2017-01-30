@@ -11,9 +11,15 @@ function fd {
 
 function vd {
   param(
-    [int]$it = 1
+    [int]$amount = 1
   )
-  cd ..
+
+  while ($amount -gt 0) {
+    $back = "../" + $back
+    $amount--
+  }
+
+  cd $back
 }
 
 function corn {
