@@ -10,6 +10,9 @@ function fd {
 }
 
 function vd {
+  param(
+    [int]$it = 1
+  )
   cd ..
 }
 
