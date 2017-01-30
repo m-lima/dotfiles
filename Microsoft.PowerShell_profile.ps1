@@ -2,6 +2,22 @@
 . $ENV:HOME\Documents\WindowsPowerShell\ComputerSymbol.ps1
 
 ###########################
+# Default alias removal
+###########################
+
+# Replaced by curl
+Remove-Item alias:curl
+
+# Replaced by git pull
+Remove-Item alias:gl -force
+
+# Replaced by git push
+Remove-Item alias:gp -force
+
+# Replaced by git commit -m
+Remove-Item alias:gc -force
+
+###########################
 # Function Aliases
 ###########################
 
@@ -104,19 +120,11 @@ function gsb {
 }
 
 function gp {
-  if ($args.count 2> $null) {
-    git push $args
-  } else {
-    git push
-  }
+  git push $args
 }
 
 function gl {
-  if ($args.count 2> $null) {
-    git pull $args
-  } else {
-    git pull
-  }
+  git pull $args
 }
 
 function gc {
@@ -149,7 +157,6 @@ set-alias npd "${env:ProgramFiles(x86)}\Notepad++\notepad++.exe"
 set-alias em "${env:USERPROFILE}\Bin\Emacs\bin\emacs.exe"
 
 # Commands
-set-alias gurl "${env:LOCALAPPDATA}/scoop/shims/curl.exe"
 set-alias whr where.exe
 set-alias tlt "${env:LOCALAPPDATA}/scoop/shims/telnet.exe"
 set-alias l ls
