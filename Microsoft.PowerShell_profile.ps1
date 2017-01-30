@@ -104,11 +104,27 @@ function gsb {
 }
 
 function gp {
-  git push $args
+  if ($args.count 2> $null) {
+    git push $args
+  } else {
+    git push
+  }
 }
 
 function gl {
-  git pull $args
+  if ($args.count 2> $null) {
+    git pull $args
+  } else {
+    git pull
+  }
+}
+
+function gc {
+  git commit -m $args
+}
+
+function gca {
+  git commit -a -m $args
 }
 
 function gco {
@@ -116,7 +132,7 @@ function gco {
 }
 
 function gsu {
-  git submodule update --init --recursive $args
+  git submodule update --init --recursive
 }
 
 function pw {
