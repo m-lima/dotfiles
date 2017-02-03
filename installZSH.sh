@@ -252,12 +252,12 @@ else
   echo "[31mFAIL[34m][m"
   echo "[34mCreating folder..[m"
 
-  if [ mkdir bin &> /dev/null ]
+  if mkdir bin &> /dev/null
   then
+    echo "[32mDone![m"
+  else
     echo "[31mCould not create bin folder![m"
     checkContinue
-  else
-    echo "[32mDone![m"
   fi
 fi
 
