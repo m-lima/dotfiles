@@ -151,12 +151,22 @@ else
   echo "[31mFAIL[34m][m"
   echo "[34mInstalling Oh My ZSH..[m"
 
-  if [ $(install "Oh My ZSH" "curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh") ]
+  if [ $(install "Oh My ZSH" "wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh") ]
   then
     echo "[31mCould not install Oh My ZSH![m"
     checkContinue
   else
-    echo "[32mDone![m"
+    chmod 755 install.sh
+
+    if ./install.sh
+    then
+      echo "[32mDone![m"
+    else
+      echo "[31mCould not install Oh My ZSH![m"
+      checkContinue
+    fi
+
+    rm install.sh
   fi
 fi
 
