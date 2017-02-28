@@ -114,6 +114,17 @@ function activateVS {
   }
 }
 
+function activateGO {
+  Remove-Item alias:go
+  $env:GOROOT = "${env:LOCALAPPDATA}\scoop\apps\go\current"
+  $env:GOPATH = "${env:USERPROFILE}\Code\Go"
+  $env:PATH = "${env:PATH};${env:GOROOT}\bin"
+  
+  if ($args.count 2> $null) {
+    go $args
+  }
+}
+
 ## Git
 function gsb {
   git status -sb
@@ -164,6 +175,7 @@ set-alias l ls
 # Functions
 set-alias bd BackOneDir
 set-alias cl activateVS
+set-alias go activateGO
 
 ###########################
 # Prompt
