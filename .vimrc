@@ -135,13 +135,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-" Dragging Visuals
-vmap <expr> <LEFT> DVB_Drag('left')
-vmap <expr> <RIGHT> DVB_Drag('right')
-vmap <expr> <UP> DVB_Drag('up')
-vmap <expr> <DOWN> DVB_Drag('down')
-vmap <expr> D DVB_Duplicate()
-
 " NeoComplete
 if has("lua")
   inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
