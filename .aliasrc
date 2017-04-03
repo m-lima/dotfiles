@@ -1,5 +1,5 @@
 alias ccat='colorize'
-alias bd='popd > /dev/null'
+#alias bd='popd > /dev/null'
 alias fd='cd ~'
 alias mud='telnet www.ateraan.com 4002'
 alias gsu='git submodule update --init --recursive'
@@ -32,6 +32,21 @@ function def {
       echo -e "\e[31mNo definition found\e[m"
     fi
   fi
+}
+
+function bd {
+  if [[ "$1" =~ '^[0-9]+$' ]]
+  then
+    local it=$1
+  else
+    local it=1
+  fi
+
+  until [ $it -eq 0 ]
+  do
+    popd > /dev/null
+    (( it-- ))
+  done
 }
 
 function vd {
