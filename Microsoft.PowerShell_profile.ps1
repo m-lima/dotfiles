@@ -50,9 +50,13 @@ function ppwd {
   cd $clipPath.Substring(1, $clipPath.Length - 3)
 }
 
-function BackOneDir {
+function bd {
+  param(
+    [int]$amount = 1
+  )
+
   $GLOBAL:addToStack = $false
-  if ($GLOBAL:dirStack.Count) {
+  while ($amout -gt 0 && $GLOBAL:dirStack.Count) {
     $lastDir = $GLOBAL:dirStack.Pop()
     cd $lastDir
   }
@@ -173,7 +177,7 @@ set-alias tlt "${env:LOCALAPPDATA}/scoop/shims/telnet.exe"
 set-alias l ls
 
 # Functions
-set-alias bd BackOneDir
+# set-alias bd BackOneDir
 set-alias cl activateVS
 set-alias go activateGO
 
