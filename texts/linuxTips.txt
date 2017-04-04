@@ -1,0 +1,83 @@
+###
+# Sudo tee
+echo <string> | sudo tee <target>
+
+
+###
+# Automatic login
+
+#~/.netrc registers server+user+password
+#like so:
+
+machine github.com
+login <user>
+password <password>
+
+#or, for GitHub
+
+machine github.com
+login <token>
+
+
+###
+# Services
+
+#Using upstart create a conf file under /etc/init/<service>.conf
+#like so:
+description "A webhook monitoring server for GitHub"
+author "Marcelo Lima"
+
+start on filesystem or runlevel [2345]
+stop on shutdown
+
+script
+
+    echo $$ > /var/run/GitWebhook.pid
+    exec sudo -u fly /home/fly/bin/GitWebhook/GitWebhook >> /var/log/GitWebhook.log 2>&1
+
+end script
+
+pre-start script
+    echo -e "\e[32m[`date`] UpStart is starting GitWebhook\e[m" >> /var/log/GitWebhook.log
+end script
+
+pre-stop script
+    rm /var/run/nodetest.pid
+    echo -e "\e[32m[`date`] UpStart is stopping GitWebhook\e[m" >> /var/log/GitWebhook.log
+end script
+
+#Start end stop with
+
+sudo service <service> start
+
+
+###
+# Attach to log file
+tail -f <file>
+
+
+###
+# SQLite3
+List tables:
+	select name from sqlite_master where type='table';
+List columns:
+	pragma table_info(table);
+
+
+###
+# Read line by line
+while IFS='' read -r line || [[ -n "$line" ]]; do echo $line; done < exposed.txt
+
+###
+# Execute upon list
+for line in $(<COMMAND>); do <ACTION>; done
+
+###
+# Run in background
+&>	# Redirect both stdout and stderr to ...
+&!	# Dettach and unparent
+
+###
+# Linux Distro Version
+lsb_release -a
+
