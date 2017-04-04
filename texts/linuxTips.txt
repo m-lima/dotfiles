@@ -81,3 +81,6 @@ for line in $(<COMMAND>); do <ACTION>; done
 # Linux Distro Version
 lsb_release -a
 
+###
+# SSH Tunne;
+ssh -N -C -v -L10000:ddyt-cicd.dataplan.telenordigital.com:8080 ubuntu@bastion-development.dataplan.telenordigital.com
