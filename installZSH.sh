@@ -10,6 +10,7 @@
 # [ ] Ask if force regenerate tmux-powerlinerc
 # [O] Ask if force regenerate tmux.conf.local
 # [ ] Add roll to TMUX powerline
+# [ ] Show no definition found on powershell
 
 function fullPath {
   TARGET_FILE=$1

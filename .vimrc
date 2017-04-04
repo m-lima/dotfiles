@@ -20,8 +20,15 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kana/vim-textobj-user'
-" Plugin 'justmao945/vim-clang'
+
+" Language
 " Plugin 'Valloric/YouCompleteMe'
+if has("lua")
+  Plugin 'shougo/neocomplete'
+endif
+Plugin 'fatih/vim-go'
+Plugin 'lambdatoast/elm.vim'
+" Plugin 'justmao945/vim-clang'
 
 " Compose
 " Plugin 'szw/vim-tags'
@@ -60,6 +67,15 @@ set noshowmode
 " if has('win32')
 " let g:fugitive_git_executable = 'C:\Users\mflim_000\AppData\Local\GitHub\Portab~1\cmd\git.exe'
 " endif
+
+" Go-Vim
+let g:go_fmt_fail_silently = 1
+
+" NeoComplete
+if has("lua")
+  let g:neocomplete#enable_at_startup = 1
+  let g:neocomplete#enable_smart_case = 1
+endif
 
 """"""""""""""""""""
 " Base config
@@ -119,12 +135,11 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-" Dragging Visuals
-vmap <expr> <LEFT> DVB_Drag('left')
-vmap <expr> <RIGHT> DVB_Drag('right')
-vmap <expr> <UP> DVB_Drag('up')
-vmap <expr> <DOWN> DVB_Drag('down')
-vmap <expr> D DVB_Duplicate()
+" NeoComplete
+if has("lua")
+  inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+endif
 
 """"""""""""""""""""
 " Tips

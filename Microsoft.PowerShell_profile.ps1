@@ -50,9 +50,13 @@ function ppwd {
   cd $clipPath.Substring(1, $clipPath.Length - 3)
 }
 
-function BackOneDir {
+function bd {
+  param(
+    [int]$amount = 1
+  )
+
   $GLOBAL:addToStack = $false
-  if ($GLOBAL:dirStack.Count) {
+  while ($amout -gt 0 && $GLOBAL:dirStack.Count) {
     $lastDir = $GLOBAL:dirStack.Pop()
     cd $lastDir
   }
@@ -114,6 +118,17 @@ function activateVS {
   }
 }
 
+function activateGO {
+  Remove-Item alias:go
+  $env:GOROOT = "${env:LOCALAPPDATA}\scoop\apps\go\current"
+  $env:GOPATH = "${env:USERPROFILE}\Code\Go"
+  $env:PATH = "${env:PATH};${env:GOROOT}\bin"
+  
+  if ($args.count 2> $null) {
+    go $args
+  }
+}
+
 ## Git
 function gsb {
   git status -sb
@@ -162,8 +177,9 @@ set-alias tlt "${env:LOCALAPPDATA}/scoop/shims/telnet.exe"
 set-alias l ls
 
 # Functions
-set-alias bd BackOneDir
+# set-alias bd BackOneDir
 set-alias cl activateVS
+set-alias go activateGO
 
 ###########################
 # Prompt
