@@ -71,9 +71,9 @@ function ee {
   ii .
 }
 
-function oct {
-  pushd "$env:LOCALAPPDATA/scoop/apps/octave/4.0.3/bin"
-  ./octave.exe -i --no-gui
+function sci {
+  pushd "$env:ProgramFiles/scilab-5.5.0/bin"
+  ./scilex.exe -nw
   popd
 }
 
@@ -98,7 +98,7 @@ function corn {
     [switch]$trace
   )
 
-  gurl $(if($trace) {'--trace-ascii'}) $(if($trace) {'-'}) -u ${user}:${pass} -d $('{ \"jsonrpc\": \"2.0\", \"method\": \"' + ${action} + '\", \"params\": { ' + ${params} + ' }, \"id\": 3 }') http://${url}:${port}
+  curl $(if($trace) {'--trace-ascii'}) $(if($trace) {'-'}) -u ${user}:${pass} -d $('{ \"jsonrpc\": \"2.0\", \"method\": \"' + ${action} + '\", \"params\": { ' + ${params} + ' }, \"id\": 3 }') http://${url}:${port}
 }
 
 function activateVS {
@@ -146,7 +146,7 @@ function gc {
   git commit -m $args
 }
 
-function gca {
+function gcam {
   git commit -a -m $args
 }
 
