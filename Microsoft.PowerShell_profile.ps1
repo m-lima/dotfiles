@@ -56,9 +56,10 @@ function bd {
   )
 
   $GLOBAL:addToStack = $false
-  while ($amout -gt 0 && $GLOBAL:dirStack.Count) {
+  while ($amount -gt 0 -and $GLOBAL:dirStack.Count) {
     $lastDir = $GLOBAL:dirStack.Pop()
     cd $lastDir
+    $amount--
   }
 }
 
