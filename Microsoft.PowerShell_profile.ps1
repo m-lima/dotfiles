@@ -124,7 +124,7 @@ function activateGO {
   $env:GOROOT = "${env:LOCALAPPDATA}\scoop\apps\go\current"
   $env:GOPATH = "${env:USERPROFILE}\Code\Go"
   $env:PATH = "${env:PATH};${env:GOROOT}\bin"
-  
+
   if ($args.count 2> $null) {
     go $args
   }
