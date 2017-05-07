@@ -27,7 +27,7 @@ if has("lua")
   Plugin 'shougo/neocomplete'
 endif
 Plugin 'fatih/vim-go'
-Plugin 'lambdatoast/elm.vim'
+" Plugin 'lambdatoast/elm.vim'
 " Plugin 'justmao945/vim-clang'
 
 " Compose
