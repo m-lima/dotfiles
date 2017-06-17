@@ -1,5 +1,5 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+set nocompatible
+filetype off
 
 set encoding=utf-8
 
@@ -90,6 +90,7 @@ source ~/.vimrc.base
 highlight OverLength ctermbg=darkred guibg=#A00000
 let g:HighlightingColumn=0
 
+set wildmenu
 
 """"""""""""""""""""
 " Functions
