@@ -65,3 +65,13 @@ function vd {
 
   cd $BACK
 }
+
+function rg {
+  tempfile="/tmp/pwd-from-ranger"
+  ranger --choosedir=$tempfile $argv
+  rangerpwd=$(cat $tempfile)
+  if [[ "$PWD" != $rangerpwd ]]
+  then
+    cd $rangerpwd
+  fi
+}
