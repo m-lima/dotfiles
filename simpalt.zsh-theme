@@ -186,11 +186,11 @@ build_prompt() {
 }
 
 PROMPT='%{%f%b%k%}$(build_prompt) '
-export LPWD="$TMPDIR/lpwd/$RANDOM-$RANDOM-$RANDOM-$RANDOM"
+export LPWD="/tmp/lpwd/$RANDOM-$RANDOM-$RANDOM-$RANDOM"
 
 pw() {
-  if ! [ -d "$TMPDIR/lpwd" ]; then
-    mkdir $TMPDIR/lpwd
+  if ! [ -d "/tmp/lpwd" ]; then
+    mkdir /tmp/lpwd
   fi
 
   if ! [ -f "$LPWD" ]; then
