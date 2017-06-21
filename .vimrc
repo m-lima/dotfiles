@@ -89,6 +89,7 @@ source ~/.vimrc.base
 
 highlight OverLength ctermbg=darkred guibg=#A00000
 let g:HighlightingColumn=0
+hi Search cterm=NONE ctermfg=black ctermbg=yellow
 
 set wildmenu
 

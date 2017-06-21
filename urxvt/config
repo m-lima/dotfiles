@@ -38,14 +38,19 @@ URxvt.pointerBlank:         true
 
 ! Color general
 URxvt.depth:                32
-URxvt.transparent:          true
-URxvt.shading:              20
-*background:                #002b36
 *foreground:                #657b83
 *fadeColor:                 #002b36
 *cursorColor:               #93a1a1
 *pointerColorBackground:    #586e75
 *pointerColorForeground:    #93a1a1
+
+! OpenGL
+URxvt.transparent:          false
+*background:                [80]#000000
+
+! Fake transparency
+!URxvt.shading:              20
+!*background:                #002b36
 
 !!Source http://github.com/altercation/solarized
 
