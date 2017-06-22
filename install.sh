@@ -323,10 +323,10 @@ then
 
         if chsh -s $(which zsh)
         then
+          echo "[32mDone![m"
+        else
           echo "[31mCould not set the main shell![m"
           checkContinue
-        else
-          echo "[32mDone![m"
         fi
         ;;
     esac
