@@ -15,8 +15,8 @@ else
     alias cpwd='pwd |  xclip'
     alias ppwd='cd $(xclip -o)'
   else
-    alias cpwd='pwd > /tmp/$USER_pwd_buffer'
-    alias ppwd='cd $(cat /tmp/$USER_pwd_buffer) 2> /dev/null'
+    alias cpwd='pwd > /tmp/pwd_buffer_$USER'
+    alias ppwd='cd $(cat /tmp/pwd_buffer_$USER) 2> /dev/null'
   fi
 fi
 
