@@ -240,6 +240,7 @@ fi
 ########################################
 # Suggest pacaur
 if [[ "$PACKAGE_INSTALL" == "sudo pacman --noconfirm -S" ]] && ! installPacaur
+then
   echo "[31mCould not install pacaur![m"
   read -p "Continue using pacman? [Y/n] " CONTINUE
   case $CONTINUE in
@@ -247,7 +248,7 @@ if [[ "$PACKAGE_INSTALL" == "sudo pacman --noconfirm -S" ]] && ! installPacaur
       exit
       ;;
   esac
-then
+fi
 
 ########################################
 # Get location of files and cd to HOME
