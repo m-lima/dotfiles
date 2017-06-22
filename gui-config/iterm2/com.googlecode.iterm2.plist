@@ -1176,19 +1176,19 @@
 	<key>NSWindow Frame ProfilesPanel</key>
 	<string>532 567 735 382 0 0 1680 1027 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>504 493 620 392 0 0 1680 1050 </string>
+	<string>504 477 620 392 0 0 1680 1028 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 94 599 501 0 0 1920 1057 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>832 267 796 473 0 0 1680 1050 </string>
+	<string>121 1903 918 381 -639 1050 2560 1440 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 374 1628 654 0 0 1680 1028 </string>
+	<string>0 396 1628 654 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>710 194 815 677 0 0 1680 1028 </string>
+	<string>173 373 815 677 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>0 5 815 677 0 0 1920 1057 </string>
+	<string>0 4 815 677 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>150 124 815 677 0 0 1680 1027 </string>
+	<string>70 1247 815 677 -122 1050 1920 1200 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
 	<string>-1450 678 830 677 -2560 662 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
@@ -1427,13 +1427,13 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.15170273184776306</real>
+				<real>0.15037345886230469</real>
 				<key>Color Space</key>
 				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.11783610284328461</real>
+				<real>0.11765088140964508</real>
 				<key>Red Component</key>
-				<real>0.0</real>
+				<real>0.0081323310732841492</real>
 			</dict>
 			<key>Background Image Is Tiled</key>
 			<false/>
@@ -3332,7 +3332,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-03-23T08:25:55Z</date>
+	<date>2017-06-22T03:16:28Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>ShowBookmarkName</key>
@@ -3392,7 +3392,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.14</string>
+	<string>3.0.15</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>6</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
