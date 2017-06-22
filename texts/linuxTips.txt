@@ -1,10 +1,12 @@
-###
+##################################################
 # Sudo tee
+##################################################
 echo <string> | sudo tee <target>
 
 
-###
+##################################################
 # Automatic login
+##################################################
 
 #~/.netrc registers server+user+password
 #like so:
@@ -19,8 +21,9 @@ machine github.com
 login <token>
 
 
-###
+##################################################
 # Services
+##################################################
 
 #Using upstart create a conf file under /etc/init/<service>.conf
 #like so:
@@ -33,7 +36,7 @@ stop on shutdown
 script
 
     echo $$ > /var/run/GitWebhook.pid
-    exec sudo -u fly /home/fly/bin/GitWebhook/GitWebhook >> /var/log/GitWebhook.log 2>&1
+    exec [COMMAND] >> /var/log/GitWebhook.log 2>&1
 
 end script
 
@@ -42,7 +45,7 @@ pre-start script
 end script
 
 pre-stop script
-    rm /var/run/nodetest.pid
+    rm /var/run/GitWebhook.pid
     echo -e "\e[32m[`date`] UpStart is stopping GitWebhook\e[m" >> /var/log/GitWebhook.log
 end script
 
@@ -51,36 +54,61 @@ end script
 sudo service <service> start
 
 
-###
+##################################################
 # Attach to log file
+##################################################
 tail -f <file>
 
 
-###
+##################################################
 # SQLite3
+##################################################
 List tables:
 	select name from sqlite_master where type='table';
 List columns:
 	pragma table_info(table);
 
 
-###
+##################################################
 # Read line by line
+##################################################
 while IFS='' read -r line || [[ -n "$line" ]]; do echo $line; done < exposed.txt
 
-###
+##################################################
 # Execute upon list
+##################################################
 for line in $(<COMMAND>); do <ACTION>; done
 
-###
+##################################################
 # Run in background
+##################################################
 &>	# Redirect both stdout and stderr to ...
 &!	# Dettach and unparent
 
-###
+##################################################
 # Linux Distro Version
+##################################################
 lsb_release -a
 
-###
-# SSH Tunne;
-ssh -N -C -v -L10000:ddyt-cicd.dataplan.telenordigital.com:8080 ubuntu@bastion-development.dataplan.telenordigital.com
+##################################################
+# SSH Tunnel
+##################################################
+ssh -N -C -v -L<WHATEVER_PORT>:<TARGET_HOST>:<TARGET_PORT> <TUNNEL_USER>@<TUNNEL_HOST>
+
+# Then access localhost:<WHATEVER_PORT> to access <TARGET_HOST>:<TARGET_PORT> through <TUNNEL_HOST>
+
+##################################################
+# SSH Reverse Tunnel
+##################################################
+ssh -f -N -T '-R*:<PUBLIC_PORT_FOR_TUNNEL>:localhost:<LOCAL_PORT>' -p <PUBLIC_PORT> <PUBLIC_USER>@<PUBLIC_HOST>
+
+# Note that to use *, add to /etc/ssh/sshd_config:
+GatewayPorts yes
+
+# If it is pnly between two computers use:
+ssh -f -N -T '-R<WHATEVER_PORT>:localhost:<LOCAL_PORT>' -p <PUBLIC_PORT> <PUBLIC_USER>@<PUBLIC_HOST>
+
+# -f Run in background
+# -N Do not run remote commands (better performance)
+# -T Disabe pseudoTTY
+

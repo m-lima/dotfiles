@@ -380,5 +380,9 @@ fi
 
 if installFile c zsh .zshrc.local
 then
+  if [[ "$PACKAGE_INSTALL" == "pacaur --noedit --noconfirm -S" ]]
+  then
+    echo 'alias pc=pacaur' >> .zshrc.local
+  fi
   vim .zshrc.local
 fi
