@@ -99,7 +99,7 @@ function checkInstall {
 
 function checkInstallDefault {
   checkString='[ $(command -v '"$1"') ]'
-  checkInstall $1 "PACKAGE_INSTALL $1" "$checkString"
+  checkInstall $1 "$PACKAGE_INSTALL $1" "$checkString"
 }
 
 ################################################################################
@@ -170,6 +170,11 @@ function installPacaur {
       return 0
       ;;
   esac
+
+  if ! sudo pacman -S base-devel fakeroot jshon expac
+  then
+    return 1
+  fi
 
   if ! checkInstallDefault git
   then
