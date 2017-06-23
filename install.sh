@@ -171,30 +171,25 @@ function installPacaur {
       ;;
   esac
 
-  if ! sudo pacman -S base-devel fakeroot jshon expac
-  then
-    return 1
-  fi
-
   if ! checkInstallDefault git
   then
     return 1
   fi
-
   GIT_INSTALLED=1
 
-  cd /tmp
-  if ! git clone https://aur.archlinux.org/cower.git
+  sudo pacman -S base-devel fakeroot jshon expac yajl
+
+  rm -rf /tmp/dotfile_pacaur_install 2> /dev/null
+  mkdir /tmp/dotfile_pacaur_install
+
+  cd /tmp/dotfile_pacaur_install
+  if git clone https://aur.archlinux.org/cower.git
   then
-    return 1
-  fi
-  cd cower
-  if ! makepkg && sudo pacman --noconfirm -U *.tar.xz
-  then
-    return 1
+    cd cower
+    makepkg && sudo pacman --noconfirm -U *.tar.xz
   fi
 
-  cd /tmp
+  cd /tmp/dotfile_pacaur_install
   if ! git clone https://aur.archlinux.org/pacaur.git
   then
     return 1
