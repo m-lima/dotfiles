@@ -284,7 +284,7 @@ checkInstall "Vundle" 'git clone https://github.com/VundleVim/Vundle.vim.git "$H
 if checkInstallDefault tmux
 then
   echo -n "[34mChecking TMUX Powerline.. [[m"
-  if [ -f .tmux-powerlinerc ]
+  if [ -f "$HOME"/.tmux-powerlinerc ]
   then
     echo "[32mOK[34m][m"
     FORCE=false
