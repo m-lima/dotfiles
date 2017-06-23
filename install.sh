@@ -110,17 +110,12 @@ function checkInstallDefault {
 # arg1: Either "s" or "c" for symlink or copy, respectively
 # arg2: The target folder location
 # arg3: The source file
-# [arg4]: Installation path. Should end with /
+# [arg4]: Installation path.
 # return: Failure if cancelled, or status code of install operation
 
 function installFile {
   echo "[34mInstalling $3..[m"
-  if [ -z "$4" ]
-  then
-    INSTALL_PATH="./"
-  else
-    INSTALL_PATH="$4"
-  fi
+  INSTALL_PATH="$HOME"/"$4"/.
 
   local OVERWRITE=false
 
@@ -212,6 +207,10 @@ function installPacaur {
 ################################################################################
 
 ########################################
+# Get location of files
+BASE_DIR=$(dirname $(fullPath $0))
+
+########################################
 # Check sudo
 if [ ! $(command -v sudo) ]
 then
@@ -262,9 +261,6 @@ then
   esac
 fi
 
-########################################
-# Get location of files and cd to HOME
-BASE_DIR=$(dirname $(fullPath $0))
 cd $HOME
 
 ########################################
@@ -281,7 +277,7 @@ checkInstallDefault vim
 
 ########################################
 # Install Vundle
-checkInstall "Vundle" 'git clone https://github.com/VundleVim/Vundle.vim.git .vim/bundle/Vundle.vim' '[ -d .vim/bundle/Vundle.vim ]'
+checkInstall "Vundle" 'git clone https://github.com/VundleVim/Vundle.vim.git "$HOME"/.vim/bundle/Vundle.vim' '[ -d "$HOME"/.vim/bundle/Vundle.vim ]'
 
 ########################################
 # Install tmux
@@ -347,19 +343,19 @@ fi
 
 ########################################
 # Install Oh My ZSH
-checkInstall "Oh My ZSH" 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"' '[ -d .oh-my-zsh ]'
+checkInstall "Oh My ZSH" 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"' '[ -d "$HOME"/.oh-my-zsh ]'
 
 ########################################
 # Create ~/bin
 echo -n "[34mChecking bin folder.. [[m"
-if [ -d bin ]
+if [ -d "$HOME"/bin ]
 then
   echo "[32mOK[34m][m"
 else
   echo "[31mFAIL[34m][m"
   echo "[34mCreating folder..[m"
 
-  if mkdir bin &> /dev/null
+  if mkdir "$HOME"/bin &> /dev/null
   then
     echo "[32mDone![m"
   else
@@ -375,9 +371,9 @@ installFile s zsh .aliasrc
 installFile s zsh .zshrc
 installFile s vim .vimrc
 installFile s vim .vimrc.base
-installFile s scripts tmx bin/
+installFile s scripts tmx bin
 installFile s tmux .tmux.conf
-installFile s zsh simpalt.zsh-theme .oh-my-zsh/themes/
+installFile s zsh simpalt.zsh-theme .oh-my-zsh/themes
 
 ########################################
 # Copy files
@@ -385,16 +381,16 @@ echo "[34mCopying files[m"
 
 if installFile c tmux .tmux.conf.local
 then
-  echo "set-option -g default-shell $(which zsh)" >> .tmux.conf.local
-  echo "set-option -g status-left \"#($BASE_DIR/tmux/tmux-powerline/powerline.sh left)\"" >> .tmux.conf.local
-  echo "set-option -g status-right \"#($BASE_DIR/tmux/tmux-powerline/powerline.sh right)\"" >> .tmux.conf.local
+  echo "set-option -g default-shell $(which zsh)" >> "$HOME"/.tmux.conf.local
+  echo "set-option -g status-left \"#($BASE_DIR/tmux/tmux-powerline/powerline.sh left)\"" >> "$HOME"/.tmux.conf.local
+  echo "set-option -g status-right \"#($BASE_DIR/tmux/tmux-powerline/powerline.sh right)\"" >> "$HOME"/.tmux.conf.local
 fi
 
 if installFile c zsh .zshrc.local
 then
   if [[ "$PACKAGE_INSTALL" == "pacaur --noedit --noconfirm -S" ]]
   then
-    echo 'alias pc=pacaur' >> .zshrc.local
+    echo 'alias pc=pacaur' >> "$HOME"/.zshrc.local
   fi
-  vim .zshrc.local
+  vim "$HOME"/.zshrc.local
 fi
