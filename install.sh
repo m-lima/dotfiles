@@ -184,6 +184,17 @@ function installPacaur {
   GIT_INSTALLED=1
 
   cd /tmp
+  if ! git clone https://aur.archlinux.org/cower.git
+  then
+    return 1
+  fi
+  cd cower
+  if ! makepkg && sudo pacman --noconfirm -U *.tar.xz
+  then
+    return 1
+  fi
+
+  cd /tmp
   if ! git clone https://aur.archlinux.org/pacaur.git
   then
     return 1
