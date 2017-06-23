@@ -115,7 +115,12 @@ function checkInstallDefault {
 
 function installFile {
   echo "[34mInstalling $3..[m"
-  INSTALL_PATH="$HOME"/"$4"/
+  if [ -z "$4" ]
+  then
+    INSTALL_PATH="$HOME"/
+  else
+    INSTALL_PATH="$HOME"/"$4"/
+  fi
 
   local OVERWRITE=false
 
