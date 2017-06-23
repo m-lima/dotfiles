@@ -186,6 +186,7 @@ function installPacaur {
   if git clone https://aur.archlinux.org/cower.git
   then
     cd cower
+    gpg --recv-keys --keyserver hkp://pgp.mit.edu 1EB2638FF56C0C53
     makepkg && sudo pacman --noconfirm -U *.tar.xz
   fi
 
