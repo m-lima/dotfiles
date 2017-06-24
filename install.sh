@@ -337,6 +337,7 @@ then
         if chsh -s $(which zsh)
         then
           echo "[32mDone![m"
+          export SHELL=zsh
         else
           echo "[31mCould not set the main shell![m"
           checkContinue
@@ -371,7 +372,7 @@ fi
 
 ########################################
 # Make symlinks
-echo "[34mMaking symlinks[m"
+echo "[34mMaking symlinks..[m"
 installFile s zsh .aliasrc
 installFile s zsh .zshrc
 installFile s vim .vimrc
@@ -382,7 +383,7 @@ installFile s zsh simpalt.zsh-theme .oh-my-zsh/themes
 
 ########################################
 # Copy files
-echo "[34mCopying files[m"
+echo "[34mCopying files..[m"
 
 if installFile c tmux .tmux.conf.local
 then
@@ -399,3 +400,14 @@ then
   fi
   vim "$HOME"/.zshrc.local
 fi
+
+########################################
+# Setup locale
+echo "[34mDownloading font..[m"
+read -p "Download DejaVu Sans for Powerline? [y/N]" INPUT
+case $INPUT in
+  [Yy] )
+    cd "$HOME"
+    curl -s -L 'https://raw.githubusercontent.com/powerline/fonts/master/DejaVuSansMono/DejaVu Sans Mono for Powerline.ttf' -o "$HOME/DejaVu Sans Mono for Powerline.ttf" && echo "[32mFont saved as $HOME/DejaVu Sans Mono for Powerline.ttf[m"
+    ;;
+esac
