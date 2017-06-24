@@ -177,7 +177,7 @@ function installPacaur {
   fi
   GIT_INSTALLED=1
 
-  sudo pacman -S base-devel fakeroot jshon expac yajl
+  $SU_DO pacman -S base-devel fakeroot jshon expac yajl
 
   rm -rf /tmp/dotfile_pacaur_install 2> /dev/null
   mkdir /tmp/dotfile_pacaur_install
@@ -187,7 +187,7 @@ function installPacaur {
   then
     cd cower
     gpg --recv-keys --keyserver hkp://pgp.mit.edu 1EB2638FF56C0C53
-    makepkg && sudo pacman --noconfirm -U *.tar.xz
+    makepkg && $SU_DO pacman --noconfirm -U *.tar.xz
   fi
 
   cd /tmp/dotfile_pacaur_install
@@ -197,7 +197,7 @@ function installPacaur {
   fi
 
   cd pacaur
-  if makepkg && sudo pacman --noconfirm -U *.tar.xz
+  if makepkg && $SU_DO pacman --noconfirm -U *.tar.xz
   then
     echo "[34mUsing pacaur[m"
     PACKAGE_INSTALL="pacaur --noedit --noconfirm -S"
@@ -212,17 +212,70 @@ function installPacaur {
 ################################################################################
 
 ########################################
-# Get location of files
+# Variables
 BASE_DIR=$(dirname $(fullPath $0))
+SU_DO="sudo"
+SYS_TYPE=""
 
 ########################################
 # Check sudo
-if [ ! $(command -v sudo) ]
+case `id -u` in
+  0) SU_DO="";;
+  *)
+    if [ ! $(command -v sudo) ]
+    then
+      echo "[31msudo not found[m"
+      echo "Please install it as super user before continuing"
+      exit
+    fi
+    SU_DO="sudo"
+    ;;
+esac
+
+########################################
+# Check OS
+echo -n "[34mChecking OS.. [[m"
+case `uname -v` in
+  *Ubuntu*) SYS_TYPE="Ubuntu";;
+  *FreeBSD*) SYS_TYPE="FreeBSD";;
+  *Darwin*) SYS_TYPE="Darwin";;
+  *Microsoft*) SYS_TYPE="Bash on Windows";;
+  *)
+    case `uname -v` in
+      *ARCH*) SYS_TYPE="Arch";;
+      *) SYS_TYPE="";;
+    esac
+esac
+
+if [ -z "$SYS_TYPE" ]
 then
-  echo "[31msudo not found[m"
-  echo "Please install it as super user before continuing"
-  exit
+  echo "[31mFAIL[34m][m"
+  SEL_SYS_TYPE=Y
+else
+  echo "[32m$SYS_TYPE[34m][m"
+  read -p "Choose a different OS? [y/N] " SEL_SYS_TYPE
 fi
+
+case $CONTINUE in
+  [Yy] )
+    echo "[33mSelect your OS[m"
+    echo "[[33mU[m]buntu"
+    echo "[[33mF[m]ree BSD"
+    echo "[[33mD[m]arwin"
+    echo "[[33mB[m]ash on Windows"
+    echo "[[33mA[m]rch"
+    echo "[[33mE[m]xit"
+
+    read -p "Choice: " INPUT
+    case "$INPUT" in
+      [Uu]) SYS_TYPE="Ubuntu";;
+      [Ff]) SYS_TYPE="FreeBSD";;
+      [Dd]) SYS_TYPE="Darwin";;
+      [Bb]) SYS_TYPE="Bash on Windows";;
+      [Aa]) SYS_TYPE="Arch";;
+      *) exit;;
+    ;;
+esac
 
 ########################################
 # Determine package manager
@@ -230,7 +283,22 @@ echo -n "[34mChecking package manager.. [[m"
 if [ $(command -v apt-get) ]
 then
   echo "[32mapt-get[34m][m"
-  PACKAGE_INSTALL="sudo apt-get -y install"
+  if [ ! "$SYS_TYPE" = "Ubuntu" ] && [ ! "$SYS_TYPE" = "Bash on Windows" ]
+  then
+    echo "[31mOS mismatch![m"
+    checkContinue
+  fi
+  PACKAGE_INSTALL="$SU_DO apt-get -y install"
+
+elif [ $(command -v pkg) ]
+then
+  echo "[32mpkg[34m][m"
+  PACKAGE_INSTALL="$SU_DO pkg install -y"
+
+elif [ $(command -v brew) ]
+then
+  echo "[32mbrew[34m][m"
+  PACKAGE_INSTALL="brew install"
 
 elif [ $(command -v pacaur) ]
 then
@@ -240,12 +308,7 @@ then
 elif [ $(command -v pacman) ]
 then
   echo "[32mpacman[34m][m"
-  PACKAGE_INSTALL="sudo pacman --noconfirm -S"
-
-elif [ $(command -v brew) ]
-then
-  echo "[32mbrew[34m][m"
-  PACKAGE_INSTALL="brew install"
+  PACKAGE_INSTALL="$SU_DO pacman --noconfirm -S"
 
 else
   echo "[31mFAIL[34m][m"
@@ -255,7 +318,7 @@ fi
 
 ########################################
 # Suggest pacaur
-if [[ "$PACKAGE_INSTALL" == "sudo pacman --noconfirm -S" ]] && ! installPacaur
+if [[ "$PACKAGE_INSTALL" == "$SU_DO pacman --noconfirm -S" ]] && ! installPacaur
 then
   echo "[31mCould not install pacaur![m"
   read -p "Continue using pacman? [Y/n] " CONTINUE
