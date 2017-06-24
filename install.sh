@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # TODO
 # [O] git submodule
 # [O] Generate tmux-powerlinerc
@@ -47,7 +45,8 @@ function checkContinue {
     echo "[31m$1[m"
   fi
 
-  read -p "Continue? [y/N] " INPUT
+  echo -n "Continue? [y/N] "
+  read INPUT
   case $INPUT in
     [Yy] )
       return 0;
@@ -73,7 +72,8 @@ function checkInstall {
   else
     echo "[31mFAIL[34m][m"
 
-    read -p "Install $1? [Y/n] " INPUT
+    echo -n "Install $1? [Y/n] "
+    read INPUT
     case $INPUT in
       [Nn] )
         checkContinue
@@ -130,7 +130,8 @@ function installFile {
 
   if [ -f "$INSTALL_PATH$3" ]
   then
-    read -p "$INSTALL_PATH$3 already exists. Overwrite? [y/N] " INPUT
+    echo -n "$INSTALL_PATH$3 already exists. Overwrite? [y/N] "
+    read INPUT
     case $INPUT in
       [Yy] )
         rm "$INSTALL_PATH$3"
@@ -168,7 +169,8 @@ function installFile {
 # return: Failure if cancelled, or status code of install operation
 
 function installPacaur {
-  read -p "Install pacaur? [Y/n] " INPUT
+  echo -n "Install pacaur? [Y/n] "
+  read INPUT
   case $INPUT in
     [Nn] )
       return 0
@@ -257,7 +259,8 @@ then
   SEL_SYS_TYPE=Y
 else
   echo "[32m$SYS_TYPE[34m][m"
-  read -p "Choose a different OS? [y/N] " SEL_SYS_TYPE
+  echo -n "Choose a different OS? [y/N] "
+  read SEL_SYS_TYPE
 fi
 
 case $SEL_SYS_TYPE in
@@ -270,7 +273,8 @@ case $SEL_SYS_TYPE in
     echo "[[33mA[m]rch"
     echo "[[33mE[m]xit"
 
-    read -p "Choice: " INPUT
+    echo -n "Choice: "
+    read INPUT
     case "$INPUT" in
       [Uu]) SYS_TYPE="Ubuntu";;
       [Ff]) SYS_TYPE="FreeBSD";;
@@ -328,7 +332,8 @@ fi
 if [[ "$PACKAGE_INSTALL" == "$SU_DO pacman --noconfirm -S" ]] && ! installPacaur
 then
   echo "[31mCould not install pacaur![m"
-  read -p "Continue using pacman? [Y/n] " CONTINUE
+  echo -n "Continue using pacman? [Y/n] "
+  read CONTINUE
   case $CONTINUE in
     [Nn] )
       exit
@@ -363,7 +368,8 @@ then
   then
     echo "[32mOK[34m][m"
     FORCE=false
-    read -p "Force generation? [y/N] " INPUT
+    echo -n "Force generation? [y/N] "
+    read INPUT
     case $INPUT in
       [Yy] )
         FORCE=true
@@ -399,7 +405,8 @@ then
   else
     echo "[31mFAIL[34m][m"
 
-    read -p "Set ZSH as main shell? [y/N] " INPUT
+    echo -n "Set ZSH as main shell? [y/N] "
+    read INPUT
     case $INPUT in
       [Yy] )
         echo "[34mSetting as main shell..[m"
@@ -472,7 +479,8 @@ fi
 ########################################
 # Setup locale
 echo "[34mDownloading font..[m"
-read -p "Download DejaVu Sans for Powerline? [y/N]" INPUT
+echo -n "Download DejaVu Sans for Powerline? [y/N]"
+read INPUT
 case $INPUT in
   [Yy] )
     cd "$HOME"
