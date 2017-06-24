@@ -143,7 +143,7 @@ function gl {
   git pull $args
 }
 
-function gc {
+function gcmsg {
   git commit -m $args
 }
 
@@ -189,7 +189,7 @@ function prompt {
   $separator = ""
   $initial = " $([char]$symbol) "
   if ($GLOBAL:fullPrompt) {
-    Write-HOst -NoNewline $initial -BackgroundColor "Black"
+    Write-Host -NoNewline $initial -BackgroundColor "Black"
     Write-Host -NoNewline $separator -ForegroundColor "Black" -BackgroundColor "DarkBlue"
     $location = " " + $(Get-Location).ToString() + " "
     Write-Host $location.Replace($HOME, "~") -NoNewLine -ForegroundColor "Black" -BackgroundColor "DarkBlue"
