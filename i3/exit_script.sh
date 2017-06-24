@@ -2,7 +2,7 @@
 
 while [ "$select" != "NO" -a "$select" != "YES" ]
 do
-  select=$(echo -e 'NO\nYES' | dmenu -i -p "Do you really want to exit i3? This will end your X session.")
+  select=$(echo -e 'YES\nNO' | rofi -lines 2 -dmenu -p "Do you really want to exit i3? This will end your X session.")
   [ -z "$select" ] && exit 0
 done
 

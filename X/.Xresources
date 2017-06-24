@@ -9,7 +9,9 @@ Xft.hinting:                true
 !Xft.hintstyle:              hintslight
 Xft.hintstyle:              hintfull
 Xft.autohint:               false
-*font:          xft:DejaVu Sans Mono for Powerline:pixelsize=10
+*font:                      xft:DejaVu Sans Mono for Powerline:pixelsize=12
+!*font:                      xft:Awesome:pixelsize=12
+!*font:                      xft:Hack:pixelsize=12
 
 !-------------------------------------------------------------------------------
 ! URxvt settings
@@ -44,6 +46,27 @@ URxvt.cursorUnderline:      false
 
 ! Pointer
 URxvt.pointerBlank:         true
+
+!-------------------------------------------------------------------------------
+! Rofi
+!-------------------------------------------------------------------------------
+
+rofi.modi: run
+rofi.font: Hack 11
+rofi.width: 100
+rofi.lines: 5
+rofi.columns: 1
+rofi.opacity: 80
+rofi.location: 6
+!rofi.padding: 100
+rofi.fuzzy: false
+
+!                    bg       fg      altbg    hlbg     hlfg
+rofi.color-normal: #282828, #ebdbb2, #282828, #ebdbb2, #282828
+rofi.color-urgent: #282828, #ebdbb2, #282828, #ebdbb2, #282828
+rofi.color-active: #282828, #ebdbb2, #282828, #ebdbb2, #282828
+rofi.color-window: #282828, #282828
+rofi.bw: 0
 
 !-------------------------------------------------------------------------------
 ! Transparency
