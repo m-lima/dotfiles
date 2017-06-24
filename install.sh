@@ -42,6 +42,11 @@ function fullPath {
 # return: Success if accepted. Will abort if cancelled
 
 function checkContinue {
+  if [ ! -z "$1" ]
+  then
+    echo "[31m$1[m"
+  fi
+
   read -p "Continue? [y/N] " INPUT
   case $INPUT in
     [Yy] )
@@ -79,8 +84,7 @@ function checkInstall {
         then
           echo "[32mDone![m"
         else
-          echo "[31mCould not install $1![m"
-          checkContinue
+          checkContinue "Could not install $1!"
           return 1
         fi
         ;;
@@ -224,7 +228,7 @@ case `id -u` in
   *)
     if [ ! $(command -v sudo) ]
     then
-      echo "[31msudo not found[m"
+      echo "[31mSudo not found[m"
       echo "Please install it as super user before continuing"
       exit
     fi
@@ -256,7 +260,7 @@ else
   read -p "Choose a different OS? [y/N] " SEL_SYS_TYPE
 fi
 
-case $CONTINUE in
+case $SEL_SYS_TYPE in
   [Yy] )
     echo "[33mSelect your OS[m"
     echo "[[33mU[m]buntu"
@@ -274,7 +278,7 @@ case $CONTINUE in
       [Bb]) SYS_TYPE="Bash on Windows";;
       [Aa]) SYS_TYPE="Arch";;
       *) exit;;
-    ;;
+    esac
 esac
 
 ########################################
@@ -285,29 +289,32 @@ then
   echo "[32mapt-get[34m][m"
   if [ ! "$SYS_TYPE" = "Ubuntu" ] && [ ! "$SYS_TYPE" = "Bash on Windows" ]
   then
-    echo "[31mOS mismatch![m"
-    checkContinue
+    checkContinue "OS mismatch"
   fi
   PACKAGE_INSTALL="$SU_DO apt-get -y install"
 
 elif [ $(command -v pkg) ]
 then
   echo "[32mpkg[34m][m"
+  [ ! "$SYS_TYPE" = "FreeBSD" ] && checkContinue "OS mismatch"
   PACKAGE_INSTALL="$SU_DO pkg install -y"
 
 elif [ $(command -v brew) ]
 then
   echo "[32mbrew[34m][m"
+  [ ! "$SYS_TYPE" = "Darwin" ] && checkContinue "OS mismatch"
   PACKAGE_INSTALL="brew install"
 
 elif [ $(command -v pacaur) ]
 then
   echo "[32mpacaur[34m][m"
+  [ ! "$SYS_TYPE" = "Arch" ] && checkContinue "OS mismatch"
   PACKAGE_INSTALL="pacaur --noedit --noconfirm -S"
 
 elif [ $(command -v pacman) ]
 then
   echo "[32mpacman[34m][m"
+  [ ! "$SYS_TYPE" = "Arch" ] && checkContinue "OS mismatch"
   PACKAGE_INSTALL="$SU_DO pacman --noconfirm -S"
 
 else
@@ -383,7 +390,7 @@ fi
 
 ########################################
 # Install ZSH
-if checkInstallDefault zsh
+if checkInstallDefault zsh && [ ! "$SYS_TYPE" = "Bash on Windows" ]
 then
   echo -n "[34mChecking default shell.. [[m"
   if [[ "$SHELL" == */zsh ]]
@@ -392,7 +399,7 @@ then
   else
     echo "[31mFAIL[34m][m"
 
-    read -p "Set ZSH as main shell (Skip if running Bash on Windows)? [y/N] " INPUT
+    read -p "Set ZSH as main shell? [y/N] " INPUT
     case $INPUT in
       [Yy] )
         echo "[34mSetting as main shell..[m"
@@ -402,8 +409,7 @@ then
           echo "[32mDone![m"
           export SHELL=zsh
         else
-          echo "[31mCould not set the main shell![m"
-          checkContinue
+          checkContinue "Could not set the main shell!"
         fi
         ;;
     esac
@@ -428,8 +434,7 @@ else
   then
     echo "[32mDone![m"
   else
-    echo "[31mCould not create bin folder![m"
-    checkContinue
+    checkContinue "Could not create bin folder!"
   fi
 fi
 
