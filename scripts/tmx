@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#! /usr/bin/env zsh
+
 if cat /etc/shells | grep zsh &> /dev/null
 then
   shell=zsh
@@ -18,7 +19,8 @@ then
       echo -e "[[33mA[m]ttach to main"
       echo -e "[[33mN[m]ame new session"
       echo -e "[[33mE[m]xit?"
-      read -p "Choice: " input
+      echo "Choice: "
+      read input
       case $input in
         [Aa]* )
           tmux attach -t main
@@ -29,7 +31,8 @@ then
           echo -e "Current sessions:[32m"
           tmux list-sessions
           echo -e -n "[m"
-          read -p "Name of the session: " name
+          echo "Name of the session: "
+          read name
           if tmux new-session -s $name
           then
             tput -Txterm reset
@@ -56,7 +59,8 @@ then
       echo -e "[[33mP[m]ick session"
       echo -e "[[33mL[m]og normally"
       echo -e "[[33mE[m]xit?"
-      read -p "Choice: " input
+      echo "Choice: "
+      read input
 
       case $input in
         [Cc]* )
@@ -68,7 +72,8 @@ then
           echo -e "Current sessions:[32m"
           tmux list-sessions
           echo -e -n "[m"
-          read -p "Name of the session: " name
+          echo "Name of the session: "
+          read name
           if tmux new-session -s $name
           then
             tput -Txterm reset
@@ -94,7 +99,8 @@ then
           echo -e "Current sessions:[32m"
           tmux list-sessions
           echo -e -n "[m"
-          read -p "Name of the session: " name
+          echo "Name of the session: "
+          read name
           if tmux attach -t $name
           then
             tput -Txterm reset
@@ -128,7 +134,8 @@ else
       echo -e "[[33mP[m]ick session"
       echo -e "[[33mL[m]og normally"
       echo -e "[[33mE[m]xit?"
-      read -p "Choice: " input
+      echo "Choice: "
+      read input
 
       case $input in
         [Cc]* )
@@ -140,7 +147,8 @@ else
           echo -e "Current sessions:[32m"
           tmux list-sessions
           echo -e -n "[m"
-          read -p "Name of the session: " name
+          echo "Name of the session: "
+          read name
           if tmux new-session -s $name
           then
             tput -Txterm reset
@@ -166,7 +174,8 @@ else
           echo -e "Current sessions:[32m"
           tmux list-sessions
           echo -e -n "[m"
-          read -p "Name of the session: " name
+          echo "Name of the session: "
+          read name
           if tmux attach -t $name
           then
             tput -Txterm reset
@@ -195,7 +204,8 @@ else
       echo -e "[[33mN[m]ame new session"
       echo -e "[[33mL[m]og normally"
       echo -e "[[33mE[m]xit?"
-      read -p "Choice: " input
+      echo "Choice: "
+      read input
 
       case $input in
         [Cc]* )
@@ -204,7 +214,8 @@ else
           exit
           ;;
         [Nn]* )
-          read -p "Name of the session: " name
+          echo "Name of the session: "
+          read name
           if tmux new-session -s $name
           then
             tput -Txterm reset
