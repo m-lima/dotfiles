@@ -446,6 +446,24 @@ else
 fi
 
 ########################################
+# Create ~/.oh-my-zsh/completions
+echo -n "[34mChecking completion folder.. [[m"
+if [ -d "$HOME"/.oh-my-zsh/completions ]
+then
+  echo "[32mOK[34m][m"
+else
+  echo "[31mFAIL[34m][m"
+  echo "[34mCreating folder..[m"
+
+  if mkdir "$HOME"/.oh-my-zsh/completions &> /dev/null
+  then
+    echo "[32mDone![m"
+  else
+    checkContinue "Could not create bin folder!"
+  fi
+fi
+
+########################################
 # Make symlinks
 echo "[34mMaking symlinks..[m"
 installFile s zsh .aliasrc
@@ -455,6 +473,8 @@ installFile s vim .vimrc.base
 installFile s scripts tmx bin
 installFile s tmux .tmux.conf
 installFile s zsh simpalt.zsh-theme .oh-my-zsh/themes
+installFile s completions _vd .oh-my-zsh/completion
+installFile s completions _bd .oh-my-zsh/completion
 
 ########################################
 # Copy files
