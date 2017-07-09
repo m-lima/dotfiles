@@ -2,23 +2,6 @@
 
 setopt localoptions nonomatch
 
-# _vd() {
-#   local stack=(${(s:/:)PWD})
-#   local reverse=( $stack )
-
-#   if [ $#stack ]
-#   then
-#     for ((i=$#stack, k=1; i>0; i--, k++))
-#     do
-#       reverse[$k]="$stack[$i]"
-#     done
-
-#     _wanted -V directory-stack expl ' directory stack' \
-#       compadd "$@" "$stack[@]" -Q -a $reverse
-#   fi
-# }
-
-
 local expl list lines revlines disp sep
 
 zstyle -s ":completion:${curcontext}:directory-stack" list-separator sep || sep=--
