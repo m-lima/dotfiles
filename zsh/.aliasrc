@@ -37,16 +37,11 @@ function def {
 function bd {
   if [[ "$1" =~ '^[0-9]+$' ]]
   then
-    local it=$1
+    cd -$1 > /dev/null
   else
-    local it=1
+    cd - > /dev/null
   fi
 
-  until [ $it -eq 0 ]
-  do
-    popd > /dev/null
-    (( it-- ))
-  done
 }
 
 function vd {

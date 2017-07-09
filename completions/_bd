@@ -1,0 +1,27 @@
+#compdef bd
+
+setopt localoptions nonomatch
+
+local expl list lines disp sep
+
+zstyle -s ":completion:${curcontext}:directory-stack" list-separator sep || sep=--
+
+if zstyle -T ":completion:${curcontext}:directory-stack" verbose; then
+  # get the list of directories with their canonical number
+  # and turn the lines into an array, removing the current directory
+  lines=("${(D)dirstack[@]}")
+
+  for (( i = 1; i <= $#lines; i++ )); do
+    lines[$i]="$i $sep ${lines[$i]##[0-9]#[	 ]#}"
+  done
+
+  # get the array of numbers only
+  list=( ${PREFIX[1]}${^lines%% *} )
+  disp=( -ld lines )
+else
+  list=( ${PREFIX[1]}{0..${#dirstack}} )
+  disp=()
+fi
+
+_wanted -V directory-stack expl 'directory stack' \
+    compadd "$@" "$disp[@]" -Q -a list

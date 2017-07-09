@@ -112,3 +112,7 @@ ssh -f -N -T '-R<WHATEVER_PORT>:localhost:<LOCAL_PORT>' -p <PUBLIC_PORT> <PUBLIC
 # -N Do not run remote commands (better performance)
 # -T Disabe pseudoTTY
 
+##################################################
+# Change resolution
+##################################################
+xrandr --output VGA-1 --mode 1920x1080
