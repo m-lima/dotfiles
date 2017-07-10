@@ -477,6 +477,11 @@ then
   vim "$HOME"/.zshrc.local
 fi
 
+if installFile c fd config .config/fd
+then
+  vim "$HOME"/.config/fd/config
+fi
+
 ########################################
 # Setup locale
 echo "[34mDownloading font..[m"
