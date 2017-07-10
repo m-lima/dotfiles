@@ -5,6 +5,7 @@ alias mud='telnet www.ateraan.com 4002'
 alias gsu='git submodule update --init --recursive'
 alias ghelp='cat ~/.oh-my-zsh/plugins/git/git.plugin.zsh'
 alias vi=vim
+# alias dh='dirs -v'
 
 if [[ "$(uname)" == "Darwin" ]]
 then
