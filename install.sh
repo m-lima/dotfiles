@@ -454,8 +454,8 @@ installFile s vim .vimrc
 installFile s vim .vimrc.base
 installFile s scripts tmx bin
 installFile s tmux .tmux.conf
-installFile s zsh simpalt.zsh-theme .oh-my-zsh/themes
-installFile s zsh nali .oh-my-zsh/plugins
+installFile s zsh simpalt.zsh-theme .oh-my-zsh/custom
+installFile s zsh nali .oh-my-zsh/custom/plugins
 
 ########################################
 # Copy files
