@@ -52,6 +52,7 @@ vnoremap \ <Esc>
 vnoremap <C-\> \
 
 nnoremap yp Yp
+nnoremap de 0D
 
 nnoremap <silent> <Leader>h :noh<CR>
 
