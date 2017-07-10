@@ -128,6 +128,16 @@ function installFile {
 
   local OVERWRITE=false
 
+  if [ ! -d $INSTALL_PATH ]
+  then
+    echo -n "$INSTALL_PATH does not exist. Create? [y/N] "
+    read INPUT
+    case $INPUT in
+      [Yy] ) mkdir -p "$INSTALL_PATH" ;;
+      * ) checkContinue ;;
+    esac
+  fi
+
   if [ -f "$INSTALL_PATH$3" ] || [ -d "$INSTALL_PATH$3" ]
   then
     echo -n "$INSTALL_PATH$3 already exists. Overwrite? [y/N] "
