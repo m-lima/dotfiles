@@ -128,7 +128,7 @@ function installFile {
 
   local OVERWRITE=false
 
-  if [ -f "$INSTALL_PATH$3" ] || [ -d "$INSTALL_PATH" ]
+  if [ -f "$INSTALL_PATH$3" ] || [ -d "$INSTALL_PATH$3" ]
   then
     echo -n "$INSTALL_PATH$3 already exists. Overwrite? [y/N] "
     read INPUT
