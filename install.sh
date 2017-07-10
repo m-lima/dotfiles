@@ -247,7 +247,7 @@ case `uname -v` in
   *Darwin*) SYS_TYPE="Darwin";;
   *Microsoft*) SYS_TYPE="Bash on Windows";;
   *)
-    case `uname -v` in
+    case `uname -a` in
       *ARCH*) SYS_TYPE="Arch";;
       *) SYS_TYPE="";;
     esac
