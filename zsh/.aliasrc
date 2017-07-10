@@ -13,7 +13,7 @@ then
   alias ppwd='cd $(pbpaste)'
 else
   if [ $(command -v xclip) ]; then
-    alias cpwd='pwd |  xclip'
+    alias cpwd='pwd | xclip'
     alias ppwd='cd $(xclip -o)'
   else
     alias cpwd='pwd > /tmp/pwd_buffer_$USER'
@@ -33,33 +33,6 @@ function def {
       echo -e "\e[31mNo definition found\e[m"
     fi
   fi
-}
-
-function bd {
-  if [[ "$1" =~ '^[0-9]+$' ]]
-  then
-    cd -$1 > /dev/null
-  else
-    cd - > /dev/null
-  fi
-
-}
-
-function vd {
-  if [[ "$1" =~ '^[0-9]+$' ]]
-  then
-    local it=$1
-  else
-    local it=1
-  fi
-
-  until [ $it -eq 0 ]
-  do
-    local BACK=../$BACK
-    (( it-- ))
-  done
-
-  cd $BACK
 }
 
 function rg {
