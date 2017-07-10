@@ -130,11 +130,14 @@ function installFile {
 
   if [ ! -d $INSTALL_PATH ]
   then
-    echo -n "$INSTALL_PATH does not exist. Create? [y/N] "
+    echo -n "$INSTALL_PATH does not exist. Create? [Y/n] "
     read INPUT
     case $INPUT in
-      [Yy] ) mkdir -p "$INSTALL_PATH" ;;
-      * ) checkContinue ;;
+      [Nn] )
+        checkContinue
+        return 1
+        ;;
+      * ) mkdir -p "$INSTALL_PATH" ;;
     esac
   fi
 
