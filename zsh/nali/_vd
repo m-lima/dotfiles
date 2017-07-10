@@ -18,7 +18,6 @@ if zstyle -T ":completion:${curcontext}:directory-stack" verbose; then
 
   [ $#lines ] && lines[$#lines]="$#lines -- /"
 
-  # get the array of numbers only
   list=( ${PREFIX[1]}${^lines%% *} )
   disp=( -ld lines )
 else
