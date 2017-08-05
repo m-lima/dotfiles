@@ -1,12 +1,17 @@
 alias ccat='colorize'
+alias mud='telnet www.ateraan.com 4002'
+alias vi=vim
+
+# alias dh='dirs -v'
 # alias bd='popd > /dev/null'
 # alias fd='cd ~'
-alias mud='telnet www.ateraan.com 4002'
-alias gsu='git submodule update --init --recursive'
-alias ghelp='cat ~/.oh-my-zsh/plugins/git/git.plugin.zsh'
-alias vi=vim
-# alias dh='dirs -v'
 
+### Git stuff
+alias gsu='git submodule update --init --recursive'
+alias gpp='git push --set-upstream origin ${$(git symbolic-ref HEAD)/refs\/heads\//}'
+alias ghelp='cat ~/.oh-my-zsh/plugins/git/git.plugin.zsh'
+
+### Copy path
 if [[ "$(uname)" == "Darwin" ]]
 then
   alias cpwd='pwd | pbcopy'
@@ -21,6 +26,7 @@ else
   fi
 fi
 
+### Dictionary
 function def {
   if [ "$1" ]
   then
@@ -35,6 +41,7 @@ function def {
   fi
 }
 
+### Ranger with pwd change
 function rg {
   tempfile="/tmp/pwd-from-ranger"
   ranger --choosedir=$tempfile $argv
