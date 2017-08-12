@@ -23,7 +23,7 @@ function checkContinue {
 # check: Command to check installation
 # install: Command to install package
 # return: False is name is not giver
-#         Abort if cancelled
+#[Environment]::GetFolderPath("MyDocuments")         Abort if cancelled
 #         Success otherwise
 
 function checkInstall {
@@ -118,6 +118,8 @@ function installFile {
 # Script start                                                                 #
 ################################################################################
 
+$DocumentsFolder = [Environment]::GetFolderPath("MyDocuments")
+
 ################################################################################
 # Install scoop
 
@@ -140,11 +142,11 @@ installFile .vimrc "$HOME" "$PSScriptRoot\vim"
 installFile .vimrc.base "$HOME" "$PSScriptRoot\vim"
 installFile .gvimrc "$HOME" "$PSScriptRoot\vim"
 installFile .vsvimrc "$HOME" "$PSScriptRoot\vim"
-installFile Microsoft.PowerShell_profile.ps1 "[Environment]::GetFolderPath("MyDocuments")\WindowsPowerShell" "$PSScriptRoot\posh"
+installFile Microsoft.PowerShell_profile.ps1 "$DocumentsFolder\WindowsPowerShell" "$PSScriptRoot\posh"
 
 ################################################################################
 # Copy files
-if (installFile -copy ComputerSymbol.ps1 [Environment]::GetFolderPath("MyDocuments")\WindowsPowerShell" "$PSScriptRoot\posh") {
-    notepad "$HOME\Documents\WindowsPowerShell\ComputerSymbol.ps1"
+if (installFile -copy ComputerSymbol.ps1 "$DocumentsFolder\WindowsPowerShell" "$PSScriptRoot\posh") {
+    notepad "$DocumentsFolder\WindowsPowerShell\ComputerSymbol.ps1"
 }
 
