@@ -140,11 +140,11 @@ installFile .vimrc "$HOME" "$PSScriptRoot\vim"
 installFile .vimrc.base "$HOME" "$PSScriptRoot\vim"
 installFile .gvimrc "$HOME" "$PSScriptRoot\vim"
 installFile .vsvimrc "$HOME" "$PSScriptRoot\vim"
-installFile Microsoft.PowerShell_profile.ps1 "$HOME\Documents\WindowsPowerShell" "$PSScriptRoot\posh"
+installFile Microsoft.PowerShell_profile.ps1 "[Environment]::GetFolderPath("MyDocuments")\WindowsPowerShell" "$PSScriptRoot\posh"
 
 ################################################################################
 # Copy files
-if (installFile -copy ComputerSymbol.ps1 "$HOME\Documents\WindowsPowerShell" "$PSScriptRoot\posh") {
+if (installFile -copy ComputerSymbol.ps1 [Environment]::GetFolderPath("MyDocuments")\WindowsPowerShell" "$PSScriptRoot\posh") {
     notepad "$HOME\Documents\WindowsPowerShell\ComputerSymbol.ps1"
 }
 
