@@ -1,3 +1,5 @@
+source "$HOME"/.zshrc.local
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME"/.oh-my-zsh
 
@@ -45,7 +47,7 @@ ZSH_THEME="simpalt"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colorize nali)
+plugins+=(git colorize nali)
 
 # User configuration
 
@@ -85,5 +87,4 @@ then
   export TERM=xterm-256color
 fi
 
-source "$HOME"/.zshrc.local
 source "$HOME"/.aliasrc
