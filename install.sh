@@ -498,7 +498,7 @@ fi
 ########################################
 # Setup locale
 echo "[34mDownloading font..[m"
-echo -n "Download DejaVu Sans for Powerline? [y/N]"
+echo -n "Download DejaVu Sans for Powerline? [y/N] "
 read INPUT
 case $INPUT in
   [Yy] )
