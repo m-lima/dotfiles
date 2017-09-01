@@ -10,4 +10,4 @@ export COMPUTER_SYMBOL='§'
 # export COMPUTER_SYMBOL='ø'
 # export COMPUTER_SYMBOL='ƛ'
 
-# plugins=(ddt)
+plugins+=(git colorize nali)
