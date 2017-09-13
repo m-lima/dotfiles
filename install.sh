@@ -61,7 +61,7 @@ function checkContinue {
 #
 # arg1: Friendly name for the package
 # arg2: Package install command
-# arg3: The conditions to check if the package is intalled
+# arg3: The conditions to check if the package is installed
 # return: Abort if cancelled, or success otherwise
 
 function checkInstall {
@@ -366,7 +366,12 @@ checkInstallDefault curl
 
 ########################################
 # Install vim
-checkInstallDefault vim
+if [[ "$SYS_TYPE" == "Darwin" ]]
+then
+  checkInstall "Vim" "$PACKAGE_INSTALL vim --with-lua" '[ $(command -v 'vim') ]'
+else
+  checkInstall "Vim" "$PACKAGE_INSTALL vim-nox" '[ $(command -v 'vim') ]'
+fi
 
 ########################################
 # Install Vundle
