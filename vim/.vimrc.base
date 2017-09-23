@@ -22,7 +22,7 @@ let g:mapleader = ","
 set mouse=a
 
 set number
-" set relativenumber
+set relativenumber
 
 exec "set listchars=tab:\uB7\uA0,trail:\uAB,nbsp:\u268B"
 set list
@@ -51,7 +51,8 @@ inoremap <C-\> \
 vnoremap \ <Esc>
 vnoremap <C-\> \
 
-nnoremap yp Yp
+nnoremap yp yyp
+nnoremap Y y$
 nnoremap de 0D
 
 nnoremap <silent> <Leader>h :noh<CR>
