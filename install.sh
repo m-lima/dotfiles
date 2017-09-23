@@ -511,3 +511,9 @@ case $INPUT in
     curl -s -L 'https://raw.githubusercontent.com/powerline/fonts/master/DejaVuSansMono/DejaVu Sans Mono for Powerline.ttf' -o "$HOME/DejaVu Sans Mono for Powerline.ttf" && echo "[32mFont saved as $HOME/DejaVu Sans Mono for Powerline.ttf[m"
     ;;
 esac
+
+########################################
+# Install pip/pygemnts
+# wget https://bootstrap.pypa.io/get-pip.py
+# python get-pyp.py
+# pip install pygments
