@@ -19,6 +19,7 @@ Plugin 'Repeat.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'kana/vim-textobj-user'
 
 " Language
@@ -131,7 +132,7 @@ nnoremap <Leader>c :call HighlightColumn()<CR>
 """"""""""""""""""""
 
 " NerdTree
-nmap <Leader>n ;NERDTreeToggle<CR>
+nmap <Leader>n ;NERDTreeTabsToggle<CR>
 let NERDTreeMapOpenInTab='<CR>'
 
 " Quit if only NERDTree is left

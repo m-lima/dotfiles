@@ -1,0 +1,33 @@
+<scheme name="DarculaMine" version="142" parent_scheme="Darcula">
+  <metaInfo>
+    <property name="created">2017-09-27T16:38:54</property>
+    <property name="ide">Idea</property>
+    <property name="ideVersion">2017.2.5.0.0</property>
+    <property name="modified">2017-09-27T16:39:21</property>
+    <property name="originalScheme">Darcula copy</property>
+  </metaInfo>
+  <attributes>
+    <option name="ERRORS_ATTRIBUTES">
+      <value>
+        <option name="BACKGROUND" value="750300" />
+        <option name="EFFECT_COLOR" value="bc3f3c" />
+        <option name="ERROR_STRIPE_COLOR" value="9e2927" />
+        <option name="EFFECT_TYPE" value="2" />
+      </value>
+    </option>
+    <option name="IDENTIFIER_UNDER_CARET_ATTRIBUTES">
+      <value>
+        <option name="BACKGROUND" value="336033" />
+        <option name="ERROR_STRIPE_COLOR" value="36b13" />
+        <option name="EFFECT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="WRITE_IDENTIFIER_UNDER_CARET_ATTRIBUTES">
+      <value>
+        <option name="BACKGROUND" value="336033" />
+        <option name="ERROR_STRIPE_COLOR" value="b56277" />
+        <option name="EFFECT_TYPE" value="1" />
+      </value>
+    </option>
+  </attributes>
+</scheme>
