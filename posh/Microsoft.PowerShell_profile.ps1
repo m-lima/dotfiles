@@ -1,5 +1,6 @@
 ﻿# Load computer identifying symbol
-. $ENV:HOME\Documents\WindowsPowerShell\ComputerSymbol.ps1
+$DocumentsFolder = [Environment]::GetFolderPath("MyDocuments")
+. $DocumentsFolder/WindowsPowerShell/ComputerSymbol.ps1
 
 ###########################
 # Default alias removal
@@ -151,6 +152,10 @@ function gcam {
   git commit -a -m $args
 }
 
+function gd {
+  git diff
+}
+
 function gco {
   git checkout $args
 }
@@ -167,14 +172,14 @@ function pw {
 # Aliases
 ###########################
 # Editors
-set-alias gvi "${env:ProgramFiles(x86)}\Vim\vim80\gvim.exe"
-set-alias vi "${env:ProgramFiles(x86)}\Vim\vim80\vim.exe"
+# set-alias gvi "${env:ProgramFiles(x86)}\Vim\vim80\gvim.exe"
+set-alias vi "$HOME\scoop\shims\vim.exe"
 set-alias npd "${env:ProgramFiles(x86)}\Notepad++\notepad++.exe"
-set-alias em "${env:USERPROFILE}\Bin\Emacs\bin\emacs.exe"
+# set-alias em "${env:USERPROFILE}\Bin\Emacs\bin\emacs.exe"
 
 # Commands
 set-alias whr where.exe
-set-alias tlt "${env:LOCALAPPDATA}/scoop/shims/telnet.exe"
+# set-alias tlt "${env:LOCALAPPDATA}/scoop/shims/telnet.exe"
 set-alias l ls
 
 # Functions

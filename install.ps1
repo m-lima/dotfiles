@@ -23,7 +23,6 @@ function checkContinue {
 # check: Command to check installation
 # install: Command to install package
 # return: False is name is not giver
-#[Environment]::GetFolderPath("MyDocuments")         Abort if cancelled
 #         Success otherwise
 
 function checkInstall {
@@ -91,6 +90,7 @@ function installFile {
         [Parameter(Mandatory=$true)][string]$source,
         [switch]$copy
     )
+    echo Copying $name from $source to $target
 
     Write-Host -ForegroundColor "Blue" "Installing $name.."
     if (Test-Path "$target\$name") {
