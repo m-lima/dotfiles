@@ -71,7 +71,7 @@ set noshowmode
 " Go-Vim
 let g:go_fmt_fail_silently = 1
 
-" Cim-commentary
+" Vim-commentary
 autocmd FileType cmake setlocal commentstring=#\ %s
 autocmd FileType cpp,hpp,c,h,cc setlocal commentstring=//\ %s
 
