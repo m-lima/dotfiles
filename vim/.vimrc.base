@@ -75,8 +75,7 @@ vnoremap H ^
 nnoremap L $
 vnoremap L $
 
-noremap <Leader>r :set rnu<CR>
-noremap <Leader><S-R> :set nornu<CR>
+noremap <Leader>r :set rnu!<CR>
 
 if has('win32')
   nnoremap <M-j> 5<C-E>

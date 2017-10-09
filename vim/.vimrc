@@ -74,7 +74,7 @@ let g:go_fmt_fail_silently = 1
 
 " Vim-commentary
 autocmd FileType cmake setlocal commentstring=#\ %s
-autocmd FileType cpp,hpp,c,h,cc setlocal commentstring=//\ %s
+autocmd FileType cpp,hpp,c,h,cc,hh,cl setlocal commentstring=//\ %s
 
 " NeoComplete
 if has("lua")
