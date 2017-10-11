@@ -244,8 +244,8 @@ case `id -u` in
     if [ ! $(command -v sudo) ]
     then
       echo "[31mSudo not found[m"
-      echo "Please install it as super user before continuing"
-      exit
+      checkContinue "sudo not found"
+      SU_DO=""
     fi
     SU_DO="sudo"
     ;;
@@ -258,6 +258,7 @@ case `uname -v` in
   *Ubuntu*) SYS_TYPE="Ubuntu";;
   *FreeBSD*) SYS_TYPE="FreeBSD";;
   *Darwin*) SYS_TYPE="Darwin";;
+  *Android*) SYS_TYPE="Android";;
   *Microsoft*) SYS_TYPE="Bash on Windows";;
   *)
     case `uname -a` in
@@ -282,6 +283,7 @@ case $SEL_SYS_TYPE in
     echo "[[33mU[m]buntu"
     echo "[[33mF[m]ree BSD"
     echo "[[33mD[m]arwin"
+    echo "A[[33mn[m]droid"
     echo "[[33mB[m]ash on Windows"
     echo "[[33mA[m]rch"
     echo "[[33mE[m]xit"
@@ -292,6 +294,7 @@ case $SEL_SYS_TYPE in
       [Uu]) SYS_TYPE="Ubuntu";;
       [Ff]) SYS_TYPE="FreeBSD";;
       [Dd]) SYS_TYPE="Darwin";;
+      [Nn]) SYS_TYPE="Android";;
       [Bb]) SYS_TYPE="Bash on Windows";;
       [Aa]) SYS_TYPE="Arch";;
       *) exit;;
