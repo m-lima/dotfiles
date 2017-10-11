@@ -233,22 +233,8 @@ function installPacaur {
 ########################################
 # Variables
 BASE_DIR=$(dirname $(fullPath $0))
-SU_DO="sudo"
+SU_DO=""
 SYS_TYPE=""
-
-########################################
-# Check sudo
-case `id -u` in
-  0) SU_DO="";;
-  *)
-    if [ ! $(command -v sudo) ]
-    then
-      checkContinue "sudo not found"
-      SU_DO=""
-    fi
-    SU_DO="sudo"
-    ;;
-esac
 
 ########################################
 # Check OS
@@ -299,6 +285,24 @@ case $SEL_SYS_TYPE in
       *) exit;;
     esac
 esac
+
+########################################
+# Check sudo
+
+if [ ! "$SYS_TYPE" = "Android" ]
+then
+  case `id -u` in
+    0) SU_DO="";;
+    *)
+      if [ ! $(command -v sudo) ]
+      then
+        checkContinue "sudo not found"
+      else
+        SU_DO="sudo"
+      fi
+      ;;
+  esac
+fi
 
 ########################################
 # Determine package manager
