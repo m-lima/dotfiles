@@ -243,7 +243,6 @@ case `id -u` in
   *)
     if [ ! $(command -v sudo) ]
     then
-      echo "[31mSudo not found[m"
       checkContinue "sudo not found"
       SU_DO=""
     fi
@@ -258,11 +257,11 @@ case `uname -v` in
   *Ubuntu*) SYS_TYPE="Ubuntu";;
   *FreeBSD*) SYS_TYPE="FreeBSD";;
   *Darwin*) SYS_TYPE="Darwin";;
-  *Android*) SYS_TYPE="Android";;
   *Microsoft*) SYS_TYPE="Bash on Windows";;
   *)
     case `uname -a` in
       *ARCH*) SYS_TYPE="Arch";;
+      *Android*) SYS_TYPE="Android";;
       *) SYS_TYPE="";;
     esac
 esac
@@ -307,7 +306,9 @@ echo -n "[34mChecking package manager.. [[m"
 if [ $(command -v apt-get) ]
 then
   echo "[32mapt-get[34m][m"
-  if [ ! "$SYS_TYPE" = "Ubuntu" ] && [ ! "$SYS_TYPE" = "Bash on Windows" ]
+  if [ ! "$SYS_TYPE" = "Ubuntu" ] \
+    && [ ! "$SYS_TYPE" = "Bash on Windows" ] \
+    && [ ! "$SYS_TYPE" = "Android" ]
   then
     checkContinue "OS mismatch"
   fi
