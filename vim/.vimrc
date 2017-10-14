@@ -98,6 +98,9 @@ let g:HighlightingColumn=0
 hi Search cterm=NONE ctermfg=black ctermbg=yellow
 
 set wildmenu
+set termguicolors
+set cul
+colorscheme grayalt
 
 """"""""""""""""""""
 " Functions
