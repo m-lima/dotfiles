@@ -10,16 +10,18 @@ if exists('syntax_on')
   syntax reset
 endif
 
+let g:colors_name = 'grayalt'
+
 highlight Normal guifg=#909090 ctermfg=245
 
 " Misc {{{1
 
 highlight Comment guifg=#585858 ctermfg=240 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-highlight Constant guifg=#87dfdf ctermfg=116 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight Constant guifg=#5e8759 ctermfg=065 guibg=NONE ctermbg=NONE gui=bold cterm=bold
 highlight Directory guifg=#ffaf87 ctermfg=216 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight EndOfBuffer guifg=#262626 ctermfg=235 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight Identifier guifg=#ffaf87 ctermfg=216 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-highlight MatchParen guifg=#df005f ctermfg=161 guibg=#262626 ctermbg=235 gui=bold cterm=bold
+highlight MatchParen guifg=#ff305f ctermfg=201 guibg=NONE ctermbg=NONE gui=underline cterm=underline
 highlight NonText guifg=#ff00af ctermfg=201 guibg=NONE ctermbg=NONE gui=bold cterm=bold
 highlight Number guifg=#87dfdf ctermfg=116 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight PreProc guifg=#ffdfaf ctermfg=223 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
@@ -29,14 +31,19 @@ highlight Statement guifg=#afdf87 ctermfg=150 guibg=NONE ctermbg=NONE gui=NONE c
 highlight String guifg=#87afdf ctermfg=110 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight Title guifg=#afff87 ctermfg=156 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight Todo guifg=#ffdfaf ctermfg=223 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-highlight Type guifg=#87dfaf ctermfg=115 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight Type guifg=#c57825 ctermfg=172 guibg=NONE ctermbg=NONE gui=bold cterm=bold
 highlight VertSplit guifg=#3a3a3a ctermfg=237 guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
-highlight WildMenu guifg=#df005f ctermfg=161 guibg=#3a3a3a ctermbg=237 gui=bold cterm=bold
 
 " Cursor lines {{{1
 
 highlight CursorColumn ctermfg=NONE guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
-highlight CursorLine ctermfg=NONE guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
+highlight CursorLine ctermfg=NONE guibg=#343434 ctermbg=236 gui=NONE cterm=NONE
+
+" Number column {{{1
+
+let g:gitgutter_override_sign_column_highlight = 0 " Tell git gutter to leave the background alone.
+highlight CursorLineNr guifg=#878787 ctermfg=102 guibg=#404040 ctermbg=239 gui=NONE cterm=NONE
+highlight LineNr guifg=#878787 ctermfg=102 guibg=#323232 ctermbg=237 gui=NONE cterm=NONE
 
 " Tabline {{{1
 
@@ -49,18 +56,14 @@ highlight TabLineSel guifg=#e4e4e4 ctermfg=254 guibg=#303030 ctermbg=236 gui=bol
 highlight StatusLine guifg=#e4e4e4 ctermfg=254 guibg=#3a3a3a ctermbg=237 gui=NONE cterm=NONE
 highlight StatusLineNC guifg=#808080 ctermfg=244 guibg=#3a3a3a ctermbg=237 gui=NONE cterm=NONE
 
-" Number column {{{1
-
-highlight CursorLineNr guifg=#878787 ctermfg=102 guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
-highlight LineNr guifg=#878787 ctermfg=102 guibg=#292929 ctermbg=236 gui=NONE cterm=NONE
-
 " Color column {{{1
 
 highlight ColorColumn ctermfg=NONE guibg=#3a3a3a ctermbg=237 gui=NONE cterm=NONE
 
 " Diff & Signs {{{1
 
-highlight SignColumn ctermfg=NONE guibg=#3a3a3a ctermbg=237 gui=NONE cterm=NONE
+" highlight SignColumn ctermfg=NONE guibg=#3a3a3a ctermbg=237 gui=NONE cterm=NONE
+highlight SignColumn guifg=#888888 ctermfg=060 guibg=#323232 ctermbg=236 gui=NONE cterm=NONE
 
 highlight DiffAdd guifg=#87ff5f ctermfg=119 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight DiffDelete guifg=#df5f5f ctermfg=167 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
@@ -96,6 +99,7 @@ highlight Pmenu guifg=#e4e4e4 ctermfg=254 guibg=#3a3a3a ctermbg=237 gui=NONE cte
 highlight PmenuSbar ctermfg=NONE guibg=#444444 ctermbg=238 gui=NONE cterm=NONE
 highlight PmenuSel guifg=#df5f5f ctermfg=167 guibg=#444444 ctermbg=238 gui=bold cterm=bold
 highlight PmenuThumb ctermfg=NONE guibg=#df5f5f ctermbg=167 gui=NONE cterm=NONE
+highlight WildMenu guifg=#df5f5f ctermfg=161 guibg=#3a3a3a ctermbg=237 gui=bold cterm=bold
 
 " Spell {{{1
 highlight SpellBad guifg=#c0c0c0 ctermfg=7 guibg=#df5f5f ctermbg=167 gui=NONE cterm=NONE
@@ -140,4 +144,4 @@ highlight StartifySpecial guifg=#585858 ctermfg=240 guibg=NONE ctermbg=NONE gui=
 " highlight TermCursor ctermfg=NONE guibg=#ff00af ctermbg=199 gui=NONE cterm=NONE
 " highlight TermCursorNC ctermfg=NONE guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
-let g:colors_name = 'grayalt'
+set background=dark

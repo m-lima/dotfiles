@@ -12,6 +12,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-repeat'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle','NERDTreeTabsToggle'] }
 Plug 'jistr/vim-nerdtree-tabs', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle','NERDTreeTabsToggle'] }
 Plug 'kana/vim-textobj-user'
@@ -55,7 +56,7 @@ autocmd FileType cpp,hpp,c,h,cc,hh,cl setlocal commentstring=//\ %s
 
 """ Vim-airline
 let g:airline_powerline_fonts = 1
-let g:airline_theme='badwolf'
+let g:airline_theme='deus'
 let g:airline#extensions#tabline#enabled = 1
 set noshowmode
 
@@ -69,6 +70,15 @@ let NERDTreeMapOpenInTab='<CR>'
 " Quit if only NERDTree is left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+""" Fugitive
+nnoremap <Leader>b :Gblame<CR>
+
+""" GitGutter
+nnoremap <Leader>g :GitGutterToggle<CR>
+
+" Don't load straightaway
+let g:gitgutter_enabled = 0
+
 """ NeoComplete
 " let g:neocomplete#enable_at_startup = 1
 " let g:neocomplete#enable_smart_case = 1
@@ -78,9 +88,13 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-if has('macunix')
+if has('win32')
+elseif has('macunix')
   let g:deoplete#sources#clang#libclang_path = "/Library/Developer/CommandLineTools/usr/lib/libclang.dylib"
   let g:deoplete#sources#clang#clang_header = "/Library/Developer/CommandLineTools/usr/lib/clang"
+else
+  let g:deoplete#sources#clang#libclang_path = "/usr/lib/llvm-4.0/lib/libclang.so.1"
+  let g:deoplete#sources#clang#clang_header = "/usr/lib/llvm-4.0/lib/clang"
 endif
 
 """"""""""""""""""""
