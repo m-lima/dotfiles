@@ -98,8 +98,10 @@ let g:HighlightingColumn=0
 hi Search cterm=NONE ctermfg=black ctermbg=yellow
 
 set wildmenu
-set termguicolors
 set cul
+if has("termguicolors")
+  set termguicolors
+endif
 colorscheme grayalt
 
 """"""""""""""""""""

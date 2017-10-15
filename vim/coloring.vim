@@ -5,7 +5,9 @@
 syntax enable
 
 " Use true colors
-set termguicolors
+if has("termguicolors")
+  set termguicolors
+endif
 
 " Highlight the cursor line
 set cul
