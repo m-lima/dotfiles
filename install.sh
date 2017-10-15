@@ -377,6 +377,7 @@ checkInstallDefault curl
 
 ########################################
 # Install vim
+# checkInstall "NeoVim" "$PACKAGE_INSTALL python3-neovim" '[ $(command -v 'nvim') ]'
 if [[ "$SYS_TYPE" == "Darwin" ]]
 then
   checkInstall "Vim" "$PACKAGE_INSTALL vim --with-lua" '[ $(command -v 'vim') ]'
@@ -464,6 +465,15 @@ fi
 checkInstall "Oh My ZSH" 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"' '[ -d "$HOME"/.oh-my-zsh ]'
 
 ########################################
+# Install ccat
+if [[ "$SYS_TYPE" == "Darwin" ]]
+then
+  checkInstall "ccat" "$SU_DO easy_install pygments" '[ $(command -v 'colorize') ]'
+else
+  checkInstall "ccat" "$PACKAGE_INSTALL python-pygments" '[ $(command -v 'colorize') ]'
+fi
+
+########################################
 # Create ~/bin
 echo -n "[34mChecking bin folder.. [[m"
 if [ -d "$HOME"/bin ]
@@ -529,9 +539,3 @@ case $INPUT in
     curl -s -L 'https://raw.githubusercontent.com/powerline/fonts/master/DejaVuSansMono/DejaVu Sans Mono for Powerline.ttf' -o "$HOME/DejaVu Sans Mono for Powerline.ttf" && echo "[32mFont saved as $HOME/DejaVu Sans Mono for Powerline.ttf[m"
     ;;
 esac
-
-########################################
-# Install pip/pygemnts
-# wget https://bootstrap.pypa.io/get-pip.py
-# python get-pyp.py
-# pip install pygments
