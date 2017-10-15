@@ -540,7 +540,6 @@ fi
 if [ $(command -v vim) ]
 then
   installFile s vim .vimrc
-  installFile s vim .vimrc.base
   installFile s vim grayalt.vim .vim/colors
 else
   echo "[33mSkipping Vim links[m"
