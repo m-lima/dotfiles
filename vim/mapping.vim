@@ -92,6 +92,13 @@ else
     imap <C-d> <Del>
   elseif has('unix')
 
+    " Scrolling using Alt for Alt-aware-terminal
+    nnoremap <M-j> 5<C-E>
+    nnoremap <M-k> 5<C-Y>
+    vnoremap <M-j> 5<C-E>
+    vnoremap <M-k> 5<C-Y>
+
+    " Scrolling using Alt with crude escape codes
     nnoremap <Esc>j 5<C-E>
     nnoremap <Esc>k 5<C-Y>
     vnoremap <Esc>j 5<C-E>
@@ -103,7 +110,7 @@ else
     " Current selection modify [Alt-S]
     vnoremap <Esc>s :s//g<LEFT><LEFT>
 
-    " Mapping crude mouse wheel terminal code
+    " Mapping crude mouse wheel escape codes
     inoremap <Esc>[62~ <C-X><C-E>
     inoremap <Esc>[63~ <C-X><C-Y>
     nnoremap <Esc>[62~ <C-E>
