@@ -1,6 +1,11 @@
 alias ccat='colorize'
 alias mud='telnet www.ateraan.com 4002'
-alias vi=vim
+if [ $(command -v nvim) ]
+then
+  alias vi=nvim
+elif [ $(command -v vim) ]
+  alias vi=vim
+fi
 
 # alias dh='dirs -v'
 # alias bd='popd > /dev/null'
