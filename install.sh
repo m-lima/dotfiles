@@ -386,15 +386,24 @@ else
 fi
 
 ########################################
-# Install Vundle
-checkInstall "Vundle" 'git clone https://github.com/VundleVim/Vundle.vim.git "$HOME"/.vim/bundle/Vundle.vim' '[ -d "$HOME"/.vim/bundle/Vundle.vim ]'
+# Install Vim-Plug
+# checkInstall "Vundle" 'git clone https://github.com/VundleVim/Vundle.vim.git "$HOME"/.vim/bundle/Vundle.vim' '[ -d "$HOME"/.vim/bundle/Vundle.vim ]'
 
-# VIM
-#curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    #https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-# NeoVIM
-#curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-    #https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# NeoVim
+if [ $(command -v nvim) ]
+then
+  checkInstall "Vim-Plug for NeoVim" 'curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' '[ -f ~/.local/share/nvim/site/autoload/plug.vim ]'
+else
+  echo "[33mSkipping Vim-Plug for NeoVim[m"
+fi
+
+# Vim
+if [ $(command -v vim) ]
+then
+  checkInstall "Vim-Plug for Vim" 'curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' '[ -f ~/.vim/autoload/plug.vim ]'
+else
+  echo "[33mSkipping Vim-Plug for Vim[m"
+fi
 
 ########################################
 # Install tmux
@@ -468,9 +477,12 @@ checkInstall "Oh My ZSH" 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/
 # Install ccat
 if [[ "$SYS_TYPE" == "Darwin" ]]
 then
-  checkInstall "ccat" "$SU_DO easy_install pygments" '[ $(command -v 'colorize') ]'
+  checkInstall "ccat" "$SU_DO easy_install pygments" '[ $(command -v 'pygmentize') ]'
+elif [[ "$SYS_TYPE" == "Arch" ]]
+then
+  checkInstall "ccat" "$PACKAGE_INSTALL pygmentize" '[ $(command -v 'pygmentize') ]'
 else
-  checkInstall "ccat" "$PACKAGE_INSTALL python-pygments" '[ $(command -v 'colorize') ]'
+  checkInstall "ccat" "$PACKAGE_INSTALL python-pygments" '[ $(command -v 'pygmentize') ]'
 fi
 
 ########################################
@@ -493,40 +505,95 @@ fi
 
 ########################################
 # Make symlinks
-echo "[34mMaking symlinks..[m"
-installFile s zsh .aliasrc
-installFile s zsh .zshrc
-installFile s vim .vimrc
-installFile s vim .vimrc.base
-installFile s scripts tmx bin
-installFile s tmux .tmux.conf
-installFile s zsh simpalt.zsh-theme .oh-my-zsh/custom
-installFile s zsh nali .oh-my-zsh/custom/plugins
+echo "[33mMaking symlinks..[m"
+if [ $(command -v zsh) ]
+then
+  installFile s zsh .aliasrc
+  installFile s zsh .zshrc
+
+  if [ -d "$HOME"/.oh-my-zsh ]
+  then
+    installFile s zsh simpalt.zsh-theme .oh-my-zsh/custom
+    installFile s zsh nali .oh-my-zsh/custom/plugins
+  else
+    echo "[33mSkipping Oh My ZSH links[m"
+  fi
+else
+  echo "[33mSkipping ZSH links[m"
+fi
+
+if [ $(command -v nvim) ] || [ $(command -v vim) ]
+then
+  installFile s vim vim .config/m-lima
+else
+  echo "[33mSkipping generic Vim links[m"
+fi
+
+if [ $(command -v nvim) ]
+then
+  installFile s vim init.vim .config/nvim
+  installFile s vim grayalt.vim .config/nvim/colors
+else
+  echo "[33mSkipping NeoVim links[m"
+fi
+
+if [ $(command -v vim) ]
+then
+  installFile s vim .vimrc
+  installFile s vim .vimrc.base
+  installFile s vim grayalt.vim .vim/colors
+else
+  echo "[33mSkipping Vim links[m"
+fi
+
+if [ $(command -v tmux) ]
+then
+  installFile s scripts tmx bin
+  installFile s tmux .tmux.conf
+else
+  echo "[33mSkipping Tmux links[m"
+fi
 
 ########################################
 # Copy files
-echo "[34mCopying files..[m"
+echo "[33mCopying files..[m"
 
-if installFile c tmux .tmux.conf.local
+if [ $(command -v tmux) ]
 then
-  echo "set-option -g default-shell $(which zsh)" >> "$HOME"/.tmux.conf.local
-  echo "set-option -g status-left \"#($BASE_DIR/tmux/tmux-powerline/powerline.sh left)\"" >> "$HOME"/.tmux.conf.local
-  echo "set-option -g status-right \"#($BASE_DIR/tmux/tmux-powerline/powerline.sh right)\"" >> "$HOME"/.tmux.conf.local
-fi
-
-if installFile c zsh .zshrc.local
-then
-  if [[ "$PACKAGE_INSTALL" == "pacaur --noedit --noconfirm -S" ]]
+  if installFile c tmux .tmux.conf.local
   then
-    echo 'alias pc=pacaur' >> "$HOME"/.zshrc.local
+    echo "set-option -g default-shell $(which zsh)" >> "$HOME"/.tmux.conf.local
+    echo "set-option -g status-left \"#($BASE_DIR/tmux/tmux-powerline/powerline.sh left)\"" >> "$HOME"/.tmux.conf.local
+    echo "set-option -g status-right \"#($BASE_DIR/tmux/tmux-powerline/powerline.sh right)\"" >> "$HOME"/.tmux.conf.local
   fi
-  vim "$HOME"/.zshrc.local
+else
+  echo "[33mSkipping Tmux files[m"
 fi
 
-if installFile c fd config .config/fd
+if [ $(command -v zsh) ]
 then
-  vim "$HOME"/.config/fd/config
+  if installFile c zsh .zshrc.local
+  then
+    if [[ "$PACKAGE_INSTALL" == "pacaur --noedit --noconfirm -S" ]]
+    then
+      echo 'alias pc=pacaur' >> "$HOME"/.zshrc.local
+    fi
+    vim "$HOME"/.zshrc.local
+  fi
+
+  if [ -d "$HOME"/.oh-my-zsh ]
+  then
+    if installFile c fd config .config/m-lima/fd
+    then
+      vim "$HOME"/.config/m-lima/fd/config
+    fi
+  else
+    echo "[33mSkipping Oh My ZSH links[m"
+  fi
+else
+  echo "[33mSkipping ZSH files[m"
 fi
+
 
 ########################################
 # Setup locale

@@ -53,6 +53,15 @@ vnoremap L $
 " Toggle relative numbering
 noremap <Leader>r :set rnu!<CR>
 
+" Global modify [Shift-S]
+nnoremap S :%s//gc<LEFT><LEFT><LEFT>
+
+" Current selection modify [Shift-S]
+vnoremap S :s//g<LEFT><LEFT>
+
+" Current line modify [Control-S]
+nnoremap <C-S> :s//g<LEFT><LEFT>
+
 if has('win32')
 
   " Scrolling [Alt-J/Alt-K]
@@ -61,15 +70,6 @@ if has('win32')
   vnoremap <M-j> 5<C-E>
   vnoremap <M-k> 5<C-Y>
 
-  " Global modify [Shift-S]
-  nnoremap S :%s//gc<LEFT><LEFT><LEFT>
-
-  " Current line modify [Alt-S]
-  nnoremap <M-s> :s//g<LEFT><LEFT>
-
-  " Current selection modify [Alt-S]
-  vnoremap <M-s> :s//g<LEFT><LEFT>
-
 else
   " These cases are for Macs or Macs wrapping Linux
   " Scrolling [Alt-J/Alt-K]
@@ -77,15 +77,6 @@ else
   nnoremap ˚ 5<C-Y>
   vnoremap ∆ 5<C-E>
   vnoremap ˚ 5<C-Y>
-
-  " Global modify [Shift-S]
-  nnoremap S :%s//gc<LEFT><LEFT><LEFT>
-
-  " Current line modify [Alt-S]
-  nnoremap ß :s//g<LEFT><LEFT>
-
-  " Current selection modify [Alt-S]
-  vnoremap ß :s//g<LEFT><LEFT>
 
   if has('macunix')
     " Get a proper delete on Mac
@@ -103,12 +94,6 @@ else
     nnoremap <Esc>k 5<C-Y>
     vnoremap <Esc>j 5<C-E>
     vnoremap <Esc>k 5<C-Y>
-
-    " Current line modify [Alt-S]
-    nnoremap <Esc>s :s//g<LEFT><LEFT>
-
-    " Current selection modify [Alt-S]
-    vnoremap <Esc>s :s//g<LEFT><LEFT>
 
     " Mapping crude mouse wheel escape codes
     inoremap <Esc>[62~ <C-X><C-E>

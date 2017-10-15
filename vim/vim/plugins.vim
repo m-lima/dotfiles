@@ -32,14 +32,17 @@ Plug 'glts/vim-textobj-comment'        " c
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 
 """ Completion
-"if has("lua")
-  "Plugin 'shougo/neocomplete'
-"endif
-if has("python3")
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'zchee/deoplete-clang', { 'for': 'cpp' }
-  Plug 'zchee/deoplete-go', { 'for': 'go' }
-  Plug 'mhartington/nvim-typescript', { 'for': 'javascript', 'do': ':UpdateRemotePlugins' }
+if has("nvim")
+  if has("python3")
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'zchee/deoplete-clang', { 'for': 'cpp' }
+    Plug 'zchee/deoplete-go', { 'for': 'go' }
+    Plug 'mhartington/nvim-typescript', { 'for': 'javascript', 'do': ':UpdateRemotePlugins' }
+  endif
+else
+  if has("lua")
+    Plug 'shougo/neocomplete'
+  endif
 endif
 
 call plug#end()
@@ -81,8 +84,8 @@ nnoremap <Leader>g :GitGutterToggle<CR>
 let g:gitgutter_enabled = 0
 
 """ NeoComplete
-" let g:neocomplete#enable_at_startup = 1
-" let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
 
 """ Deoplete
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"

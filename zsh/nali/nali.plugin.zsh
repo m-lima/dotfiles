@@ -29,9 +29,9 @@ function fd {
   if [ "$1" ]
   then
 
-    if [ ! -f ~/.config/fd/config ]
+    if [ ! -f ~/.config/m-lima/fd/config ]
     then
-      echo Entry file not found at "$HOME/.config/fd/config"
+      echo Entry file not found at "$HOME/.config/m-lima/fd/config"
       return -1
     fi
 
@@ -46,7 +46,7 @@ function fd {
           return
           ;;
       esac
-    done < ~/.config/fd/config
+    done < ~/.config/m-lima/fd/config
     echo Entry not found
     return -1
 

@@ -1,12 +1,12 @@
 #compdef fd
 
-if [ -f ~/.config/fd/config ]
+if [ -f ~/.config/m-lima/fd/config ]
 then
   setopt localoptions nonomatch
 
   local lines list disp
 
-  lines=($(cat ~/.config/fd/config))
+  lines=($(cat ~/.config/m-lima/fd/config))
   list=( $lines )
   disp=( -ld lines )
 

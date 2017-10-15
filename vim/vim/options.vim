@@ -1,5 +1,5 @@
 """"""""""""""""""""
-" Base config
+" Options config
 """"""""""""""""""""
 
 " Fix the backspace
@@ -46,3 +46,4 @@ set wildmenu
 
 " TS is javascript
 autocmd BufRead,BufNewFile *.ts set filetype=javascript
+

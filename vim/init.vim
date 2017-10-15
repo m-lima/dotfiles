@@ -1,14 +1,14 @@
 " Base config
-source ~/.config/nvim/base.vim
+source ~/.config/m-lima/vim/base.vim
 
 " Mappings
-source ~/.config/nvim/mapping.vim
+source ~/.config/m-lima/vim/mapping.vim
 
 " Plugins
-source ~/.config/nvim/plugins.vim
+source ~/.config/m-lima/vim/plugins.vim
 
 " Coloring
-source ~/.config/nvim/coloring.vim
+source ~/.config/m-lima/vim/coloring.vim
 
 " Functions
-source ~/.config/nvim/functions.vim
+source ~/.config/m-lima/vim/functions.vim
