@@ -22,7 +22,7 @@ set mouse=a
 set number
 set relativenumber
 
-" Show white spaces
+" Show white spaces (in an exec to escape the caracters)
 exec "set listchars=tab:\uB7\uA0,trail:\uAB,nbsp:\u268B"
 set list
 

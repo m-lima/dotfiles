@@ -19,7 +19,7 @@ highlight Constant guifg=#87dfdf ctermfg=116 guibg=NONE ctermbg=NONE gui=NONE ct
 highlight Directory guifg=#ffaf87 ctermfg=216 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight EndOfBuffer guifg=#262626 ctermfg=235 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight Identifier guifg=#ffaf87 ctermfg=216 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-highlight MatchParen guifg=#df005f ctermfg=161 guibg=NONE ctermbg=NONE gui=bold cterm=bold
+highlight MatchParen guifg=#df005f ctermfg=161 guibg=#262626 ctermbg=235 gui=bold cterm=bold
 highlight NonText guifg=#ff00af ctermfg=201 guibg=NONE ctermbg=NONE gui=bold cterm=bold
 highlight Number guifg=#87dfdf ctermfg=116 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight PreProc guifg=#ffdfaf ctermfg=223 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
