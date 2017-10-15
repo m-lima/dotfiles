@@ -4,6 +4,7 @@ if [ $(command -v nvim) ]
 then
   alias vi=nvim
 elif [ $(command -v vim) ]
+then
   alias vi=vim
 fi
 
