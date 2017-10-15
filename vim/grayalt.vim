@@ -10,7 +10,7 @@ if exists('syntax_on')
   syntax reset
 endif
 
-highlight Normal guifg=#909090 ctermfg=245 guibg=#262626 gui=NONE cterm=NONE
+highlight Normal guifg=#909090 ctermfg=245
 
 " Misc {{{1
 
@@ -20,7 +20,7 @@ highlight Directory guifg=#ffaf87 ctermfg=216 guibg=NONE ctermbg=NONE gui=NONE c
 highlight EndOfBuffer guifg=#262626 ctermfg=235 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight Identifier guifg=#ffaf87 ctermfg=216 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight MatchParen guifg=#df005f ctermfg=161 guibg=NONE ctermbg=NONE gui=bold cterm=bold
-highlight NonText guifg=#ff00af ctermfg=199 guibg=NONE ctermbg=NONE gui=bold cterm=bold
+highlight NonText guifg=#ff00af ctermfg=201 guibg=NONE ctermbg=NONE gui=bold cterm=bold
 highlight Number guifg=#87dfdf ctermfg=116 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight PreProc guifg=#ffdfaf ctermfg=223 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight Special guifg=#dfafaf ctermfg=181 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
