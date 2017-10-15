@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # TODO
 # [O] git submodule
 # [O] Generate tmux-powerlinerc
