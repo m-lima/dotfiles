@@ -9,6 +9,9 @@
 # [O] Ask if force regenerate tmux.conf.local
 # [ ] Add roll to TMUX powerline
 # [ ] Show no definition found on powershell
+# [ ] Allow for neovim instead of vim
+# [ ] Adapt vimrc to new rc format
+# [ ] Configure clang-complete based on local environment
 
 ################################################################################
 # Functions                                                                    #
@@ -384,6 +387,13 @@ fi
 ########################################
 # Install Vundle
 checkInstall "Vundle" 'git clone https://github.com/VundleVim/Vundle.vim.git "$HOME"/.vim/bundle/Vundle.vim' '[ -d "$HOME"/.vim/bundle/Vundle.vim ]'
+
+# VIM
+#curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    #https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# NeoVIM
+#curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    #https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 ########################################
 # Install tmux

@@ -43,3 +43,6 @@ set timeoutlen=400
 
 " Show suggestions on top
 set wildmenu
+
+" TS is javascript
+autocmd BufRead,BufNewFile *.ts set filetype=javascript

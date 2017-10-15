@@ -28,6 +28,9 @@ Plug 'kana/vim-textobj-indent'         " i
 Plug 'kana/vim-textobj-entire'         " e
 Plug 'glts/vim-textobj-comment'        " c
 
+""" Languages
+Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
+
 """ Completion
 "if has("lua")
   "Plugin 'shougo/neocomplete'
@@ -35,11 +38,9 @@ Plug 'glts/vim-textobj-comment'        " c
 if has("python3")
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'zchee/deoplete-clang', { 'for': 'cpp' }
-  Plug 'zchee/deoplete-go'
+  Plug 'zchee/deoplete-go', { 'for': 'go' }
+  Plug 'mhartington/nvim-typescript', { 'for': 'javascript', 'do': ':UpdateRemotePlugins' }
 endif
-
-""" Languages
-Plug 'fatih/vim-go'
 
 call plug#end()
 
@@ -84,10 +85,16 @@ let g:gitgutter_enabled = 0
 " let g:neocomplete#enable_smart_case = 1
 
 """ Deoplete
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+
+" Golang
+let g:deoplete#sources#go#gocode_binary = $GOPATH."/bin/gocode"
+
+" Clang
 if has('win32')
 elseif has('macunix')
   let g:deoplete#sources#clang#libclang_path = "/Library/Developer/CommandLineTools/usr/lib/libclang.dylib"
