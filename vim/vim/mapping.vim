@@ -20,6 +20,11 @@ nnoremap yp yyp
 " Y should follow the pattern and yank until the end
 nnoremap Y y$
 
+" Copy to unnamed register
+nnoremap gY "*y$
+nnoremap gyy "*yy
+vnoremap gy "*y
+
 " Clean line
 nnoremap de 0D
 
