@@ -4,18 +4,36 @@ if [ -f ~/.config/m-lima/fd/config ]
 then
   setopt localoptions nonomatch
 
-  local lines list disp
+  if (( CURRENT == 2 ))
+  then
+    local lines list disp
 
-  lines=($(cat ~/.config/m-lima/fd/config))
-  list=( $lines )
-  disp=( -ld lines )
+    lines=($(cat ~/.config/m-lima/fd/config))
+    list=( $lines )
+    disp=( -ld lines )
 
-  integer i
-  for (( i = 1; i <= $#list; i++ ))
-  do
-    list[$i]=$(echo $lines[$i] | cut -d : -f 1)
-    lines[$i]="$(echo $lines[$i] | cut -d : -f 1) : $(echo $lines[$i] | cut -d : -f 2)"
-  done
+    integer i
+    for (( i = 1; i <= $#list; i++ ))
+    do
+      list[$i]=$(echo $lines[$i] | cut -d : -f 1)
+      lines[$i]="$(echo $lines[$i] | cut -d : -f 1) : $(echo $lines[$i] | cut -d : -f 2)"
+    done
 
-  compadd "$disp[@]" -Q -a list
+    compadd "$disp[@]" -Q -a list
+  elif (( CURRENT == 3 ))
+  then
+    while read line
+    do
+      entry=$(echo $line | cut -d : -f 1)
+      case $entry in
+        $words[2])
+          dir=$(echo $line | cut -d : -f 2)
+          # echo $dir
+          # eval echo $dir
+          eval _path_files -W $dir -/
+          return
+          ;;
+      esac
+    done < ~/.config/m-lima/fd/config
+  fi
 fi

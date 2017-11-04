@@ -41,8 +41,7 @@ function fd {
       case $entry in
         $1)
           dir=$(echo $line | cut -d : -f 2)
-          # cd $(eval echo $dir)
-          eval $dir
+          eval cd $dir/$2
           return
           ;;
       esac
