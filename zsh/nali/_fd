@@ -28,8 +28,6 @@ then
       case $entry in
         $words[2])
           dir=$(echo $line | cut -d : -f 2)
-          # echo $dir
-          # eval echo $dir
           eval _path_files -W $dir -/
           return
           ;;
