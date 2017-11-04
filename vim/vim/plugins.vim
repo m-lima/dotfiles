@@ -16,6 +16,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle','NERDTreeTabsToggle'] }
 Plug 'jistr/vim-nerdtree-tabs', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle','NERDTreeTabsToggle'] }
 Plug 'kana/vim-textobj-user'
+Plug 'terryma/vim-multiple-cursors'
 
 " Verbs
 Plug 'tpope/vim-surround'              " s
@@ -23,7 +24,7 @@ Plug 'tpope/vim-commentary'            " gc
 Plug 'vim-scripts/ReplaceWithRegister' " gr
 
 " Text objects
-Plug 'kana/vim-textobj-line'           " l
+" Plug 'kana/vim-textobj-line'           " l
 Plug 'kana/vim-textobj-indent'         " i
 Plug 'kana/vim-textobj-entire'         " e
 Plug 'glts/vim-textobj-comment'        " c
@@ -56,7 +57,7 @@ let g:go_fmt_fail_silently = 1
 
 """ Vim-commentary
 autocmd FileType cmake setlocal commentstring=#\ %s
-autocmd FileType cpp,hpp,c,h,cc,hh,cl setlocal commentstring=//\ %s
+autocmd FileType cpp,hpp,c,h,cc,hh,cl,tf setlocal commentstring=//\ %s
 
 """ Vim-airline
 let g:airline_powerline_fonts = 1
@@ -137,3 +138,5 @@ endif
 " cs                  [Change surround]
 " ds                  [Delete surround]
 " ys                  [Add surround]
+"
+" va}a}a}...a}        [Select larger and larger scope]
