@@ -378,6 +378,11 @@ cd $HOME
 checkInstallDefault curl
 
 ########################################
+# Install NeoVim
+# checkInstall "NeoVim" "$PACKAGE_INSTALL python3-neovim" '[ $(command -v 'nvim') ]'
+checkInstall "NeoVim" "$PACKAGE_INSTALL neovim" '[ $(command -v 'nvim') ]'
+
+########################################
 # Install vim
 # checkInstall "NeoVim" "$PACKAGE_INSTALL python3-neovim" '[ $(command -v 'nvim') ]'
 if [[ "$SYS_TYPE" == "Darwin" ]]
