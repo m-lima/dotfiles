@@ -60,11 +60,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='vim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -87,4 +87,74 @@ then
   export TERM=xterm-256color
 fi
 
-source "$HOME"/.aliasrc
+source "${HOME}"/.aliasrc
+
+if test -e "${HOME}/.iterm2_shell_integration.zsh"
+then
+  source "${HOME}/.iterm2_shell_integration.zsh"
+
+  function buildGitStatusLabel {
+    _STATUS=""
+
+    # check status of files
+    _INDEX=$(command git status --porcelain 2> /dev/null)
+    if [[ -n "$_INDEX" ]]; then
+      if $(echo "$_INDEX" | command grep -q '^[AMRD]. '); then
+        # Staged
+        _STATUS="$_STATUS📦"
+      fi
+      if $(echo "$_INDEX" | command grep -q '^.[MTD] '); then
+        # Unstaged
+        _STATUS="$_STATUS🤖"
+      fi
+      if $(echo "$_INDEX" | command grep -q -E '^\?\? '); then
+        # Untracked
+        _STATUS="$_STATUS✨"
+      fi
+      if $(echo "$_INDEX" | command grep -q '^UU '); then
+        # Unmerged
+        _STATUS="$_STATUS⛔️"
+      fi
+    else
+      # Clean
+      _STATUS="$_STATUS✅"
+    fi
+
+    # check status of local repository
+    _INDEX=$(command git status --porcelain -b 2> /dev/null)
+    if $(echo "$_INDEX" | command grep -q '^## .*ahead'); then
+      # Ahead
+      _STATUS="$_STATUS🚀"
+    fi
+    if $(echo "$_INDEX" | command grep -q '^## .*behind'); then
+      # Behind
+      _STATUS="$_STATUS🐌"
+    fi
+    if $(echo "$_INDEX" | command grep -q '^## .*diverged'); then
+      # Diverged
+      _STATUS="$_STATUS😱"
+    fi
+
+    if $(command git rev-parse --verify refs/stash &> /dev/null); then
+      # Stashed
+      _STATUS="$_STATUS💾"
+    fi
+
+    echo $_STATUS
+
+  }
+
+  function iterm2_print_user_vars() {
+    local ref dirty customLabel customGit
+
+    customLabel=$(pwd | sed -e "s,^$HOME,~," | sed "s@\(.\)[^/]*/@\1/@g")
+
+    if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
+      ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="‼️$(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
+      customLabel="${customLabel} : ${ref/refs\/heads\//} $(buildGitStatusLabel)"
+    fi
+
+    "${HOME}/.iterm2/it2setkeylabel" set status "$customLabel"
+  }
+fi
+
