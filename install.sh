@@ -531,7 +531,7 @@ then
   then
     installFile s zsh simpalt.zsh-theme .oh-my-zsh/custom
     installFile s zsh nali .oh-my-zsh/custom/plugins
-    installFile s zsh autosuggestions.zsh .oh-my-zsh/custom
+    installFile s zsh localConfig.zsh .oh-my-zsh/custom
   else
     echo "[33mSkipping Oh My ZSH links[m"
   fi
