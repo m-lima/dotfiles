@@ -10,7 +10,4 @@ export COMPUTER_SYMBOL='§'
 # export COMPUTER_SYMBOL='ø'
 # export COMPUTER_SYMBOL='ƛ'
 
-plugins+=(zsh-autosuggestions git colorize nali)
-
-# Enable vim mode
-bindkey -v
+#plugins+=(ddt)
