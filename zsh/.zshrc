@@ -1,5 +1,9 @@
 # Shared plugins
-plugins+=(zsh-autosuggestions git colorize nali history-substring-search vi-mode)
+plugins+=(git colorize nali)
+plugins+=(zsh-autosuggestions)
+plugins+=(history-substring-search)
+# plugins+=(vi-mode)
+# plugins+=(zsh-vim-mode)
 
 # Load local config
 source "$HOME"/.zshrc.local
@@ -9,7 +13,7 @@ export ZSH="$HOME"/.oh-my-zsh
 
 # ZSH options
 ZSH_THEME="simpalt"
-HYPHEN_INSENSITIVE="true"
+# HYPHEN_INSENSITIVE="true"
 ENABLE_CORRECTION="true"
 # COMPLETION_WAITING_DOTS="true"
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
