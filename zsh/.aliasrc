@@ -1,5 +1,7 @@
 alias ccat='colorize'
 alias mud='telnet www.ateraan.com 4002'
+alias png='ping -c 4'
+
 if [ $(command -v nvim) ]
 then
   alias vi=nvim
