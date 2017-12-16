@@ -388,6 +388,9 @@ checkInstall "NeoVim" "$PACKAGE_INSTALL neovim" '[ $(command -v 'nvim') ]'
 if [[ "$SYS_TYPE" == "Darwin" ]]
 then
   checkInstall "Vim" "$PACKAGE_INSTALL vim --with-lua" '[ $(command -v 'vim') ]'
+elif [[ "$SYS_TYPE" == "Arch" ]]
+then
+  checkInstall "Vim" "$PACKAGE_INSTALL vim" '[ $(command -v 'vim') ]'
 else
   checkInstall "Vim" "$PACKAGE_INSTALL vim-nox" '[ $(command -v 'vim') ]'
 fi
@@ -481,12 +484,12 @@ fi
 checkInstall "Oh My ZSH" 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"' '[ -d "$HOME"/.oh-my-zsh ]'
 
 ########################################
-# Install ZSH AutoSuggestions
+# Install Nali AutoSuggestions
 if [ $(command -v zsh) ] && [ -d "$HOME"/.oh-my-zsh ]
 then
-  checkInstall "ZSH AutoSuggestions" 'git clone git://github.com/zsh-users/zsh-autosuggestions "$HOME"/.oh-my-zsh/custom/plugins/zsh-autosuggestions' '[ -d "$HOME"/.oh-my-zsh/custom/plugins/zsh-autosuggestions ]'
+  checkInstall "Nali AutoSuggestions" 'git clone https://github.com/m-lima/nali-autosuggestions "$HOME"/.oh-my-zsh/custom/plugins/nali-autosuggestions' '[ -d "$HOME"/.oh-my-zsh/custom/plugins/nali-autosuggestions ]'
 else
-  echo "[33mSkipping ZSH AutoSuggestions[m"
+  echo "[33mSkipping Nali AutoSuggestions[m"
 fi
 
 ########################################
