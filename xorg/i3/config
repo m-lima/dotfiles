@@ -16,7 +16,7 @@ set_from_resource $cyan        color14 #000000
 set_from_resource $darkwhite   color7  #000000
 set_from_resource $white       color15 #000000
 # Use custom colors for black
-set $black       #282828
+set $black       #262626
 set $darkblack   #1d2021
 set $transparent #00000000
 
@@ -24,7 +24,6 @@ set $height 24
 set $editor termite
 
 set $ws1  "1:  "
-#set $ws2  "2:  "
 set $ws2  "2: "
 set $ws3  "3:  "
 set $ws4  "4:  "
@@ -33,7 +32,7 @@ set $ws6  "6:  "
 set $ws7  "7:  "
 set $ws8  "8:  "
 set $ws9  "9:  "
-set $ws10 "10:  "
+set $ws10 "10:  "
 
 workspace $ws1 gaps inner 0
 workspace $ws1 gaps outer 0
@@ -241,7 +240,7 @@ bar {
 
     colors {
         statusline         $white
-        background         #282828
+        background         #262626
         separator          $transparent
 
 #                          BORDER       BACKGROUND   TEXT
