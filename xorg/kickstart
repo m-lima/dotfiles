@@ -1,0 +1,24 @@
+Inspiration:
+Airblader
+https://github.com/Airblader
+
+Packages to install:
+ - XOrg
+ - i3-gaps
+  \- rofi (instead of dmenu)
+  \- i3blocks-gaps-git (pacaur)
+ - termite (for gui term)
+ - fontawesome (ttf-font-awesome from pacaur)
+
+Placement:
+X/* -> ~/.
+i3 -> ~/.config/.
+i3blocks -> ~/.config/.
+urxvt -> ~/.config/.
+termite -> ~/.config/.
+
+Add:
+~/.xinitrc:
+```
+exec i3
+```

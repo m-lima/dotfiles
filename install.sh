@@ -81,8 +81,6 @@ function checkInstall {
     read INPUT
     case $INPUT in
       [Nn] )
-        checkContinue
-        return 1
         ;;
       *)
         if eval "$2"
@@ -379,12 +377,10 @@ checkInstallDefault curl
 
 ########################################
 # Install NeoVim
-# checkInstall "NeoVim" "$PACKAGE_INSTALL python3-neovim" '[ $(command -v 'nvim') ]'
 checkInstall "NeoVim" "$PACKAGE_INSTALL neovim" '[ $(command -v 'nvim') ]'
 
 ########################################
 # Install vim
-# checkInstall "NeoVim" "$PACKAGE_INSTALL python3-neovim" '[ $(command -v 'nvim') ]'
 if [[ "$SYS_TYPE" == "Darwin" ]]
 then
   checkInstall "Vim" "$PACKAGE_INSTALL vim --with-lua" '[ $(command -v 'vim') ]'

@@ -48,3 +48,5 @@ set wildmenu
 autocmd BufRead,BufNewFile *.ts set filetype=javascript
 autocmd BufRead,BufNewFile *.cl set filetype=c
 
+" UTF
+set encoding=utf-8
