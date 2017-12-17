@@ -9,6 +9,7 @@ Packages to install:
   \- i3blocks-gaps-git (pacaur)
  - termite (for gui term)
  - ttf-font-awesome (pacaur)
+ - ttf-devaju-sans-mono-powerline-git (pacaur)
 
 Placement:
 X/* -> ~/.
