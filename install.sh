@@ -593,14 +593,14 @@ then
     then
       echo 'alias pc=pacaur' >> "$HOME"/.zshrc.local
     fi
-    vim "$HOME"/.zshrc.local
+    vi "$HOME"/.zshrc.local
   fi
 
   if [ -d "$HOME"/.oh-my-zsh ]
   then
     if installFile c fd config .config/m-lima/fd
     then
-      vim "$HOME"/.config/m-lima/fd/config
+      vi "$HOME"/.config/m-lima/fd/config
     fi
   else
     echo "[33mSkipping Oh My ZSH links[m"
