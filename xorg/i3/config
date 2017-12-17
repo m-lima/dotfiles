@@ -254,7 +254,7 @@ bar {
     }
 }
 
-# Background
-exec --no-startup-id feh --bg-scale ~/Downloads/1440x900.jpg
+## Background
+#xec --no-startup-id feh --bg-scale ~/.config/i3/1440x900.jpg
 #exec --no-startup-id feh --bg-scale ~/Downloads/soft.jpg
-exec --no-startup-id compton -b
+#exec --no-startup-id compton -b
