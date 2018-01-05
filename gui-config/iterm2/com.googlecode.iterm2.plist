@@ -1344,6 +1344,34 @@
 			<key>Text</key>
 			<string></string>
 		</dict>
+		<key>0x68-0x180000</key>
+		<dict>
+			<key>Action</key>
+			<integer>18</integer>
+			<key>Text</key>
+			<string></string>
+		</dict>
+		<key>0x6a-0x180000</key>
+		<dict>
+			<key>Action</key>
+			<integer>21</integer>
+			<key>Text</key>
+			<string></string>
+		</dict>
+		<key>0x6b-0x180000</key>
+		<dict>
+			<key>Action</key>
+			<integer>20</integer>
+			<key>Text</key>
+			<string></string>
+		</dict>
+		<key>0x6c-0x180000</key>
+		<dict>
+			<key>Action</key>
+			<integer>19</integer>
+			<key>Text</key>
+			<string></string>
+		</dict>
 		<key>0x73-0x40000</key>
 		<dict>
 			<key>Action</key>
@@ -1584,7 +1612,7 @@ Show Toolbelt</string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>1786 1836 620 392 816 1050 2560 1440 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>163 113 1016 512 0 0 1680 1050 </string>
+	<string>196 308 918 381 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>0 374 1625 654 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
@@ -3720,7 +3748,7 @@ Show Toolbelt</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-11-13T12:46:28Z</date>
+	<date>2017-12-21T08:19:38Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
