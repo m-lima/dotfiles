@@ -1,4 +1,3 @@
-alias ccat='colorize'
 alias mud='telnet www.ateraan.com 4002'
 alias png='ping -c 4'
 
@@ -8,6 +7,14 @@ then
 elif [ $(command -v vim) ]
 then
   alias vi=vim
+fi
+
+if [ $(command -v colorize) ]
+then
+  alias ccat='colorize'
+elif [ $(command -v pygmentize) ]
+then
+  alias ccat='pygmentize'
 fi
 
 # alias dh='dirs -v'
