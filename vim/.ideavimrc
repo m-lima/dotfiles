@@ -1,0 +1,2 @@
+" Base config
+source ~/.config/m-lima/vim/base.vim
