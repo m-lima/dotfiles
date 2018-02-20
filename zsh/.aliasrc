@@ -11,7 +11,7 @@ fi
 
 if [ $(command -v colorize) ]
 then
-  alias ccat='colorize'
+  #alias ccat='colorize'
 elif [ $(command -v pygmentize) ]
 then
   alias ccat='pygmentize'

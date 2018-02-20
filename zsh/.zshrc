@@ -29,9 +29,9 @@ export EDITOR='vim'
 export PATH="$HOME"/bin:$PATH
 
 # Setting UTF8 locale
-export LC_ALL="en_US.UTF-8"
+# export LC_ALL="en_US.UTF-8"
 
-if [ $TERM = "xterm" ]
+if [[ $TERM = xterm* ]]
 then
   export TERM=xterm-256color
 fi
