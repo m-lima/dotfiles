@@ -9,7 +9,7 @@ then
   alias vi=vim
 fi
 
-if [ $(command -v colorize) ]
+if [[ $(command -v colorize) ]]
 then
   alias ccat='colorize'
 fi
