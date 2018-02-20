@@ -11,10 +11,7 @@ fi
 
 if [ $(command -v colorize) ]
 then
-  #alias ccat='colorize'
-elif [ $(command -v pygmentize) ]
-then
-  alias ccat='pygmentize'
+  alias ccat='colorize'
 fi
 
 # alias dh='dirs -v'
