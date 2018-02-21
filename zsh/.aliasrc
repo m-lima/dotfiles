@@ -9,10 +9,16 @@ then
   alias vi=vim
 fi
 
-if [[ $(command -v colorize) ]]
-then
-  alias ccat='colorize'
-fi
+#if [[ $(command -v colorize) ]]
+#then
+#  alias ccat='colorize'
+#elif [[ $(command -v colorize_via_pygmentize) ]]
+#then
+#  alias ccat='colorize_via_pygmentize'
+#elif [[ $(command -v pygmentize) ]]
+#then
+#  alias ccat='pygmentize'
+#fi
 
 # alias dh='dirs -v'
 # alias bd='popd > /dev/null'
