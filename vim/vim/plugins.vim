@@ -36,7 +36,7 @@ Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 if has("nvim")
   if has("python3")
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'zchee/deoplete-clang', { 'for': 'cpp' }
+    Plug 'zchee/deoplete-clang', { 'for': ['cpp', 'c'] }
     Plug 'zchee/deoplete-go', { 'for': 'go' }
     Plug 'mhartington/nvim-typescript', { 'for': 'javascript', 'do': ':UpdateRemotePlugins' }
   endif
