@@ -11,16 +11,15 @@ then
 
   elif (( CURRENT == 3 ))
   then
+
     while read line
     do
-      local entry=$(echo $line | cut -d : -f 1)
-      case $entry in
-        $words[2])
-          dir=$(echo $line | cut -d : -f 2)
-          eval _path_files -W $dir -/
-          return
-          ;;
-      esac
+      if [[ "$(echo $line | cut -d : -f 1)" == "$words[2]" ]]
+      then
+        eval _path_files -W $(echo $line | cut -d : -f 2) -/
+        return
+      fi
     done < ~/.config/m-lima/fd/config
+
   fi
 fi
