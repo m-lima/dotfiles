@@ -1,25 +1,16 @@
 #compdef fd
 
+# Reload by: unfunction _fd && autoload -U _fd
+
 if [ -f ~/.config/m-lima/fd/config ]
 then
-  setopt localoptions nonomatch
-
   if (( CURRENT == 2 ))
   then
-    local lines list disp
+    local list
 
-    lines=($(cat ~/.config/m-lima/fd/config))
-    list=( $lines )
-    disp=( -ld lines )
+    list=($(cat ~/.config/m-lima/fd/config))
+    _describe 'list' list
 
-    integer i
-    for (( i = 1; i <= $#list; i++ ))
-    do
-      list[$i]=$(echo $lines[$i] | cut -d : -f 1)
-      lines[$i]="$(echo $lines[$i] | cut -d : -f 1) : $(echo $lines[$i] | cut -d : -f 2)"
-    done
-
-    compadd "$disp[@]" -Q -a list
   elif (( CURRENT == 3 ))
   then
     while read line

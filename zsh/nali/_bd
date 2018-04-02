@@ -1,24 +1,27 @@
 #compdef bd
 
-setopt localoptions nonomatch
+# Reload by: unfunction _bd && autoload -U _bd
 
-local expl list lines disp sep
+if ((CURRENT == 2))
+then
 
-zstyle -s ":completion:${curcontext}:directory-stack" list-separator sep || sep=--
+  # Setting the tag to indexes and disabling grouping
+  zstyle ":completion:${curcontext}:indexes" list-grouped no
 
-if zstyle -T ":completion:${curcontext}:directory-stack" verbose; then
+  local lines i list
+
+  # Allowing $HOME to be replaced
   lines=("${(D)dirstack[@]}")
+  list=()
+  integer i
 
-  for (( i = 1; i <= $#lines; i++ )); do
-    lines[$i]="$i $sep ${lines[$i]##[0-9]#[	 ]#}"
+  # The list is the format "value:description"
+  for (( i = 1; i <= $#lines; i++ ))
+  do
+    list+="$i:$lines[$i]"
   done
 
-  list=( ${PREFIX[1]}${^lines%% *} )
-  disp=( -ld lines )
-else
-  list=( ${PREFIX[1]}{0..${#dirstack}} )
-  disp=()
-fi
+  # -V disables the ordering
+  _describe -V 'indexes' list
 
-_wanted -V directory-stack expl 'directory stack' \
-    compadd "$@" "$disp[@]" -Q -a list
+fi
