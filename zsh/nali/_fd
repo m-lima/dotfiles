@@ -6,16 +6,14 @@ if [ -f ~/.config/m-lima/fd/config ]
 then
   if (( CURRENT == 2 ))
   then
-    local list
-
-    list=($(cat ~/.config/m-lima/fd/config))
+    local list=($(cat ~/.config/m-lima/fd/config))
     _describe 'list' list
 
   elif (( CURRENT == 3 ))
   then
     while read line
     do
-      entry=$(echo $line | cut -d : -f 1)
+      local entry=$(echo $line | cut -d : -f 1)
       case $entry in
         $words[2])
           dir=$(echo $line | cut -d : -f 2)
