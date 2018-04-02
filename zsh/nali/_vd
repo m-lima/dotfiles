@@ -1,29 +1,27 @@
 #compdef vd
 
-setopt localoptions nonomatch
+# Reload by: unfunction _vd && autoload -U _vd
 
-local expl list lines revlines disp sep
+if ((CURRENT == 2))
+then
 
-zstyle -s ":completion:${curcontext}:directory-stack" list-separator sep || sep=--
+  # Setting the tag to indexes and disabling grouping
+  zstyle ":completion:${curcontext}:indexes" list-grouped no
 
-if zstyle -T ":completion:${curcontext}:directory-stack" verbose; then
+  local lines i list
+
+  # Slipting the path by "/"
   lines=(${(s:/:)PWD})
-  lines=("${(D)lines[@]}")
-
+  list=()
   integer i
-  revlines=( $lines )
-  for (( i = 2; i <= $#lines; i++ )); do
-    lines[$i-1]="$((i-1)) $sep ${revlines[-$i]##[0-9]#[	 ]#}"
+
+  # The list is the format "value:description"
+  for (( i = 2; i <= $#lines; i++ ))
+  do
+    list+="$((i-1)):$lines[-$i]"
   done
 
-  [ $#lines ] && lines[$#lines]="$#lines -- /"
+  # -V disables the ordering
+  _describe -V 'indexes' list
 
-  list=( ${PREFIX[1]}${^lines%% *} )
-  disp=( -ld lines )
-else
-  list=( ${PREFIX[1]}{0..${#dirstack}} )
-  disp=()
 fi
-
-_wanted -V directory-stack expl 'directory stack' \
-    compadd "$@" "$disp[@]" -Q -a list
