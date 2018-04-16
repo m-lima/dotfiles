@@ -5,9 +5,16 @@ border_left=0
 border_right=0
 border_bottom=4
 
+[volume]
+command=$HOME/.config/i3blocks/volume.sh
+interval=1
+signal=1
+markup=pango
+border=#a2973d
+
 [time]
 label=    
-command=echo "`date +'%a %d %b'` <b>`date +'%T'`</b> "; [[ -z "${BLOCK_BUTTON}" ]] || gsimplecal &
+command=echo "`date +'%a %d %b'` <b>`date +'%T'`</b> "
 interval=1
 markup=pango
 border=#928374
