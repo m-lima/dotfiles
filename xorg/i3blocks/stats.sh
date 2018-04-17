@@ -2,14 +2,20 @@
 
 if [[ "$1" == "ram" ]]
 then
-  total=`cat /proc/meminfo | grep MemTotal | grep -o "[0-9]*"`
-  free=`cat /proc/meminfo | grep MemFree | grep -o "[0-9]*"`
 
-  used=$(( (total - free) * 1000 ))
-  echo -n $(( used / 1024 / 1024 ))"MiB"
+  memory=( `free -m | awk 'FNR == 2 {print $3*100; print $2}'` )
 
-  used=$(( used / total ))
-  echo " ("$(( used / 10 ))"."$(( used % 10 ))"%)"
+  if (( memory[1] > 99900 ))
+  then
+    used=$(( (memory[1] / 1024 + 5) / 10 ))
+    echo -n $(( used / 10 ))"."$(( used % 10 ))G
+  else
+    used=$(( (memory[1] + 5) / 10 ))
+    echo -n $(( used / 10 ))M
+  fi
+
+  percentage=$(( memory[1] * 10 / memory[2] ))
+  echo " ("$(( (percentage + 5) / 10 ))"%)"
 
 elif [[ "$1" == "cpu" ]]
 then
@@ -20,4 +26,5 @@ then
 
   load=$(( (final[1] - initial[1]) * 1000 / (final[2] - initial[2]) ))
   echo $(( load / 10 ))"."$(( load % 10 ))"%"
+
 fi
