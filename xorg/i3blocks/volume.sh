@@ -1,9 +1,18 @@
 #!/usr/bin/env zsh
 
+## Start with user input
+case ${BLOCK_BUTTON} in
+  1) amixer -q set Master toggle ;;
+  4) amixer -q set PCM 1.5dB+ ;;
+  5) amixer -q set PCM 1.5dB- ;;
+esac
+
 IFS='
 '
 
-volumes=( `amixer get Master | grep -o "\[.*%\]" | grep -o "[0-9]*"` )
+
+### Get the volumes
+volumes=( `amixer get PCM | grep -o "\[.*%\]" | grep -o "[0-9]*"` )
 count=$#volumes
 volume=0
 
@@ -14,6 +23,8 @@ done
 
 volume=$(( volume / count ))
 
+
+### Get if muted/unmuted
 statuses=( `amixer get Master | grep -o "\[\(on\|off\)\]"` )
 muted=true
 
@@ -26,6 +37,18 @@ do
   fi
 done
 
+
+### Make sure all controls are in sync
+if [[ "${BLOCK_BUTTON}" == "1" ]] && [[ "$muted" == "false" ]]
+then
+  amixer -q set PCM unmute
+  amixer -q set Surround unmute
+  amixer -q set Center unmute
+  amixer -q set LFE unmute
+fi
+
+
+### Time to print
 if [[ "$muted" == "true" ]]
 then
   echo -n "    "
@@ -38,10 +61,3 @@ else
   fi
 fi
 echo "$volume%"
-
-#"${BLOCK_BUTTON}"
-#1: left
-#2: middle
-#3: right
-#4: wheel up
-#5: wheel down
