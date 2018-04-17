@@ -5,9 +5,21 @@ border_left=0
 border_right=0
 border_bottom=4
 
+[ram]
+label=    
+command=$HOME/.config/i3blocks/stats.sh ram
+interval=5
+border=#fa8730
+
+[cpu]
+label=  y  
+command=echo yo
+interval=5
+border=#30fa87
+
 [volume]
 command=$HOME/.config/i3blocks/volume.sh
-interval=1
+interval=5
 signal=1
 markup=pango
 border=#a2973d
