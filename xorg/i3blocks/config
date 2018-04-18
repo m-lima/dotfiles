@@ -21,6 +21,7 @@ border=#fa6730
 command=$HOME/.config/i3blocks/stats.sh net 4
 interval=5
 border=#d6e358
+separator_block_width=16
 
 [volume]
 command=$HOME/.config/i3blocks/volume.sh
@@ -28,6 +29,7 @@ interval=5
 signal=1
 markup=pango
 border=#3d97a2
+separator_block_width=16
 
 [time]
 label=    
