@@ -7,7 +7,7 @@ border_bottom=4
 
 [cpu]
 label=    
-command=$HOME/.config/i3blocks/stats.sh cpu
+command=$HOME/.config/i3blocks/stats.sh cpu 4
 interval=5
 border=#30ba77
 
@@ -16,6 +16,11 @@ label=  
 command=$HOME/.config/i3blocks/stats.sh ram
 interval=5
 border=#fa6730
+
+[net]
+command=$HOME/.config/i3blocks/stats.sh net 4
+interval=5
+border=#d6e358
 
 [volume]
 command=$HOME/.config/i3blocks/volume.sh

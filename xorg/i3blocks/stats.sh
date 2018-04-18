@@ -21,10 +21,19 @@ elif [[ "$1" == "cpu" ]]
 then
 
   initial=( `grep 'cpu ' /proc/stat | awk '{print $2+$3+$4+$7+$8; print $2+$3+$4+$5+$6+$7+$8}'` )
-  sleep 4
+  sleep $2
   final=( `grep 'cpu ' /proc/stat | awk '{print $2+$3+$4+$7+$8; print $2+$3+$4+$5+$6+$7+$8}'` )
 
   load=$(( (final[1] - initial[1]) * 1000 / (final[2] - initial[2]) ))
   echo $(( load / 10 ))"."$(( load % 10 ))"%"
+
+elif [[ "$1" == "net" ]]
+then
+
+  initial=( `ip -s link | awk 'FNR == 10 {print $1} FNR == 12 {print $1}'` )
+  sleep $2
+  final=( `ip -s link | awk 'FNR == 10 {print $1} FNR == 12 {print $1}'` )
+
+  echo  $(( (final[1] - initial[1]) / (1024 * $2) ))  $(( (final[2] - initial[2]) / (1024 * $2) )) kB/s
 
 fi
