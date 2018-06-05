@@ -116,3 +116,11 @@ ssh -f -N -T '-R<WHATEVER_PORT>:localhost:<LOCAL_PORT>' -p <PUBLIC_PORT> <PUBLIC
 # Change resolution
 ##################################################
 xrandr --output VGA-1 --mode 1920x1080
+
+##################################################
+# Memcached
+##################################################
+stats items # Info about items
+stats slabs # Info about the slabs (also, the number is the slab class)
+stats cachedump <slab_class> <number_to_dumb> # Returns the keys for that slab
+get <key> # Returns the value for the key
