@@ -5,9 +5,35 @@ border_left=0
 border_right=0
 border_bottom=4
 
+[cpu]
+label=    
+command=$HOME/.config/i3blocks/stats.sh cpu 4
+interval=5
+border=#30ba77
+
+[ram]
+label=    
+command=$HOME/.config/i3blocks/stats.sh ram
+interval=5
+border=#fa6730
+
+[net]
+command=$HOME/.config/i3blocks/stats.sh net 4
+interval=5
+border=#d6e358
+separator_block_width=16
+
+[volume]
+command=$HOME/.config/i3blocks/volume.sh
+interval=5
+signal=1
+markup=pango
+border=#3d97a2
+separator_block_width=16
+
 [time]
 label=    
-command=echo "`date +'%a %d %b'` <b>`date +'%T'`</b> "; [[ -z "${BLOCK_BUTTON}" ]] || gsimplecal &
+command=echo "`date +'%a %d %b'` <b>`date +'%T'`</b> "
 interval=1
 markup=pango
 border=#928374
