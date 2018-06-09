@@ -124,3 +124,11 @@ stats items # Info about items
 stats slabs # Info about the slabs (also, the number is the slab class)
 stats cachedump <slab_class> <number_to_dumb> # Returns the keys for that slab
 get <key> # Returns the value for the key
+
+##################################################
+# Private git repository
+##################################################
+On server:
+git init --bare repo_name.git
+On client:
+git remote add origin ssh://user@host:port/full/path/to/repo_name.git
