@@ -166,34 +166,27 @@ prompt_status() {
 ## Main prompt
 build_prompt() {
   RETVAL=$?
-  if [ -f "$LPWD" ]; then
-    prompt_status
-    prompt_context
-    prompt_dir
-    prompt_git
-    prompt_end
-
-    if [ -f "$LPWD" ]; then
-      rm "$LPWD"
-    fi
-  else
+  if [ $LPWD ]; then
     prompt_status
     prompt_context
     prompt_dir_small
     prompt_git_small
     prompt_end_small
+  else
+    prompt_status
+    prompt_context
+    prompt_dir
+    prompt_git
+    prompt_end
   fi
 }
 
 PROMPT='%{%f%b%k%}$(build_prompt) '
-export LPWD="/tmp/lpwd/$RANDOM-$RANDOM-$RANDOM-$RANDOM"
 
 pw() {
-  if ! [ -d "/tmp/lpwd" ]; then
-    mkdir /tmp/lpwd
-  fi
-
-  if ! [ -f "$LPWD" ]; then
-    touch "$LPWD"
+  if [ $LPWD ]; then
+    unset LPWD
+  else
+    export LPWD=1
   fi
 }
