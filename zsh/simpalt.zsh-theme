@@ -166,27 +166,27 @@ prompt_status() {
 ## Main prompt
 build_prompt() {
   RETVAL=$?
-  if [ $LPWD ]; then
-    prompt_status
-    prompt_context
-    prompt_dir_small
-    prompt_git_small
-    prompt_end_small
-  else
+  if [ $SIMPALT_LPWD ]; then
     prompt_status
     prompt_context
     prompt_dir
     prompt_git
     prompt_end
+  else
+    prompt_status
+    prompt_context
+    prompt_dir_small
+    prompt_git_small
+    prompt_end_small
   fi
 }
 
 PROMPT='%{%f%b%k%}$(build_prompt) '
 
 pw() {
-  if [ $LPWD ]; then
-    unset LPWD
+  if [ $SIMPALT_LPWD ]; then
+    unset SIMPALT_LPWD
   else
-    export LPWD=1
+    export SIMPALT_LPWD=1
   fi
 }
