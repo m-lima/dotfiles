@@ -11,3 +11,6 @@ export COMPUTER_SYMBOL='§'
 # export COMPUTER_SYMBOL='ƛ'
 
 #plugins+=(ddt)
+
+#alias pc='pacaur --color always'
+#alias pcm='pacman --color always'
