@@ -105,8 +105,27 @@ ssh -f -N -T '-R*:<PUBLIC_PORT_FOR_TUNNEL>:localhost:<LOCAL_PORT>' -p <PUBLIC_PO
 # Note that to use *, add to /etc/ssh/sshd_config:
 GatewayPorts yes
 
-# If it is pnly between two computers use:
+# If it is only between two computers use:
 ssh -f -N -T '-R<WHATEVER_PORT>:localhost:<LOCAL_PORT>' -p <PUBLIC_PORT> <PUBLIC_USER>@<PUBLIC_HOST>
+
+# This should be run in the target computer, not the tunnel (which runs only sshd)
+# Example
+
+# Target runs:
+ssh -f -N -T -R2020:localhost:22 -p 2222 cool_user@cool_server
+                ^ Arbitrary port that will be open on cool_server
+                              ^ Port for target sshd
+                                     ^ Port for the proxy server ssh
+                                             ^ Proxy server ssh login
+
+# Source runs:
+ssh -o ProxyCommand='ssh -ax -W localhost:2020 -l cool_user cool_server -p 2222' -p 2020 target_user@localhost
+                                  ^ Points to the reverse proxy (localhost and the first port)
+                                                     ^ User on proxy server ssh
+                                                                ^ Proxy server ssh
+                                                                            ^ Port for proxy server ssh
+                                                                                     ^ Reverse proxy port
+                                                                                                ^ Reverse proxy
 
 # -f Run in background
 # -N Do not run remote commands (better performance)
