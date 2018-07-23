@@ -569,6 +569,13 @@ else
   echo "[33mSkipping Tmux links[m"
 fi
 
+if [ $(command -v scaffpp) ]
+then
+  installFile s scripts scaffpp bin
+else
+  echo "[33mSkipping scaffpp links[m"
+fi
+
 ########################################
 # Copy files
 echo "[33mCopying files..[m"

@@ -1,0 +1,205 @@
+#!/bin/bash
+
+if (( $# != 2 ))
+then
+  echo "[31mIllegal number of parameters[m"
+  echo "[31mExpected: $0 scaffolding_dir project_name[m"
+
+  exit -1
+fi
+
+function generateTree {
+  local base=$1
+
+  mkdir -p "$base/build/cmake"
+  mkdir -p "$base/ext/mfl"
+  mkdir -p "$base/src"
+}
+
+function generateGitIgnore {
+  local base=$1
+
+  echo \
+'# Vim
+**/.*.swp
+
+# Idea
+**/.idea
+
+# Netbeans
+nbproject
+
+# QT Creator
+CMakeLists.txt.user
+
+# Visual Studio
+.vs
+
+# Build
+build
+
+# Output
+lib
+bin
+include
+
+# Secrets
+**/*.hide
+
+# External projects
+ext/*/pack
+' > $base/.gitignore
+}
+
+function generateMain {
+  local base=$1
+
+  echo \
+'#include <mfl/out.hpp>
+
+int main(int argc, char * argv[]) {
+  mfl::out::println("Hello world");
+
+  return 0;
+}
+' > $base/src/main.cpp
+}
+
+function generateCmakeBase {
+  local base=$1
+
+  echo \
+'##------------------------------------------------------------------------------
+## Initialization
+##
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+
+# Set release by default
+if (NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
+# Enable folders
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+# Current state
+if (WIN32)
+  message(STATUS "WIN32")
+endif ()
+if (MSVC)
+  message(STATUS "MSVC")
+endif ()
+if (APPLE)
+  message(STATUS "APPLE")
+endif ()
+
+message(STATUS "Using C: " ${CMAKE_C_COMPILER_ID})
+message(STATUS "Using CXX: " ${CMAKE_CXX_COMPILER_ID})
+
+# Set high warning levels
+if (MSVC)
+  if (CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
+    string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+  else ()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+  endif ()
+else ()
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wextra -Wno-long-long -pedantic")
+endif ()
+
+# Make $HOME compatible with windows
+STRING(REGEX REPLACE "\\\\" "/" ENV_HOME_DIR "$ENV{HOME}")
+
+# Add custom modules
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/findcmake")
+
+# Set base directories
+set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
+set(EXT_DIR "${CMAKE_SOURCE_DIR}/ext")
+set(LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
+set(INC_DIR "${CMAKE_SOURCE_DIR}/inc")
+' > $base/Init.cmake
+
+  local project_subst='s~##PROJECT_NAME##~'$2'~'
+  local executable_subst='s~##EXE_NAME##~'`echo "$2" | tr '[:upper:]' '[:lower:]'`'~'
+
+  sed -e $project_subst -e $executable_subst <<< \
+'cmake_minimum_required(VERSION 3.2)
+project(##PROJECT_NAME## CXX)
+
+##------------------------------------------------------------------------------
+## Initialization
+##
+
+include("Init.cmake")
+
+##------------------------------------------------------------------------------
+## Dependencies
+##
+
+# MFL
+include("${EXT_DIR}/mfl/mfl.cmake")
+list(APPEND LIBRARIES mfl)
+
+##------------------------------------------------------------------------------
+## Sources
+##
+
+list(APPEND SOURCES
+    ${SRC_DIR}/main.cpp
+  )
+
+list(APPEND HEADERS
+    )
+
+##------------------------------------------------------------------------------
+## Targets
+##
+
+add_definitions(${DEFINITIONS})
+
+add_executable(##EXE_NAME## ${SOURCES} ${HEADERS})
+target_link_libraries(##EXE_NAME## PUBLIC ${LIBRARIES})
+target_include_directories(##EXE_NAME## PUBLIC ${INCLUDE_DIRS})
+' > $base/CMakeLists.txt
+}
+
+function generateMFL {
+  local base=$1
+
+  echo \
+'include(ExternalProject)
+include(GNUInstallDirs)
+
+ExternalProject_Add(mfl-project
+  PREFIX deps/mfl
+  GIT_REPOSITORY "https://github.com/m-lima/mfl.git"
+  GIT_TAG "master"
+  SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/pack/mfl
+  STAMP_DIR ${CMAKE_CURRENT_LIST_DIR}/pack/tmp/mfl
+  TMP_DIR ${CMAKE_CURRENT_LIST_DIR}/pack/tmp/mfl
+  INSTALL_COMMAND ""
+  )
+
+add_library(mfl INTERFACE)
+
+target_compile_definitions(mfl INTERFACE FMT_HEADER_ONLY=1)
+
+target_include_directories(mfl INTERFACE
+  ${CMAKE_CURRENT_LIST_DIR}/pack/mfl/include
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/pack/mfl/ext/fmt/pack/fmt/include>
+  $<INSTALL_INTERFACE:include>)
+
+add_dependencies(mfl mfl-project)
+' > $base/ext/mfl/mfl.cmake
+}
+
+generateTree $1
+generateGitIgnore $1
+generateMain $1
+generateCmakeBase $1 $2
+generateMFL $1
