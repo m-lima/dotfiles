@@ -1,0 +1,9 @@
+##################################################
+# CMake
+##################################################
+
+# Build for nmake (no VS)
+cmake -G "NMake Makefiles" ../..
+
+# Build for x64 (in this case VS 15 2017)
+cmake .. -G "Visual Studio 15 2017 Win64"
