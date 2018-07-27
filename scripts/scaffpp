@@ -135,7 +135,7 @@ project(##PROJECT_NAME## CXX)
 ## Initialization
 ##
 
-include("Init.cmake")
+include("${CMAKE_SOURCE_DIR}/Init.cmake")
 
 ##------------------------------------------------------------------------------
 ## Dependencies
