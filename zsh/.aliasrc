@@ -62,14 +62,7 @@ function rg {
   fi
 }
 
-### ccat
-#if [[ $(command -v colorize) ]]
-#then
-#  alias ccat='colorize'
-#elif [[ $(command -v colorize_via_pygmentize) ]]
-#then
-#  alias ccat='colorize_via_pygmentize'
-#elif [[ $(command -v pygmentize) ]]
-#then
-#  alias ccat='pygmentize'
-#fi
+### Commands to remember
+## Code
+# gource -c 3 <path>
+# cloc --exclude-dir=ext,lib,build,node_modules,.git,.idea,nbproject --not-match-f='package-lock\.json' <path>
