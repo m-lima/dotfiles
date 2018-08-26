@@ -1610,17 +1610,17 @@ Show Toolbelt</string>
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>-535 1133 445 77 -2000 1050 3440 1440 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>-590 1836 620 392 -2000 1050 3440 1440 </string>
+	<string>502 477 620 392 0 0 1680 1028 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
-	<string>-1291 1881 609 495 -2000 1050 3440 1440 </string>
+	<string>-1291 1881 606 469 -2000 1050 3440 1440 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>196 189 796 473 0 0 1680 1028 </string>
+	<string>196 302 796 486 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-2000 1050 3440 1440 -2000 1050 3440 1440 </string>
+	<string>0 351 815 677 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>1756 1117 815 677 1440 1050 2560 1440 </string>
+	<string>40 207 815 677 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>601 89 815 677 0 0 1680 1028 </string>
+	<string>198 46 815 677 0 0 1680 1050 </string>
 	<key>NeverWarnAboutShortLivedSessions_2B9BD79B-5708-4628-AEF2-AF428700D242</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_2B9BD79B-5708-4628-AEF2-AF428700D242_selection</key>
@@ -2445,7 +2445,7 @@ Show Toolbelt</string>
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
-			<integer>1000</integer>
+			<integer>0</integer>
 			<key>Scrollback With Status Bar</key>
 			<false/>
 			<key>Scrollback in Alternate Screen</key>
@@ -4767,7 +4767,7 @@ Show Toolbelt</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-07-06T10:39:38Z</date>
+	<date>2018-08-18T07:06:45Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -11468,7 +11468,7 @@ Show Toolbelt</string>
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.1.6</string>
+	<string>3.2.0</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>6</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
