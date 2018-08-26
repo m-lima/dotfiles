@@ -1,6 +1,10 @@
+### General
+alias jsn='python -m json.tool'
 alias mud='telnet www.ateraan.com 4002'
 alias png='ping -c 4'
+alias lt='ls -lathr'
 
+### Vim
 if [ $(command -v nvim) ]
 then
   alias vi=nvim
@@ -9,21 +13,6 @@ then
   alias vi=vim
 fi
 
-#if [[ $(command -v colorize) ]]
-#then
-#  alias ccat='colorize'
-#elif [[ $(command -v colorize_via_pygmentize) ]]
-#then
-#  alias ccat='colorize_via_pygmentize'
-#elif [[ $(command -v pygmentize) ]]
-#then
-#  alias ccat='pygmentize'
-#fi
-
-# alias dh='dirs -v'
-# alias bd='popd > /dev/null'
-# alias fd='cd ~'
-
 ### Git stuff
 alias gsu='git submodule update --init --recursive'
 alias gpp='git push --set-upstream origin ${$(git symbolic-ref HEAD)/refs\/heads\//}'
@@ -31,8 +20,6 @@ alias gppf='git push --set-upstream origin +${$(git symbolic-ref HEAD)/refs\/hea
 alias ghelp='cat ~/.oh-my-zsh/plugins/git/git.plugin.zsh'
 alias ggal="git branch -a | tr -d \* | sed '/->/d' | xargs git grep -HI"
 alias gdc="git diff --cached"
-
-alias jsn='python -m json.tool'
 
 ### Copy path
 if [[ "$(uname)" == "Darwin" ]]
@@ -74,3 +61,15 @@ function rg {
     cd $rangerpwd
   fi
 }
+
+### ccat
+#if [[ $(command -v colorize) ]]
+#then
+#  alias ccat='colorize'
+#elif [[ $(command -v colorize_via_pygmentize) ]]
+#then
+#  alias ccat='colorize_via_pygmentize'
+#elif [[ $(command -v pygmentize) ]]
+#then
+#  alias ccat='pygmentize'
+#fi
