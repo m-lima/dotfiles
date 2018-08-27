@@ -7,8 +7,9 @@ alias lt='ls -lathr'
 ### Vim
 if [ $(command -v nvim) ]
 then
-  alias vi=nvim
-elif [ $(command -v vim) ]
+  alias ni=nvim
+fi
+if [ $(command -v vim) ]
 then
   alias vi=vim
 fi
