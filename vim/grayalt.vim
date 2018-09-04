@@ -12,7 +12,11 @@ endif
 
 let g:colors_name = 'grayalt'
 
-highlight Normal guifg=#909090 ctermfg=245
+if exists('g:gui_oni')
+  highlight Normal guifg=#909090 ctermfg=245 guibg=#202020 gui=NONE cterm=NONE
+else
+  highlight Normal guifg=#909090 ctermfg=245
+endif
 
 " Misc {{{1
 
@@ -36,14 +40,21 @@ highlight VertSplit guifg=#3a3a3a ctermfg=237 guibg=#303030 ctermbg=236 gui=NONE
 
 " Cursor lines {{{1
 
-highlight CursorColumn ctermfg=NONE guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
-highlight CursorLine ctermfg=NONE guibg=#343434 ctermbg=236 gui=NONE cterm=NONE
+" Strong background
+" highlight CursorColumn ctermfg=NONE guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
+" highlight CursorLine ctermfg=NONE guibg=#343434 ctermbg=236 gui=NONE cterm=NONE
+" Soft background
+highlight CursorColumn ctermfg=NONE guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight CursorLine ctermfg=NONE guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
 
 " Number column {{{1
 
-let g:gitgutter_override_sign_column_highlight = 0 " Tell git gutter to leave the background alone.
-highlight CursorLineNr guifg=#878787 ctermfg=102 guibg=#404040 ctermbg=239 gui=NONE cterm=NONE
-highlight LineNr guifg=#878787 ctermfg=102 guibg=#323232 ctermbg=237 gui=NONE cterm=NONE
+" Strong background
+" highlight CursorLineNr guifg=#878787 ctermfg=102 guibg=#404040 ctermbg=239 gui=NONE cterm=NONE
+" highlight LineNr guifg=#878787 ctermfg=102 guibg=#323232 ctermbg=237 gui=NONE cterm=NONE
+" Soft background
+highlight CursorLineNr guifg=#b7b75f ctermfg=185 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight LineNr guifg=#878787 ctermfg=102 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
 " Tabline {{{1
 
@@ -62,8 +73,12 @@ highlight ColorColumn ctermfg=NONE guibg=#3a3a3a ctermbg=237 gui=NONE cterm=NONE
 
 " Diff & Signs {{{1
 
+let g:gitgutter_override_sign_column_highlight = 0 " Tell git gutter to leave the background alone.
 " highlight SignColumn ctermfg=NONE guibg=#3a3a3a ctermbg=237 gui=NONE cterm=NONE
-highlight SignColumn guifg=#888888 ctermfg=060 guibg=#323232 ctermbg=236 gui=NONE cterm=NONE
+" Hard background
+" highlight SignColumn guifg=#888888 ctermfg=060 guibg=#323232 ctermbg=236 gui=NONE cterm=NONE
+" Soft background
+highlight SignColumn guifg=#888888 ctermfg=060 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
 highlight DiffAdd guifg=#87ff5f ctermfg=119 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight DiffDelete guifg=#df5f5f ctermfg=167 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
