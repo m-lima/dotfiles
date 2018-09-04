@@ -2,6 +2,12 @@
 " Options config
 """"""""""""""""""""
 
+" Don't show mode
+set noshowmode
+
+" No *.swp file
+set noswapfile
+
 " Fix the backspace
 set backspace=indent,eol,start
 
@@ -10,6 +16,10 @@ set incsearch
 set ignorecase
 set smartcase
 set hlsearch
+
+" More sensible splitting
+set splitright
+set splitbelow
 
 " Leader mapping
 let mapleader = ","
@@ -50,3 +60,6 @@ autocmd BufRead,BufNewFile *.cl set filetype=c
 
 " UTF
 set encoding=utf-8
+
+" Netrw (folder view)
+let g:netrw_banner = 0
