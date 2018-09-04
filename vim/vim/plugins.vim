@@ -45,6 +45,7 @@ Plug 'glts/vim-textobj-comment'        " c
 """ Languages
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 " Plug 'vim-syntastic/syntastic'
+Plug 'vim-scripts/nginx.vim'
 
 """ Completion
 if has("nvim")

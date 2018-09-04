@@ -15,7 +15,9 @@ vnoremap \ <Esc>
 vnoremap <C-\> \
 
 " Use ESC to exit insert mode in :term
-tnoremap <Esc> <C-\><C-n>
+if has("nvim")
+  tnoremap <Esc> <C-\><C-n>
+endif
 
 " Copy line
 nnoremap yp yyp
