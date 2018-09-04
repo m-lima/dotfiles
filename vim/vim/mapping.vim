@@ -14,6 +14,9 @@ inoremap <C-\> \
 vnoremap \ <Esc>
 vnoremap <C-\> \
 
+" Use ESC to exit insert mode in :term
+tnoremap <Esc> <C-\><C-n>
+
 " Copy line
 nnoremap yp yyp
 
