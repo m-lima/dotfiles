@@ -5,18 +5,31 @@
 call plug#begin()
 
 """ Visual
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+if !exists('g:gui_oni')
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+endif
+
+""" Dependencies
+" Dependency for text objects
+Plug 'kana/vim-textobj-user'
+" Depenency for vim-scripts/ReplaceWithRegister
+Plug 'tpope/vim-repeat'
+" Dependency for jistr/vim-nerdtree-tabs
+" Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle','NERDTreeTabsToggle'] }
+if has("nvim") && has("python3")
+  " Dependency for zchee/deocomplete-go
+  Plug 'mdempsky/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh', 'for': 'go' }
+endif
+" Dependency for tpope/fugitive (apparently not true)
+" Plug 'tpope/vim-rhubarb'
 
 """ Util
-Plug 'tpope/vim-repeat'
 Plug 'kien/ctrlp.vim'
+" Plug 'jistr/vim-nerdtree-tabs', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle','NERDTreeTabsToggle'] }
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle','NERDTreeTabsToggle'] }
-Plug 'jistr/vim-nerdtree-tabs', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle','NERDTreeTabsToggle'] }
-Plug 'kana/vim-textobj-user'
-Plug 'terryma/vim-multiple-cursors'
+" Plug 'terryma/vim-multiple-cursors'
 
 " Verbs
 Plug 'tpope/vim-surround'              " s
@@ -31,13 +44,14 @@ Plug 'glts/vim-textobj-comment'        " c
 
 """ Languages
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
+" Plug 'vim-syntastic/syntastic'
 
 """ Completion
 if has("nvim")
   if has("python3")
     Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'zchee/deoplete-clang', { 'for': ['cpp', 'c'] }
-    Plug 'zchee/deoplete-go', { 'for': 'go' }
+    Plug 'zchee/deoplete-go', { 'for': 'go', 'do': 'make' }
     Plug 'mhartington/nvim-typescript', { 'for': 'javascript', 'do': ':UpdateRemotePlugins' }
   endif
 else
@@ -60,13 +74,17 @@ autocmd FileType cmake setlocal commentstring=#\ %s
 autocmd FileType cpp,hpp,c,h,cc,hh,cl,tf setlocal commentstring=//\ %s
 
 """ Vim-airline
-let g:airline_powerline_fonts = 1
-let g:airline_theme='deus'
-let g:airline#extensions#tabline#enabled = 1
-set noshowmode
-
-" Always show status
-set laststatus=2
+if !exists('g:gui_oni')
+  let g:airline_powerline_fonts = 1
+  let g:airline_theme='deus'
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline#extensions#tabline#formatter = 'unique_tail'
+  set laststatus=2
+else
+  set noruler
+  set laststatus=0
+  set noshowcmd
+endif
 
 """ NerdTree
 nnoremap <Leader>n :NERDTreeTabsToggle<CR>
@@ -81,8 +99,15 @@ nnoremap <Leader>b :Gblame<CR>
 """ GitGutter
 nnoremap <Leader>g :GitGutterToggle<CR>
 
+" Increase the update speed to allow faster signing
+set updatetime=400
+" Optionally, gitgutter can run on saves:
+" autocmd BufWritePost * GitGutter
+" In the file: .vim/after/plugin/gitgutter.vim
+" autocmd! gitgutter CursorHold,CursorHoldI
+
 " Don't load straightaway
-let g:gitgutter_enabled = 0
+" let g:gitgutter_enabled = 0
 
 """ NeoComplete
 let g:neocomplete#enable_at_startup = 1
