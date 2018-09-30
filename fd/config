@@ -1,3 +1,2 @@
-home:~
-code:~/code
-dotfiles:~/code/dotfiles
+cd:~/code
+df:~/code/dotfiles
