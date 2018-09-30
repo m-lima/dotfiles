@@ -16,7 +16,7 @@ Plug 'kana/vim-textobj-user'
 " Depenency for vim-scripts/ReplaceWithRegister
 Plug 'tpope/vim-repeat'
 " Dependency for jistr/vim-nerdtree-tabs
-" Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle','NERDTreeTabsToggle'] }
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle','NERDTreeTabsToggle'] }
 if has("nvim") && has("python3")
   " Dependency for zchee/deocomplete-go
   Plug 'mdempsky/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh', 'for': 'go' }
@@ -26,7 +26,7 @@ endif
 
 """ Util
 Plug 'kien/ctrlp.vim'
-" Plug 'jistr/vim-nerdtree-tabs', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle','NERDTreeTabsToggle'] }
+Plug 'jistr/vim-nerdtree-tabs', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle','NERDTreeTabsToggle'] }
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 " Plug 'terryma/vim-multiple-cursors'
