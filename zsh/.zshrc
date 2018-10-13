@@ -103,11 +103,12 @@ then
   function iterm2_print_user_vars() {
     local ref dirty customLabel customGit
 
-    customLabel=$(pwd | sed -e "s,^$HOME,~," | sed "s@\(.\)[^/]*/@\1/@g")
-
     if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
       ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="‼️$(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
-      customLabel="${customLabel} : ${ref/refs\/heads\//} $(buildGitStatusLabel)"
+      # customLabel="${customLabel} : ${ref/refs\/heads\//} $(buildGitStatusLabel)"
+      customLabel="${ref/refs\/heads\//} $(buildGitStatusLabel)"
+    else
+      customLabel=$(pwd | sed -e "s,^$HOME,~," | sed "s@\(.\)[^/]*/@\1/@g")
     fi
 
     "${HOME}/.iterm2/it2setkeylabel" set status "$customLabel"
