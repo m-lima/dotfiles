@@ -151,3 +151,22 @@ On server:
 git init --bare repo_name.git
 On client:
 git remote add origin ssh://user@host:port/full/path/to/repo_name.git
+
+##################################################
+# Wildcard TLS certificate
+##################################################
+T# o issue:
+docker run -it --rm --name certbot \
+  -v /nice/path/certbot/etc:/etc/letsencrypt \
+  -v /nice/path/certbot/var:/var/lib/letsencrypt \
+  certbot/certbot \
+  certonly --manual -d '*.domain.com' -d domain.com \
+  --preferred-challenges dns \
+  --server https://acme-v02.api.letsencrypt.org/directory \
+  --register-unsafely-without-email \
+  --agree-tos --manual-public-ip-logging-ok
+
+# To check the DNS during the process:
+host -t txt _acme-challenge.domain.com
+
+# Keys will be under /nice/path/certbot/etc/live/domain.com
