@@ -163,17 +163,27 @@ prompt_status() {
   [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
 }
 
+prompt_aws() {
+  [[ $AWS_VAULT ]] && prompt_segment magenta black " $AWS_VAULT"
+}
+
+prompt_aws_small() {
+  [[ $AWS_VAULT ]] && prompt_segment black default "%{%F{magenta}%}"
+}
+
 ## Main prompt
 build_prompt() {
   RETVAL=$?
   if [ $SIMPALT_LPWD ]; then
     prompt_status
+    prompt_aws
     prompt_context
     prompt_dir
     prompt_git
     prompt_end
   else
     prompt_status
+    prompt_aws_small
     prompt_context
     prompt_dir_small
     prompt_git_small
