@@ -11,4 +11,7 @@ source "${HOME}/.config/m-lima/zsh/plugins.zsh"
 source "${HOME}/.config/m-lima/zsh/alias.zsh"
 
 # If using iTerm2, set integration
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.config/m-lima/zsh/iterm.zsh"
+if test -e "${HOME}/.iterm2_shell_integration.zsh"
+then
+  source "${HOME}/.config/m-lima/zsh/iterm.zsh"
+fi
