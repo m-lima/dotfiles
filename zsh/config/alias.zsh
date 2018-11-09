@@ -2,7 +2,6 @@
 alias jsn='python -m json.tool'
 alias mud='telnet www.ateraan.com 4002'
 alias png='ping -c 4'
-alias lt='ls -lathr'
 
 ### Vim
 if [ $(command -v nvim) ]
@@ -53,14 +52,19 @@ function def {
 
 ### Ranger with pwd change
 function rg {
-  tempfile="/tmp/pwd-from-ranger"
+  local tempfile="/tmp/pwd-from-ranger"
   ranger --choosedir=$tempfile $argv
-  rangerpwd=$(cat $tempfile)
+  local rangerpwd=$(cat $tempfile)
   if [[ "$PWD" != $rangerpwd ]]
   then
     cd $rangerpwd
   fi
 }
+
+### Directory stuff
+# alias l='ls -lah'
+# alias ll='ls -lh'
+alias lt='ls -lathr'
 
 ### Commands to remember
 ## Code
