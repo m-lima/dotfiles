@@ -26,17 +26,19 @@
 # return: The full path
 
 function fullPath {
-  TARGET_FILE=${1}
+  local targetFile physDir result
 
-  cd `dirname ${TARGET_FILE}`
-  TARGET_FILE=`basename ${TARGET_FILE}`
+  targetFile="${1}"
+
+  cd `dirname "${targetFile}"`
+  targetFile=`basename "${targetFile}"`
 
   # Compute the canonicalized name by finding the physical path 
   # for the directory we're in and appending the target file.
-  PHYS_DIR=`pwd -P`
-  RESULT=${PHYS_DIR}/${TARGET_FILE}
-  RESULT=${RESULT%/.}
-  echo ${RESULT}
+  physDir=`pwd -P`
+  result="${physDir}/${targetFile}"
+  result="${result%/.}"
+  echo ${result}
 }
 
 ################################################################################
@@ -45,14 +47,16 @@ function fullPath {
 # return: Success if accepted. Will abort if cancelled
 
 function checkContinue {
-  if [ ! -z "${1}" ]
+  local input
+
+  if [ "${1}" ]
   then
     echo "[31m${1}[m"
   fi
 
   echo -n "Continue? [y/N] "
-  read INPUT
-  case ${INPUT} in
+  read input
+  case ${input} in
     [Yy] )
       return 0;
       ;;
@@ -70,6 +74,8 @@ function checkContinue {
 # return: Abort if cancelled, or success otherwise
 
 function checkInstall {
+  local input
+
   echo -n "[34mChecking ${1}.. [[m"
   if eval ${3}
   then
@@ -78,8 +84,8 @@ function checkInstall {
     echo "[31mFAIL[34m][m"
 
     echo -n "Install ${1}? [Y/n] "
-    read INPUT
-    case ${INPUT} in
+    read input
+    case ${input} in
       [Nn] )
         ;;
       *)
@@ -105,7 +111,7 @@ function checkInstall {
 # return: Abort if cancelled, or success otherwise
 
 function checkInstallDefault {
-  checkString='[ $(command -v '"${1}"') ]'
+  local checkString='[ $(command -v '"${1}"') ]'
   checkInstall ${1} "${PACKAGE_INSTALL} ${1}" "${checkString}"
 }
 
@@ -118,54 +124,65 @@ function checkInstallDefault {
 # arg2: The target folder location
 # arg3: The source file
 # [arg4]: Installation path.
+# [arg5]: Installation file name.
 # return: Failure if cancelled, or status code of install operation
 
 function installFile {
-  echo "[34mInstalling ${3}..[m"
-  if [ -z "${4}" ]
+  local installPath installName overwrite input
+
+  if [ "${4}" ]
   then
-    INSTALL_PATH="${HOME}"/
+    installPath="${HOME}/${4}/"
   else
-    INSTALL_PATH="${HOME}"/"${4}"/
+    installPath="${HOME}/"
   fi
 
-  local OVERWRITE=false
-
-  if [ ! -d ${INSTALL_PATH} ]
+  if [ "${5}" ]
   then
-    echo -n "${INSTALL_PATH} does not exist. Create? [Y/n] "
-    read INPUT
-    case ${INPUT} in
+    installName="${5}"
+  else
+    installName="${3}"
+  fi
+
+  echo "[34mInstalling ${installName}..[m"
+
+  overwrite=false
+
+  if [ ! -d ${installPath} ]
+  then
+    echo -n "${installPath} does not exist. Create? [Y/n] "
+    read input
+    case ${input} in
       [Nn] )
         checkContinue
         return 1
         ;;
-      * ) mkdir -p "${INSTALL_PATH}" ;;
+      * ) mkdir -p "${installPath}" ;;
     esac
   fi
 
-  if [ -f "${INSTALL_PATH}${3}" ] || [ -d "${INSTALL_PATH}${3}" ]
+  if [ -f "${installPath}${installName}" ] || [ -d "${installPath}${installName}" ]
   then
-    echo -n "${INSTALL_PATH}${3} already exists. Overwrite? [y/N] "
-    read INPUT
-    case ${INPUT} in
+    echo -n "${installPath}${installName} already exists. Overwrite? [y/N] "
+    read input
+    case ${input} in
       [Yy] )
-        rm "${INSTALL_PATH}${3}"
-        OVERWRITE=true
+        rm "${installPath}${installName}"
+        overwrite=true
         ;;
     esac
   else
-    OVERWRITE=true
+    overwrite=true
   fi
 
-  if [[ "${OVERWRITE}" == "true" ]]
+  if [[ "${overwrite}" == "true" ]]
   then
     if [[ "${1}" == "s" ]]
     then
-      ln -sf ${BASE_DIR}/${2}/${3} ${INSTALL_PATH}
+      ln -sf ${BASE_DIR}/${2}/${3} ${installPath}${installName}
     elif [[ "${1}" == "c" ]]
     then
-      cp ${BASE_DIR}/${2}/${3} ${INSTALL_PATH}
+      cp ${BASE_DIR}/${2}/${3} ${installPath}${installName}
     else
       return 1
     fi
@@ -185,9 +202,11 @@ function installFile {
 # return: Failure if cancelled, or status code of install operation
 
 function installPacaur {
+  local input
+
   echo -n "Install pacaur? [Y/n] "
-  read INPUT
-  case ${INPUT} in
+  read input
+  case ${input} in
     [Nn] )
       return 0
       ;;
@@ -523,8 +542,8 @@ fi
 echo "[33mMaking symlinks..[m"
 if [ $(command -v zsh) ]
 then
-  installFile s zsh .aliasrc
   installFile s zsh .zshrc
+  installFile s zsh config .config/m-lima zsh
 
   if [ -d "${HOME}"/.oh-my-zsh ]
   then
@@ -555,7 +574,7 @@ fi
 
 if [ $(command -v vim) ]
 then
-  installFile s vim .vimrc
+  installFile s vim init.vim . .vimrc
   installFile s vim grayalt.vim .vim/colors
 else
   echo "[33mSkipping Vim links[m"
@@ -589,20 +608,20 @@ fi
 
 if [ $(command -v zsh) ]
 then
-  if installFile c zsh .zshrc.local
+  if installFile c zsh local.zsh .config/m-lima/zsh
   then
     if [[ "${PACKAGE_INSTALL}" == "pacaur --noedit --noconfirm -S" ]]
     then
-      echo 'alias pc=pacaur' >> "${HOME}"/.zshrc.local
+      echo 'alias pc=pacaur' >> "${HOME}/.config/m-lima/zsh/local.zsh"
     fi
-    vi "${HOME}"/.zshrc.local
+    vi "${HOME}/.config/m-lima/zsh/local.zsh"
   fi
 
-  if [ -d "${HOME}"/.oh-my-zsh ]
+  if [ -d "${HOME}/.oh-my-zsh" ]
   then
     if installFile c fd config .config/m-lima/fd
     then
-      vi "${HOME}"/.config/m-lima/fd/config
+      vi "${HOME}/.config/m-lima/fd/config"
     fi
   else
     echo "[33mSkipping Oh My ZSH links[m"
