@@ -8,6 +8,7 @@ then
 
   zgen load m-lima/nali
   zgen load m-lima/nali-autosuggestions
+  zgen load m-lima/simpalt simpalt.zsh-theme
   zgen load zsh-users/zsh-syntax-highlighting
 
   for plugin in ${localPlugins}

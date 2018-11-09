@@ -495,9 +495,8 @@ then
 fi
 
 ########################################
-# Install Oh My ZSH
-checkInstall "Oh My ZSH" 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"' '[ -d "${HOME}"/.oh-my-zsh ]'
-
+# Install ZGen
+checkInstall "ZGen" 'git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"' '[ -d "${HOME}"/.zgen ]'
 
 ########################################
 # Install ccat
@@ -536,13 +535,6 @@ if [ $(command -v zsh) ]
 then
   installFile s zsh .zshrc
   installFile s zsh config .config/m-lima zsh
-
-  if [ -d "${HOME}"/.oh-my-zsh ]
-  then
-    installFile s zsh simpalt.zsh-theme .oh-my-zsh/custom
-  else
-    echo "[33mSkipping Oh My ZSH links[m"
-  fi
 else
   echo "[33mSkipping ZSH links[m"
 fi
@@ -607,14 +599,14 @@ then
     vi "${HOME}/.config/m-lima/zsh/local.zsh"
   fi
 
-  if [ -d "${HOME}/.oh-my-zsh" ]
+  if [ -d "${HOME}/.zgen" ]
   then
     if installFile c fd config .config/m-lima/fd
     then
       vi "${HOME}/.config/m-lima/fd/config"
     fi
   else
-    echo "[33mSkipping Oh My ZSH links[m"
+    echo "[33mSkipping ZGen links[m"
   fi
 else
   echo "[33mSkipping ZSH files[m"
