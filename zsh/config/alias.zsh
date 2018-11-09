@@ -2,7 +2,6 @@
 alias jsn='python -m json.tool'
 alias mud='telnet www.ateraan.com 4002'
 alias png='ping -c 4'
-alias lt='ls -lathr'
 
 ### Vim
 if [ $(command -v nvim) ]
@@ -61,6 +60,11 @@ function rg {
     cd $rangerpwd
   fi
 }
+
+### Directory stuff
+alias l='ls -lah'
+alias ll='ls -lh'
+alias lt='ls -lathr'
 
 ### Commands to remember
 ## Code
