@@ -52,9 +52,9 @@ function def {
 
 ### Ranger with pwd change
 function rg {
-  tempfile="/tmp/pwd-from-ranger"
+  local tempfile="/tmp/pwd-from-ranger"
   ranger --choosedir=$tempfile $argv
-  rangerpwd=$(cat $tempfile)
+  local rangerpwd=$(cat $tempfile)
   if [[ "$PWD" != $rangerpwd ]]
   then
     cd $rangerpwd
