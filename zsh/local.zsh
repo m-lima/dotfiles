@@ -10,7 +10,7 @@ export COMPUTER_SYMBOL='§'
 # export COMPUTER_SYMBOL='ø'
 # export COMPUTER_SYMBOL='ƛ'
 
-#plugins+=(ddt)
+# localPlugins+=("git@ghe.telenordigital.com:marcelo-lima/DDT-helper.git" aws)
 
-#alias pc='pacaur --color always'
-#alias pcm='pacman --color always'
+# alias pc='pacaur --color always'
+# alias pcm='pacman --color always'

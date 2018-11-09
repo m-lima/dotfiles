@@ -62,8 +62,8 @@ function rg {
 }
 
 ### Directory stuff
-alias l='ls -lah'
-alias ll='ls -lh'
+# alias l='ls -lah'
+# alias ll='ls -lh'
 alias lt='ls -lathr'
 
 ### Commands to remember

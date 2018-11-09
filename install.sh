@@ -498,14 +498,6 @@ fi
 # Install Oh My ZSH
 checkInstall "Oh My ZSH" 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"' '[ -d "${HOME}"/.oh-my-zsh ]'
 
-########################################
-# Install Nali AutoSuggestions
-if [ $(command -v zsh) ] && [ -d "${HOME}"/.oh-my-zsh ]
-then
-  checkInstall "Nali AutoSuggestions" 'git clone https://github.com/m-lima/nali-autosuggestions "${HOME}"/.oh-my-zsh/custom/plugins/nali-autosuggestions' '[ -d "${HOME}"/.oh-my-zsh/custom/plugins/nali-autosuggestions ]'
-else
-  echo "[33mSkipping Nali AutoSuggestions[m"
-fi
 
 ########################################
 # Install ccat
@@ -548,8 +540,6 @@ then
   if [ -d "${HOME}"/.oh-my-zsh ]
   then
     installFile s zsh simpalt.zsh-theme .oh-my-zsh/custom
-    installFile s zsh nali .oh-my-zsh/custom/plugins
-    installFile s zsh localConfig.zsh .oh-my-zsh/custom
   else
     echo "[33mSkipping Oh My ZSH links[m"
   fi
@@ -612,7 +602,7 @@ then
   then
     if [[ "${PACKAGE_INSTALL}" == "pacaur --noedit --noconfirm -S" ]]
     then
-      echo 'alias pc=pacaur' >> "${HOME}/.config/m-lima/zsh/local.zsh"
+      echo "alias pc='pacaur --color always'" >> "${HOME}/.config/m-lima/zsh/local.zsh"
     fi
     vi "${HOME}/.config/m-lima/zsh/local.zsh"
   fi

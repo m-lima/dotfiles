@@ -1,17 +1,22 @@
-plugins+=(git colorize nali)
-plugins+=(nali-autosuggestions)
+source "${HOME}/.zgen/zgen.zsh"
 
-# Path oh-my-zsh installation.
-export ZSH="$HOME"/.oh-my-zsh
+if ! zgen saved
+then
+  zgen oh-my-zsh
+  zgen oh-my-zsh plugins/colorize
+  zgen oh-my-zsh plugins/git
 
-# ZSH options
-ZSH_THEME="simpalt"
-# HYPHEN_INSENSITIVE="true"
-# ENABLE_CORRECTION="true"
-# COMPLETION_WAITING_DOTS="true"
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+  zgen load m-lima/nali
+  zgen load m-lima/nali-autosuggestions
+  zgen load zsh-users/zsh-syntax-highlighting
 
-source $ZSH/oh-my-zsh.sh
+  for plugin in ${localPlugins}
+  do
+    zgen load ${plugin}
+  done
+
+  zgen save
+fi
 
 # Auto Suggestion Config
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=4"
