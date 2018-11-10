@@ -1,3 +1,4 @@
 cd:~/code
-df:~/code/dotfiles
 cf:~/.config/m-lima
+df:~/code/dotfiles
+tmp:~/tmp

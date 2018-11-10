@@ -595,13 +595,14 @@ then
     if [[ "${PACKAGE_INSTALL}" == "pacaur --noedit --noconfirm -S" ]]
     then
       echo "alias pc='pacaur --color always'" >> "${HOME}/.config/m-lima/zsh/local.zsh"
+      echo "alias pcm='pacman --color always'" >> "${HOME}/.config/m-lima/zsh/local.zsh"
     fi
     vi "${HOME}/.config/m-lima/zsh/local.zsh"
   fi
 
   if [ -d "${HOME}/.zgen" ]
   then
-    if installFile c fd config .config/m-lima/fd
+    if installFile c zsh/fd config .config/m-lima/fd
     then
       vi "${HOME}/.config/m-lima/fd/config"
     fi
