@@ -1,23 +1,30 @@
-source "${HOME}/.zgen/zgen.zsh"
+case "${pluginManager}" in
+  zgen)
+    source "${HOME}/.zgen/zgen.zsh"
 
-if ! zgen saved
-then
-  zgen oh-my-zsh
-  zgen oh-my-zsh plugins/colorize
-  zgen oh-my-zsh plugins/git
+    if ! zgen saved
+    then
+      zgen oh-my-zsh
+      zgen oh-my-zsh plugins/colorize
+      zgen oh-my-zsh plugins/git
 
-  zgen load m-lima/nali
-  zgen load m-lima/nali-autosuggestions
-  zgen load m-lima/simpalt simpalt.zsh-theme
-  zgen load zsh-users/zsh-syntax-highlighting
+      zgen load m-lima/nali
+      zgen load m-lima/nali-autosuggestions
+      zgen load m-lima/simpalt simpalt.zsh-theme
+      zgen load zsh-users/zsh-syntax-highlighting
 
-  for plugin in ${localPlugins}
-  do
-    zgen load ${plugin}
-  done
+      for plugin in ${localPlugins}
+      do
+        zgen ${(z)plugin}
+      done
 
-  zgen save
-fi
+      zgen save
+    fi
+    ;;
+
+  zplug)
+    ;;
+esac
 
 # Auto Suggestion Config
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=4"
@@ -28,4 +35,3 @@ bindkey '^K' autosuggest-next
 bindkey '^J' autosuggest-previous
 bindkey '^L' forward-word
 bindkey '^H' backward-delete-word
-
