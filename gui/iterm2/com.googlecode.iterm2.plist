@@ -1622,19 +1622,19 @@ Show Toolbelt</string>
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>-535 1133 445 77 -2000 1050 3440 1440 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>-590 1836 620 392 -2000 1050 3440 1440 </string>
+	<string>503 476 620 392 0 0 1680 1027 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>-1291 1881 606 469 -2000 1050 3440 1440 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>239 597 1018 447 0 0 1680 1050 </string>
+	<string>-1761 1641 928 394 -2000 1050 3440 1417 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-2000 1050 3440 1417 -2000 1050 3440 1440 </string>
+	<string>0 0 1627 1027 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>610 155 815 677 0 0 1680 1027 </string>
+	<string>610 155 815 677 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>198 46 815 677 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>275 32 815 677 0 0 1680 1050 </string>
+	<string>275 32 815 677 0 0 1680 1027 </string>
 	<key>NeverWarnAboutShortLivedSessions_2B9BD79B-5708-4628-AEF2-AF428700D242</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_2B9BD79B-5708-4628-AEF2-AF428700D242_selection</key>
@@ -1809,13 +1809,13 @@ Show Toolbelt</string>
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.59607839584350586</real>
+				<real>0.5836216266857629</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
 				<real>0.63137257099151611</real>
 				<key>Red Component</key>
-				<real>0.16470590233802795</real>
+				<real>0.0</real>
 			</dict>
 			<key>Ansi 7 Color</key>
 			<dict>
@@ -1880,13 +1880,13 @@ Show Toolbelt</string>
 			<key>Badge Color</key>
 			<dict>
 				<key>Alpha Component</key>
-				<real>0.31372549019607843</real>
+				<real>0.50196078431372548</real>
 				<key>Blue Component</key>
-				<real>1</real>
+				<real>1.3536773479927433e-08</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>1</real>
+				<real>0.14913111925125122</real>
 				<key>Red Component</key>
 				<real>1</real>
 			</dict>
@@ -3782,7 +3782,7 @@ Show Toolbelt</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-10-29T08:06:13Z</date>
+	<date>2018-11-09T22:22:17Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -10484,7 +10484,7 @@ Show Toolbelt</string>
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.2.4</string>
+	<string>3.2.5</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>6</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
