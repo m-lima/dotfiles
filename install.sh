@@ -257,6 +257,7 @@ function installPacaur {
 BASE_DIR=$(dirname $(fullPath ${0}))
 SU_DO=""
 SYS_TYPE=""
+PACKAGE_INSTALL=""
 PLUGIN_MANAGER=""
 
 ########################################
@@ -278,14 +279,14 @@ esac
 if [ -z "${SYS_TYPE}" ]
 then
   echo "[31mFAIL[34m][m"
-  SEL_SYS_TYPE=Y
+  change=Y
 else
   echo "[32m${SYS_TYPE}[34m][m"
   echo -n "Choose a different OS? [y/N] "
-  read SEL_SYS_TYPE
+  read change
 fi
 
-case ${SEL_SYS_TYPE} in
+case ${change} in
   [Yy] )
     echo "[33mSelect your OS[m"
     echo "[[33mU[m]buntu"
@@ -297,8 +298,8 @@ case ${SEL_SYS_TYPE} in
     echo "[[33mE[m]xit"
 
     echo -n "Choice: "
-    read INPUT
-    case "${INPUT}" in
+    read input
+    case "${input}" in
       [Uu]) SYS_TYPE="Ubuntu";;
       [Ff]) SYS_TYPE="FreeBSD";;
       [Dd]) SYS_TYPE="Darwin";;
@@ -377,8 +378,8 @@ if [[ "${PACKAGE_INSTALL}" == "${SU_DO} pacman --noconfirm -S" ]] && ! installPa
 then
   echo "[31mCould not install pacaur![m"
   echo -n "Continue using pacman? [Y/n] "
-  read CONTINUE
-  case ${CONTINUE} in
+  read input
+  case ${input} in
     [Nn] )
       exit
       ;;
@@ -386,10 +387,6 @@ then
 fi
 
 cd ${HOME}
-
-########################################
-# Get pluginManager
-grep "plugin "${HOME}/.config/m-lima/zsh/local.sh"
 
 ########################################
 # Install git
@@ -413,15 +410,15 @@ then
   if [ -z "${PLUGIN_MANAGER}" ]
   then
     echo "[31mFAIL[34m][m"
-    SEL_PLUGIN_MANAGER=Y
+    change=Y
   else
     echo "[32m${PLUGIN_MANAGER}[34m][m"
     echo -n "Choose a different manager? [y/N] "
-    OLD_PLUGIN_MANAGER="${PLUGIN_MANAGER}"
-    read SEL_PLUGIN_MANAGER
+    oldPluginManager="${PLUGIN_MANAGER}"
+    read change
   fi
 
-  case ${SEL_PLUGIN_MANAGER} in
+  case ${change} in
     [Yy] )
       echo "[33mSelect your manager[m"
       echo "Z[[33mG[m]en"
@@ -430,8 +427,8 @@ then
       echo "[[33mE[m]xit"
 
       echo -n "Choice: "
-      read INPUT
-      case "${INPUT}" in
+      read input
+      case "${input}" in
         [Gg]) PLUGIN_MANAGER="zgen";;
         [Pp]) PLUGIN_MANAGER="zplug";;
         [Nn]) PLUGIN_MANAGER="";;
@@ -439,7 +436,7 @@ then
       esac
   esac
 
-  [ ${OLD_PLUGIN_MANAGER} ] && sed 's~pluginManager='"${OLD_PLUGIN_MANAGER}"'~pluginManager='"${PLUGIN_MANAGER}"'~g' "${HOME}/.config/m-lima/zsh/local.zsh"
+  [ ${oldPluginManager} ] && sed 's~pluginManager='"${oldPluginManager}"'~pluginManager='"${PLUGIN_MANAGER}"'~g' "${HOME}/.config/m-lima/zsh/local.zsh"
 fi
 
 ########################################
@@ -482,20 +479,20 @@ then
   if [ -f "${HOME}"/.tmux-powerlinerc ]
   then
     echo "[32mOK[34m][m"
-    FORCE=false
+    force=false
     echo -n "Force generation? [y/N] "
-    read INPUT
-    case ${INPUT} in
+    read input
+    case ${input} in
       [Yy] )
-        FORCE=true
+        force=true
         ;;
     esac
   else
     echo "[31mFAIL[34m][m"
-    FORCE=true
+    force=true
   fi
 
-  if [[ "${FORCE}" == "true" ]]
+  if [[ "${force}" == "true" ]]
   then
     echo "[34mGenerating tmux-powerlinerc..[m"
 
@@ -521,8 +518,8 @@ then
     echo "[31mFAIL[34m][m"
 
     echo -n "Set ZSH as main shell? [y/N] "
-    read INPUT
-    case ${INPUT} in
+    read input
+    case ${input} in
       [Yy] )
         echo "[34mSetting as main shell..[m"
 
@@ -659,8 +656,8 @@ fi
 # Setup locale
 echo "[34mDownloading font..[m"
 echo -n "Download DejaVu Sans for Powerline? [y/N] "
-read INPUT
-case ${INPUT} in
+read input
+case ${input} in
   [Yy] )
     cd "${HOME}"
     curl -s -L 'https://raw.githubusercontent.com/powerline/fonts/master/DejaVuSansMono/DejaVu Sans Mono for Powerline.ttf' -o "${HOME}/DejaVu Sans Mono for Powerline.ttf" && echo "[32mFont saved as ${HOME}/DejaVu Sans Mono for Powerline.ttf[m"
