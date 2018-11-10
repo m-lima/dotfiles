@@ -387,6 +387,10 @@ fi
 cd ${HOME}
 
 ########################################
+# Get pluginManager
+grep "plugin "${HOME}/.config/m-lima/zsh/local.sh"
+
+########################################
 # Install git
 [ -z ${GIT_INSTALLED} ] && checkInstallDefault git
 
@@ -493,10 +497,6 @@ then
     esac
   fi
 fi
-
-########################################
-# Install ZGen
-checkInstall "ZGen" 'git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"' '[ -d "${HOME}"/.zgen ]'
 
 ########################################
 # Install ccat
