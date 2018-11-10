@@ -3,6 +3,11 @@ alias jsn='python -m json.tool'
 alias mud='telnet www.ateraan.com 4002'
 alias png='ping -c 4'
 
+### Directory stuff
+alias lt='ls -lathr'
+# alias l='ls -lah'
+# alias ll='ls -lh'
+
 ### Vim
 if [ $(command -v nvim) ]
 then
@@ -61,10 +66,50 @@ function rg {
   fi
 }
 
-### Directory stuff
-# alias l='ls -lah'
-# alias ll='ls -lh'
-alias lt='ls -lathr'
+### Faster find
+function fnd {
+  if [ ! "${1}" ]
+  then
+    return -1
+  fi
+
+  local case="-name"
+  local error=""
+  local root="."
+  local type=""
+  local flags=${2}
+
+  if [ "${flags}" ]
+  then
+    [[ "${flags}" == *i* ]] && case="-iname"
+    [[ "${flags}" == *e* ]] && error="true"
+    [[ "${flags}" == *r* ]] && root="/"
+    [[ "${flags}" == *f* ]] && type=("-type" "f")
+    [[ "${flags}" == *d* ]] && type=("-type" "d")
+  fi
+
+  if [ ${error} ]
+  then
+    find ${root} ${type} ${case} "${1}"
+  else
+    find ${root} ${type} ${case} "${1}" 2> /dev/null
+  fi
+}
+
+function _fnd {
+  if (( CURRENT == 3 ))
+  then
+    local flags=(
+    'i[Case insensitive]'
+    'e[Show errors]'
+    '(d)f[Set type to directory]'
+    '(f)d[Set type to file]'
+    )
+    _values -s '' 'flags' ${flags}
+  fi
+}
+
+compdef _fnd fnd
 
 ### Commands to remember
 ## Code
