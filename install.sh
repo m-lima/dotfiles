@@ -257,6 +257,7 @@ function installPacaur {
 BASE_DIR=$(dirname $(fullPath ${0}))
 SU_DO=""
 SYS_TYPE=""
+PLUGIN_MANAGER=""
 
 ########################################
 # Check OS
@@ -401,6 +402,45 @@ checkInstallDefault curl
 ########################################
 # Install NeoVim
 checkInstall "NeoVim" "${PACKAGE_INSTALL} neovim" '[ $(command -v 'nvim') ]'
+
+########################################
+# Check pluginManager
+echo -n "[34mChecking Plugin Manager.. [[m"
+if [ -f "${HOME}/.config/m-lima/zsh/local.zsh" ]
+then
+  PLUGIN_MANAGER=`awk '{ if ($1 ~ /^pluginManager=[a-zA-Z0-9]+/) { print $1 }}' "${HOME}/.config/m-lima/zsh/local.zsh" | cut -d '=' -f2 | tail -1`
+
+  if [ -z "${PLUGIN_MANAGER}" ]
+  then
+    echo "[31mFAIL[34m][m"
+    SEL_PLUGIN_MANAGER=Y
+  else
+    echo "[32m${PLUGIN_MANAGER}[34m][m"
+    echo -n "Choose a different manager? [y/N] "
+    OLD_PLUGIN_MANAGER="${PLUGIN_MANAGER}"
+    read SEL_PLUGIN_MANAGER
+  fi
+
+  case ${SEL_PLUGIN_MANAGER} in
+    [Yy] )
+      echo "[33mSelect your manager[m"
+      echo "Z[[33mG[m]en"
+      echo "Z[[33mP[m]lug"
+      echo "[[33mN[m]one"
+      echo "[[33mE[m]xit"
+
+      echo -n "Choice: "
+      read INPUT
+      case "${INPUT}" in
+        [Gg]) PLUGIN_MANAGER="zgen";;
+        [Pp]) PLUGIN_MANAGER="zplug";;
+        [Nn]) PLUGIN_MANAGER="";;
+        *) exit;;
+      esac
+  esac
+
+  [ ${OLD_PLUGIN_MANAGER} ] && sed 's~pluginManager='"${OLD_PLUGIN_MANAGER}"'~pluginManager='"${PLUGIN_MANAGER}"'~g' "${HOME}/.config/m-lima/zsh/local.zsh"
+fi
 
 ########################################
 # Install vim
@@ -597,17 +637,18 @@ then
       echo "alias pc='pacaur --color always'" >> "${HOME}/.config/m-lima/zsh/local.zsh"
       echo "alias pcm='pacman --color always'" >> "${HOME}/.config/m-lima/zsh/local.zsh"
     fi
+    [ "${PLUGIN_MANAGER}" ] && echo "pluginManager=${PLUGIN_MANAGER}" >> "${HOME}/.config/m-lima/zsh/local.zsh"
     vi "${HOME}/.config/m-lima/zsh/local.zsh"
   fi
 
-  if [ -d "${HOME}/.zgen" ]
+  if [ "${PLUGIN_MANAGER}" ]
   then
     if installFile c zsh/fd config .config/m-lima/fd
     then
       vi "${HOME}/.config/m-lima/fd/config"
     fi
   else
-    echo "[33mSkipping ZGen links[m"
+    echo "[33mSkipping zsh plugin links[m"
   fi
 else
   echo "[33mSkipping ZSH files[m"

@@ -10,8 +10,6 @@ export COMPUTER_SYMBOL='§'
 # export COMPUTER_SYMBOL='ø'
 # export COMPUTER_SYMBOL='ƛ'
 
-pluginManager=zgen
-
 # localPlugins+=("load git@ghe.telenordigital.com:marcelo-lima/DDT-helper.git" "oh-my-zsh plugins/aws")
 
 # alias pc='pacaur --color always'
