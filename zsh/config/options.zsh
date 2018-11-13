@@ -3,6 +3,9 @@ export PATH="$HOME"/bin:$PATH
 
 # Preferred editor for local and remote sessions
 export EDITOR='vim'
+export VISUAL='vim'
+export PAGER='less'
+export LESS='-F -g -i -M -R -S -w -X -z-4'
 
 if [[ $TERM = xterm* ]]
 then

@@ -5,7 +5,7 @@ source "${HOME}/.config/m-lima/zsh/options.zsh"
 source "${HOME}/.config/m-lima/zsh/local.zsh"
 
 # If using zgen, load plugins
-[ -d "${HOME}/.zgen" ] && source "${HOME}/.config/m-lima/zsh/plugins.zsh"
+source "${HOME}/.config/m-lima/zsh/plugins.zsh"
 
 # Load the aliases
 source "${HOME}/.config/m-lima/zsh/alias.zsh"
