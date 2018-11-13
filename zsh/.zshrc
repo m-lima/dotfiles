@@ -15,4 +15,5 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.config/m-lim
 
 # Clean up temporary variables
 unset pluginManager
+unset zshFramework
 unset localPlugins

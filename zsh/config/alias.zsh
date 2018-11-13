@@ -5,8 +5,8 @@ alias png='ping -c 4'
 
 ### Directory stuff
 alias lt='ls -lathr'
-# alias l='ls -lah'
-# alias ll='ls -lh'
+alias l='ls -lah'
+alias ll='ls -lh'
 
 ### Vim
 if [ $(command -v nvim) ]
@@ -16,6 +16,11 @@ elif [ $(command -v vim) ]
 then
   alias vi=vim
 fi
+
+### Prompt expansion
+pw() {
+  [ $SIMPALT_SMALL ] && unset SIMPALT_SMALL || SIMPALT_SMALL='ON'
+}
 
 ### Git stuff
 alias gsu='git submodule update --init --recursive'

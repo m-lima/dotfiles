@@ -8,14 +8,36 @@ case "${pluginManager}" in
 
     if ! zgen saved
     then
-      zgen oh-my-zsh
-      zgen oh-my-zsh plugins/colorize
-      zgen oh-my-zsh plugins/git
+      case "${zshFramework}" in
+        omz)
+          zgen oh-my-zsh
+          zgen oh-my-zsh plugins/git
 
+          zgen load m-lima/simpalt
+          zgen load zsh-users/zsh-syntax-highlighting
+          zgen load m-lima/simpalt simpalt.zsh-theme
+          # zgen load /home/archer/code/shell/simpalt/simpalt.zsh-theme
+          ;;
+
+        prezto)
+          zgen prezto
+
+          zgen prezto '*:*' case-sensitive 'no'
+          zgen prezto '*:*' color 'yes'
+          zgen prezto prompt theme 'simpalt'
+
+          zgen prezto git
+          zgen prezto syntax-highlighting
+          zgen prezto history-substring-search
+
+          zgen load m-lima/simpalt
+          # zgen load /home/archer/code/shell/simpalt
+          ;;
+      esac
+
+      zgen oh-my-zsh plugins/colorize
       zgen load m-lima/nali
       zgen load m-lima/nali-autosuggestions
-      zgen load m-lima/simpalt simpalt.zsh-theme
-      zgen load zsh-users/zsh-syntax-highlighting
 
       for plugin in ${localPlugins}
       do

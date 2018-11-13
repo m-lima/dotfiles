@@ -259,6 +259,7 @@ SU_DO=""
 SYS_TYPE=""
 PACKAGE_INSTALL=""
 PLUGIN_MANAGER=""
+ZSH_FRAMEWORK=""
 
 ########################################
 # Check OS
@@ -434,9 +435,56 @@ then
         [Nn]) PLUGIN_MANAGER="";;
         *) exit;;
       esac
-  esac
 
-  [ ${oldPluginManager} ] && sed 's~pluginManager='"${oldPluginManager}"'~pluginManager='"${PLUGIN_MANAGER}"'~g' "${HOME}/.config/m-lima/zsh/local.zsh"
+      if [ ${oldPluginManager} ]
+      then
+        echo "Updating local configuration"
+        sed -i 's~pluginManager='"${oldPluginManager}"'~pluginManager='"${PLUGIN_MANAGER}"'~g' "${HOME}/.config/m-lima/zsh/local.zsh"
+      fi
+  esac
+fi
+
+########################################
+# Check ZSH framework
+echo -n "[34mChecking ZSH framework.. [[m"
+if [ -f "${HOME}/.config/m-lima/zsh/local.zsh" ]
+then
+  ZSH_FRAMEWORK=`awk '{ if ($1 ~ /^zshFramework=[a-zA-Z0-9]+/) { print $1 }}' "${HOME}/.config/m-lima/zsh/local.zsh" | cut -d '=' -f2 | tail -1`
+
+  if [ -z "${ZSH_FRAMEWORK}" ]
+  then
+    echo "[31mFAIL[34m][m"
+    change=Y
+  else
+    oldZshFramework="${ZSH_FRAMEWORK}"
+    echo "[32m${ZSH_FRAMEWORK}[34m][m"
+    echo -n "Choose a different framework? [y/N] "
+    read change
+  fi
+
+  case ${change} in
+    [Yy] )
+      echo "[33mSelect your framework[m"
+      echo "[[33mP[m]rezto"
+      echo "[[33mO[m]h-my-zsh"
+      echo "[[33mN[m]one"
+      echo "[[33mE[m]xit"
+
+      echo -n "Choice: "
+      read input
+      case "${input}" in
+        [Pp]) ZSH_FRAMEWORK="prezto";;
+        [Oo]) ZSH_FRAMEWORK="omz";;
+        [Nn]) ZSH_FRAMEWORK="";;
+        *) exit;;
+      esac
+
+      if [ ${oldZshFramework} ]
+      then
+        echo "Updating local configuration"
+        sed -i 's~zshFramework='"${oldZshFramework}"'~zshFramework='"${ZSH_FRAMEWORK}"'~g' "${HOME}/.config/m-lima/zsh/local.zsh"
+      fi
+  esac
 fi
 
 ########################################
@@ -635,6 +683,7 @@ then
       echo "alias pcm='pacman --color always'" >> "${HOME}/.config/m-lima/zsh/local.zsh"
     fi
     [ "${PLUGIN_MANAGER}" ] && echo "pluginManager=${PLUGIN_MANAGER}" >> "${HOME}/.config/m-lima/zsh/local.zsh"
+    [ "${ZSH_FRAMEWORK}" ] && echo "zshFramework=${ZSH_FRAMEWORK}" >> "${HOME}/.config/m-lima/zsh/local.zsh"
     vi "${HOME}/.config/m-lima/zsh/local.zsh"
   fi
 
