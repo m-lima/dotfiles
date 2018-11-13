@@ -29,6 +29,7 @@ alias gppf='git push --set-upstream origin +${$(git symbolic-ref HEAD)/refs\/hea
 alias ghelp='cat ~/.oh-my-zsh/plugins/git/git.plugin.zsh'
 alias ggal="git branch -a | tr -d \* | sed '/->/d' | xargs git grep -HI"
 alias gdc="git diff --cached"
+alias gwb="git status -sb"
 
 ### Copy path
 if [[ "$(uname)" == "Darwin" ]]
