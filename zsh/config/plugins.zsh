@@ -16,7 +16,6 @@ case "${pluginManager}" in
           zgen load m-lima/simpalt
           zgen load zsh-users/zsh-syntax-highlighting
           zgen load m-lima/simpalt simpalt.zsh-theme
-          # zgen load /home/archer/code/shell/simpalt/simpalt.zsh-theme
           ;;
 
         prezto)
@@ -31,7 +30,6 @@ case "${pluginManager}" in
           zgen prezto history-substring-search
 
           zgen load m-lima/simpalt
-          # zgen load /home/archer/code/shell/simpalt
           ;;
       esac
 
