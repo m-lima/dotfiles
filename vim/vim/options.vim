@@ -56,6 +56,7 @@ set wildmenu
 
 " File types
 autocmd BufRead,BufNewFile *.ts set filetype=javascript
+" autocmd BufRead,BufNewFile *.tsx set filetype=javascript
 autocmd BufRead,BufNewFile *.cl set filetype=c
 
 " UTF

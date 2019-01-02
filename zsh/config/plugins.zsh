@@ -13,7 +13,6 @@ case "${pluginManager}" in
           zgen oh-my-zsh
           zgen oh-my-zsh plugins/git
 
-          zgen load m-lima/simpalt
           zgen load zsh-users/zsh-syntax-highlighting
           zgen load m-lima/simpalt simpalt.zsh-theme
           ;;
