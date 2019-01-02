@@ -406,7 +406,7 @@ checkInstall "NeoVim" "${PACKAGE_INSTALL} neovim" '[ $(command -v 'nvim') ]'
 echo -n "[34mChecking Plugin Manager.. [[m"
 if [ -f "${HOME}/.config/m-lima/zsh/local.zsh" ]
 then
-  PLUGIN_MANAGER=`awk '{ if ($1 ~ /^pluginManager=[a-zA-Z0-9]+/) { print $1 }}' "${HOME}/.config/m-lima/zsh/local.zsh" | cut -d '=' -f2 | tail -1`
+  PLUGIN_MANAGER=`awk '{ if ($1 ~ /^pluginManager=.+/) { print $1 }}' "${HOME}/.config/m-lima/zsh/local.zsh" | cut -d '=' -f2 | tail -1`
 
   if [ -z "${PLUGIN_MANAGER}" ]
   then
@@ -436,10 +436,13 @@ then
         *) exit;;
       esac
 
-      if [ ${oldPluginManager} ]
+      echo -n "Updating local configuration"
+      if sed -i 's~pluginManager=.*~pluginManager='"${PLUGIN_MANAGER}"'~g' "${HOME}/.config/m-lima/zsh/local.zsh"
       then
-        echo "Updating local configuration"
-        sed -i 's~pluginManager='"${oldPluginManager}"'~pluginManager='"${PLUGIN_MANAGER}"'~g' "${HOME}/.config/m-lima/zsh/local.zsh"
+        echo " by replacing existing declaration"
+      else
+        echo " by inserting new declaration"
+        echo 'pluginManager='"${PLUGIN_MANAGER}" >> "${HOME}/.config/m-lima/zsh/local.zsh"
       fi
   esac
 fi
@@ -449,7 +452,7 @@ fi
 echo -n "[34mChecking ZSH framework.. [[m"
 if [ -f "${HOME}/.config/m-lima/zsh/local.zsh" ]
 then
-  ZSH_FRAMEWORK=`awk '{ if ($1 ~ /^zshFramework=[a-zA-Z0-9]+/) { print $1 }}' "${HOME}/.config/m-lima/zsh/local.zsh" | cut -d '=' -f2 | tail -1`
+  ZSH_FRAMEWORK=`awk '{ if ($1 ~ /^zshFramework=.+/) { print $1 }}' "${HOME}/.config/m-lima/zsh/local.zsh" | cut -d '=' -f2 | tail -1`
 
   if [ -z "${ZSH_FRAMEWORK}" ]
   then
@@ -479,10 +482,13 @@ then
         *) exit;;
       esac
 
-      if [ ${oldZshFramework} ]
+      echo -n "Updating local configuration"
+      if sed -i 's~zshFramework=.*~zshFramework='"${ZSH_FRAMEWORK}"'~g' "${HOME}/.config/m-lima/zsh/local.zsh"
       then
-        echo "Updating local configuration"
-        sed -i 's~zshFramework='"${oldZshFramework}"'~zshFramework='"${ZSH_FRAMEWORK}"'~g' "${HOME}/.config/m-lima/zsh/local.zsh"
+        echo " by replacing existing declaration"
+      else
+        echo " by inserting new declaration"
+        echo 'zshFramework='"${ZSH_FRAMEWORK}" >> "${HOME}/.config/m-lima/zsh/local.zsh"
       fi
   esac
 fi
