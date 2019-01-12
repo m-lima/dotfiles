@@ -14,3 +14,6 @@ export COMPUTER_SYMBOL='§'
 
 # alias pc='pacaur --color always'
 # alias pcm='pacman --color always'
+
+pluginManager=zgen
+zshFramework=omz
