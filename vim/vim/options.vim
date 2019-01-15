@@ -36,6 +36,9 @@ set relativenumber
 exec "set listchars=tab:\uB7\uA0,trail:\uAB,nbsp:\u268B"
 set list
 
+" Do not add comment when using 'o'
+autocmd FileType * setlocal formatoptions-=o
+
 " Identation
 set autoindent
 set smartindent

@@ -134,6 +134,10 @@ else
   let g:deoplete#sources#clang#clang_header = "/usr/lib/llvm-4.0/lib/clang"
 endif
 
+""" Vim-commentary
+" Do not add comment when using 'o'
+autocmd FileType * setlocal formatoptions-=o
+
 """"""""""""""""""""
 " Tips
 """"""""""""""""""""
