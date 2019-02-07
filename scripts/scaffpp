@@ -117,6 +117,15 @@ STRING(REGEX REPLACE "\\\\" "/" ENV_HOME_DIR "$ENV{HOME}")
 # Add custom modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/findcmake")
 
+# Static library formats
+if(WIN32)
+  set(STATIC_LIB_PREFIX "")
+  set(STATIC_LIB_SUFFIX ".lib")
+else()
+  set(STATIC_LIB_PREFIX "lib")
+  set(STATIC_LIB_SUFFIX ".a")
+endif()
+
 # Set base directories
 set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
 set(EXT_DIR "${CMAKE_SOURCE_DIR}/ext")
