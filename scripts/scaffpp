@@ -50,6 +50,7 @@ include
 
 # External projects
 ext/*/pack
+ext/*/pre
 ' > "${base}/.gitignore"
 }
 
@@ -185,7 +186,7 @@ list(APPEND HEADERS
 
 add_definitions(${DEFINITIONS})
 
-add_library(##EXE_NAME## ${SRC_DIR}/main.cpp ${SOURCES} ${HEADERS})
+add_library(##EXE_NAME## ${SRC_DIR}/main.cpp ${SOURCES})
 target_link_libraries(##EXE_NAME## PUBLIC ${LIBRARIES})
 target_include_directories(##EXE_NAME## PUBLIC ${INCLUDE_DIRS})
 
@@ -204,21 +205,20 @@ if (MAKE_TESTS)
       )
 
   # Test executable
-  add_executable(##EXE_NAME##-test ${TEST_DIR}/test_main.cpp ${TESTS} ${SOURCES} ${HEADERS})
+  add_executable(##EXE_NAME##-test ${TEST_DIR}/test_main.cpp ${TESTS} ${SOURCES})
   target_link_libraries(##EXE_NAME##-test PRIVATE ${LIBRARIES} ${TEST_LIBRARIES})
-  target_include_directories(##EXE_NAME##-test PRIVATE ${INCLUDE_DIRS} ${TEST_INCLUDE_DIRS})
+  target_include_directories(##EXE_NAME##-test PRIVATE ${SRC_DIR} ${INCLUDE_DIRS} ${TEST_INCLUDE_DIRS})
 
   # CTest integration
   gtest_discover_tests(##EXE_NAME##-test)
 
   # Copy the resources
-  file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/res/test)
+  file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/test/res)
   file(GLOB RESOURCES ${TEST_DIR}/res/*)
-  file(COPY ${RESOURCES} DESTINATION ${CMAKE_BINARY_DIR}/res/test)
+  file(COPY ${RESOURCES} DESTINATION ${CMAKE_BINARY_DIR}/test/res)
 
   # Run tests before main build
-  add_custom_target(test-all
-      COMMAND GTEST_COLOR=1 ctest -C $<CONFIGURATION> -j 4)
+  add_custom_target(test-all COMMAND ./##EXE_NAME##-test --gtest_shuffle)
   add_dependencies(test-all ##EXE_NAME##-test)
   add_dependencies(##EXE_NAME## test-all)
 endif()
@@ -281,7 +281,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 # Add googletest directly to our build. This defines the gtest and gtest_main targets.
 add_subdirectory(
     ${CMAKE_CURRENT_LIST_DIR}/pack/gtest
-    ${CMAKE_CURRENT_LIST_DIR}/pack/build
+    ${CMAKE_BINARY_DIR}/deps/gtest
     EXCLUDE_FROM_ALL
 )
 
@@ -297,13 +297,19 @@ include(GNUInstallDirs)
 ExternalProject_Add(gtest-project
     GIT_REPOSITORY https://github.com/google/googletest.git
     SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/pack/gtest
-    BINARY_DIR ${CMAKE_CURRENT_LIST_DIR}/pack/build
+    BINARY_DIR ${CMAKE_BINARY_DIR}/deps/gtest
     CONFIGURE_COMMAND ""
     BUILD_COMMAND     ""
     INSTALL_COMMAND   ""
     TEST_COMMAND      ""
     )
 ' > "${base}/ext/gtest/CMakeLists.txt.in"
+}
+
+function initGit {
+  pushd $1 > /dev/null
+  git init
+  popd > /dev/null
 }
 
 generateTree $1
@@ -313,3 +319,4 @@ generateTestMain $1
 generateCmakeBase $1 $2
 generateMFL $1
 generateGtest $1
+initGit $1
