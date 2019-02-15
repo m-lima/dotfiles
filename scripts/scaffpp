@@ -11,9 +11,11 @@ fi
 function generateTree {
   local base=$1
 
-  mkdir -p "$base/build/cmake"
-  mkdir -p "$base/ext/mfl"
-  mkdir -p "$base/src"
+  mkdir -p "${base}/build/cmake"
+  mkdir -p "${base}/ext/mfl"
+  mkdir -p "${base}/ext/gtest"
+  mkdir -p "${base}/src"
+  mkdir -p "${base}/test"
 }
 
 function generateGitIgnore {
@@ -48,7 +50,7 @@ include
 
 # External projects
 ext/*/pack
-' > $base/.gitignore
+' > "${base}/.gitignore"
 }
 
 function generateMain {
@@ -62,7 +64,24 @@ int main(int argc, char * argv[]) {
 
   return 0;
 }
-' > $base/src/main.cpp
+' > "${base}/src/main.cpp"
+}
+
+function generateTestMain {
+  local base=$1
+
+  echo \
+'#include <gtest/gtest.h>
+
+int main(int argc, char * argv[]) {
+  try {
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+  } catch (...) {}
+
+  return -1;
+}
+' > "${base}/test/test_main.cpp"
 }
 
 function generateCmakeBase {
@@ -77,6 +96,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
+
+# Test enabler
+option(MAKE_TESTS "make tests" ON)
 
 # Set release by default
 if (NOT CMAKE_BUILD_TYPE)
@@ -108,7 +130,7 @@ if (MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
   endif ()
 else ()
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wextra -Wno-long-long -pedantic")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wno-long-long -pedantic")
 endif ()
 
 # Make $HOME compatible with windows
@@ -117,21 +139,14 @@ STRING(REGEX REPLACE "\\\\" "/" ENV_HOME_DIR "$ENV{HOME}")
 # Add custom modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/findcmake")
 
-# Static library formats
-if(WIN32)
-  set(STATIC_LIB_PREFIX "")
-  set(STATIC_LIB_SUFFIX ".lib")
-else()
-  set(STATIC_LIB_PREFIX "lib")
-  set(STATIC_LIB_SUFFIX ".a")
-endif()
-
 # Set base directories
 set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
 set(EXT_DIR "${CMAKE_SOURCE_DIR}/ext")
 set(LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
 set(INC_DIR "${CMAKE_SOURCE_DIR}/inc")
-' > $base/Init.cmake
+set(TEST_DIR "${CMAKE_SOURCE_DIR}/test")
+set(LIB_INSTALL_DIR "${CMAKE_BINARY_DIR}/lib")
+' > "${base}/Init.cmake"
 
   local project_subst='s~##PROJECT_NAME##~'$2'~'
   local executable_subst='s~##EXE_NAME##~'`echo "$2" | tr '[:upper:]' '[:lower:]'`'~'
@@ -159,11 +174,10 @@ list(APPEND LIBRARIES mfl)
 ##
 
 list(APPEND SOURCES
-    ${SRC_DIR}/main.cpp
-  )
+)
 
 list(APPEND HEADERS
-    )
+)
 
 ##------------------------------------------------------------------------------
 ## Targets
@@ -171,10 +185,46 @@ list(APPEND HEADERS
 
 add_definitions(${DEFINITIONS})
 
-add_executable(##EXE_NAME## ${SOURCES} ${HEADERS})
+add_library(##EXE_NAME## ${SRC_DIR}/main.cpp ${SOURCES} ${HEADERS})
 target_link_libraries(##EXE_NAME## PUBLIC ${LIBRARIES})
 target_include_directories(##EXE_NAME## PUBLIC ${INCLUDE_DIRS})
-' > $base/CMakeLists.txt
+
+if (MAKE_TESTS)
+  message(STATUS "Making tests")
+
+  enable_testing()
+  include(GoogleTest)
+
+  # GTest
+  include("${EXT_DIR}/gtest/gtest.cmake")
+  list(APPEND TEST_LIBRARIES gtest_main)
+
+  # Test sources
+  list(APPEND TESTS
+      )
+
+  # Test executable
+  add_executable(##EXE_NAME##-test ${TEST_DIR}/test_main.cpp ${TESTS} ${SOURCES} ${HEADERS})
+  target_link_libraries(##EXE_NAME##-test PRIVATE ${LIBRARIES} ${TEST_LIBRARIES})
+  target_include_directories(##EXE_NAME##-test PRIVATE ${INCLUDE_DIRS} ${TEST_INCLUDE_DIRS})
+
+  # CTest integration
+  gtest_discover_tests(##EXE_NAME##-test)
+
+  # Copy the resources
+  file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/res/test)
+  file(GLOB RESOURCES ${TEST_DIR}/res/*)
+  file(COPY ${RESOURCES} DESTINATION ${CMAKE_BINARY_DIR}/res/test)
+
+  # Run tests before main build
+  add_custom_target(test-all
+      COMMAND GTEST_COLOR=1 ctest -C $<CONFIGURATION> -j 4)
+  add_dependencies(test-all ##EXE_NAME##-test)
+  add_dependencies(##EXE_NAME## test-all)
+endif()
+
+
+' > "${base}/CMakeLists.txt"
 }
 
 function generateMFL {
@@ -204,11 +254,62 @@ target_include_directories(mfl INTERFACE
   $<INSTALL_INTERFACE:include>)
 
 add_dependencies(mfl mfl-project)
-' > $base/ext/mfl/mfl.cmake
+' > "${base}/ext/mfl/mfl.cmake"
+}
+
+function generateGtest {
+  local base=$1
+
+  echo \
+'configure_file("${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt.in" "${CMAKE_CURRENT_LIST_DIR}/pre/CMakeLists.txt")
+execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+    RESULT_VARIABLE failure
+    WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/pre")
+if (failure)
+  message(FATAL_ERROR "Failed to configure GTest")
+endif()
+execute_process(COMMAND ${CMAKE_COMMAND} --build .
+    RESULT_VARIABLE success
+    WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/pre")
+if (failure)
+  message(FATAL_ERROR "Failed to make GTest")
+endif()
+
+# Prevent overriding the parent project compiler/linker settings on Windows
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+# Add googletest directly to our build. This defines the gtest and gtest_main targets.
+add_subdirectory(
+    ${CMAKE_CURRENT_LIST_DIR}/pack/gtest
+    ${CMAKE_CURRENT_LIST_DIR}/pack/build
+    EXCLUDE_FROM_ALL
+)
+
+set(INSTALL_GTEST OFF)
+' > "${base}/ext/gtest/gtest.cmake"
+
+echo 'cmake_minimum_required(VERSION 3.2)
+project(gtest-download NONE)
+
+include(ExternalProject)
+include(GNUInstallDirs)
+
+ExternalProject_Add(gtest-project
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/pack/gtest
+    BINARY_DIR ${CMAKE_CURRENT_LIST_DIR}/pack/build
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND     ""
+    INSTALL_COMMAND   ""
+    TEST_COMMAND      ""
+    )
+' > "${base}/ext/gtest/CMakeLists.txt.in"
 }
 
 generateTree $1
 generateGitIgnore $1
 generateMain $1
+generateTestMain $1
 generateCmakeBase $1 $2
 generateMFL $1
+generateGtest $1
