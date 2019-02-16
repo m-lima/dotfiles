@@ -186,9 +186,20 @@ list(APPEND HEADERS
 
 add_definitions(${DEFINITIONS})
 
-add_library(##EXE_NAME## ${SRC_DIR}/main.cpp ${SOURCES})
-target_link_libraries(##EXE_NAME## PUBLIC ${LIBRARIES})
-target_include_directories(##EXE_NAME## PUBLIC ${INCLUDE_DIRS})
+add_library(##EXE_NAME##-lib STATIC ${SOURCES})
+target_link_libraries(##EXE_NAME##-lib PUBLIC ${LIBRARIES})
+target_include_directories(##EXE_NAME##-lib PUBLIC ${INCLUDE_DIRS})
+
+##------------------------------------------------------------------------------
+## Main
+##
+
+add_executable(##EXE_NAME## ${SRC_DIR}/main.cpp)
+target_link_libraries(##EXE_NAME## PRIVATE ##EXE_NAME##-lib)
+
+##------------------------------------------------------------------------------
+## Tests
+##
 
 if (MAKE_TESTS)
   message(STATUS "Making tests")
@@ -198,16 +209,20 @@ if (MAKE_TESTS)
 
   # GTest
   include("${EXT_DIR}/gtest/gtest.cmake")
-  list(APPEND TEST_LIBRARIES gtest_main)
+  list(APPEND TEST_LIBRARIES
+      ##EXE_NAME##-lib
+      gtest_main)
+
+  list(APPEND TEST_INCLUDE_DIRS ${SRC_DIR})
 
   # Test sources
   list(APPEND TESTS
       )
 
   # Test executable
-  add_executable(##EXE_NAME##-test ${TEST_DIR}/test_main.cpp ${TESTS} ${SOURCES})
-  target_link_libraries(##EXE_NAME##-test PRIVATE ${LIBRARIES} ${TEST_LIBRARIES})
-  target_include_directories(##EXE_NAME##-test PRIVATE ${SRC_DIR} ${INCLUDE_DIRS} ${TEST_INCLUDE_DIRS})
+  add_executable(##EXE_NAME##-test ${TEST_DIR}/test_main.cpp ${TESTS})
+  target_link_libraries(##EXE_NAME##-test PRIVATE ${TEST_LIBRARIES})
+  target_include_directories(##EXE_NAME##-test PRIVATE ${TEST_INCLUDE_DIRS})
 
   # CTest integration
   gtest_discover_tests(##EXE_NAME##-test)
