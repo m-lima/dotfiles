@@ -1,31 +1,5 @@
 #!/bin/bash
 
-if (( $# < 2 ))
-then
-  echo "[31mIllegal number of parameters[m"
-  echo "[31mExpected: $0 scaffolding_dir project_name [addons...][m"
-
-  exit -1
-fi
-
-BASE_DIR=$1
-shift
-PROJECT_NAME=$1
-shift
-
-while [ $1 ]
-do
-  option=$1
-  shift
-
-  case ${option} in
-    mfl) MAKE_MFL=1 ;;
-    gtest) MAKE_GTEST=1 ;;
-    qt) MAKE_QT=1 ;;
-    boost) MAKE_BOOST=1 ;;
-  esac
-done
-
 function generateTree {
   mkdir -p "${BASE_DIR}/build/cmake"
   mkdir -p "${BASE_DIR}/ext"
@@ -136,7 +110,7 @@ int main(int argc, char * argv[]) {
 ' > "${BASE_DIR}/src/main.cpp"
 }
 
-function generateTest {
+function generateTestSource {
   # test_main.cpp
   echo \
 '#include <gtest/gtest.h>
@@ -342,12 +316,7 @@ target_link_libraries(##EXE_NAME## PRIVATE ##EXE_NAME##-lib)
 ##
 ' >> "${BASE_DIR}/CMakeLists.txt"
 
-if [ ${MAKE_GTEST} ]
-then
-  echo 'include("${CMAKE_SOURCE_DIR}/Tests.cmake")' >> "${BASE_DIR}/CMakeLists.txt"
-  echo '' >> "${BASE_DIR}/CMakeLists.txt"
-  generateCmakeTestBase > "${BASE_DIR}/Tests.cmake"
-fi
+[ ${MAKE_GTEST} ] && echo 'include("${CMAKE_SOURCE_DIR}/Tests.cmake")' >> "${BASE_DIR}/CMakeLists.txt"
 
 }
 
@@ -432,6 +401,8 @@ ExternalProject_Add(gtest-project
     TEST_COMMAND      ""
     )
 ' > "${BASE_DIR}/ext/gtest/CMakeLists.txt.in"
+
+generateCmakeTestBase > "${BASE_DIR}/Tests.cmake"
 }
 
 function generateQT {
@@ -536,18 +507,79 @@ ExternalProject_Add(qt-project
 }
 
 function initGit {
-  pushd "$1" > /dev/null
-  git init
+  pushd "${BASE_DIR}" > /dev/null
+  git init > /dev/null
   popd > /dev/null
 }
 
-generateTree "${BASE_DIR}"
-generateGitIgnore "${BASE_DIR}"
-generateSource "${BASE_DIR}"
-[ ${MAKE_GTEST} ] && generateTest "${BASE_DIR}"
-generateCmakeBase "${BASE_DIR}" "${PROJECT_NAME}"
-[ ${MAKE_MFL} ] && generateMFL "${BASE_DIR}"
-[ ${MAKE_GTEST} ] && generateGtest "${BASE_DIR}"
-[ ${MAKE_QT} ] && generateQT "${BASE_DIR}"
-initGit "${BASE_DIR}"
+if [[ "$1" == "-a" ]]
+then
+  shift
+
+  if (( $# < 1 ))
+  then
+    echo "[31mIllegal number of parameters[m"
+    echo "[31mExpected: $0 -a addon [addons...][m"
+
+    exit -1
+  fi
+
+  BASE_DIR="."
+  echo "Appending:" ${@}
+
+  while [ $1 ]
+  do
+    option=$1
+    shift
+
+    case ${option} in
+      mfl) generateMFL ;;
+      gtest) generateGtest ;;
+      qt) generateQT ;;
+    esac
+  done
+
+  exit 0
+fi
+
+if (( $# < 2 ))
+then
+  echo "[31mIllegal number of parameters[m"
+  echo "[31mExpected: $0 scaffolding_dir project_name [addons...][m"
+
+  exit -1
+fi
+
+BASE_DIR=$1
+shift
+PROJECT_NAME=$1
+shift
+
+if (( $# > 0 ))
+then
+  echo "Including:" ${@}
+fi
+
+while [ $1 ]
+do
+  option=$1
+  shift
+
+  case ${option} in
+    mfl) MAKE_MFL=1 ;;
+    gtest) MAKE_GTEST=1 ;;
+    qt) MAKE_QT=1 ;;
+    boost) MAKE_BOOST=1 ;;
+  esac
+done
+
+generateTree
+generateGitIgnore
+generateSource
+[ ${MAKE_GTEST} ] && generateTestSource
+generateCmakeBase
+[ ${MAKE_MFL} ] && generateMFL
+[ ${MAKE_GTEST} ] && generateGtest
+[ ${MAKE_QT} ] && generateQT
+initGit
 
