@@ -54,23 +54,44 @@ ext/*/pre
 ' > "${base}/.gitignore"
 }
 
-function generateMain {
+function generateSource {
   local base=$1
 
+  # main.cpp
   echo \
-'#include <mfl/out.hpp>
+'#include "hello.hpp"
 
 int main(int argc, char * argv[]) {
-  mfl::out::println("Hello world");
+  return hello(argc, argv);
+}
+' > "${base}/src/main.cpp"
+
+  # hello.hpp
+  echo \
+'#pragma once
+
+int hello(int argc, char * argv[]);
+' > "${base}/src/hello.hpp"
+
+  # hello.cpp
+  echo \
+'#include "hello.hpp"
+
+#include <mfl/out.hpp>
+
+int hello(int argc, char * argv[]) {
+  auto name = argc > 1 ? argv[1] : "world";
+  mfl::out::println("Hello {:s}", name);
 
   return 0;
 }
-' > "${base}/src/main.cpp"
+' > "${base}/src/hello.cpp"
 }
 
-function generateTestMain {
+function generateTest {
   local base=$1
 
+  # test_main.cpp
   echo \
 '#include <gtest/gtest.h>
 
@@ -83,6 +104,17 @@ int main(int argc, char * argv[]) {
   return -1;
 }
 ' > "${base}/test/test_main.cpp"
+
+  # test_hello.cpp
+  echo \
+'#include <gtest/gtest.h>
+
+#include "hello.hpp"
+
+TEST(Hello, should_return_zero) {
+  GTEST_ASSERT_EQ(0, hello(0, nullptr));
+}
+' > "${base}/test/test_hello.cpp"
 }
 
 function generateCmakeBase {
@@ -149,10 +181,10 @@ set(TEST_DIR "${CMAKE_SOURCE_DIR}/test")
 set(LIB_INSTALL_DIR "${CMAKE_BINARY_DIR}/lib")
 ' > "${base}/Init.cmake"
 
-  local project_subst='s~##PROJECT_NAME##~'$2'~'
-  local executable_subst='s~##EXE_NAME##~'`echo "$2" | tr '[:upper:]' '[:lower:]'`'~'
+  local project_subst='s~##PROJECT_NAME##~'$2'~g'
+  local executable_subst='s~##EXE_NAME##~'`echo "$2" | tr '[:upper:]' '[:lower:]'`'~g'
 
-  sed -e $project_subst -e $executable_subst <<< \
+  sed -e "${project_subst}" -e "${executable_subst}" <<< \
 'cmake_minimum_required(VERSION 3.2)
 project(##PROJECT_NAME## CXX)
 
@@ -175,9 +207,11 @@ list(APPEND LIBRARIES mfl)
 ##
 
 list(APPEND SOURCES
+  ${SRC_DIR}/hello.cpp
 )
 
 list(APPEND HEADERS
+  ${SRC_DIR}/hello.hpp
 )
 
 ##------------------------------------------------------------------------------
@@ -211,13 +245,15 @@ if (MAKE_TESTS)
   include("${EXT_DIR}/gtest/gtest.cmake")
   list(APPEND TEST_LIBRARIES
       ##EXE_NAME##-lib
-      gtest_main)
+      gtest_main
+  )
 
-  list(APPEND TEST_INCLUDE_DIRS ${SRC_DIR})
+  list(APPEND TEST_INCLUDE_DIRS "${SRC_DIR}")
 
   # Test sources
   list(APPEND TESTS
-      )
+    ${TEST_DIR}/test_hello.cpp
+  )
 
   # Test executable
   add_executable(##EXE_NAME##-test ${TEST_DIR}/test_main.cpp ${TESTS})
@@ -254,7 +290,7 @@ ExternalProject_Add(mfl-project
   GIT_REPOSITORY "https://github.com/m-lima/mfl.git"
   GIT_TAG "master"
   SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/pack/mfl
-  STAMP_DIR ${CMAKE_CURRENT_LIST_DIR}/pack/tmp/mfl
+  STAMP_DIR ${CMAKE_CURRENT_LIST_DIR}/pack/stamp/mfl
   TMP_DIR ${CMAKE_CURRENT_LIST_DIR}/pack/tmp/mfl
   INSTALL_COMMAND ""
   )
@@ -322,16 +358,16 @@ ExternalProject_Add(gtest-project
 }
 
 function initGit {
-  pushd $1 > /dev/null
+  pushd "$1" > /dev/null
   git init
   popd > /dev/null
 }
 
-generateTree $1
-generateGitIgnore $1
-generateMain $1
-generateTestMain $1
-generateCmakeBase $1 $2
-generateMFL $1
-generateGtest $1
-initGit $1
+generateTree "$1"
+generateGitIgnore "$1"
+generateSource "$1"
+generateTest "$1"
+generateCmakeBase "$1" "$2"
+generateMFL "$1"
+generateGtest "$1"
+initGit "$1"
