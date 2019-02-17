@@ -179,6 +179,10 @@ set(LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
 set(INC_DIR "${CMAKE_SOURCE_DIR}/inc")
 set(TEST_DIR "${CMAKE_SOURCE_DIR}/test")
 set(LIB_INSTALL_DIR "${CMAKE_BINARY_DIR}/lib")
+
+# User aditional findpackage prefixes
+set(USER_LIBS_PATH "${ENV_HOME_DIR}/lib" CACHE LIST "additional findpackage prefixes (~/lib)")
+message(STATUS "Additional findpackage prefixes: " "${USER_LIBS_PATH}")
 ' > "${base}/Init.cmake"
 
   local project_subst='s~##PROJECT_NAME##~'$2'~g'
@@ -273,8 +277,6 @@ if (MAKE_TESTS)
   add_dependencies(test-all ##EXE_NAME##-test)
   add_dependencies(##EXE_NAME## test-all)
 endif()
-
-
 ' > "${base}/CMakeLists.txt"
 }
 
