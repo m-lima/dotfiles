@@ -1,26 +1,39 @@
 #!/bin/bash
 
-if (( $# != 2 ))
+if (( $# < 2 ))
 then
   echo "[31mIllegal number of parameters[m"
-  echo "[31mExpected: $0 scaffolding_dir project_name[m"
+  echo "[31mExpected: $0 scaffolding_dir project_name [addons...][m"
 
   exit -1
 fi
 
-function generateTree {
-  local base=$1
+BASE_DIR=$1
+shift
+PROJECT_NAME=$1
+shift
 
-  mkdir -p "${base}/build/cmake"
-  mkdir -p "${base}/ext/mfl"
-  mkdir -p "${base}/ext/gtest"
-  mkdir -p "${base}/src"
-  mkdir -p "${base}/test"
+while [ $1 ]
+do
+  option=$1
+  shift
+
+  case ${option} in
+    mfl) MAKE_MFL=1 ;;
+    gtest) MAKE_GTEST=1 ;;
+    qt) MAKE_QT=1 ;;
+    boost) MAKE_BOOST=1 ;;
+  esac
+done
+
+function generateTree {
+  mkdir -p "${BASE_DIR}/build/cmake"
+  mkdir -p "${BASE_DIR}/ext"
+  mkdir -p "${BASE_DIR}/src"
+  mkdir -p "${BASE_DIR}/test"
 }
 
 function generateGitIgnore {
-  local base=$1
-
   echo \
 '# Vim
 **/.*.swp
@@ -50,47 +63,80 @@ include
 
 # External projects
 ext/*/pack
-ext/*/pre
-' > "${base}/.gitignore"
+' > "${BASE_DIR}/.gitignore"
+}
+
+function generateHelloSource {
+  echo '#include "hello.hpp"'
+  echo ''
+
+  [ ! ${MAKE_MFL} ] && echo '#include <iostream>' && echo ''
+
+  [ ${MAKE_MFL} ] && echo '#include <mfl/out.hpp>'
+  [ ${MAKE_QT} ] && echo '#include <QString>'
+
+  [ ${MAKE_MFL} ] || [ ${MAKE_QT} ] && echo ''
+
+  if [ ${MAKE_MFL} ]
+  then
+    echo \
+'void hello(std::string && name) {
+  mfl::out::println("Hello {:s}", name);
+}'
+  else
+    echo \
+'void hello(std::string && name) {
+  std::cout << "Hello " << name << std::endl;
+}'
+  fi
+
+  echo ''
+
+  if [ ${MAKE_QT} ]
+  then
+    echo \
+'std::string extractName(int argc, char * argv[]) {
+  QString name{argc > 1 ? argv[1] : "World"};
+
+  return name.toStdString();
+}'
+  else
+    echo \
+'std::string extractName(int argc, char * argv[]) {
+  auto name = argc > 1 ? argv[1] : "World";
+
+  return name;
+}'
+  fi
 }
 
 function generateSource {
-  local base=$1
+  # hello.hpp
+  echo \
+'#pragma once
+
+#include <string>
+
+void hello(std::string && name);
+std::string extractName(int argc, char * argv[]);
+' > "${BASE_DIR}/src/hello.hpp"
+
+  # hello.cpp
+  generateHelloSource > "${BASE_DIR}/src/hello.cpp"
 
   # main.cpp
   echo \
 '#include "hello.hpp"
 
 int main(int argc, char * argv[]) {
-  return hello(argc, argv);
-}
-' > "${base}/src/main.cpp"
-
-  # hello.hpp
-  echo \
-'#pragma once
-
-int hello(int argc, char * argv[]);
-' > "${base}/src/hello.hpp"
-
-  # hello.cpp
-  echo \
-'#include "hello.hpp"
-
-#include <mfl/out.hpp>
-
-int hello(int argc, char * argv[]) {
-  auto name = argc > 1 ? argv[1] : "world";
-  mfl::out::println("Hello {:s}", name);
+  hello(extractName(argc, argv));
 
   return 0;
 }
-' > "${base}/src/hello.cpp"
+' > "${BASE_DIR}/src/main.cpp"
 }
 
 function generateTest {
-  local base=$1
-
   # test_main.cpp
   echo \
 '#include <gtest/gtest.h>
@@ -103,7 +149,7 @@ int main(int argc, char * argv[]) {
 
   return -1;
 }
-' > "${base}/test/test_main.cpp"
+' > "${BASE_DIR}/test/test_main.cpp"
 
   # test_hello.cpp
   echo \
@@ -111,15 +157,59 @@ int main(int argc, char * argv[]) {
 
 #include "hello.hpp"
 
-TEST(Hello, should_return_zero) {
-  GTEST_ASSERT_EQ(0, hello(0, nullptr));
+TEST(Hello, should_return_world_on_empty) {
+  ASSERT_EQ("World", extractName(0, nullptr));
 }
-' > "${base}/test/test_hello.cpp"
+' > "${BASE_DIR}/test/test_hello.cpp"
+}
+
+function generateCmakeTestBase {
+  local project_subst='s~##PROJECT_NAME##~'"${PROJECT_NAME}"'~g'
+  local executable_subst='s~##EXE_NAME##~'`echo "${PROJECT_NAME}" | tr '[:upper:]' '[:lower:]'`'~g'
+
+  sed -e "${project_subst}" -e "${executable_subst}" <<< \
+'if (MAKE_TESTS)
+  message(STATUS "Making tests")
+
+  enable_testing()
+  include(GoogleTest)
+
+  # GTest
+  include("${EXT_DIR}/gtest/gtest.cmake")
+  list(APPEND TEST_LIBRARIES
+      ##EXE_NAME##-lib
+      gtest_main
+  )
+
+  list(APPEND TEST_INCLUDE_DIRS "${SRC_DIR}")
+
+  # Test sources
+  list(APPEND TESTS
+    ${TEST_DIR}/test_hello.cpp
+  )
+
+  # Test executable
+  add_executable(##EXE_NAME##-test ${TEST_DIR}/test_main.cpp ${TESTS})
+  target_link_libraries(##EXE_NAME##-test PRIVATE ${TEST_LIBRARIES})
+  target_include_directories(##EXE_NAME##-test PRIVATE ${TEST_INCLUDE_DIRS})
+
+  # CTest integration
+  gtest_discover_tests(##EXE_NAME##-test)
+
+  # Copy the resources
+  file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/test/res)
+  file(GLOB RESOURCES ${TEST_DIR}/res/*)
+  file(COPY ${RESOURCES} DESTINATION ${CMAKE_BINARY_DIR}/test/res)
+
+  # Run tests before main build
+  add_custom_target(test-all COMMAND ./##EXE_NAME##-test --gtest_shuffle)
+  add_dependencies(test-all ##EXE_NAME##-test)
+  add_dependencies(##EXE_NAME## test-all)
+endif()
+'
 }
 
 function generateCmakeBase {
-  local base=$1
-
   echo \
 '##------------------------------------------------------------------------------
 ## Initialization
@@ -183,13 +273,13 @@ set(LIB_INSTALL_DIR "${CMAKE_BINARY_DIR}/lib")
 # User aditional findpackage prefixes
 set(USER_LIBS_PATH "${ENV_HOME_DIR}/lib" CACHE LIST "additional findpackage prefixes (~/lib)")
 message(STATUS "Additional findpackage prefixes: " "${USER_LIBS_PATH}")
-' > "${base}/Init.cmake"
+' > "${BASE_DIR}/Init.cmake"
 
-  local project_subst='s~##PROJECT_NAME##~'$2'~g'
-  local executable_subst='s~##EXE_NAME##~'`echo "$2" | tr '[:upper:]' '[:lower:]'`'~g'
+  local project_subst='s~##PROJECT_NAME##~'"${PROJECT_NAME}"'~g'
+  local executable_subst='s~##EXE_NAME##~'`echo "${PROJECT_NAME}" | tr '[:upper:]' '[:lower:]'`'~g'
 
   sed -e "${project_subst}" -e "${executable_subst}" <<< \
-'cmake_minimum_required(VERSION 3.2)
+'cmake_minimum_required(VERSION 3.12)
 project(##PROJECT_NAME## CXX)
 
 ##------------------------------------------------------------------------------
@@ -201,12 +291,24 @@ include("${CMAKE_SOURCE_DIR}/Init.cmake")
 ##------------------------------------------------------------------------------
 ## Dependencies
 ##
+' > "${BASE_DIR}/CMakeLists.txt"
 
-# MFL
+[ ${MAKE_MFL} ] && echo \
+'# MFL
 include("${EXT_DIR}/mfl/mfl.cmake")
 list(APPEND LIBRARIES mfl)
+' >> "${BASE_DIR}/CMakeLists.txt"
 
-##------------------------------------------------------------------------------
+[ ${MAKE_QT} ] && echo \
+'# QT
+set(QT_USER_LIB_NAME qt)
+list(APPEND QT_COMPONENTS Widgets)
+include("${EXT_DIR}/qt/qt.cmake")
+list(APPEND LIBRARIES qt)
+' >> "${BASE_DIR}/CMakeLists.txt"
+
+  sed -e "${project_subst}" -e "${executable_subst}" <<< \
+'##------------------------------------------------------------------------------
 ## Sources
 ##
 
@@ -238,50 +340,19 @@ target_link_libraries(##EXE_NAME## PRIVATE ##EXE_NAME##-lib)
 ##------------------------------------------------------------------------------
 ## Tests
 ##
+' >> "${BASE_DIR}/CMakeLists.txt"
 
-if (MAKE_TESTS)
-  message(STATUS "Making tests")
+if [ ${MAKE_GTEST} ]
+then
+  echo 'include("${CMAKE_SOURCE_DIR}/Tests.cmake")' >> "${BASE_DIR}/CMakeLists.txt"
+  echo '' >> "${BASE_DIR}/CMakeLists.txt"
+  generateCmakeTestBase > "${BASE_DIR}/Tests.cmake"
+fi
 
-  enable_testing()
-  include(GoogleTest)
-
-  # GTest
-  include("${EXT_DIR}/gtest/gtest.cmake")
-  list(APPEND TEST_LIBRARIES
-      ##EXE_NAME##-lib
-      gtest_main
-  )
-
-  list(APPEND TEST_INCLUDE_DIRS "${SRC_DIR}")
-
-  # Test sources
-  list(APPEND TESTS
-    ${TEST_DIR}/test_hello.cpp
-  )
-
-  # Test executable
-  add_executable(##EXE_NAME##-test ${TEST_DIR}/test_main.cpp ${TESTS})
-  target_link_libraries(##EXE_NAME##-test PRIVATE ${TEST_LIBRARIES})
-  target_include_directories(##EXE_NAME##-test PRIVATE ${TEST_INCLUDE_DIRS})
-
-  # CTest integration
-  gtest_discover_tests(##EXE_NAME##-test)
-
-  # Copy the resources
-  file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/test/res)
-  file(GLOB RESOURCES ${TEST_DIR}/res/*)
-  file(COPY ${RESOURCES} DESTINATION ${CMAKE_BINARY_DIR}/test/res)
-
-  # Run tests before main build
-  add_custom_target(test-all COMMAND ./##EXE_NAME##-test --gtest_shuffle)
-  add_dependencies(test-all ##EXE_NAME##-test)
-  add_dependencies(##EXE_NAME## test-all)
-endif()
-' > "${base}/CMakeLists.txt"
 }
 
 function generateMFL {
-  local base=$1
+  mkdir -p "${BASE_DIR}/ext/mfl"
 
   echo \
 'include(ExternalProject)
@@ -292,8 +363,8 @@ ExternalProject_Add(mfl-project
   GIT_REPOSITORY "https://github.com/m-lima/mfl.git"
   GIT_TAG "master"
   SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/pack/mfl
-  STAMP_DIR ${CMAKE_CURRENT_LIST_DIR}/pack/stamp/mfl
-  TMP_DIR ${CMAKE_CURRENT_LIST_DIR}/pack/tmp/mfl
+  STAMP_DIR ${CMAKE_CURRENT_LIST_DIR}/pack/stamp
+  TMP_DIR ${CMAKE_CURRENT_LIST_DIR}/pack/tmp
   INSTALL_COMMAND ""
   )
 
@@ -307,23 +378,27 @@ target_include_directories(mfl INTERFACE
   $<INSTALL_INTERFACE:include>)
 
 add_dependencies(mfl mfl-project)
-' > "${base}/ext/mfl/mfl.cmake"
+' > "${BASE_DIR}/ext/mfl/mfl.cmake"
 }
 
 function generateGtest {
-  local base=$1
+  mkdir -p "${BASE_DIR}/ext/gtest"
 
   echo \
-'configure_file("${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt.in" "${CMAKE_CURRENT_LIST_DIR}/pre/CMakeLists.txt")
+'configure_file("${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt.in" "${CMAKE_CURRENT_LIST_DIR}/pack/pre/CMakeLists.txt")
+
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
     RESULT_VARIABLE failure
-    WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/pre")
+    WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/pack/pre")
+
 if (failure)
   message(FATAL_ERROR "Failed to configure GTest")
 endif()
+
 execute_process(COMMAND ${CMAKE_COMMAND} --build .
-    RESULT_VARIABLE success
-    WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/pre")
+    RESULT_VARIABLE failure
+    WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/pack/pre")
+
 if (failure)
   message(FATAL_ERROR "Failed to make GTest")
 endif()
@@ -339,9 +414,9 @@ add_subdirectory(
 )
 
 set(INSTALL_GTEST OFF)
-' > "${base}/ext/gtest/gtest.cmake"
+' > "${BASE_DIR}/ext/gtest/gtest.cmake"
 
-echo 'cmake_minimum_required(VERSION 3.2)
+echo 'cmake_minimum_required(VERSION 3.12)
 project(gtest-download NONE)
 
 include(ExternalProject)
@@ -356,7 +431,108 @@ ExternalProject_Add(gtest-project
     INSTALL_COMMAND   ""
     TEST_COMMAND      ""
     )
-' > "${base}/ext/gtest/CMakeLists.txt.in"
+' > "${BASE_DIR}/ext/gtest/CMakeLists.txt.in"
+}
+
+function generateQT {
+  mkdir -p "${BASE_DIR}/ext/qt"
+
+  echo \
+'if(NOT DEFINED QT_COMPONENTS)
+  message("")
+  message("No modules specified for QT")
+  message("Set QT_COMPONENTS variable before including QT")
+  message("e.g. list(APPEND QT_COMPONENTS Widgets)")
+  message("")
+  message(FATAL_ERROR "No modules specified for QT")
+endif()
+
+
+if(DEFINED QT_USER_LIB_NAME)
+  list(APPEND CMAKE_PREFIX_PATH "${USER_LIBS_PATH}/${QT_USER_LIB_NAME}")
+endif()
+
+message(STATUS "Using QT modules: " ${QT_COMPONENTS})
+find_package(Qt5 QUIET COMPONENTS ${QT_COMPONENTS})
+
+# QT not installed and should use ExternalProject_Add
+if (NOT Qt5_FOUND)
+  message("Could not find Qt. Adding external project")
+  message("If you have it, set QT_USER_LIB_NAME")
+
+  configure_file("${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt.in" "${CMAKE_CURRENT_LIST_DIR}/pack/pre/CMakeLists.txt")
+
+  execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+      RESULT_VARIABLE failure
+      WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/pack/pre")
+
+  if (failure)
+    message(FATAL_ERROR "Failed to configure QT")
+  endif()
+
+  execute_process(COMMAND ${CMAKE_COMMAND} --build .
+      RESULT_VARIABLE failure
+      WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/pack/pre")
+
+  if (failure)
+    message(FATAL_ERROR "Failed to make QT")
+  endif()
+
+  list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_LIST_DIR}/pack/qt")
+
+  find_package(Qt5 COMPONENTS ${QT_COMPONENTS} REQUIRED)
+else()
+  message(STATUS "Found QT. Not adding external project")
+endif()
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+add_library(qt INTERFACE)
+
+list(TRANSFORM QT_COMPONENTS PREPEND "Qt5::" OUTPUT_VARIABLE QT_PREPENDED_COMPONENTS)
+target_link_libraries(qt INTERFACE ${QT_PREPENDED_COMPONENTS})
+' > "${BASE_DIR}/ext/qt/qt.cmake"
+
+  echo \
+'cmake_minimum_required(VERSION 3.12)
+project(qt-download NONE)
+
+include(ExternalProject)
+include(GNUInstallDirs)
+  #URL_HASH "SHA256=a0d047b2da5782c8332c59ae203984b64e4d5dc5f4ba9c0884fdbe753d0afb46"
+
+ExternalProject_Add(qt-project
+  PREFIX deps/qt
+  URL "https://download.qt.io/official_releases/qt/5.11/5.11.1/submodules/qtbase-everywhere-src-5.11.1.tar.xz"
+  DOWNLOAD_DIR "${CMAKE_CURRENT_LIST_DIR}/pack/down"
+  SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/pack/src"
+  STAMP_DIR "${CMAKE_CURRENT_LIST_DIR}/pack/stamp"
+  TMP_DIR "${CMAKE_CURRENT_LIST_DIR}/pack/tmp"
+  BUILD_IN_SOURCE 1
+  CONFIGURE_COMMAND "./configure"
+    -prefix "qt"
+    -extprefix "${CMAKE_CURRENT_LIST_DIR}/pack/qt"
+    -opensource
+    -confirm-license
+    -static
+    -release
+    -nomake examples
+    -nomake tests
+    -nomake tools
+    -no-feature-concurrent
+    -no-feature-dbus
+    -no-feature-network
+    -no-feature-sql
+    -no-feature-testlib
+    -no-feature-xml
+  BUILD_COMMAND make
+  INSTALL_COMMAND make install
+  )
+' > "${BASE_DIR}/ext/qt/CMakeLists.txt.in"
 }
 
 function initGit {
@@ -365,11 +541,13 @@ function initGit {
   popd > /dev/null
 }
 
-generateTree "$1"
-generateGitIgnore "$1"
-generateSource "$1"
-generateTest "$1"
-generateCmakeBase "$1" "$2"
-generateMFL "$1"
-generateGtest "$1"
-initGit "$1"
+generateTree "${BASE_DIR}"
+generateGitIgnore "${BASE_DIR}"
+generateSource "${BASE_DIR}"
+[ ${MAKE_GTEST} ] && generateTest "${BASE_DIR}"
+generateCmakeBase "${BASE_DIR}" "${PROJECT_NAME}"
+[ ${MAKE_MFL} ] && generateMFL "${BASE_DIR}"
+[ ${MAKE_GTEST} ] && generateGtest "${BASE_DIR}"
+[ ${MAKE_QT} ] && generateQT "${BASE_DIR}"
+initGit "${BASE_DIR}"
+
