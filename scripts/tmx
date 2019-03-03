@@ -1,5 +1,50 @@
 #! /usr/bin/env bash
 
+function create () {
+  if [ ! "${name}" ]
+  then
+    echo -e "[31mInvalid name[m"
+  fi
+
+  if tmux new-session -s "${name}"
+  then
+    tput -Txterm reset
+    exit
+  else
+    echo -e "[31mUnable to create[m"
+  fi
+}
+
+function attach () {
+  if [ ! "${name}" ]
+  then
+    echo -e "[31mInvalid name[m"
+  fi
+
+  if tmux attach -t "${name}"
+  then
+    tput -Txterm reset
+    exit
+  else
+    echo -e "[31mUnable to attach[m"
+  fi
+}
+
+function getSession () {
+  echo -e "Current sessions:[32m"
+  for session in "${sessions[@]}"
+  do
+    echo ${session}
+  done
+  echo -e -n "[m"
+  echo "Name of the session: "
+  read name
+}
+
+function menu () {
+  echo -e "[[33m${1:0:1}[m]${1:1}"
+}
+
 if cat /etc/shells | grep zsh &> /dev/null
 then
   shell=zsh
@@ -7,44 +52,43 @@ else
   shell=bash
 fi
 
-if tmux list-sessions 2> /dev/null | grep main: > /dev/null
+if ! command -v tmux &> /dev/null
 then
-  if [ $(tmux list-sessions | wc -l) == 1 ]
+  echo -e "[31mCould not find tmux on the path[m"
+  return -1
+fi
+
+sessions=()
+name="${1}"
+
+while read line
+do
+  sessions+=( "${line}" )
+done < <(tmux list-sessions 2> /dev/null)
+
+if [ "${name}" ]
+then
+  grep "${name}: " > /dev/null <<< ${sessions[@]} && attach || create
+fi
+
+if grep 'main:' > /dev/null <<< ${sessions[@]}
+then
+  if (( ${#y[@]} == 1 ))
   then
     while true
     do
       tput -Txterm reset
       echo -e "[31mOnly main session exists[m"
       echo "What do you whish to do?"
-      echo -e "[[33mA[m]ttach to main"
-      echo -e "[[33mN[m]ame new session"
-      echo -e "[[33mE[m]xit?"
+      menu "Attach to main"
+      menu "Name new session"
+      menu "Exit"
       echo "Choice: "
       read input
-      case $input in
-        [Aa]* )
-          tmux attach -t main
-          tput -Txterm reset
-          exit
-          ;;
-        [Nn]* )
-          echo -e "Current sessions:[32m"
-          tmux list-sessions
-          echo -e -n "[m"
-          echo "Name of the session: "
-          read name
-          if tmux new-session -s $name
-          then
-            tput -Txterm reset
-            exit
-          else
-            echo -e "[31mUnable to create[m"
-          fi
-          ;;
-        [Ee]* )
-          tput -Txterm reset
-          exit
-          ;;
+      case ${input} in
+        [Aa]* ) name="main" && attach ;;
+        [Nn]* ) getSession && create ;;
+        [Ee]* ) tput -Txterm reset && exit ;;
       esac
     done
   else
@@ -53,145 +97,49 @@ then
       tput -Txterm reset
       echo -e "[31mSeveral sessions found[m"
       echo "What do you whish to do?"
-      echo -e "[[33mC[m]onnect to main"
-      echo -e "[[33mN[m]ame new session"
-      echo -e "[[33mA[m]ttach to last"
-      echo -e "[[33mP[m]ick session"
-      echo -e "[[33mL[m]og normally"
-      echo -e "[[33mE[m]xit?"
+      menu "Connect to main"
+      menu "Name new session"
+      menu "Attach to last"
+      menu "Pick session"
+      menu "Log normally"
+      menu "Exit"
       echo "Choice: "
       read input
 
-      case $input in
-        [Cc]* )
-          tmux attach -t main
-          tput -Txterm reset
-          exit
-          ;;
-        [Nn]* )
-          echo -e "Current sessions:[32m"
-          tmux list-sessions
-          echo -e -n "[m"
-          echo "Name of the session: "
-          read name
-          if tmux new-session -s $name
-          then
-            tput -Txterm reset
-            exit
-          else
-            echo -e "[31mUnable to create[m"
-          fi
-          ;;
-        [Aa]* )
-          # First line
-          name=$(tmux list-sessions | head -1 | cut -f1 -d ":")
-          # Last line
-          #name=$(tmux list-sessions | sed -e '$!d' | cut -f1 -d ":")
-          if tmux attach -t $name
-          then
-            tput -Txterm reset
-            exit
-          else
-            echo -e "[31mUnable to attach[m"
-          fi
-          ;;
-        [Pp]* )
-          echo -e "Current sessions:[32m"
-          tmux list-sessions
-          echo -e -n "[m"
-          echo "Name of the session: "
-          read name
-          if tmux attach -t $name
-          then
-            tput -Txterm reset
-            exit
-          else
-            echo -e "[31mUnable to attach[m"
-          fi
-          ;;
-        [Ll]* )
-          $($shell)
-          exit
-          ;;
-        [Ee]* )
-          tput -Txterm reset
-          exit
-          ;;
+      case ${input} in
+        [Cc]* ) name="main" && attach ;;
+        [Nn]* ) getSession && create ;;
+        [Aa]* ) name="${sessions[0]%%:*}" && attach ;;
+        [Pp]* ) getSession && attach ;;
+        [Ll]* ) /usr/bin/env ${shell} && exit ;;
+        [Ee]* ) tput -Txterm reset && exit ;;
       esac
     done
-  fi	
+  fi
 else
-  if tmux list-sessions &> /dev/null
+  if [ "${sessions}" ]
   then
     while true
     do
       tput -Txterm reset
       echo -e "[31mMain session not found[m"
       echo "What do you whish to do?"
-      echo -e "[[33mC[m]reate main"
-      echo -e "[[33mN[m]ame new session"
-      echo -e "[[33mA[m]ttach to last"
-      echo -e "[[33mP[m]ick session"
-      echo -e "[[33mL[m]og normally"
-      echo -e "[[33mE[m]xit?"
+      menu "Create main"
+      menu "Name new session"
+      menu "Attach to last"
+      menu "Pick session"
+      menu "Log normally"
+      menu "Exit"
       echo "Choice: "
       read input
 
-      case $input in
-        [Cc]* )
-          tmux new-session -s main
-          tput -Txterm reset
-          exit
-          ;;
-        [Nn]* )
-          echo -e "Current sessions:[32m"
-          tmux list-sessions
-          echo -e -n "[m"
-          echo "Name of the session: "
-          read name
-          if tmux new-session -s $name
-          then
-            tput -Txterm reset
-            exit
-          else
-            echo -e "[31mUnable to create[m"
-          fi
-          ;;
-        [Aa]* )
-          # First line
-          name=$(tmux list-sessions | head -1 | cut -f1 -d ":")
-          # Last line
-          #name=$(tmux list-sessions | sed -e '$!d' | cut -f1 -d ":")
-          if tmux attach -t $name
-          then
-            tput -Txterm reset
-            exit
-          else
-            echo -e "[31mUnable to attach[m"
-          fi
-          ;;
-        [Pp]* )
-          echo -e "Current sessions:[32m"
-          tmux list-sessions
-          echo -e -n "[m"
-          echo "Name of the session: "
-          read name
-          if tmux attach -t $name
-          then
-            tput -Txterm reset
-            exit
-          else
-            echo -e "[31mUnable to attach[m"
-          fi
-          ;;
-        [Ll]* )
-          /usr/bin/env $shell
-          exit
-          ;;
-        [Ee]* )
-          tput -Txterm reset
-          exit
-          ;;
+      case ${input} in
+        [Cc]* ) name="main" && create ;;
+        [Nn]* ) getSession && create ;;
+        [Aa]* ) name="${sessions[0]}%%:*" && attach ;;
+        [Pp]* ) getSession && attach ;;
+        [Ll]* ) /usr/bin/env ${shell} && exit ;;
+        [Ee]* ) tput -Txterm reset && exit ;;
       esac
     done
   else
@@ -200,39 +148,18 @@ else
       tput -Txterm reset
       echo -e "[31mNo sessions found[m"
       echo "What do you whish to do?"
-      echo -e "[[33mC[m]reate main"
-      echo -e "[[33mN[m]ame new session"
-      echo -e "[[33mL[m]og normally"
-      echo -e "[[33mE[m]xit?"
+      menu "Create main"
+      menu "Name new session"
+      menu "Log normally"
+      menu "Exit"
       echo "Choice: "
       read input
 
-      case $input in
-        [Cc]* )
-          tmux new-session -s main
-          tput -Txterm reset
-          exit
-          ;;
-        [Nn]* )
-          echo "Name of the session: "
-          read name
-          if tmux new-session -s $name
-          then
-            tput -Txterm reset
-            exit
-          else
-            echo -e "[31mUnable to create[m"
-          fi
-          ;;
-        [Ll]* )
-          /usr/bin/env $shell
-          tput -Txterm reset
-          exit
-          ;;
-        [Ee]* )
-          tput -Txterm reset
-          exit
-          ;;
+      case ${input} in
+        [Cc]* ) create main ;;
+        [Nn]* ) echo "Name of the session: " && read name && create ;;
+        [Ll]* ) /usr/bin/env ${shell} && exit ;;
+        [Ee]* ) tput -Txterm reset && exit ;;
       esac
     done
   fi

@@ -120,7 +120,7 @@ ssh -f -N -T -R2020:localhost:22 -p 2222 cool_user@cool_server
 
 # Source runs:
 ssh -o ProxyCommand='ssh -ax -W localhost:2020 -l cool_user cool_server -p 2222' -p 2020 target_user@localhost
-                                  ^ Points to the reverse proxy (localhost and the first port)
+                                  ^ Points to the reverse proxy (localhost and the arbitrary port)
                                                      ^ User on proxy server ssh
                                                                 ^ Proxy server ssh
                                                                             ^ Port for proxy server ssh
