@@ -67,3 +67,6 @@ set encoding=utf-8
 
 " Netrw (folder view)
 let g:netrw_banner = 0
+
+" Personal help files
+autocmd BufRead *.help set tw=78 ts=8 ft=help norl
