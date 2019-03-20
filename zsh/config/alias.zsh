@@ -17,6 +17,37 @@ then
   alias vi=vim
 fi
 
+### Compile on Mac
+alias mg++='g++ -Wall -Wextra -Wno-long-long -pedantic  -O3 -DNDEBUG -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -std=gnu++1z -O3'
+
+### ccat
+if [ $(command -v pygmentize) ]
+then
+  command -v ccat &> /dev/null && unalias ccat
+  function ccat {
+    # No parameter mode
+    if [ $# -eq 0 ]
+    then
+      pygmentize -O style=paraiso-dark -g
+      return $?
+    fi
+    local FNAME lexer
+    for FNAME in $@
+    do
+      # Guess lexer before invoking each file
+      lexer=$(pygmentize -N "$FNAME")
+      if [[ $lexer != text ]]
+      then
+        # Lexer found
+        pygmentize -O style=paraiso-dark -l "$lexer" "$FNAME"
+      else
+        # Text lexer
+        pygmentize -O style=paraiso-dark -g "$FNAME"
+      fi
+    done
+  }
+fi
+
 ### Prompt expansion
 pw() {
   [ $SIMPALT_SMALL ] && unset SIMPALT_SMALL || SIMPALT_SMALL='ON'
