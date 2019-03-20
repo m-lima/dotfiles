@@ -46,6 +46,10 @@ Plug 'glts/vim-textobj-comment'        " c
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 " Plug 'vim-syntastic/syntastic'
 Plug 'vim-scripts/nginx.vim'
+" Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript' }
+" Plug 'othree/yajs.vim', { 'for': 'javascript' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 
 """ Completion
 if has("nvim")
@@ -53,9 +57,10 @@ if has("nvim")
     Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'zchee/deoplete-clang', { 'for': ['cpp', 'c'] }
     Plug 'zchee/deoplete-go', { 'for': 'go', 'do': 'make' }
-    Plug 'mhartington/nvim-typescript', { 'for': 'javascript', 'do': ':UpdateRemotePlugins' }
+    Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'typescript.tsx' ], 'do': './install.sh' }
   endif
 else
+  Plug 'Quramy/tsuquyomi', { 'for': 'typescript', 'do': 'make' }
   if has("lua")
     Plug 'shougo/neocomplete'
   endif
