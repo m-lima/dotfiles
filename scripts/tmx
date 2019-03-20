@@ -156,7 +156,7 @@ else
       read input
 
       case ${input} in
-        [Cc]* ) create main ;;
+        [Cc]* ) name="main" && create ;;
         [Nn]* ) echo "Name of the session: " && read name && create ;;
         [Ll]* ) /usr/bin/env ${shell} && exit ;;
         [Ee]* ) tput -Txterm reset && exit ;;
