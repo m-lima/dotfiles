@@ -663,9 +663,9 @@ fi
 
 installFile s scripts scaffpp bin
 
-if [ -f "${HOME}/.termux/colors.properties" ]
+if [[ "${SYS_TYPE}" == "Android" ]]
 then
-  installFile s termux colors.properties
+  installFile s termux colors.properties .termux
 fi
 
 ########################################
