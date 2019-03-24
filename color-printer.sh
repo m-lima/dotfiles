@@ -1,5 +1,3 @@
-# iterm2 vim i3
-
 awk '{
   if ($0 ~ /<key>.+ Color<\/key>/) {
     color = $0
@@ -37,5 +35,5 @@ awk '{
       r = int(value * 255 + 0.5)
     }
   }
-  printf("  Hex: #%x%x%x%x\n", r, g ,b , a)
+  printf("  Hex: #%02x%02x%02x%02x\n", r, g ,b , a)
 }'

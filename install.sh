@@ -663,6 +663,11 @@ fi
 
 installFile s scripts scaffpp bin
 
+if [ -f "${HOME}/.termux/colors.properties" ]
+then
+  installFile s termux colors.properties
+fi
+
 ########################################
 # Copy files
 echo "[33mCopying files..[m"
