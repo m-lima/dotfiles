@@ -663,6 +663,11 @@ fi
 
 installFile s scripts scaffpp bin
 
+if [[ "${SYS_TYPE}" == "Android" ]]
+then
+  installFile s termux colors.properties .termux
+fi
+
 ########################################
 # Copy files
 echo "[33mCopying files..[m"
