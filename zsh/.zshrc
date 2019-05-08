@@ -25,4 +25,7 @@ then
   source "${SDKMAN_DIR}/bin/sdkman-init.sh"
 fi
 
-autoload -U compinit && compinit
+if ! command -v _fd
+then
+  autoload -U compinit && compinit
+fi
