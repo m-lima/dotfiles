@@ -21,7 +21,7 @@ function! HighlightColumn()
     match OverLength //
   else
     let g:HighlightingColumn = 1
-    match OverLength /\%81v.\+/
+    match OverLength /\%101v.\+/
   endif
 endfunction
 
