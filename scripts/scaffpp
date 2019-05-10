@@ -245,7 +245,7 @@ set(TEST_DIR "${CMAKE_SOURCE_DIR}/test")
 set(LIB_INSTALL_DIR "${CMAKE_BINARY_DIR}/lib")
 
 # User aditional findpackage prefixes
-set(USER_LIBS_PATH "${ENV_HOME_DIR}/lib" CACHE LIST "additional findpackage prefixes (~/lib)")
+list(APPEND USER_LIBS_PATH "${ENV_HOME_DIR}/lib" CACHE LIST "additional findpackage prefixes (~/lib)")
 message(STATUS "Additional findpackage prefixes: " "${USER_LIBS_PATH}")
 ' > "${BASE_DIR}/Init.cmake"
 
