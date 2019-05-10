@@ -520,6 +520,7 @@ then
   then
     echo "[31mIllegal number of parameters[m"
     echo "[31mExpected: $0 -a addon [addons...][m"
+    echo "[31mAddons available: mfl gtest qt[m"
 
     exit -1
   fi
@@ -546,6 +547,7 @@ if (( $# < 2 ))
 then
   echo "[31mIllegal number of parameters[m"
   echo "[31mExpected: $0 scaffolding_dir project_name [addons...][m"
+  echo "Addons available: mfl gtest qt"
 
   exit -1
 fi
