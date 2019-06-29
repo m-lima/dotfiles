@@ -24,15 +24,16 @@ awk '{
     split($i, field, ":")
     component = field[1]
     value = field[2]
-    print "  " component ": " value
+    byte = int(value * 255 + 0.5)
+    print "  " component ": " value " (" byte ")"
     if (component == "Alpha") {
-      a = int(value * 255 + 0.5)
+      a = byte
     } else if (component == "Blue") {
-      b = int(value * 255 + 0.5)
+      b = byte
     } else if (component == "Green") {
-      g = int(value * 255 + 0.5)
+      g = byte
     } else if (component == "Red") {
-      r = int(value * 255 + 0.5)
+      r = byte
     }
   }
   printf("  Hex: #%02x%02x%02x%02x\n", r, g ,b , a)
