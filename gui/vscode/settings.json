@@ -1,0 +1,99 @@
+{
+    "editor.tabSize": 2,
+    "terminal.integrated.fontFamily": "Inconsolata-g for Powerline",
+    "breadcrumbs.enabled": true,
+    "editor.lineNumbers": "relative",
+    "editor.tabCompletion": "on",
+    "vim.leader": ",",
+
+    "vim.insertModeKeyBindingsNonRecursive": [
+        {
+            "before": ["\\"],
+            "after": ["<Esc>"]
+        },
+        {
+            "before": ["<C-\\>"],
+            "after": ["\\"]
+        }
+    ],
+
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [";"],
+            "after": [":"]
+        },
+        {
+            "before": [":"],
+            "after": [";"]
+        },
+        {
+            "before": ["yp"],
+            "after": ["yyp"]
+        },
+        {
+            "before": ["Y"],
+            "after": ["y$"]
+        },
+        {
+            "before": ["<CR>"],
+            "after": ["o<Esc>"]
+        },
+        {
+            "before": ["|"],
+            "after": ["O<Esc>"]
+        },
+        {
+            "before": ["H"],
+            "after": ["^"]
+        },
+        {
+            "before": ["L"],
+            "after": ["$"],
+        },
+        {
+            "before": ["gY"],
+            "after": ["\"*y$"],
+        },
+        {
+            "before": ["gyy"],
+            "after": ["\"*yy"],
+        },
+        {
+            "before": ["de"],
+            "after": ["0D"],
+        }
+    ],
+
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": ["\\"],
+            "after": ["<Esc>"]
+        },
+        {
+            "before": ["<C-\\>"],
+            "after": ["\\"]
+        },
+        {
+            "before": [";"],
+            "after": [":"]
+        },
+        {
+            "before": [":"],
+            "after": [";"]
+        },
+        {
+            "before": ["H"],
+            "after": ["^"]
+        },
+        {
+            "before": ["L"],
+            "after": ["$"]
+        },
+        {
+            "before": ["gy"],
+            "after": ["\"*y"],
+        }
+    ],
+    "npm.enableScriptExplorer": true,
+    "window.zoomLevel": 0
+}
