@@ -662,6 +662,7 @@ else
 fi
 
 installFile s scripts scaffpp bin
+installFile s scripts scaffjs bin
 
 if [[ "${SYS_TYPE}" == "Android" ]]
 then
