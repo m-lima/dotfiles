@@ -1,0 +1,9 @@
+mkdir public
+mkdir src
+mkdir lib
+git init
+npm init
+npm install -s webpack webpack-dev-server webpack-cli
+
+babel babel-core babel-loader babel-preset-2015 babel-preset-stage-2
+touch src/index.js
