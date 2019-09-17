@@ -18,7 +18,7 @@ then
 fi
 
 ### Compile on Mac
-alias mg++='g++ -Wall -Wextra -Wno-long-long -pedantic  -O3 -DNDEBUG -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -std=gnu++1z -O3'
+alias mg++='g++ -Wall -Wextra -Wno-long-long -pedantic  -O3 -DNDEBUG -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -std=c++17 -O3'
 
 ### ccat
 if [ $(command -v pygmentize) ]
