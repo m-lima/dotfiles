@@ -12,7 +12,7 @@
             "after": ["<Esc>"]
         },
         {
-            "before": ["<C-\\>"],
+            "before": ["<C>-\\"],
             "after": ["\\"]
         }
     ],
@@ -95,5 +95,6 @@
         }
     ],
     "npm.enableScriptExplorer": true,
-    "window.zoomLevel": 0
+    "window.zoomLevel": 0,
+    "editor.minimap.enabled": false
 }
