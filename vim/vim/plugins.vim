@@ -16,7 +16,7 @@ Plug 'kana/vim-textobj-user'
 " Depenency for vim-scripts/ReplaceWithRegister
 Plug 'tpope/vim-repeat'
 " Dependency for jistr/vim-nerdtree-tabs
-Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle','NERDTreeTabsToggle'] }
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle', 'NERDTreeTabsToggle'] }
 if has("nvim") && has("python3")
   " Dependency for zchee/deocomplete-go
   Plug 'mdempsky/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh', 'for': 'go' }
@@ -94,7 +94,8 @@ endif
 
 """ NerdTree
 nnoremap <Leader>n :NERDTreeTabsToggle<CR>
-let NERDTreeMapOpenInTab='<CR>'
+" let NERDTreeMapOpenInTab='<CR>'
+let NERDTreeMinimalUI=1
 
 " Quit if only NERDTree is left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
