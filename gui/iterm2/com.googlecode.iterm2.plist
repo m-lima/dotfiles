@@ -1528,7 +1528,7 @@ Show Toolbelt</string>
 	<key>HotKeyTogglesWindow</key>
 	<true/>
 	<key>Hotkey</key>
-	<true/>
+	<false/>
 	<key>HotkeyChar</key>
 	<integer>32</integer>
 	<key>HotkeyCode</key>
@@ -1655,15 +1655,15 @@ Show Toolbelt</string>
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>-535 1133 445 77 -2000 1050 3440 1440 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>251 1836 620 392 -719 1050 2560 1440 </string>
+	<string>530 493 620 392 0 0 1680 1050 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>-1291 1881 606 469 -2000 1050 3440 1440 </string>
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>-1835 1997 918 452 -2011 1050 3440 1440 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-679 1150 815 654 -719 1050 2560 1440 </string>
+	<string>0 347 815 677 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>-347 1250 815 677 -719 1050 2560 1440 </string>
+	<string>184 92 815 677 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>734 49 815 677 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -3283,7 +3283,7 @@ Show Toolbelt</string>
 			<key>Guid</key>
 			<string>D06388C0-2ED7-4ED0-93C4-E52BF0B5CCED</string>
 			<key>Has Hotkey</key>
-			<true/>
+			<false/>
 			<key>Hide After Opening</key>
 			<false/>
 			<key>Horizontal Spacing</key>
@@ -3958,8 +3958,11 @@ Show Toolbelt</string>
 	</array>
 	<key>NoSyncAllAppVersions</key>
 	<array>
+		<string>3.3.2</string>
 		<string>3.2.9</string>
 		<string>3.3.1</string>
+		<string>3.3.4</string>
+		<string>3.3.3</string>
 	</array>
 	<key>NoSyncCommandHistoryHasEverBeenUsed</key>
 	<true/>
@@ -3988,7 +3991,7 @@ Show Toolbelt</string>
 	<key>NoSyncInstallationId</key>
 	<string>0695A0DB-BE31-4928-A16E-208EAB9D9E03</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>5</integer>
+	<integer>12</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>586953590.45573294</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
@@ -4433,6 +4436,14 @@ Show Toolbelt</string>
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
+				<string>number</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
 				<string>currentTab.currentSession.hostname</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
@@ -4482,11 +4493,11 @@ Show Toolbelt</string>
 		<array>
 			<dict>
 				<key>isTerminal</key>
-				<true/>
+				<false/>
 				<key>name</key>
 				<string>currentSession</string>
 				<key>nonterminalContext</key>
-				<integer>0</integer>
+				<integer>1</integer>
 			</dict>
 			<dict>
 				<key>isTerminal</key>
@@ -4525,6 +4536,14 @@ Show Toolbelt</string>
 				<true/>
 				<key>name</key>
 				<string>iterm2.localhostName</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentSession.jobPid</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -4612,6 +4631,14 @@ Show Toolbelt</string>
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
+				<string>currentSession.path</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
 				<string>currentSession.termid</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
@@ -4666,17 +4693,9 @@ Show Toolbelt</string>
 			</dict>
 			<dict>
 				<key>isTerminal</key>
-				<false/>
-				<key>name</key>
-				<string>currentSession</string>
-				<key>nonterminalContext</key>
-				<integer>1</integer>
-			</dict>
-			<dict>
-				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
-				<string>currentSession.path</string>
+				<string>currentSession</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -4789,11 +4808,11 @@ Show Toolbelt</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-09-02T07:03:45Z</date>
+	<date>2019-09-22T16:39:32Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
-	<true/>
+	<false/>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
@@ -4811,7 +4830,7 @@ Show Toolbelt</string>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>SplitPaneDimmingAmount</key>
-	<real>0.40000000596046448</real>
+	<real>0.13742796985815603</real>
 	<key>StatusBarPosition</key>
 	<integer>1</integer>
 	<key>SwitchPaneModifier</key>
@@ -11502,7 +11521,7 @@ Show Toolbelt</string>
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.3.1</string>
+	<string>3.3.4</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>6</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
