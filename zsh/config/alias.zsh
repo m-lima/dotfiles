@@ -17,9 +17,6 @@ then
   alias vi=vim
 fi
 
-### Compile on Mac
-alias mg++='g++ -Wall -Wextra -Wno-long-long -pedantic  -O3 -DNDEBUG -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -std=c++17 -O3'
-
 ### ccat
 if [ $(command -v pygmentize) ]
 then
@@ -102,6 +99,12 @@ function rg {
     cd $rangerpwd
   fi
 }
+
+### Visual Studio Code from Mac CLI
+if [ -d "/Applications/Visual Studio Code.app" ]
+then
+  alias code='open -a /Applications/Visual\ Studio\ Code.app'
+fi
 
 ### Faster find
 function fnd {
