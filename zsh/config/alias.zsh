@@ -45,6 +45,9 @@ then
   }
 fi
 
+### bat
+alias bbat='bat --paging=auto --style=auto'
+
 ### Prompt expansion
 pw() {
   [ $SIMPALT_SMALL ] && unset SIMPALT_SMALL || SIMPALT_SMALL='ON'
