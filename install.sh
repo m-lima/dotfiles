@@ -740,21 +740,30 @@ fi
 
 
 ########################################
-# Setup locale
-echo "[34mDownloading font..[m"
-echo -n "Download DejaVu Sans for Powerline? [y/N] "
-read input
-case ${input} in
-  [Yy] )
-    cd "${HOME}"
-    curl -s -L 'https://raw.githubusercontent.com/powerline/fonts/master/DejaVuSansMono/DejaVu Sans Mono for Powerline.ttf' -o "${HOME}/DejaVu Sans Mono for Powerline.ttf" && echo "[32mFont saved as ${HOME}/DejaVu Sans Mono for Powerline.ttf[m"
-    ;;
-esac
-echo -n "Download DejaVu Sans Nerd Font? [y/N] "
-read input
-case ${input} in
-  [Yy] )
-    cd "${HOME}"
-    curl -s -L 'https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/DejaVuSansMono.zip' -o "${HOME}/DejaVu Sans Mono Nerd Font.zip" && echo "[32mFont saved as ${HOME}/DejaVu Sans Mono Nerd Font.zip[m"
-    ;;
-esac
+# Download fonts
+echo "[33mDownloading fonts..[m"
+
+if [ ! -f "${HOME}/DejaVu Sans Mono for Powerline.ttf" ] || [ -z ${NO_OVERWRITE} ]
+then
+  echo "[34mDownloading font..[m"
+  echo -n "Download DejaVu Sans for Powerline? [y/N] "
+  read input
+  case ${input} in
+    [Yy] )
+      cd "${HOME}"
+      curl -s -L 'https://raw.githubusercontent.com/powerline/fonts/master/DejaVuSansMono/DejaVu Sans Mono for Powerline.ttf' -o "${HOME}/DejaVu Sans Mono for Powerline.ttf" && echo "[32mFont saved as ${HOME}/DejaVu Sans Mono for Powerline.ttf[m"
+      ;;
+  esac
+fi
+
+if [ ! -f "${HOME}/DejaVu Sans Mono Nerd Font.zip" ] || [ -z ${NO_OVERWRITE} ]
+then
+  echo -n "Download DejaVu Sans Nerd Font? [y/N] "
+  read input
+  case ${input} in
+    [Yy] )
+      cd "${HOME}"
+      curl -s -L 'https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/DejaVuSansMono.zip' -o "${HOME}/DejaVu Sans Mono Nerd Font.zip" && echo "[32mFont saved as ${HOME}/DejaVu Sans Mono Nerd Font.zip[m"
+      ;;
+  esac
+fi
