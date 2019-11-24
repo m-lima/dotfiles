@@ -149,7 +149,7 @@ function installFile {
     installName="${3}"
   fi
 
-  echo "[34mInstalling ${installName}..[m"
+  echo "[34mInstalling ${installPath}${installName}..[m"
 
   overwrite=false
 
@@ -168,14 +168,20 @@ function installFile {
 
   if [ -f "${installPath}${installName}" ] || [ -d "${installPath}${installName}" ]
   then
-    echo -n "${installPath}${installName} already exists. Overwrite? [y/N] "
-    read input
-    case ${input} in
-      [Yy] )
-        rm "${installPath}${installName}"
-        overwrite=true
-        ;;
-    esac
+    if [ ${NO_OVERWRITE} ]
+    then
+      echo "Already exists. Skipping.."
+      return 1
+    else
+      echo -n "${installPath}${installName} already exists. Overwrite? [y/N] "
+      read input
+      case ${input} in
+        [Yy] )
+          rm "${installPath}${installName}"
+          overwrite=true
+          ;;
+      esac
+    fi
   else
     overwrite=true
   fi
@@ -266,6 +272,11 @@ PACKAGE_INSTALL=""
 PLUGIN_MANAGER=""
 ZSH_FRAMEWORK=""
 
+if [[ "${1}" = "-no" ]]
+then
+  NO_OVERWRITE=1
+fi
+
 ########################################
 # Check OS
 echo -n "[34mChecking OS.. [[m"
@@ -288,8 +299,11 @@ then
   change=Y
 else
   echo "[32m${SYS_TYPE}[34m][m"
-  echo -n "Choose a different OS? [y/N] "
-  read change
+  if [ -z ${NO_OVERWRITE} ]
+  then
+    echo -n "Choose a different OS? [y/N] "
+    read change
+  fi
 fi
 
 case ${change} in
@@ -419,9 +433,12 @@ then
     change=Y
   else
     echo "[32m${PLUGIN_MANAGER}[34m][m"
-    echo -n "Choose a different manager? [y/N] "
-    oldPluginManager="${PLUGIN_MANAGER}"
-    read change
+    if [ -z ${NO_OVERWRITE} ]
+    then
+      echo -n "Choose a different manager? [y/N] "
+      oldPluginManager="${PLUGIN_MANAGER}"
+      read change
+    fi
   fi
 
   case ${change} in
@@ -466,8 +483,11 @@ then
   else
     oldZshFramework="${ZSH_FRAMEWORK}"
     echo "[32m${ZSH_FRAMEWORK}[34m][m"
-    echo -n "Choose a different framework? [y/N] "
-    read change
+    if [ -z ${NO_OVERWRITE} ]
+    then
+      echo -n "Choose a different framework? [y/N] "
+      read change
+    fi
   fi
 
   case ${change} in
@@ -539,13 +559,17 @@ then
   then
     echo "[32mOK[34m][m"
     force=false
-    echo -n "Force generation? [y/N] "
-    read input
-    case ${input} in
-      [Yy] )
-        force=true
-        ;;
-    esac
+
+    if [ -z ${NO_OVERWRITE} ]
+    then
+      echo -n "Force generation? [y/N] "
+      read input
+      case ${input} in
+        [Yy] )
+          force=true
+          ;;
+      esac
+    fi
   else
     echo "[31mFAIL[34m][m"
     force=true
@@ -703,7 +727,7 @@ then
 
   if [ "${PLUGIN_MANAGER}" ]
   then
-    if installFile c zsh/fd config .config/m-lima/fd
+    if installFile c config/fd config .config/m-lima/fd
     then
       vi "${HOME}/.config/m-lima/fd/config"
     fi
