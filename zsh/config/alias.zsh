@@ -17,34 +17,6 @@ then
   alias vi=vim
 fi
 
-### ccat
-if [ $(command -v pygmentize) ]
-then
-  command -v ccat &> /dev/null && unalias ccat
-  function ccat {
-    # No parameter mode
-    if [ $# -eq 0 ]
-    then
-      pygmentize -O style=paraiso-dark -g
-      return $?
-    fi
-    local FNAME lexer
-    for FNAME in $@
-    do
-      # Guess lexer before invoking each file
-      lexer=$(pygmentize -N "$FNAME")
-      if [[ $lexer != text ]]
-      then
-        # Lexer found
-        pygmentize -O style=paraiso-dark -l "$lexer" "$FNAME"
-      else
-        # Text lexer
-        pygmentize -O style=paraiso-dark -g "$FNAME"
-      fi
-    done
-  }
-fi
-
 ### bat
 alias bbat='bat --paging=auto --style=auto'
 

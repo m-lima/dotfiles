@@ -132,7 +132,12 @@ function installFile {
 
   if [ "${4}" ]
   then
-    installPath="${HOME}/${4}/"
+    if [ "${4:0:1}" = "/" ]
+    then
+      installPath="${4}/"
+    else
+      installPath="${HOME}/${4}/"
+    fi
   else
     installPath="${HOME}/"
   fi
@@ -590,16 +595,8 @@ then
 fi
 
 ########################################
-# Install ccat
-if [[ "${SYS_TYPE}" == "Darwin" ]]
-then
-  checkInstall "ccat" "${SU_DO} easy_install pygments" '[ $(command -v 'pygmentize') ]'
-elif [[ "${SYS_TYPE}" == "Arch" ]]
-then
-  checkInstall "ccat" "${PACKAGE_INSTALL} pygmentize" '[ $(command -v 'pygmentize') ]'
-else
-  checkInstall "ccat" "${PACKAGE_INSTALL} python-pygments" '[ $(command -v 'pygmentize') ]'
-fi
+# Install bat
+checkInstall "Bat" "${PACKAGE_INSTALL} bat" '[ $(command -v 'bat') ]'
 
 ########################################
 # Create ~/bin
@@ -669,6 +666,11 @@ then
   installFile s termux colors.properties .termux
 fi
 
+if [ $(command -v bat) ]
+then
+  installFile s config/bat config `bat --config-dir`
+fi
+
 ########################################
 # Copy files
 echo "[33mCopying files..[m"
@@ -722,5 +724,13 @@ case ${input} in
   [Yy] )
     cd "${HOME}"
     curl -s -L 'https://raw.githubusercontent.com/powerline/fonts/master/DejaVuSansMono/DejaVu Sans Mono for Powerline.ttf' -o "${HOME}/DejaVu Sans Mono for Powerline.ttf" && echo "[32mFont saved as ${HOME}/DejaVu Sans Mono for Powerline.ttf[m"
+    ;;
+esac
+echo -n "Download DejaVu Sans Nerd Font? [y/N] "
+read input
+case ${input} in
+  [Yy] )
+    cd "${HOME}"
+    curl -s -L 'https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/DejaVuSansMono.zip' -o "${HOME}/DejaVu Sans Mono Nerd Font.zip" && echo "[32mFont saved as ${HOME}/DejaVu Sans Mono Nerd Font.zip[m"
     ;;
 esac
