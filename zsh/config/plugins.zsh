@@ -84,3 +84,6 @@ bindkey '^K' autosuggest-next
 bindkey '^J' autosuggest-previous
 bindkey '^L' forward-word
 bindkey '^H' backward-delete-word
+
+# FZF
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
