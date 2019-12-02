@@ -17,6 +17,10 @@ set ignorecase
 set smartcase
 set hlsearch
 
+" Persistent undo
+set undofile
+set undodir=~/tmp/vim_undo
+
 " More sensible splitting
 set splitright
 set splitbelow
