@@ -29,6 +29,7 @@ Plug 'kien/ctrlp.vim'
 Plug 'jistr/vim-nerdtree-tabs', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle','NERDTreeTabsToggle'] }
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-rooter'
 " Plug 'terryma/vim-multiple-cursors'
 
 " Verbs
