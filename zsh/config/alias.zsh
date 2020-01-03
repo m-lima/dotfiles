@@ -78,7 +78,7 @@ function rg {
 ### Visual Studio Code from Mac CLI
 if [ -d "/Applications/Visual Studio Code.app" ]
 then
-  alias code='open -a /Applications/Visual\ Studio\ Code.app'
+  alias vscode='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 fi
 
 ### Faster find
