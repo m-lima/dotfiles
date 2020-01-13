@@ -51,6 +51,7 @@ Plug 'vim-scripts/nginx.vim'
 Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript' }
 " Plug 'othree/yajs.vim', { 'for': 'javascript' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
 """ Completion
 if has("nvim")
@@ -59,6 +60,7 @@ if has("nvim")
     Plug 'zchee/deoplete-clang', { 'for': ['cpp', 'c'] }
     Plug 'zchee/deoplete-go', { 'for': 'go', 'do': 'make' }
     Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'typescript.tsx' ], 'do': './install.sh' }
+    Plug 'racer-rust/vim-racer', { 'for': 'rust' }
   endif
 else
   Plug 'Quramy/tsuquyomi', { 'for': 'typescript', 'do': 'make' }
@@ -140,6 +142,9 @@ else
   let g:deoplete#sources#clang#libclang_path = "/usr/lib/llvm-4.0/lib/libclang.so.1"
   let g:deoplete#sources#clang#clang_header = "/usr/lib/llvm-4.0/lib/clang"
 endif
+
+" Rust
+let g:rustfmt_autosave = 1
 
 """ Vim-commentary
 " Do not add comment when using 'o'
