@@ -32,7 +32,6 @@ case "${pluginManager}" in
           ;;
       esac
 
-      zgen oh-my-zsh plugins/colorize
       zgen load m-lima/nali
       zgen load m-lima/nali-autosuggestions
 
@@ -55,7 +54,6 @@ case "${pluginManager}" in
     # zplug "lib/completion", from:oh-my-zsh
     zplug "lib/grep", from:oh-my-zsh
     zplug "lib/history", from:oh-my-zsh
-    zplug "plugins/colorize", from:oh-my-zsh
     zplug "plugins/git", from:oh-my-zsh
 
     zplug "m-lima/nali"
