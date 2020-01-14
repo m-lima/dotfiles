@@ -1661,9 +1661,9 @@ Show Toolbelt</string>
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>-1835 1997 918 452 -2011 1050 3440 1440 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 3440 1405 0 0 1680 1050 </string>
+	<string>-2351 1400 815 677 -2351 1050 3440 1440 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>184 92 815 677 0 0 1680 1027 </string>
+	<string>184 92 815 677 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>618 62 815 677 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -1681,6 +1681,8 @@ Show Toolbelt</string>
 			<true/>
 			<key>ASCII Ligatures</key>
 			<false/>
+			<key>Allow Paste Bracketing</key>
+			<true/>
 			<key>Allow Title Reporting</key>
 			<false/>
 			<key>Ambiguous Double Width</key>
@@ -4005,7 +4007,7 @@ Show Toolbelt</string>
 	<key>NoSyncInstallationId</key>
 	<string>0695A0DB-BE31-4928-A16E-208EAB9D9E03</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>40</integer>
+	<integer>47</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>586953590.45573294</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
@@ -4096,6 +4098,14 @@ Show Toolbelt</string>
 				<true/>
 				<key>name</key>
 				<string>tab.tmuxWindowTitle</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>user.session</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -4338,6 +4348,14 @@ Show Toolbelt</string>
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
+				<string>currentTab.currentSession.user.session</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
 				<string>frame</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
@@ -4509,7 +4527,15 @@ Show Toolbelt</string>
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
-				<string>currentSession</string>
+				<string>tmuxWindow</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentSession.user.session</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -4715,19 +4741,19 @@ Show Toolbelt</string>
 			</dict>
 			<dict>
 				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentSession</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
 				<false/>
 				<key>name</key>
 				<string>currentSession</string>
 				<key>nonterminalContext</key>
 				<integer>1</integer>
-			</dict>
-			<dict>
-				<key>isTerminal</key>
-				<true/>
-				<key>name</key>
-				<string>tmuxWindow</string>
-				<key>nonterminalContext</key>
-				<integer>0</integer>
 			</dict>
 		</array>
 		<key>4</key>
@@ -4846,7 +4872,7 @@ Show Toolbelt</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-12-15T09:18:03Z</date>
+	<date>2020-01-08T23:37:17Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
