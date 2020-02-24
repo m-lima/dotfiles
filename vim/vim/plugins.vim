@@ -30,6 +30,7 @@ Plug 'jistr/vim-nerdtree-tabs', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTr
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
+Plug 'ryanoasis/vim-devicons'
 " Plug 'terryma/vim-multiple-cursors'
 
 " Verbs
