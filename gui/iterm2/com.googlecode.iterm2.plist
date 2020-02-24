@@ -10,6 +10,8 @@
 	<false/>
 	<key>AppleAntiAliasingThreshold</key>
 	<integer>1</integer>
+	<key>ApplePressAndHoldEnabled</key>
+	<false/>
 	<key>AppleScrollAnimationEnabled</key>
 	<integer>0</integer>
 	<key>AppleSmoothFixedFontsSizeThreshold</key>
@@ -1655,15 +1657,15 @@ Show Toolbelt</string>
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>-535 1133 445 77 -2000 1050 3440 1440 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>507 476 620 392 0 0 1680 1027 </string>
+	<string>-941 1836 620 392 -2351 1050 3440 1440 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>-1291 1881 606 469 -2000 1050 3440 1440 </string>
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>-1835 1997 918 452 -2011 1050 3440 1440 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-2351 1400 815 677 -2351 1050 3440 1440 </string>
+	<string>0 350 815 677 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>184 92 815 677 0 0 1680 1050 </string>
+	<string>-1793 1238 815 677 -2351 1050 3440 1440 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>618 62 815 677 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -3965,6 +3967,7 @@ Show Toolbelt</string>
 	<key>NoSyncAllAppVersions</key>
 	<array>
 		<string>3.3.6</string>
+		<string>3.3.8</string>
 		<string>3.3.1</string>
 		<string>3.3.3</string>
 		<string>3.3.5</string>
@@ -4007,7 +4010,7 @@ Show Toolbelt</string>
 	<key>NoSyncInstallationId</key>
 	<string>0695A0DB-BE31-4928-A16E-208EAB9D9E03</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>47</integer>
+	<integer>56</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>586953590.45573294</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
@@ -4784,14 +4787,6 @@ Show Toolbelt</string>
 			</dict>
 		</array>
 	</dict>
-	<key>NoSyncSearchHistory2</key>
-	<array>
-		<string>helm version</string>
-		<string>v1.</string>
-		<string>exit</string>
-		<string>Helm is not installe</string>
-		<string>626c</string>
-	</array>
 	<key>NoSyncSuppressBroadcastInputWarning</key>
 	<true/>
 	<key>NoSyncSuppressBroadcastInputWarning_selection</key>
@@ -4872,7 +4867,7 @@ Show Toolbelt</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-01-08T23:37:17Z</date>
+	<date>2020-02-06T10:25:17Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
@@ -11585,7 +11580,7 @@ Show Toolbelt</string>
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.3.7</string>
+	<string>3.3.8</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>6</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
