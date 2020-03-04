@@ -166,7 +166,7 @@ git remote add origin ssh://user@host:port/full/path/to/repo_name.git
 ##################################################
 # Wildcard TLS certificate
 ##################################################
-T# o issue:
+# To issue:
 docker run -it --rm --name certbot \
   -v /nice/path/certbot/etc:/etc/letsencrypt \
   -v /nice/path/certbot/var:/var/lib/letsencrypt \
@@ -181,3 +181,24 @@ docker run -it --rm --name certbot \
 host -t txt _acme-challenge.domain.com
 
 # Keys will be under /nice/path/certbot/etc/live/domain.com
+
+##################################################
+# Encrypt files
+##################################################
+# For files:
+  # To encrypt:
+  openssl enc -aes-256-cbc -in <INPUT_FILE> -out <OUTPUT_FILE>
+
+  # To decrypt:
+  openssl enc -aes-256-cbc -d -in <INPUT_FILE> > <OUTPUT_FILE>
+
+  # enc Encrypt
+  # -aes-256-cbc Algorithm
+  # -d decrypt
+
+# For directories
+  # To encrypt:
+  tar -czf - <INPUT_DIRECTORY> | openssl enc -e -aes-256-cbc -out <OUTPUT_FILE>
+
+  # To decrypt:
+  openssl enc -aes-256-cbc -d -in <INPUT_FILE> | tar xz -C <OUTPUT_DIRECTORY>
