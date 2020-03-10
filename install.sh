@@ -674,6 +674,13 @@ else
   echo "[33mSkipping Vim links[m"
 fi
 
+if [ $(command -v nvim) ] || [ $(command -v vim) ]
+then
+  installFile s vim .ideavimrc .
+else
+  echo "[33mSkipping IdeaVim links[m"
+fi
+
 if [ $(command -v tmux) ]
 then
   installFile s scripts tmx bin
