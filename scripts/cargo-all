@@ -1,0 +1,21 @@
+#!/bin/bash
+
+shift
+
+if [[ "${1}" == "--run" ]]; then
+  run=1
+  shift
+fi
+
+echo "[34mFormatting[m" && \
+cargo fmt && \
+echo "[34mBuilding[m" && \
+cargo build ${@} && \
+echo "[34mLinting[m" && \
+cargo clippy ${@} && \
+echo "[34mTesting[m" && \
+cargo test ${@}
+if [ "${run}" ]; then
+  echo "[34mRunning[m" && \
+  cargo run ${@}
+fi

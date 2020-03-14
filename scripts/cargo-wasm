@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# A crude (vry crude) halper for wasm-bindgen applications
+
+if ! command -v wasm-bindgen; then
+  echo "[34mCould not find wasm-bindgen[m" >&2
+  echo "Downloand it from https://github.com/rustwasm/wasm-bindgen/releases" >&2
+  exit -1
+fi
+
+base_dir=`cargo locate-project | jq -r '.root' | xargs dirname`
+if ! cargo build --target wasm32-unknown-unknown --release; then
+  exit -1
+fi
+
+output=`ls "${base_dir}"/target/wasm32-unknown-unknown/release/*.wasm | head -1 | xargs basename | cut -d'.' -f1`
+
+wasm-bindgen "${base_dir}/target/wasm32-unknown-unknown/release/${output}.wasm" --out-dir "${base_dir}/static" --web && \
+  echo '<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <title>'"${output}"'</title>
+  </head>
+  <body>
+    <script type="module">
+      import init from "./'"${output}"'.js";
+
+      init("./'"${output}"'_bg.wasm");
+    </script>
+  </body>
+</html>' > "${base_dir}/static/index.html"
+
+shift
+
+if [[ "${1}" == "--run" ]]; then
+  simple-server "${base_dir}/static"
+fi
