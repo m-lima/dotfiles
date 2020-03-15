@@ -8,6 +8,7 @@ echo '# To Do
 
 ## Main
 [ ] Todo
+[ ] *Minor*
 [ ] **Important**
 [ ] ***Bug***
 [x] Done
