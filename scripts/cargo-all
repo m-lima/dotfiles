@@ -8,13 +8,23 @@ if [[ "${1}" == "--run" ]]; then
 fi
 
 echo "[34mFormatting[m" && \
-cargo fmt && \
-echo "[34mBuilding[m" && \
-cargo build ${@} && \
-echo "[34mLinting[m" && \
-cargo clippy ${@} && \
-echo "[34mTesting[m" && \
-cargo test ${@}
+cargo fmt --all && \
+echo "[34mBuilding main[m" && \
+cargo build --workspace --all-features ${@} && \
+echo "[34mBuilding targets[m" && \
+cargo build --workspace --all-targets ${@} && \
+echo "[34mBuilding examples[m" && \
+cargo build --workspace --examples ${@} && \
+echo "[34mLinting main[m" && \
+cargo clippy --workspace --all-features ${@} && \
+echo "[34mLinting targets[m" && \
+cargo clippy --workspace --all-targets ${@} && \
+echo "[34mLinting examples[m" && \
+cargo clippy --workspace --examples ${@} && \
+echo "[34mTesting main[m" && \
+cargo test --workspace --all-features ${@} && \
+echo "[34mTesting targets[m" && \
+cargo test --workspace --all-targets ${@}
 if [ "${run}" ]; then
   echo "[34mRunning[m" && \
   cargo run ${@}
