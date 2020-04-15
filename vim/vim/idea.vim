@@ -3,3 +3,4 @@
 """"""""""""""""""""
 set surround
 set commentary
+set ReplaceWithRegister
