@@ -129,7 +129,7 @@ inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
+call g:deoplete#custom#option({'smart_case': v:true})
 
 " Golang
 let g:deoplete#sources#go#gocode_binary = $GOPATH."/bin/gocode"
