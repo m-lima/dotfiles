@@ -83,45 +83,20 @@ if &diff
   hi DiffText   ctermfg=233  ctermbg=yellow  guifg=#000033 guibg=#DDDDFF gui=none cterm=none
 endif
 
-if has('win32')
+" Scrolling using Ctrl
+nnoremap <C-j> 5<C-E>
+nnoremap <C-k> 5<C-Y>
+vnoremap <C-j> 5<C-E>
+vnoremap <C-k> 5<C-Y>
 
-  " Scrolling [Alt-J/Alt-K]
-  nnoremap <M-j> 5<C-E>
-  nnoremap <M-k> 5<C-Y>
-  vnoremap <M-j> 5<C-E>
-  vnoremap <M-k> 5<C-Y>
-
-else
-  " These cases are for Macs or Macs wrapping Linux
-  " Scrolling [Alt-J/Alt-K]
-  nnoremap ∆ 5<C-E>
-  nnoremap ˚ 5<C-Y>
-  vnoremap ∆ 5<C-E>
-  vnoremap ˚ 5<C-Y>
-
-  if has('macunix')
-    " Get a proper delete on Mac
-    imap <C-d> <Del>
-  elseif has('unix')
-
-    " Scrolling using Alt for Alt-aware-terminal
-    nnoremap <M-j> 5<C-E>
-    nnoremap <M-k> 5<C-Y>
-    vnoremap <M-j> 5<C-E>
-    vnoremap <M-k> 5<C-Y>
-
-    " Scrolling using Alt with crude escape codes
-    nnoremap <Esc>j 5<C-E>
-    nnoremap <Esc>k 5<C-Y>
-    vnoremap <Esc>j 5<C-E>
-    vnoremap <Esc>k 5<C-Y>
-
-    " Mapping crude mouse wheel escape codes
-    inoremap <Esc>[62~ <C-X><C-E>
-    inoremap <Esc>[63~ <C-X><C-Y>
-    nnoremap <Esc>[62~ <C-E>
-    nnoremap <Esc>[63~ <C-Y>
-
-  endif
+if has('macunix')
+  " Get a proper delete on Mac
+  imap <C-d> <Del>
+elseif has('unix')
+  " Mapping crude mouse wheel escape codes
+  inoremap <Esc>[62~ <C-X><C-E>
+  inoremap <Esc>[63~ <C-X><C-Y>
+  nnoremap <Esc>[62~ <C-E>
+  nnoremap <Esc>[63~ <C-Y>
 endif
 
