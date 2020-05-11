@@ -64,8 +64,8 @@ if has("nvim")
     Plug 'racer-rust/vim-racer', { 'for': 'rust' }
   endif
 else
-  Plug 'Quramy/tsuquyomi', { 'for': 'typescript', 'do': 'make' }
   if has("lua")
+    Plug 'Quramy/tsuquyomi', { 'for': 'typescript', 'do': 'make' }
     Plug 'shougo/neocomplete'
   endif
 endif
@@ -120,35 +120,42 @@ set updatetime=400
 " Don't load straightaway
 " let g:gitgutter_enabled = 0
 
-""" NeoComplete
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-
-""" Deoplete
+""" Completion navigation overload
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
-let g:deoplete#enable_at_startup = 1
-if exists("g:deoplete#custom#option")
-  call g:deoplete#custom#option({'smart_case': v:true})
+if has("nvim")
+  if has("python3")
+
+    """ Deoplete
+    let g:deoplete#enable_at_startup = 1
+    call g:deoplete#custom#option({'smart_case': v:true})
+
+    " Golang
+    let g:deoplete#sources#go#gocode_binary = $GOPATH."/bin/gocode"
+
+    " Clang
+    if has('win32')
+    elseif has('macunix')
+      let g:deoplete#sources#clang#libclang_path = "/Library/Developer/CommandLineTools/usr/lib/libclang.dylib"
+      let g:deoplete#sources#clang#clang_header = "/Library/Developer/CommandLineTools/usr/lib/clang"
+    else
+      let g:deoplete#sources#clang#libclang_path = "/usr/lib/llvm-4.0/lib/libclang.so.1"
+      let g:deoplete#sources#clang#clang_header = "/usr/lib/llvm-4.0/lib/clang"
+    endif
+
+  endif
 else
-  let g:deoplete#enable_smart_case = 1
+  if has("lua")
+
+    """ NeoComplete
+    let g:neocomplete#enable_at_startup = 1
+    let g:neocomplete#enable_smart_case = 1
+
+  endif
 endif
 
-" Golang
-let g:deoplete#sources#go#gocode_binary = $GOPATH."/bin/gocode"
-
-" Clang
-if has('win32')
-elseif has('macunix')
-  let g:deoplete#sources#clang#libclang_path = "/Library/Developer/CommandLineTools/usr/lib/libclang.dylib"
-  let g:deoplete#sources#clang#clang_header = "/Library/Developer/CommandLineTools/usr/lib/clang"
-else
-  let g:deoplete#sources#clang#libclang_path = "/usr/lib/llvm-4.0/lib/libclang.so.1"
-  let g:deoplete#sources#clang#clang_header = "/usr/lib/llvm-4.0/lib/clang"
-endif
-
-" Rust
+""" Rust
 let g:rustfmt_autosave = 1
 
 """ Vim-commentary
