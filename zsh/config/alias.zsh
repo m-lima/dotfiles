@@ -8,6 +8,11 @@ alias lt='ls -lathr'
 alias l='ls -lah'
 alias ll='ls -lh'
 
+# function cd() {
+#   builtin cd $@
+#   ls -A
+# }
+
 ### Vim
 if [ $(command -v nvim) ]
 then
@@ -48,6 +53,35 @@ else
     alias ppwd='cd "$(cat /tmp/pwd_buffer_$USER)" 2> /dev/null'
   fi
 fi
+
+### Pyenv
+function pyenv {
+  if [ "$1" ]
+  then
+    newEnv="$1"
+  else
+    newEnv="${HOME}/code/mine/python/env/test"
+  fi
+  oldEnv="${VIRTUAL_ENV}"
+
+  if [[ "${oldEnv}" != "${newEnv}" ]]
+  then
+    if command -v deactivate &> /dev/null
+    then
+      deactivate
+    fi
+
+    if [ ! -f "${newEnv}" ]
+    then
+      python3 -m venv "${newEnv}"
+      source "${newEnv}/bin/activate"
+      pip3 install --upgrade pip
+      echo "Virtual environment created at ${newEnv}"
+    else
+      source "${newEnv}/bin/activate"
+    fi
+  fi
+}
 
 ### Dictionary
 function def {
