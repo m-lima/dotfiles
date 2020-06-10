@@ -242,7 +242,7 @@ bar {
     colors {
         statusline         $white
         background         #262626
-        separator          $transparent
+        separator          #555555
 
 #                          BORDER       BACKGROUND   TEXT
         focused_workspace  #383838      #383838      $white
@@ -257,3 +257,4 @@ bar {
 #exec --no-startup-id feh --bg-scale ~/.config/i3/1440x900.jpg
 #exec --no-startup-id feh --bg-scale ~/Downloads/soft.jpg
 #exec --no-startup-id compton -b
+exec xsetroot -solid "#262626"
