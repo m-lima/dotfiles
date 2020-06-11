@@ -60,7 +60,7 @@ function pyenv {
   then
     newEnv="$1"
   else
-    newEnv="${HOME}/code/mine/python/env/test"
+    newEnv="${HOME}/code/mine/python/env/main"
   fi
   oldEnv="${VIRTUAL_ENV}"
 
