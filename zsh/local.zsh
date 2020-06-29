@@ -9,6 +9,7 @@ export COMPUTER_SYMBOL='§'
 # export COMPUTER_SYMBOL='☢'
 # export COMPUTER_SYMBOL='ø'
 # export COMPUTER_SYMBOL='ƛ'
+# export COMPUTER_SYMBOL='τ'
 
 # localPlugins+=("load git@ghe.telenordigital.com:marcelo-lima/DDT-helper.git" "oh-my-zsh plugins/aws")
 
