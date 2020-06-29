@@ -732,14 +732,9 @@ then
     vi "${HOME}/.config/m-lima/zsh/local.zsh"
   fi
 
-  if [ "${PLUGIN_MANAGER}" ]
+  if installFile c config/fd config .config/m-lima/fd
   then
-    if installFile c config/fd config .config/m-lima/fd
-    then
-      vi "${HOME}/.config/m-lima/fd/config"
-    fi
-  else
-    echo "[33mSkipping zsh plugin links[m"
+    vi "${HOME}/.config/m-lima/fd/config"
   fi
 else
   echo "[33mSkipping ZSH files[m"

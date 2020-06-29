@@ -60,7 +60,12 @@ function pyenv {
   then
     newEnv="$1"
   else
-    newEnv="${HOME}/code/mine/python/env/main"
+    if [ -d "${HOME}/code/mine" ]
+    then
+      newEnv="${HOME}/code/mine/python/env/main"
+    else
+      newEnv="${HOME}/code/python/env/main"
+    fi
   fi
   oldEnv="${VIRTUAL_ENV}"
 
@@ -71,7 +76,7 @@ function pyenv {
       deactivate
     fi
 
-    if [ ! -f "${newEnv}" ]
+    if [ ! -d "${newEnv}" ]
     then
       python3 -m venv "${newEnv}"
       source "${newEnv}/bin/activate"
