@@ -86,6 +86,10 @@ function pyenv {
       source "${newEnv}/bin/activate"
       echo "Virtual environment \x1b[1mset\x1b[m at \x1b[34m${newEnv}\x1b[m"
     fi
+
+    function exit() {
+      deactivate && unset -f exit
+    }
   fi
 }
 
