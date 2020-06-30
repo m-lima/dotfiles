@@ -22,3 +22,6 @@ setopt HIST_IGNORE_ALL_DUPS
 autoload edit-command-line
 zle -N edit-command-line
 bindkey '^e' edit-command-line
+
+export HISTSIZE=100000
+export SAVEHIST=${HISTSIZE}
