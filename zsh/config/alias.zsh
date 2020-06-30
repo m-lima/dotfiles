@@ -81,9 +81,10 @@ function pyenv {
       python3 -m venv "${newEnv}"
       source "${newEnv}/bin/activate"
       pip3 install --upgrade pip
-      echo "Virtual environment created at ${newEnv}"
+      echo "Virtual environment \x1b[1mcreated\x1b[m at $\x1b[34m{newEnv}\x1b[m"
     else
       source "${newEnv}/bin/activate"
+      echo "Virtual environment \x1b[1mset\x1b[m at \x1b[34m${newEnv}\x1b[m"
     fi
   fi
 }
