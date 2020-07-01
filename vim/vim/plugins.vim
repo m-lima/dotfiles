@@ -17,10 +17,6 @@ Plug 'kana/vim-textobj-user'
 Plug 'tpope/vim-repeat'
 " Dependency for jistr/vim-nerdtree-tabs
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle', 'NERDTreeTabsToggle'] }
-if has("nvim") && has("python3")
-  " Dependency for zchee/deocomplete-go
-  Plug 'mdempsky/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh', 'for': 'go' }
-endif
 " Dependency for tpope/fugitive (apparently not true)
 " Plug 'tpope/vim-rhubarb'
 
@@ -59,7 +55,6 @@ if has("nvim")
   if has("python3")
     Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'zchee/deoplete-clang', { 'for': ['cpp', 'c'] }
-    Plug 'zchee/deoplete-go', { 'for': 'go', 'do': 'make' }
     Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'typescript.tsx' ], 'do': './install.sh' }
     Plug 'racer-rust/vim-racer', { 'for': 'rust' }
   endif
@@ -132,7 +127,7 @@ if has("nvim")
     call g:deoplete#custom#option({'smart_case': v:true})
 
     " Golang
-    let g:deoplete#sources#go#gocode_binary = $GOPATH."/bin/gocode"
+    call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
 
     " Clang
     if has('win32')
