@@ -160,7 +160,9 @@ autocmd FileType * setlocal formatoptions-=o
 """"""""""""""""""""
 " Tips
 """"""""""""""""""""
-"
+
+" :checkhealth        Check the health of the plugins
+
 " :w<CR> :e #         [Saves and open last save]
 " s                   [Changes character]
 " :noh                [Turn highlight off]
