@@ -26,7 +26,6 @@ nnoremap yp yyp
 nnoremap Y y$
 
 " Copy to unnamed register
-nnoremap gY "*y$
 nnoremap gyy "*yy
 vnoremap gy "*y
 
