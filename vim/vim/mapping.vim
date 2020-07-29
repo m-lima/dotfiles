@@ -43,11 +43,6 @@ nnoremap <silent> <Leader>z :let &scrolloff=999-&scrolloff<CR>
 noremap <C-E> 3<C-E>
 noremap <C-Y> 3<C-Y>
 
-" Enter adds a line below
-nnoremap <CR> o<Esc>
-" | adds a line above
-nnoremap \| O<Esc>
-
 " Navigate through panes
 noremap gh <C-W>h
 noremap gj <C-W>j
