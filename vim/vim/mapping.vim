@@ -32,6 +32,10 @@ vnoremap gy "*y
 " Clean line
 nnoremap de 0D
 
+" Add new line
+nnoremap U O<Esc>
+nnoremap K o<Esc>
+
 " Remove the search highlights
 nnoremap <silent> <Leader>h :noh<CR>
 

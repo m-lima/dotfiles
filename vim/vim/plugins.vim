@@ -41,22 +41,51 @@ Plug 'kana/vim-textobj-entire'         " e
 Plug 'glts/vim-textobj-comment'        " c
 
 """ Languages
-Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
-" Plug 'vim-syntastic/syntastic'
-Plug 'vim-scripts/nginx.vim'
-" Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
-Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript' }
-" Plug 'othree/yajs.vim', { 'for': 'javascript' }
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
-""" Completion
+" Go
+if executable('go')
+  " Language server
+  Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
+endif
+
+" JS stuff
+if executable('npm')
+  " Javascript highlight
+  Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+
+  " Typescript highlight
+  Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ] }
+
+  " Language server
+  Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ], 'do': './install.sh' }
+endif
+
+" Rust
+if executable('rustc')
+  " Rust commands
+  Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+
+  if executable('racer')
+    " Language server
+    Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+  endif
+endif
+
+" Nginx
+Plug 'vim-scripts/nginx.vim'
+
+""" Language helpers
+
+" Syntax markers
+Plug 'vim-syntastic/syntastic'
+
+" Completion
 if has("nvim")
   if has("python3")
     Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'zchee/deoplete-clang', { 'for': ['cpp', 'c'] }
-    Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'typescript.tsx' ], 'do': './install.sh' }
-    Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+    if executable('clang')
+      Plug 'zchee/deoplete-clang', { 'for': ['cpp', 'c'] }
+    endif
   endif
 else
   if has("lua")
@@ -127,16 +156,20 @@ if has("nvim")
     call g:deoplete#custom#option({'smart_case': v:true})
 
     " Golang
-    call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
+    if executable('go')
+      call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
+    endif
 
     " Clang
-    if has('win32')
-    elseif has('macunix')
-      let g:deoplete#sources#clang#libclang_path = "/Library/Developer/CommandLineTools/usr/lib/libclang.dylib"
-      let g:deoplete#sources#clang#clang_header = "/Library/Developer/CommandLineTools/usr/lib/clang"
-    else
-      let g:deoplete#sources#clang#libclang_path = "/usr/lib/llvm-4.0/lib/libclang.so.1"
-      let g:deoplete#sources#clang#clang_header = "/usr/lib/llvm-4.0/lib/clang"
+    if executable('clang')
+      if has('win32')
+      elseif has('macunix')
+        let g:deoplete#sources#clang#libclang_path = "/Library/Developer/CommandLineTools/usr/lib/libclang.dylib"
+        let g:deoplete#sources#clang#clang_header = "/Library/Developer/CommandLineTools/usr/lib/clang"
+      else
+        let g:deoplete#sources#clang#libclang_path = "/usr/lib/llvm-4.0/lib/libclang.so.1"
+        let g:deoplete#sources#clang#clang_header = "/usr/lib/llvm-4.0/lib/clang"
+      endif
     endif
 
   endif
@@ -151,7 +184,27 @@ else
 endif
 
 """ Rust
-let g:rustfmt_autosave = 1
+if executable('rustc')
+  let g:rustfmt_autosave = 1
+
+  if executable('racer')
+    let g:racer_insert_paren = 1
+
+    augroup Racer
+      autocmd!
+      autocmd FileType rust nmap <buffer> gd         <Plug>(rust-def)
+      autocmd FileType rust nmap <buffer> gD         <Plug>(rust-def-tab)
+      autocmd FileType rust nmap <buffer> <leader>gd <Plug>(rust-doc)
+      autocmd FileType rust nmap <buffer> <leader>gD <Plug>(rust-doc-tab)
+    augroup END
+  endif
+endif
+
+" Syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 """ Vim-commentary
 " Do not add comment when using 'o'
