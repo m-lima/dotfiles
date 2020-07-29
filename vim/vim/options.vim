@@ -75,3 +75,6 @@ let g:netrw_banner = 0
 
 " Personal help files
 autocmd BufRead *.help set tw=78 ts=8 ft=help norl
+
+" Pyenv root
+let g:python3_host_prog = '$HOME/code/python/env/vim/bin/python'

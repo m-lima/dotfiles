@@ -56,18 +56,13 @@ fi
 
 ### Pyenv
 function penv {
-  if [ -d "${HOME}/code/mine" ]
-  then
-    base="${HOME}/code/mine/python/env"
-  else
-    base="${HOME}/code/python/env"
-  fi
+  base="${HOME}/code/python/env"
 
   if [ "$1" ]
   then
-    newEnv="${base}/$1"
+    newEnv="$1"
   else
-    newEnv="${base}/main"
+    newEnv="main"
   fi
   oldEnv="${VIRTUAL_ENV}"
 
@@ -78,13 +73,15 @@ function penv {
       deactivate
     fi
 
+    newEnv="${base}/${newEnv}"
+
     if [ ! -d "${newEnv}" ]
     then
       python3 -m venv "${newEnv}"
       source "${newEnv}/bin/activate"
       python -m ensurepip
       pip3 install --upgrade pip
-      echo "Virtual environment \x1b[1mcreated\x1b[m at $\x1b[34m{newEnv}\x1b[m"
+      echo "Virtual environment \x1b[1mcreated\x1b[m at $\x1b[34m${newEnv}\x1b[m"
     else
       source "${newEnv}/bin/activate"
       echo "Virtual environment \x1b[1mset\x1b[m at \x1b[34m${newEnv}\x1b[m"
