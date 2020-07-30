@@ -200,13 +200,35 @@ if executable('rustc')
   endif
 endif
 
-" Syntastic
+""" Syntastic
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
+let g:syntastic_loc_list_height = 5
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+let g:syntastic_error_symbol = ''
+let g:syntastic_warning_symbol = ''
+let g:syntastic_style_error_symbol = ''
+let g:syntastic_style_warning_symbol = ''
+
+highlight link SyntasticErrorSign DiffDelete
+highlight link SyntasticWarningSign DiffChange
+highlight link SyntasticStyleErrorSign DiffDelete
+highlight link SyntasticStyleWarningSign DiffChange
+
+" Rust
+" Automatic
+
+" Javascript
+" ??
+
+" CPP
+" Automatic
+
+" Go
 if executable('go')
-  let g:syntastic_go_checkers = [ 'go' ]
+  let g:syntastic_go_checkers = ['go']
 endif
 
 """ Vim-commentary
