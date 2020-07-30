@@ -2,6 +2,26 @@
 " Plugins install
 """"""""""""""""""""
 
+if executable('rustc')
+  if executable('racer')
+    let s:rust = 2
+  else
+    let s:rust = 1
+  endif
+endif
+
+if executable('npm')
+  let s:npm = 1
+endif
+
+if executable('clang')
+  let s:clang = 1
+endif
+
+if executable('go')
+  let s:go = 1
+endif
+
 call plug#begin()
 
 """ Visual
@@ -43,13 +63,13 @@ Plug 'glts/vim-textobj-comment'        " c
 """ Languages
 
 " Go
-if executable('go')
+if exists('s:go')
   " Language server
   Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 endif
 
 " JS stuff
-if executable('npm')
+if exists('s:npm')
   " Javascript highlight
   Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 
@@ -57,15 +77,16 @@ if executable('npm')
   Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ] }
 
   " Language server
-  Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ], 'do': './install.sh' }
+  Plug 'shougo/vimproc.vim', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ], 'do': 'make' }
+  Plug 'quramy/tsuquyomi', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ] }
 endif
 
 " Rust
-if executable('rustc')
+if exists('s:rust')
   " Rust commands
   Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
-  if executable('racer')
+  if s:rust > 1
     " Language server
     Plug 'racer-rust/vim-racer', { 'for': 'rust' }
   endif
@@ -80,15 +101,20 @@ Plug 'vim-scripts/nginx.vim'
 Plug 'vim-syntastic/syntastic'
 
 " Completion
-if has("nvim")
-  if has("python3")
+if has('nvim')
+  if has('python3')
     Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    if executable('clang')
+
+    if exists('s:clang')
       Plug 'zchee/deoplete-clang', { 'for': ['cpp', 'c'] }
+    endif
+
+    if exists('s:npm')
+      Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ], 'do': './install.sh' }
     endif
   endif
 else
-  if has("lua")
+  if has('lua')
     Plug 'Quramy/tsuquyomi', { 'for': 'typescript', 'do': 'make' }
     Plug 'shougo/neocomplete'
   endif
@@ -126,7 +152,7 @@ nnoremap <Leader>n :NERDTreeTabsToggle<CR>
 let NERDTreeMinimalUI=1
 
 " Quit if only NERDTree is left
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
 
 """ Fugitive
 nnoremap <Leader>b :Gblame<CR>
@@ -135,9 +161,9 @@ nnoremap <Leader>b :Gblame<CR>
 nnoremap <Leader>g :GitGutterToggle<CR>
 
 " Increase the update speed to allow faster signing
-set updatetime=400
+" set updatetime=400
 " Optionally, gitgutter can run on saves:
-" autocmd BufWritePost * GitGutter
+autocmd BufWritePost * GitGutter
 " In the file: .vim/after/plugin/gitgutter.vim
 " autocmd! gitgutter CursorHold,CursorHoldI
 
@@ -148,33 +174,33 @@ set updatetime=400
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
-if has("nvim")
-  if has("python3")
+if has('nvim')
+  if has('python3')
 
     """ Deoplete
     let g:deoplete#enable_at_startup = 1
     call g:deoplete#custom#option({'smart_case': v:true})
 
     " Golang
-    if executable('go')
+    if exists('s:go')
       call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
     endif
 
     " Clang
-    if executable('clang')
+    if exists('s:clang')
       if has('win32')
       elseif has('macunix')
-        let g:deoplete#sources#clang#libclang_path = "/Library/Developer/CommandLineTools/usr/lib/libclang.dylib"
-        let g:deoplete#sources#clang#clang_header = "/Library/Developer/CommandLineTools/usr/lib/clang"
+        let g:deoplete#sources#clang#libclang_path = '/Library/Developer/CommandLineTools/usr/lib/libclang.dylib'
+        let g:deoplete#sources#clang#clang_header = '/Library/Developer/CommandLineTools/usr/lib/clang'
       else
-        let g:deoplete#sources#clang#libclang_path = "/usr/lib/llvm-4.0/lib/libclang.so.1"
-        let g:deoplete#sources#clang#clang_header = "/usr/lib/llvm-4.0/lib/clang"
+        let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-4.0/lib/libclang.so.1'
+        let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-4.0/lib/clang'
       endif
     endif
 
   endif
 else
-  if has("lua")
+  if has('lua')
 
     """ NeoComplete
     let g:neocomplete#enable_at_startup = 1
@@ -184,10 +210,10 @@ else
 endif
 
 """ Rust
-if executable('rustc')
+if exists('s:rust')
   let g:rustfmt_autosave = 1
 
-  if executable('racer')
+  if s:rust > 1
     let g:racer_insert_paren = 1
 
     augroup Racer
@@ -221,13 +247,22 @@ highlight link SyntasticStyleWarningSign DiffChange
 " Automatic
 
 " Javascript
-" ??
+if exists('s:npm')
+  let g:tsuquyomi_disable_quickfix = 1
+  let g:syntastic_typescript_checkers = ['tsuquyomi']
+  let g:syntastic_typescriptreact_checkers = ['tsuquyomi']
+  augroup Tsu
+    autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gd :TsuDefinition<CR>
+    autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gD :TsuTypeDefinition<CR>
+    autocmd FileType typescript,typescriptreact,typescript.tsx nmap     <buffer> R  <Plug>(TsuquyomiRenameSymbolC)
+  augroup END
+endif
 
 " CPP
 " Automatic
 
 " Go
-if executable('go')
+if exists('s:go')
   let g:syntastic_go_checkers = ['go']
 endif
 
@@ -249,9 +284,9 @@ autocmd FileType * setlocal formatoptions-=o
 " ~                   [Toggle case]
 " ''                  [Go back to previous position]
 
-" has("win32")        [Windows]
-" has("unix")         [Unix and Mac]
-" has("macunix")      [Just mac]
+" has('win32')        [Windows]
+" has('unix')         [Unix and Mac]
+" has('macunix')      [Just mac]
 
 " [Goto line]
 " 42G
