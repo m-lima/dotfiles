@@ -51,6 +51,8 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 set smarttab
+" But go is special
+autocmd FileType go setlocal shiftwidth=4 tabstop=4 softtabstop=4 noexpandtab
 
 " Give some room at top and bottom when scrolling
 set scrolloff=4

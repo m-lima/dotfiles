@@ -76,9 +76,13 @@ if exists('s:npm')
   " Typescript highlight
   Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ] }
 
-  " Language server
-  Plug 'shougo/vimproc.vim', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ], 'do': 'make' }
-  Plug 'quramy/tsuquyomi', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ] }
+    " Language server
+  if has('nvim')
+    Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ], 'do': './install.sh' }
+  else
+    Plug 'shougo/vimproc.vim', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ], 'do': 'make' }
+    Plug 'quramy/tsuquyomi', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ] }
+  endif
 endif
 
 " Rust
@@ -97,8 +101,12 @@ Plug 'vim-scripts/nginx.vim'
 
 """ Language helpers
 
-" Syntax markers
-Plug 'vim-syntastic/syntastic'
+" Lint
+if has('nvim')
+  Plug 'neomake/neomake'
+else
+  Plug 'vim-syntastic/syntastic'
+endif
 
 " Completion
 if has('nvim')
@@ -107,10 +115,6 @@ if has('nvim')
 
     if exists('s:clang')
       Plug 'zchee/deoplete-clang', { 'for': ['cpp', 'c'] }
-    endif
-
-    if exists('s:npm')
-      Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ], 'do': './install.sh' }
     endif
   endif
 else
@@ -226,45 +230,77 @@ if exists('s:rust')
   endif
 endif
 
-""" Syntastic
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_loc_list_height = 5
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+""" Javascript
+if exists('s:npm')
+  if has('nvim')
+    augroup Ts
+      autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gd        :TSDef<CR>
+      autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gD        :TSDefPreview<CR>
+      autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> <leader>e :TSRename<CR>
+    augroup END
+  else
+    let g:tsuquyomi_disable_quickfix = 1
+    augroup Ts
+      autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gd        :TsuDefinition<CR>
+      autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gD        :TsuTypeDefinition<CR>
+      autocmd FileType typescript,typescriptreact,typescript.tsx nmap     <buffer> <leader>e <Plug>(TsuquyomiRenameSymbolC)
+    augroup END
+  endif
+endif
 
-let g:syntastic_error_symbol = ''
-let g:syntastic_warning_symbol = ''
-let g:syntastic_style_error_symbol = ''
-let g:syntastic_style_warning_symbol = ''
+if exists('s:go')
+  autocmd FileType go nmap <buffer> <leader>e <Plug>(go-rename)
+endif
 
-highlight link SyntasticErrorSign DiffDelete
-highlight link SyntasticWarningSign DiffChange
-highlight link SyntasticStyleErrorSign DiffDelete
-highlight link SyntasticStyleWarningSign DiffChange
+""" Lint
+if has('nvim')
+  call neomake#configure#automake('nrwi', 500)
+  augroup neomake_highlights
+    au!
+    autocmd ColorScheme *
+      \ highlight NeomakeVirtualtextError cterm=bold ctermfg=203 ctermbg=52 gui=bold guifg=#ff5f5f guibg=#5f0000 |
+      \ highlight NeomakeVirtualtextWarning ctermfg=227 guifg=#ffff5f
+  augroup END
+
+  if exists('s:go')
+    let g:neomake_go_enabled_makers = [ 'go' ]
+  endif
+
+  if exists('s:npm')
+    " TODO: linting in typescript with neomake is not setup right yet
+  endif
+else
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_auto_loc_list = 1
+  let g:syntastic_loc_list_height = 5
+  let g:syntastic_check_on_open = 0
+  let g:syntastic_check_on_wq = 0
+
+  let g:syntastic_error_symbol = ''
+  let g:syntastic_warning_symbol = ''
+  let g:syntastic_style_error_symbol = ''
+  let g:syntastic_style_warning_symbol = ''
+
+  highlight link SyntasticErrorSign DiffDelete
+  highlight link SyntasticWarningSign DiffChange
+  highlight link SyntasticStyleErrorSign DiffDelete
+  highlight link SyntasticStyleWarningSign DiffChange
+
+  if exists('s:npm')
+    let g:syntastic_typescript_checkers = [ 'tsuquyomi' ]
+    let g:syntastic_typescriptreact_checkers = [ 'tsuquyomi' ]
+  endif
+
+  if exists('s:go')
+    let g:syntastic_go_checkers = [ 'go' ]
+  endif
+endif
 
 " Rust
 " Automatic
 
-" Javascript
-if exists('s:npm')
-  let g:tsuquyomi_disable_quickfix = 1
-  let g:syntastic_typescript_checkers = ['tsuquyomi']
-  let g:syntastic_typescriptreact_checkers = ['tsuquyomi']
-  augroup Tsu
-    autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gd :TsuDefinition<CR>
-    autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gD :TsuTypeDefinition<CR>
-    autocmd FileType typescript,typescriptreact,typescript.tsx nmap     <buffer> R  <Plug>(TsuquyomiRenameSymbolC)
-  augroup END
-endif
-
 " CPP
 " Automatic
-
-" Go
-if exists('s:go')
-  let g:syntastic_go_checkers = ['go']
-endif
 
 """ Vim-commentary
 " Do not add comment when using 'o'
