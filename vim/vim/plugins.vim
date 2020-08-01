@@ -224,8 +224,8 @@ if exists('s:rust')
       autocmd!
       autocmd FileType rust nmap <buffer> gd         <Plug>(rust-def)
       autocmd FileType rust nmap <buffer> gD         <Plug>(rust-def-tab)
-      autocmd FileType rust nmap <buffer> <leader>gd <Plug>(rust-doc)
-      autocmd FileType rust nmap <buffer> <leader>gD <Plug>(rust-doc-tab)
+      autocmd FileType rust nmap <buffer> <leader>d  <Plug>(rust-doc)
+      autocmd FileType rust nmap <buffer> <leader>D  <Plug>(rust-doc-tab)
     augroup END
   endif
 endif
