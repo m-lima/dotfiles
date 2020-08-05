@@ -52,6 +52,11 @@ noremap gj <C-W>j
 noremap gk <C-W>k
 noremap gl <C-W>l
 
+" Navigate through buffers
+noremap <silent> bt :bn<CR>
+noremap <silent> bT :bp<CR>
+noremap <silent> bd :bd #<CR>
+
 " I hate using ^ and $
 nnoremap H ^
 vnoremap H ^
