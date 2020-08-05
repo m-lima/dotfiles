@@ -254,7 +254,12 @@ endif
 
 """ Lint
 if has('nvim')
+
   call neomake#configure#automake('nrwi', 500)
+
+  " Run `:Neomake clear` to clear the screen from Neomake
+  let g:neomake_clear_maker = {}
+
   augroup neomake_highlights
     au!
     autocmd ColorScheme *
@@ -340,3 +345,5 @@ autocmd FileType * setlocal formatoptions-=o
 " ys                  [Add surround]
 "
 " va}a}a}...a}        [Select larger and larger scope]
+
+" :Neomake clear      Clear all neomake marks
