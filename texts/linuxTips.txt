@@ -202,3 +202,31 @@ host -t txt _acme-challenge.domain.com
 
   # To decrypt:
   openssl enc -aes-256-cbc -d -in <INPUT_FILE> | tar xz -C <OUTPUT_DIRECTORY>
+
+##################################################
+# PGP GPG
+##################################################
+# Create new key
+gpg --gen-key
+
+# Export public
+gpg --export <KEY>
+gpg -a --export <KEY> # Exports in ascii
+
+# Export private to other machine
+  # On source
+  gpg [-a] --export-secret-key <KEY> > FILE
+
+  # On target
+  gpg --import FILE
+
+  # Trust it
+  gpg --edit-key <KEY>
+  > trust
+  > 5
+
+# Change expiry
+gpg --edit-key <KEY>
+> expire
+> key 1
+> expire
