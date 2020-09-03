@@ -86,8 +86,7 @@ function checkInstall {
     echo -n "Install ${1}? [Y/n] "
     read input
     case ${input} in
-      [Nn] )
-        ;;
+      [Nn] ) ;;
       *)
         if eval "${2}"
         then
@@ -620,7 +619,7 @@ fi
 
 ########################################
 # Install bat
-checkInstall "Bat" "${PACKAGE_INSTALL} bat" '[ $(command -v 'bat') ]'
+checkInstall "Bat" "${PACKAGE_INSTALL} " '[ $(command -v 'bat') ] || [ $(command -v 'batcat') ]'
 
 ########################################
 # Create ~/bin
@@ -700,6 +699,9 @@ fi
 if [ $(command -v bat) ]
 then
   installFile s config/bat config `bat --config-dir`
+elif [ $(command -v batcat) ]
+then
+  installFile s config/bat config `batcat --config-dir`
 fi
 
 ########################################
@@ -730,6 +732,17 @@ then
     [ "${PLUGIN_MANAGER}" ] && echo "pluginManager=${PLUGIN_MANAGER}" >> "${HOME}/.config/m-lima/zsh/local.zsh"
     [ "${ZSH_FRAMEWORK}" ] && echo "zshFramework=${ZSH_FRAMEWORK}" >> "${HOME}/.config/m-lima/zsh/local.zsh"
     vi "${HOME}/.config/m-lima/zsh/local.zsh"
+
+    if [ $(command -v batcat) ]
+    then
+      echo -n "Alias bat to batcat? [Y/n] "
+      read input
+      case ${input} in
+        [Nn] ) ;;
+        * )
+          echo 'alias bat=batcat' >> "${HOME}/.config/m-lima/zsh/local.zsh"
+      esac
+    fi
   fi
 
   if installFile c config/fd config .config/m-lima/fd
@@ -740,6 +753,25 @@ else
   echo "[33mSkipping ZSH files[m"
 fi
 
+########################################
+# PyEnv for (Neo)Vim
+if [ $(command -v nvim) ]
+then
+  if [ ! -d "${HOME}/code/python/env/vim" ] || [ -z ${NO_OVERWRITE} ]
+  then
+    echo "[34mInstalling vim pyenv..[m"
+    echo -n "Create pyenv for vim? [Y/n] "
+    read input
+    case ${input} in
+      [Nn] ) ;;
+      * )
+        python3 -m venv "${HOME}/code/python/env/vim"
+        source "${HOME}/code/python/env/vim/bin/activate"
+        pip3 install pynvim
+        deactivate
+    esac
+  fi
+fi
 
 ########################################
 # Download fonts
