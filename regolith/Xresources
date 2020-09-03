@@ -1,0 +1,20 @@
+i3-wm.bar.position: top
+
+i3-wm.workspace.01.name: 1:<span font_desc='JetBrains Mono Medium 13'>  </span>
+i3-wm.workspace.02.name: 2:<span font_desc='JetBrains Mono Medium 13'>  </span>
+i3-wm.workspace.03.name: 3:<span font_desc='JetBrains Mono Medium 13'>  </span>
+i3-wm.workspace.04.name: 4:<span font_desc='JetBrains Mono Medium 13'>  </span>
+
+i3-wm.bar.workspace.inactive.background.color: #1F2430
+i3-wm.bar.workspace.inactive.border.color: #1F2430
+i3-wm.bar.workspace.inactive.text.color: #586E75
+
+i3-wm.window.border.size: 1
+i3-wm.floatingwindow.border.size: 1
+
+i3-wm.client.focused.color.child_border: #FFA759
+
+gnome.wallpaper: #292B30
+gnome.terminal.font: JetBrains Mono 10
+
+# Xft.dpi: 192
