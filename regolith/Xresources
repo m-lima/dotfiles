@@ -8,6 +8,11 @@ i3-wm.workspace.03.name: 3:<span font_desc='JetBrains Mono Medium 13'>  </spa
 i3-wm.workspace.04.name: 4:<span font_desc='JetBrains Mono Medium 13'>  </span>
 
 i3-wm.client.focused.color.background: #FFA759
+i3-wm.client.focused.color.border: #FFA759
+i3-wm.client.focused.color.text: #1F2430
+i3-wm.client.focused_inactive.color.background: #BFBAB0
+i3-wm.client.focused_inactive.color.border: #BFBAB0
+i3-wm.client.focused_inactive.color.text: #1F2430
 i3-wm.client.unfocused.color.background: #1F2430
 
 i3-wm.bar.workspace.inactive.background.color: #1F2430
