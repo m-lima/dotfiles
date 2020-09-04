@@ -535,5 +535,5 @@ assign [class=(?i)firefox] $ws2
 for_window [class=(?i)firefox] focus
 for_window [class=(?i)firefox] layout tabbed
 
-assign [class=(?i)spotify] $ws4
+for_window [class=(?i)spotify] move to workspace $ws4
 for_window [class=(?i)spotify] focus
