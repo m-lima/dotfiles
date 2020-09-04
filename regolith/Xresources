@@ -11,10 +11,9 @@ i3-wm.bar.workspace.inactive.text.color: #586E75
 
 i3-wm.window.border.size: 1
 i3-wm.floatingwindow.border.size: 1
-
 i3-wm.client.focused.color.child_border: #FFA759
 
-gnome.wallpaper: #292B30
-gnome.terminal.font: JetBrains Mono 10
+gnome.wallpaper: ~/Pictures/Phil\ Horrocks\ copy.jpg
 
-# Xft.dpi: 192
+rofi.font: JetBrains Mono Medium 12
+gnome.terminal.font: JetBrains Mono 9
