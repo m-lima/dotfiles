@@ -115,6 +115,12 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
+## Navigate // Parent // <> a ##
+bindsym $mod+a focus parent
+
+## Navigate // Child // <><Shift> a ##
+bindsym $mod+Shift+a focus child
+
 ## Navigate // Workspaces 1-10 // <> 0..9 ##
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -149,8 +155,11 @@ bindsym $mod+Shift+Tab workspace prev
 ## Navigate // Previous Workspace // <><Alt> ← ##
 bindsym $mod+$alt+Left workspace prev
 
-## Navigate // Scratchpad // <><Ctrl> a ##
-bindsym $mod+Ctrl+a scratchpad show
+## Navigate // Scratchpad // <><Shift> m ##
+bindsym $mod+Shift+m scratchpad show
+
+## Navigate // Focus Marked // <><Shift> x ##
+bindsym $mod+Shift+x [con_mark="marked"] focus
 
 ###############################################################################
 # Window and Workspace Configuration
@@ -191,6 +200,15 @@ bindsym $mod+Shift+t focus mode_toggle
 
 ## Modify // Window Layout Mode // <> t ##
 bindsym $mod+t layout toggle tabbed splith splitv
+
+## Modify // Mark Window // <> x ##
+bindsym $mod+x mark marked
+
+## Modify // Unmark Window // <><Ctrl> x ##
+bindsym $mod+Ctrl+x unmark marked
+
+## Modify // Swap Windows // <> s ##
+bindsym $mod+s swap container with mark marked
 
 ## Modify // Move Window to Workspace 1 - 10 // <><Shift> 0..9 ##
 bindsym $mod+Shift+1 move container to workspace number $ws1
