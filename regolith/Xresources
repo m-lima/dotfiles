@@ -35,7 +35,7 @@ i3-wm.client.focused.color.child_border: #FFA759
 ###############################
 ## Colors
 ###############################
-# St.color0:  #333333
+St.color0:  #333333
 St.color1:  #DC322F
 St.color2:  #44A400
 St.color3:  #EDB300
@@ -44,18 +44,43 @@ St.color5:  #D33682
 St.color6:  #009AA1
 St.color7:  #EEE8D5
 # St.color8:  #3C3C3C
-# St.color9:  #FF3A36
-# St.color10: #60E800
-# St.color11: #FFF204
-# St.color12: #5BBBFF
-# St.color13: #C66CC1
-# St.color14: #00CAC9
-# St.color15: #FDF6E3
+St.color9:  #FF3A36
+St.color10: #60E800
+St.color11: #FFF204
+St.color12: #5BBBFF
+St.color13: #C66CC1
+St.color14: #00CAC9
+St.color15: #FDF6E3
 
 ###############################
 ## Misc
 ###############################
 rofi.font: JetBrains Mono Medium 12
-
-gnome.wallpaper: ~/Pictures/point-7-wallpaper-blue-big.png
 gnome.terminal.font: JetBrains Mono 9
+
+###############################
+## Gray and orange theme
+###############################
+gnome.wallpaper: ~/Pictures/point-7-wallpaper-gray-big.png
+gnome.gtk.theme: Ultimate-Dark-(Flat)-Orange
+gnome.wm.theme: Ultimate-Dark-(Flat)-Orange
+
+i3-wm.bar.background.color:	#333333
+i3-wm.bar.workspace.focused.text.color:	#333333
+i3-wm.bar.workspace.inactive.background.color:	#333333
+i3-wm.bar.workspace.inactive.border.color:	#333333
+i3-wm.client.focused.color.text:	#333333
+gnome.wm.theme:	Ayu-Mirage-Dark
+
+i3-wm.bar.background.color:	#333333
+i3-wm.bar.workspace.focused.text.color:	#333333
+i3-wm.bar.workspace.inactive.background.color:	#333333
+i3-wm.bar.workspace.inactive.border.color:	#333333
+i3-wm.client.focused.color.text:	#333333
+i3-wm.client.focused_inactive.color.child_border:	#333333
+i3-wm.client.focused_inactive.color.text:	#333333
+i3-wm.client.unfocused.color.background:	#333333
+i3-wm.client.unfocused.color.border:	#333333
+i3-wm.client.unfocused.color.child_border:	#333333
+i3-wm.client.urgent.color.border:	#333333
+i3-wm.client.urgent.color.child_border:	#333333
