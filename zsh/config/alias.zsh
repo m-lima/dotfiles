@@ -42,11 +42,11 @@ alias gdb='git diff --stat'
 ### Copy path
 if [[ "$(uname)" == "Darwin" ]]
 then
-  alias cpwd='pwd | pbcopy'
+  alias cpwd='echo -n "${PWD}" | pbcopy'
   alias ppwd='cd $(pbpaste)'
 else
   if [ $(command -v xclip) ]; then
-    alias cpwd='pwd | xclip'
+    alias cpwd='echo -n "${PWD}" | xclip'
     alias ppwd='cd $(xclip -o)'
   else
     alias cpwd='pwd > /tmp/pwd_buffer_$USER'
