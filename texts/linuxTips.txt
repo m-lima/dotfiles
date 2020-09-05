@@ -230,3 +230,10 @@ gpg --edit-key <KEY>
 > expire
 > key 1
 > expire
+
+##################################################
+# Misc
+##################################################
+
+# Get a printout of GPU info
+[sudo] gpu-manager
