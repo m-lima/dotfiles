@@ -46,8 +46,8 @@ then
   alias ppwd='cd $(pbpaste)'
 else
   if [ $(command -v xclip) ]; then
-    alias cpwd='echo -n "${PWD}" | xclip'
-    alias ppwd='cd $(xclip -o)'
+    alias cpwd='echo -n "${PWD}" | xclip -se c'
+    alias ppwd='cd $(xclip -o -se c)'
   else
     alias cpwd='pwd > /tmp/pwd_buffer_$USER'
     alias ppwd='cd "$(cat /tmp/pwd_buffer_$USER)" 2> /dev/null'
