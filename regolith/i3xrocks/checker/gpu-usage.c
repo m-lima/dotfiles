@@ -2,15 +2,14 @@
 #include <string.h>
 
 int main() {
-  char buffer[64];
   FILE *file;
-
   if ((file = fopen("/sys/kernel/debug/vgaswitcheroo/switch", "r")) == NULL) {
     return -1;
   }
 
+  char buffer[64] = {0};
   int bytes = 0;
-  while ((bytes = fscanf(file, "%64[^\n]", buffer)) >= 0) {
+  while ((bytes = fscanf(file, "%64[^\n]", buffer)) == 1) {
     if (memcmp(buffer+1, ":DIS:", 5) == 0) {
       fclose(file);
       if (memcmp(buffer+7, ":DynOff:", 8) == 0) {
