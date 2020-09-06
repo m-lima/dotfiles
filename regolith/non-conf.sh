@@ -14,3 +14,7 @@ vi /usr/share/lightdm/lightdm-gtk-greeter.conf.d/02_regolith.conf
 
 # To check the current configuration for Xresources
 xrdb -query
+
+# To chekc fonts
+http://mathew-kurian.github.io/CharacterMap/
+https://fontdrop.info/
