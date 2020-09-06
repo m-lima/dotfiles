@@ -11,3 +11,6 @@ dconf write /org/gnome/desktop/background/picture-options "'centered'"
 
 # Change the system-wide login screen
 vi /usr/share/lightdm/lightdm-gtk-greeter.conf.d/02_regolith.conf
+
+# To check the current configuration for Xresources
+xrdb -query
