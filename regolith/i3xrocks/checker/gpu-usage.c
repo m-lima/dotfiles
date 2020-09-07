@@ -1,33 +1,88 @@
 #include <stdio.h>
 #include <string.h>
-#include <mfl/xresget.h>
+#include <X11/Xresource.h>
 
 int main() {
-  FILE *file;
+  int ret = -1;
+  FILE *file = NULL;
+  Display *display = NULL;
+
   if ((file = fopen("/sys/kernel/debug/vgaswitcheroo/switch", "r")) == NULL) {
-    return -1;
+    goto cleanup;
   }
 
   char buffer[64] = {0};
-  int bytes = 0;
-  while ((bytes = fscanf(file, "%64[^\n]", buffer)) == 1) {
+  while (fscanf(file, "%64[^\n]", buffer) == 1) {
     if (memcmp(buffer+1, ":DIS:", 5) == 0) {
-      fclose(file);
-      if (memcmp(buffer+7, ":DynOff:", 8) == 0) {
-        return 0;
-      } else if (memcmp(buffer+7, ":DynPwr:", 8) == 0) {
-        printf("<span font_desc='%s' color='%s'>%s</span>\n",
-            get_xresource("i3xrocks.value.font", true),
-            get_xresource("i3xrocks.warning", true),
-            get_xresource("i3xrocks.label.gpu", true));
-        return 0;
-      } else {
-        return -1;
-      }
-    }
-    fseek(file, bytes, SEEK_CUR);
-  }
-  fclose(file);
+      if (memcmp(buffer+7, ":DynPwr:", 8) == 0) {
+        ret = 0;
 
-  return -1;
+        XrmInitialize();
+
+        display = XOpenDisplay(NULL);
+        if (NULL == display) {
+          goto cleanup;
+        }
+
+        char *manager = XResourceManagerString(display);
+        if (NULL == manager) {
+          goto cleanup;
+        }
+
+        XrmDatabase db = XrmGetStringDatabase(manager);
+        if (NULL == db) {
+          goto cleanup;
+        }
+
+        char *type;
+        XrmValue value;
+
+        char *font = "JetBrains Mono Medium 13";
+        char *color = "#FFD580";
+        char *label = "";
+
+        if (XrmGetResource(db, "i3xrocks.value.font", "i3xrocks.value.font", &type, &value)) {
+          if(value.size > 2 && value.addr[0] == '"' && value.addr[value.size-2] == '"') {
+            value.addr[value.size - 2] = 0;
+            value.addr++;
+          }
+          font = value.addr;
+        }
+
+        if (XrmGetResource(db, "i3xrocks.warning", "i3xrocks.warning", &type, &value)) {
+          if(value.size > 2 && value.addr[0] == '"' && value.addr[value.size-2] == '"') {
+            value.addr[value.size - 2] = 0;
+            value.addr++;
+          }
+          color = value.addr;
+        }
+
+        if (XrmGetResource(db, "i3xrocks.label.gpu", "i3xrocks.label.gpu", &type, &value)) {
+          if(value.size > 2 && value.addr[0] == '"' && value.addr[value.size-2] == '"') {
+            value.addr[value.size - 2] = 0;
+            value.addr++;
+          }
+          label = value.addr;
+        }
+
+        printf("<span font_desc='%s' color='%s'>%s</span>\n", font, color, label);
+      } else if (memcmp(buffer+7, ":DynOff:", 8) == 0) {
+        ret = 0;
+      }
+
+      goto cleanup;
+    }
+    fseek(file, 1, SEEK_CUR);
+  }
+
+cleanup:
+  if (NULL != file) {
+    fclose(file);
+  }
+
+  if (NULL != display) {
+    XCloseDisplay(display);
+  }
+
+  return ret;
 }
