@@ -56,6 +56,7 @@ noremap gl <C-W>l
 noremap <silent> bt :bn<CR>
 noremap <silent> bT :bp<CR>
 noremap <silent> bd :bn<CR>:bd #<CR>
+nnoremap B b
 
 " I hate using ^ and $
 nnoremap H ^
