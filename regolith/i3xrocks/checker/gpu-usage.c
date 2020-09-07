@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <mfl/xresget.h>
 
 int main() {
   FILE *file;
@@ -15,7 +16,10 @@ int main() {
       if (memcmp(buffer+7, ":DynOff:", 8) == 0) {
         return 0;
       } else if (memcmp(buffer+7, ":DynPwr:", 8) == 0) {
-        printf("<span font_desc='JetBrains Mono Medium 13' color='#ffa759'></span>\n");
+        printf("<span font_desc='%s' color='%s'>%s</span>\n",
+            get_xresource("i3xrocks.value.font", true),
+            get_xresource("i3xrocks.warning", true),
+            get_xresource("i3xrocks.label.gpu", true));
         return 0;
       } else {
         return -1;
