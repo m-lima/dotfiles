@@ -35,7 +35,7 @@ i3-wm.client.focused.color.child_border: #ffa759
 ###############################
 ## Colors
 ###############################
-St.color0:  #333333
+St.color0:  #262626
 St.color1:  #dc322f
 St.color2:  #44a400
 St.color3:  #edb300
@@ -71,15 +71,15 @@ gnome.gtk.theme: Ultimate-Dark-(Flat)-Orange
 gnome.wm.theme: Ultimate-Dark-(Flat)-Orange
 rofi.theme: ~/.config/regolith/rofi.rasi
 
-i3-wm.bar.background.color: #333333
-i3-wm.bar.workspace.focused.text.color: #333333
-i3-wm.bar.workspace.inactive.background.color: #333333
-i3-wm.bar.workspace.inactive.border.color: #333333
-i3-wm.client.focused.color.text: #333333
-i3-wm.client.focused_inactive.color.child_border: #333333
-i3-wm.client.focused_inactive.color.text: #333333
-i3-wm.client.unfocused.color.background: #333333
-i3-wm.client.unfocused.color.border: #333333
-i3-wm.client.unfocused.color.child_border: #333333
-i3-wm.client.urgent.color.border: #333333
-i3-wm.client.urgent.color.child_border: #333333
+i3-wm.bar.background.color: #262626
+i3-wm.bar.workspace.focused.text.color: #262626
+i3-wm.bar.workspace.inactive.background.color: #262626
+i3-wm.bar.workspace.inactive.border.color: #262626
+i3-wm.client.focused.color.text: #262626
+i3-wm.client.focused_inactive.color.child_border: #262626
+i3-wm.client.focused_inactive.color.text: #262626
+i3-wm.client.unfocused.color.background: #262626
+i3-wm.client.unfocused.color.border: #262626
+i3-wm.client.unfocused.color.child_border: #262626
+i3-wm.client.urgent.color.border: #262626
+i3-wm.client.urgent.color.child_border: #262626
