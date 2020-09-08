@@ -218,8 +218,6 @@ if exists('s:rust')
   let g:rustfmt_autosave = 1
 
   if s:rust > 1
-    let g:racer_insert_paren = 1
-
     augroup Racer
       autocmd!
       autocmd FileType rust nmap <buffer> gd         <Plug>(rust-def)
