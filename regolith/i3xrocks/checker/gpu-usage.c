@@ -42,26 +42,14 @@ int main() {
         char *label = "";
 
         if (XrmGetResource(db, "i3xrocks.value.font", "i3xrocks.value.font", &type, &value)) {
-          if(value.size > 2 && value.addr[0] == '"' && value.addr[value.size-2] == '"') {
-            value.addr[value.size - 2] = 0;
-            value.addr++;
-          }
           font = value.addr;
         }
 
         if (XrmGetResource(db, "i3xrocks.warning", "i3xrocks.warning", &type, &value)) {
-          if(value.size > 2 && value.addr[0] == '"' && value.addr[value.size-2] == '"') {
-            value.addr[value.size - 2] = 0;
-            value.addr++;
-          }
           color = value.addr;
         }
 
         if (XrmGetResource(db, "i3xrocks.label.gpu", "i3xrocks.label.gpu", &type, &value)) {
-          if(value.size > 2 && value.addr[0] == '"' && value.addr[value.size-2] == '"') {
-            value.addr[value.size - 2] = 0;
-            value.addr++;
-          }
           label = value.addr;
         }
 
