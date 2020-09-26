@@ -127,6 +127,12 @@ then
   alias vscode='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 fi
 
+### Open with default opener
+if command -v xdg-open &> /dev/null
+then
+  alias open='xdg-open'
+fi
+
 ### Faster find
 function fnd {
   if [ ! "${1}" ]
