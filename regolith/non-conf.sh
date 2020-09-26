@@ -12,8 +12,18 @@ dconf write /org/gnome/desktop/background/picture-options "'centered'"
 # Change the system-wide login screen
 vi /usr/share/lightdm/lightdm-gtk-greeter.conf.d/02_regolith.conf
 
+####################
+# Misc actions
+####################
+
 # To check the current configuration for Xresources
 xrdb -query
+
+# To check the windows props
+xprop
+
+# Download NerdFonts and add to ~/.fonts
+https://www.nerdfonts.com/font-downloads
 
 # To chekc fonts
 http://mathew-kurian.github.io/CharacterMap/
