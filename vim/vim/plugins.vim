@@ -132,6 +132,7 @@ call plug#end()
 
 """ Vim-go
 let g:go_fmt_fail_silently = 1
+let g:go_doc_keywordprg_enabled = 0
 
 """ Vim-commentary
 autocmd FileType cmake setlocal commentstring=#\ %s
