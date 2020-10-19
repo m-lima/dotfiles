@@ -175,6 +175,9 @@ autocmd BufWritePost * GitGutter
 " Don't load straightaway
 " let g:gitgutter_enabled = 0
 
+""" Vim-rooter
+let g:rooter_patterns = ['.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'Cargo.toml', 'build.gradle', 'CMakeLists.txt']
+
 """ Completion navigation overload
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
@@ -301,7 +304,10 @@ else
 endif
 
 " Rust
-" Automatic
+if exists('s:rust')
+  let g:rust_cargo_check_tests = 1
+  let g:rust_cargo_check_examples = 1
+endif
 
 " CPP
 " Automatic
