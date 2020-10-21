@@ -178,6 +178,10 @@ autocmd BufWritePost * GitGutter
 """ Vim-rooter
 let g:rooter_patterns = ['.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'Cargo.toml', 'build.gradle', 'CMakeLists.txt']
 
+""" Vim-commentary
+" Do not add comment when using 'o'
+autocmd FileType * setlocal formatoptions-=o
+
 """ Completion navigation overload
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
@@ -311,10 +315,6 @@ endif
 
 " CPP
 " Automatic
-
-""" Vim-commentary
-" Do not add comment when using 'o'
-autocmd FileType * setlocal formatoptions-=o
 
 """"""""""""""""""""
 " Tips
