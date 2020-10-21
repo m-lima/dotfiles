@@ -330,25 +330,37 @@ autocmd FileType * setlocal formatoptions-=o
 " ~                   [Toggle case]
 " ''                  [Go back to previous position]
 
+" va}a}a}...a}        [Select larger and larger scope]
+
 " has('win32')        [Windows]
 " has('unix')         [Unix and Mac]
 " has('macunix')      [Just mac]
+" executable('racer') [Exectutable is found]
 
-" [Goto line]
+""" Go to line
 " 42G
 " 42gg
 " :42<CR>
+" 80%
 
+""" VimGutter
+" <leader>hp          [Preview hunk changes]
+" <leader>hu          [Undo hunk changes]
+" <leader>hs          [Stage hunk changes]
+" [c                  [Previous hunk]
+" ]c                  [Next hunk]
+
+""" VimDiff
 " [c                  [Previous diff]
 " ]c                  [Next diff]
 " do                  [Diff obtain]
 " dp                  [Diff put]
 
+""" Surround
 " s                   [Surround]
 " cs                  [Change surround]
 " ds                  [Delete surround]
 " ys                  [Add surround]
-"
-" va}a}a}...a}        [Select larger and larger scope]
 
+""" Neomake
 " :Neomake clear      Clear all neomake marks
