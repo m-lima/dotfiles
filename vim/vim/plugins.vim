@@ -61,66 +61,70 @@ Plug 'kana/vim-textobj-entire'         " e
 Plug 'glts/vim-textobj-comment'        " c
 
 """ Languages
-
-" Go
-if exists('s:go')
-  " Language server
-  Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
-endif
-
-" JS stuff
-if exists('s:npm')
-  " Javascript highlight
-  Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-
-  " Typescript highlight
-  Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ] }
-
-    " Language server
-  if has('nvim')
-    Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ], 'do': './install.sh' }
-  else
-    Plug 'shougo/vimproc.vim', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ], 'do': 'make' }
-    Plug 'quramy/tsuquyomi', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ] }
-  endif
-endif
-
-" Rust
-if exists('s:rust')
-  " Rust commands
-  Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-
-  if s:rust > 1
-    " Language server
-    Plug 'racer-rust/vim-racer', { 'for': 'rust' }
-  endif
-endif
-
-" Nginx
-Plug 'vim-scripts/nginx.vim'
-
-""" Language helpers
-
-" Lint
-if has('nvim')
-  Plug 'neomake/neomake'
+if has('node')
+  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 else
-  Plug 'vim-syntastic/syntastic'
-endif
 
-" Completion
-if has('nvim')
-  if has('python3')
-    Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  " Go
+  if exists('s:go')
+    " Language server
+    Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
+  endif
 
-    if exists('s:clang')
-      Plug 'zchee/deoplete-clang', { 'for': ['cpp', 'c'] }
+  " JS stuff
+  if exists('s:npm')
+    " Javascript highlight
+    Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+
+    " Typescript highlight
+    Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ] }
+
+    " Language server
+    if has('nvim')
+      Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ], 'do': './install.sh' }
+    else
+      Plug 'shougo/vimproc.vim', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ], 'do': 'make' }
+      Plug 'quramy/tsuquyomi', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ] }
     endif
   endif
-else
-  if has('lua')
-    Plug 'Quramy/tsuquyomi', { 'for': 'typescript', 'do': 'make' }
-    Plug 'shougo/neocomplete'
+
+  " Rust
+  if exists('s:rust')
+    " Rust commands
+    Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+
+    if s:rust > 1
+      " Language server
+      Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+    endif
+  endif
+
+  " Nginx
+  Plug 'vim-scripts/nginx.vim'
+
+  """ Language helpers
+
+  " Lint
+  if has('nvim')
+    Plug 'neomake/neomake'
+  else
+    Plug 'vim-syntastic/syntastic'
+  endif
+
+  " Completion
+  if has('nvim')
+    if has('python3')
+      Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+      if exists('s:clang')
+        Plug 'zchee/deoplete-clang', { 'for': ['cpp', 'c'] }
+      endif
+    endif
+  else
+    if has('lua')
+      Plug 'Quramy/tsuquyomi', { 'for': 'typescript', 'do': 'make' }
+      Plug 'shougo/neocomplete'
+    endif
   endif
 endif
 
@@ -186,135 +190,150 @@ autocmd FileType * setlocal formatoptions-=o
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
-if has('nvim')
-  if has('python3')
+if has('node')
+  " Definition
+  nmap     <silent> gd         <Plug>(coc-definition)
+  " nnoremap <silent> gD         :call <SID>show_documentation()<CR>
+  nmap     <silent> <leader>e  <Plug>(coc-rename)
+  nmap     <silent> <leader>E  <Plug>(coc-refactor)
 
-    """ Deoplete
-    let g:deoplete#enable_at_startup = 1
-    call g:deoplete#custom#option({'smart_case': v:true})
+  " Pop-up scrolling
+  " nnoremap <expr><C-k> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  " nnoremap <expr><C-j> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  " inoremap <expr><C-k> coc#float#has_scroll() ? coc#float#scroll(1) : "\<Right>"
+  " inoremap <expr><C-j> coc#float#has_scroll() ? coc#float#scroll(0) : "\<Left>"
 
-    " Golang
-    if exists('s:go')
-      call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
-    endif
-
-    " Clang
-    if exists('s:clang')
-      if has('win32')
-      elseif has('macunix')
-        let g:deoplete#sources#clang#libclang_path = '/Library/Developer/CommandLineTools/usr/lib/libclang.dylib'
-        let g:deoplete#sources#clang#clang_header = '/Library/Developer/CommandLineTools/usr/lib/clang'
-      else
-        let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-4.0/lib/libclang.so.1'
-        let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-4.0/lib/clang'
-      endif
-    endif
-
-  endif
+  " More readable colors
+  highlight link CocErrorSign DiffDelete
+  highlight link CocWarningSign DiffChange
 else
-  if has('lua')
-
-    """ NeoComplete
-    let g:neocomplete#enable_at_startup = 1
-    let g:neocomplete#enable_smart_case = 1
-
-  endif
-endif
-
-""" Rust
-if exists('s:rust')
-  let g:rustfmt_autosave = 1
-
-  if s:rust > 1
-    augroup Racer
-      autocmd!
-      autocmd FileType rust nmap <buffer> gd         <Plug>(rust-def)
-      autocmd FileType rust nmap <buffer> gD         <Plug>(rust-def-tab)
-      autocmd FileType rust nmap <buffer> <leader>d  <Plug>(rust-doc)
-      autocmd FileType rust nmap <buffer> <leader>D  <Plug>(rust-doc-tab)
-    augroup END
-  endif
-endif
-
-""" Javascript
-if exists('s:npm')
   if has('nvim')
-    augroup Ts
-      autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gd        :TSDef<CR>
-      autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gD        :TSDefPreview<CR>
-      autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> <leader>e :TSRename<CR>
-    augroup END
+    if has('python3')
+
+      """ Deoplete
+      let g:deoplete#enable_at_startup = 1
+      call g:deoplete#custom#option({'smart_case': v:true})
+
+      " Golang
+      if exists('s:go')
+        call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
+      endif
+
+      " Clang
+      if exists('s:clang')
+        if has('win32')
+        elseif has('macunix')
+          let g:deoplete#sources#clang#libclang_path = '/Library/Developer/CommandLineTools/usr/lib/libclang.dylib'
+          let g:deoplete#sources#clang#clang_header = '/Library/Developer/CommandLineTools/usr/lib/clang'
+        else
+          let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-4.0/lib/libclang.so.1'
+          let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-4.0/lib/clang'
+        endif
+      endif
+
+    endif
   else
-    let g:tsuquyomi_disable_quickfix = 1
-    augroup Ts
-      autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gd        :TsuDefinition<CR>
-      autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gD        :TsuTypeDefinition<CR>
-      autocmd FileType typescript,typescriptreact,typescript.tsx nmap     <buffer> <leader>e <Plug>(TsuquyomiRenameSymbolC)
+    if has('lua')
+
+      """ NeoComplete
+      let g:neocomplete#enable_at_startup = 1
+      let g:neocomplete#enable_smart_case = 1
+
+    endif
+  endif
+
+  """ Rust
+  if exists('s:rust')
+    let g:rustfmt_autosave = 1
+
+    if s:rust > 1
+      augroup Racer
+        autocmd!
+        autocmd FileType rust nmap <buffer> gd         <Plug>(rust-def)
+        autocmd FileType rust nmap <buffer> gD         <Plug>(rust-def-tab)
+        autocmd FileType rust nmap <buffer> <leader>d  <Plug>(rust-doc)
+        autocmd FileType rust nmap <buffer> <leader>D  <Plug>(rust-doc-tab)
+      augroup END
+    endif
+  endif
+
+  """ Javascript
+  if exists('s:npm')
+    if has('nvim')
+      augroup Ts
+        autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gd        :TSDef<CR>
+        autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gD        :TSDefPreview<CR>
+        autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> <leader>e :TSRename<CR>
+      augroup END
+    else
+      let g:tsuquyomi_disable_quickfix = 1
+      augroup Ts
+        autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gd        :TsuDefinition<CR>
+        autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gD        :TsuTypeDefinition<CR>
+        autocmd FileType typescript,typescriptreact,typescript.tsx nmap     <buffer> <leader>e <Plug>(TsuquyomiRenameSymbolC)
+      augroup END
+    endif
+  endif
+
+  if exists('s:go')
+    autocmd FileType go nmap <buffer> <leader>e <Plug>(go-rename)
+  endif
+
+  """ Lint
+  if has('nvim')
+
+    call neomake#configure#automake('nrwi', 500)
+
+    " Run `:Neomake clear` to clear the screen from Neomake
+    let g:neomake_clear_maker = {}
+
+    augroup neomake_highlights
+      au!
+      autocmd ColorScheme *
+            \ highlight NeomakeVirtualtextError cterm=bold ctermfg=203 ctermbg=52 gui=bold guifg=#ff5f5f guibg=#5f0000 |
+            \ highlight NeomakeVirtualtextWarning ctermfg=227 guifg=#ffff5f
     augroup END
+
+    if exists('s:go')
+      let g:neomake_go_enabled_makers = [ 'go' ]
+    endif
+
+    if exists('s:npm')
+      " TODO: linting in typescript with neomake is not setup right yet
+    endif
+  else
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_loc_list_height = 5
+    let g:syntastic_check_on_open = 0
+    let g:syntastic_check_on_wq = 0
+
+    let g:syntastic_error_symbol = ''
+    let g:syntastic_warning_symbol = ''
+    let g:syntastic_style_error_symbol = ''
+    let g:syntastic_style_warning_symbol = ''
+
+    highlight link SyntasticErrorSign DiffDelete
+    highlight link SyntasticWarningSign DiffChange
+    highlight link SyntasticStyleErrorSign DiffDelete
+    highlight link SyntasticStyleWarningSign DiffChange
+
+    if exists('s:npm')
+      let g:syntastic_typescript_checkers = [ 'tsuquyomi' ]
+      let g:syntastic_typescriptreact_checkers = [ 'tsuquyomi' ]
+    endif
+
+    if exists('s:go')
+      let g:syntastic_go_checkers = [ 'go' ]
+    endif
+  endif
+
+  " Rust
+  if exists('s:rust')
+    let g:rust_cargo_check_tests = 1
+    let g:rust_cargo_check_examples = 1
   endif
 endif
-
-if exists('s:go')
-  autocmd FileType go nmap <buffer> <leader>e <Plug>(go-rename)
-endif
-
-""" Lint
-if has('nvim')
-
-  call neomake#configure#automake('nrwi', 500)
-
-  " Run `:Neomake clear` to clear the screen from Neomake
-  let g:neomake_clear_maker = {}
-
-  augroup neomake_highlights
-    au!
-    autocmd ColorScheme *
-      \ highlight NeomakeVirtualtextError cterm=bold ctermfg=203 ctermbg=52 gui=bold guifg=#ff5f5f guibg=#5f0000 |
-      \ highlight NeomakeVirtualtextWarning ctermfg=227 guifg=#ffff5f
-  augroup END
-
-  if exists('s:go')
-    let g:neomake_go_enabled_makers = [ 'go' ]
-  endif
-
-  if exists('s:npm')
-    " TODO: linting in typescript with neomake is not setup right yet
-  endif
-else
-  let g:syntastic_always_populate_loc_list = 1
-  let g:syntastic_auto_loc_list = 1
-  let g:syntastic_loc_list_height = 5
-  let g:syntastic_check_on_open = 0
-  let g:syntastic_check_on_wq = 0
-
-  let g:syntastic_error_symbol = ''
-  let g:syntastic_warning_symbol = ''
-  let g:syntastic_style_error_symbol = ''
-  let g:syntastic_style_warning_symbol = ''
-
-  highlight link SyntasticErrorSign DiffDelete
-  highlight link SyntasticWarningSign DiffChange
-  highlight link SyntasticStyleErrorSign DiffDelete
-  highlight link SyntasticStyleWarningSign DiffChange
-
-  if exists('s:npm')
-    let g:syntastic_typescript_checkers = [ 'tsuquyomi' ]
-    let g:syntastic_typescriptreact_checkers = [ 'tsuquyomi' ]
-  endif
-
-  if exists('s:go')
-    let g:syntastic_go_checkers = [ 'go' ]
-  endif
-endif
-
-" Rust
-if exists('s:rust')
-  let g:rust_cargo_check_tests = 1
-  let g:rust_cargo_check_examples = 1
-endif
-
-" CPP
-" Automatic
 
 """"""""""""""""""""
 " Tips
