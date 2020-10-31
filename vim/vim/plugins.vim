@@ -191,9 +191,18 @@ inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 if has('node')
+
+  function! s:show_documentation()
+    if &filetype == 'vim'
+      execute 'h '.expand('<cword>')
+    else
+      call CocAction('doHover')
+    endif
+  endfunction
+
   " Definition
   nmap     <silent> gd         <Plug>(coc-definition)
-  " nnoremap <silent> gD         :call <SID>show_documentation()<CR>
+  nnoremap <silent> gD         :call <SID>show_documentation()<CR>
   nmap     <silent> <leader>e  <Plug>(coc-rename)
   nmap     <silent> <leader>E  <Plug>(coc-refactor)
 
