@@ -65,6 +65,7 @@ set wildmenu
 
 " File types
 autocmd BufRead,BufNewFile *.cl set filetype=c
+autocmd BufRead,BufNewFile *.toml set filetype=toml
 
 " UTF
 set encoding=utf-8

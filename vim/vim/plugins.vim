@@ -48,6 +48,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
 Plug 'ryanoasis/vim-devicons'
 " Plug 'terryma/vim-multiple-cursors'
+Plug 'aserebryakov/vim-todo-lists'
 
 " Verbs
 Plug 'tpope/vim-surround'              " s
@@ -141,6 +142,7 @@ let g:go_doc_keywordprg_enabled = 0
 """ Vim-commentary
 autocmd FileType cmake setlocal commentstring=#\ %s
 autocmd FileType cpp,hpp,c,h,cc,hh,cl,tf setlocal commentstring=//\ %s
+autocmd FileType toml setlocal commentstring=#\ %s
 
 """ Vim-airline
 if !exists('g:gui_oni')
