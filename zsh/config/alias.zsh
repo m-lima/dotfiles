@@ -80,11 +80,18 @@ function penv {
       python3 -m venv "${newEnv}"
       source "${newEnv}/bin/activate"
       python -m ensurepip
-      pip3 install --upgrade pip
+      python3 -m pip install --upgrade pip
       echo "Virtual environment \x1b[1mcreated\x1b[m at $\x1b[34m${newEnv}\x1b[m"
     else
       source "${newEnv}/bin/activate"
       echo "Virtual environment \x1b[1mset\x1b[m at \x1b[34m${newEnv}\x1b[m"
+    fi
+
+    if [[ ! `which python` =~ "${newEnv}/bin/*" ]]
+    then
+      echo -e "\e[31mFailed to swithc virtual environment:\e[m python binary does not belong to ${newEnv}"
+      deactivate
+      return -1
     fi
 
     export PYENV_ROOT="${newEnv}"
