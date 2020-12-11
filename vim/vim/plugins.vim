@@ -37,8 +37,6 @@ Plug 'kana/vim-textobj-user'
 Plug 'tpope/vim-repeat'
 " Dependency for jistr/vim-nerdtree-tabs
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle', 'NERDTreeTabsToggle'] }
-" Dependency for tpope/fugitive (apparently not true)
-" Plug 'tpope/vim-rhubarb'
 
 """ Util
 Plug 'kien/ctrlp.vim'
@@ -49,6 +47,8 @@ Plug 'airblade/vim-rooter'
 Plug 'ryanoasis/vim-devicons'
 " Plug 'terryma/vim-multiple-cursors'
 Plug 'aserebryakov/vim-todo-lists'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Verbs
 Plug 'tpope/vim-surround'              " s
@@ -56,7 +56,6 @@ Plug 'tpope/vim-commentary'            " gc
 Plug 'vim-scripts/ReplaceWithRegister' " gr
 
 " Text objects
-" Plug 'kana/vim-textobj-line'           " l
 Plug 'kana/vim-textobj-indent'         " i
 Plug 'kana/vim-textobj-entire'         " e
 Plug 'glts/vim-textobj-comment'        " c

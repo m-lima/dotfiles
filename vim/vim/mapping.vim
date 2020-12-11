@@ -77,7 +77,7 @@ vnoremap S :s//g<LEFT><LEFT>
 nnoremap <C-S> :s//g<LEFT><LEFT>
 
 " Grep current directory
-nnoremap ? :grep '' %:p:h/*<LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT>
+nnoremap ? :Ag 
 
 if &diff
   map ] ]c
