@@ -1,4 +1,14 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["rust"],
-  "coc.preferences.hoverTarget": "float"
+  "coc.preferences.formatOnSaveFiletypes": ["rust", "go"],
+  "coc.preferences.hoverTarget": "float",
+  "languageserver": {
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "usePlaceholders": true
+      }
+    }
+  }
 }
