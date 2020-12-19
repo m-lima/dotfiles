@@ -1,0 +1,7 @@
+#!/bin/bash
+
+export PATH="/usr/local/opt/qt/bin:$PATH"
+bundle=`cargo bundle --release`
+bundle="${bundle##* }"
+bundle="${bundle%%* }"
+[ $bundle ] && macdeployqt "${bundle}"
