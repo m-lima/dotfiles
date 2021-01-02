@@ -19,5 +19,3 @@ export COMPUTER_SYMBOL='§'
 
 pluginManager=zgen
 zshFramework=omz
-
-# alias bat=batcat

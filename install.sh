@@ -742,17 +742,6 @@ then
     [ "${PLUGIN_MANAGER}" ] && echo "pluginManager=${PLUGIN_MANAGER}" >> "${HOME}/.config/m-lima/zsh/local.zsh"
     [ "${ZSH_FRAMEWORK}" ] && echo "zshFramework=${ZSH_FRAMEWORK}" >> "${HOME}/.config/m-lima/zsh/local.zsh"
     vi "${HOME}/.config/m-lima/zsh/local.zsh"
-
-    if [ $(command -v batcat) ]
-    then
-      echo -n "Alias bat to batcat? [Y/n] "
-      read input
-      case ${input} in
-        [Nn] ) ;;
-        * )
-          echo 'alias bat=batcat' >> "${HOME}/.config/m-lima/zsh/local.zsh"
-      esac
-    fi
   fi
 
   if installFile c config/fd config .config/m-lima/fd

@@ -23,6 +23,10 @@ then
 fi
 
 ### bat
+if [ $(command -v batcat) ]
+then
+  alias bat=batcat
+fi
 alias bbat='bat --paging=auto --style=auto'
 
 ### Prompt expansion
