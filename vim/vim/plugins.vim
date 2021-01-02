@@ -193,6 +193,8 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 if has('node')
 
+  let g:coc_global_extensions = [ "coc-rust-analyzer", "coc-go", "coc-json", "coc-tsserver" ]
+
   function! s:show_documentation()
     if &filetype == 'vim'
       execute 'h '.expand('<cword>')
