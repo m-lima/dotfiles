@@ -536,7 +536,10 @@ fi
 # NeoVim
 if [ $(command -v nvim) ]
 then
-  checkInstall "Vim-Plug for NeoVim" 'curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' '[ -f ~/.local/share/nvim/site/autoload/plug.vim ]'
+  if checkInstall "Vim-Plug for NeoVim" 'curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' '[ -f ~/.local/share/nvim/site/autoload/plug.vim ]'
+  then
+    nvim -c 'PlugInstall' -c 'qa!'
+  fi
 else
   echo "[33mSkipping Vim-Plug for NeoVim[m"
 fi
@@ -544,7 +547,10 @@ fi
 # Vim
 if [ $(command -v vim) ]
 then
-  checkInstall "Vim-Plug for Vim" 'curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' '[ -f ~/.vim/autoload/plug.vim ]'
+  if checkInstall "Vim-Plug for Vim" 'curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' '[ -f ~/.vim/autoload/plug.vim ]'
+  then
+    vim -c 'PlugInstall' -c 'qa!'
+  fi
 else
   echo "[33mSkipping Vim-Plug for Vim[m"
 fi
