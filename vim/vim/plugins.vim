@@ -63,7 +63,7 @@ Plug 'glts/vim-textobj-comment'        " c
 """ Languages
 if has('node')
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-  Plug 'puremourning/vimspector', { 'on': '<Plug>VimspectorLaunch' }
+  Plug 'puremourning/vimspector', { 'on': [ '<Plug>VimspectorLaunch', '<Plug>VimspectorToggleBreakpoint' ] }
 else
 
   " Go
