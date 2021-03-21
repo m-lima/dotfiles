@@ -21,7 +21,9 @@ endif
 " Misc {{{1
 
 highlight Comment guifg=#585858 ctermfg=240 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-highlight Constant guifg=#5e8759 ctermfg=065 guibg=NONE ctermbg=NONE gui=bold cterm=bold
+" highlight Constant guifg=#5e8759 ctermfg=202 guibg=NONE ctermbg=NONE gui=bold cterm=bold
+highlight Constant guifg=#78a67d ctermfg=108 guibg=NONE ctermbg=NONE gui=bold cterm=bold
+" highlight Constant guifg=#87afdf ctermfg=110 guibg=NONE ctermbg=NONE gui=bold cterm=bold
 highlight Directory guifg=#ffaf87 ctermfg=216 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight EndOfBuffer guifg=#262626 ctermfg=235 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight Identifier guifg=#ffaf87 ctermfg=216 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
@@ -32,7 +34,7 @@ highlight PreProc guifg=#ffdfaf ctermfg=223 guibg=NONE ctermbg=NONE gui=NONE cte
 highlight Special guifg=#dfafaf ctermfg=181 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight SpecialKey guifg=#ff005f ctermfg=201 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight Statement guifg=#afdf87 ctermfg=150 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-highlight String guifg=#87afdf ctermfg=110 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight String guifg=#5e8759 ctermfg=065 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight Title guifg=#afff87 ctermfg=156 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight Todo guifg=#ffdfaf ctermfg=223 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight Type guifg=#c57825 ctermfg=172 guibg=NONE ctermbg=NONE gui=bold cterm=bold
