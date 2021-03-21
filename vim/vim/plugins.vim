@@ -63,6 +63,7 @@ Plug 'glts/vim-textobj-comment'        " c
 """ Languages
 if has('node')
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+  Plug 'puremourning/vimspector', { 'on': '<Plug>VimspectorLaunch' }
 else
 
   " Go
@@ -208,6 +209,7 @@ if has('node')
   nnoremap <silent> gD         :call <SID>show_documentation()<CR>
   nmap     <silent> <leader>e  <Plug>(coc-rename)
   nmap     <silent> <leader>E  <Plug>(coc-refactor)
+  nmap     <silent> <leader>f  <Plug>(coc-references)
 
   " Pop-up scrolling
   " nnoremap <expr><C-k> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
@@ -218,6 +220,20 @@ if has('node')
   " More readable colors
   highlight link CocErrorSign DiffDelete
   highlight link CocWarningSign DiffChange
+
+  " VimInspector
+  nmap <F2> <Plug>VimspectorLaunch
+  nnoremap <silent> <leader><F2> :VimspectorReset<CR>
+  nmap <F11> <Plug>VimspectorReset
+  nmap <F5> <Plug>VimspectorContinue
+  nmap <F4> <Plug>VimspectorRestart
+  nmap <F3> <Plug>VimspectorStop
+  nmap <F6> <Plug>VimspectorRunToCursor
+  nmap <F7> <Plug>VimspectorStepInto
+  nmap <F8> <Plug>VimspectorStepOver
+  nmap <F9> <Plug>VimspectorToggleBreakpoint
+  nmap <F10> <Plug>VimspectorBalloonEval
+  xmap <F10> <Plug>VimspectorBalloonEval
 else
   if has('nvim')
     if has('python3')
