@@ -1,5 +1,4 @@
 ### General
-alias jsn='python -m json.tool'
 alias mud='telnet www.ateraan.com 4002'
 alias png='ping -c 4'
 
@@ -9,20 +8,20 @@ alias l='ls -lah'
 alias ll='ls -lh'
 
 ### Vim
-if [ $(command -v nvim) ]
+if command -v nvim &> /dev/null
 then
   alias vi=nvim
-elif [ $(command -v vim) ]
+elif command -v vim &> /dev/null
 then
   alias vi=vim
 fi
 
 ### bat
-if [ $(command -v batcat) ]
+if command -v batcat &> /dev/null
 then
   alias bat=batcat
+  alias bbat='batcat --paging=auto --style=auto'
 fi
-alias bbat='bat --paging=auto --style=auto'
 
 ### Prompt expansion
 pw() {
@@ -44,7 +43,8 @@ then
   alias cpwd='echo -n "${PWD}" | pbcopy'
   alias ppwd='cd $(pbpaste)'
 else
-  if [ $(command -v xclip) ]; then
+  if command -v xclip &> /dev/null
+  then
     alias cpwd='echo -n "${PWD}" | xclip -se c'
     alias ppwd='cd $(xclip -o -se c)'
   else
@@ -117,7 +117,7 @@ function def {
 }
 
 ### Ranger with pwd change
-if [ $(command -v ranger) ]
+if command -v ranger &> /dev/null
 then
   function rng {
     local tempfile="/tmp/pwd-from-ranger"
@@ -143,7 +143,7 @@ then
 fi
 
 ### Ripgrep
-if [ $(command -v ranger) ]
+if command -v rg &> /dev/null
 then
   alias rg='rg --smart-case'
 fi
