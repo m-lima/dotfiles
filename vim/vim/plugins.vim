@@ -211,6 +211,12 @@ if has('node')
   nmap     <silent> <leader>E  <Plug>(coc-refactor)
   nmap     <silent> <leader>f  <Plug>(coc-references)
 
+  " Error
+  nmap g[ <Plug>(coc-diagnostic-prev-error)
+  nmap g] <Plug>(coc-diagnostic-next-error)
+  nmap G[ <Plug>(coc-diagnostic-prev)
+  nmap G] <Plug>(coc-diagnostic-next)
+
   " Pop-up scrolling
   " nnoremap <expr><C-k> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
   " nnoremap <expr><C-j> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
