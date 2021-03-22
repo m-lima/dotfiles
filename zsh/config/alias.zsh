@@ -122,7 +122,7 @@ function def {
 }
 
 ### Ranger with pwd change
-function rg {
+function rng {
   local tempfile="/tmp/pwd-from-ranger"
   ranger --choosedir=$tempfile $argv
   local rangerpwd=$(cat $tempfile)

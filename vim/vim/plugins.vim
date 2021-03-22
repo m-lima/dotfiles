@@ -188,6 +188,11 @@ let g:rooter_patterns = ['.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'C
 " Do not add comment when using 'o'
 autocmd FileType * setlocal formatoptions-=o
 
+""" Fzf
+" Grep current directory
+nnoremap ? :Rg
+" nnoremap ? :Ag
+
 """ Completion navigation overload
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"

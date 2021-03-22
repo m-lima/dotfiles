@@ -76,9 +76,6 @@ vnoremap S :s//g<LEFT><LEFT>
 " Current line modify [Control-S]
 nnoremap <C-S> :s//g<LEFT><LEFT>
 
-" Grep current directory
-nnoremap ? :Ag
-
 if &diff
   map ] ]c
   map [ [c
