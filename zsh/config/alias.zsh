@@ -8,11 +8,6 @@ alias lt='ls -lathr'
 alias l='ls -lah'
 alias ll='ls -lh'
 
-# function cd() {
-#   builtin cd $@
-#   ls -A
-# }
-
 ### Vim
 if [ $(command -v nvim) ]
 then
@@ -122,15 +117,18 @@ function def {
 }
 
 ### Ranger with pwd change
-function rng {
-  local tempfile="/tmp/pwd-from-ranger"
-  ranger --choosedir=$tempfile $argv
-  local rangerpwd=$(cat $tempfile)
-  if [[ "$PWD" != $rangerpwd ]]
-  then
-    cd $rangerpwd
-  fi
-}
+if [ $(command -v ranger) ]
+then
+  function rng {
+    local tempfile="/tmp/pwd-from-ranger"
+    ranger --choosedir=$tempfile $argv
+    local rangerpwd=$(cat $tempfile)
+    if [[ "$PWD" != $rangerpwd ]]
+    then
+      cd $rangerpwd
+    fi
+  }
+fi
 
 ### Visual Studio Code from Mac CLI
 if [ -d "/Applications/Visual Studio Code.app" ]
@@ -142,6 +140,12 @@ fi
 if command -v xdg-open &> /dev/null
 then
   alias open='xdg-open'
+fi
+
+### Ripgrep
+if [ $(command -v ranger) ]
+then
+  alias rg='rg --smart-case'
 fi
 
 ### Faster find
