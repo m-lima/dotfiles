@@ -190,8 +190,8 @@ autocmd FileType * setlocal formatoptions-=o
 
 """ Fzf
 " Grep current directory
-nnoremap ? :Rg
-" nnoremap ? :Ag
+nnoremap ? :Rg 
+" nnoremap ? :Ag 
 
 """ Completion navigation overload
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
