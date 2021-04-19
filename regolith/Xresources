@@ -5,13 +5,13 @@ i3-wm.font: pango:JetBrains Mono Medium 9
 i3-wm.bar.position: top
 
 # Workspaces
-i3-wm.workspace.01.name: 1:<span font_desc='JetBrains Mono Medium 18'>  </span>
-i3-wm.workspace.02.name: 2:<span font_desc='JetBrains Mono Medium 18'>  </span>
-i3-wm.workspace.03.name: 3:<span font_desc='JetBrains Mono Medium 18'>  </span>
-i3-wm.workspace.04.name: 4:<span font_desc='JetBrains Mono Medium 18'>  </span>
-i3-wm.workspace.05.name: 5:<span font_desc='JetBrains Mono Medium 18'> 嗢 </span>
-i3-wm.workspace.06.name: 6:<span font_desc='JetBrains Mono Medium 18'>  </span>
-i3-wm.workspace.10.name: 10:<span font_desc='JetBrains Mono Medium 18'>  </span>
+i3-wm.workspace.01.name: 1:<span font_desc='JetBrains Mono Medium 13'>  </span>
+i3-wm.workspace.02.name: 2:<span font_desc='JetBrains Mono Medium 13'>  </span>
+i3-wm.workspace.03.name: 3:<span font_desc='JetBrains Mono Medium 13'>  </span>
+i3-wm.workspace.04.name: 4:<span font_desc='JetBrains Mono Medium 13'>  </span>
+i3-wm.workspace.05.name: 5:<span font_desc='JetBrains Mono Medium 13'> 嗢 </span>
+i3-wm.workspace.06.name: 6:<span font_desc='JetBrains Mono Medium 13'>  </span>
+i3-wm.workspace.10.name: 10:<span font_desc='JetBrains Mono Medium 13'>  </span>
 
 # Colors
 i3-wm.bar.workspace.inactive.background.color: #1f2430
@@ -57,7 +57,7 @@ St.color15: #fdf6e3
 ###############################
 ## GPU usage
 ###############################
-i3xrocks.label.gpu: 
+i3xrocks.label.gpu: 
 
 ###############################
 ## Misc
