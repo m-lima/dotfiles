@@ -139,6 +139,9 @@ call plug#end()
 let g:go_fmt_fail_silently = 1
 let g:go_doc_keywordprg_enabled = 0
 
+""" Ctrl-P
+nnoremap <C-E> :<C-U>CtrlPBuffer<CR>
+
 """ Vim-commentary
 autocmd FileType cmake setlocal commentstring=#\ %s
 autocmd FileType cpp,hpp,c,h,cc,hh,cl,tf setlocal commentstring=//\ %s
