@@ -9,13 +9,22 @@ if ! command -v wasm-bindgen; then
 fi
 
 base_dir=`cargo locate-project | jq -r '.root' | xargs dirname`
-if ! cargo build --target wasm32-unknown-unknown --release; then
+if ! cargo build --target wasm32-unknown-unknown --release --lib
+then
   exit -1
 fi
 
 output=`ls "${base_dir}"/target/wasm32-unknown-unknown/release/*.wasm | head -1 | xargs basename | cut -d'.' -f1`
 
-wasm-bindgen "${base_dir}/target/wasm32-unknown-unknown/release/${output}.wasm" --out-dir "${base_dir}/static" --web && \
+if ! wasm-bindgen "${base_dir}/target/wasm32-unknown-unknown/release/${output}.wasm" --out-dir "${base_dir}/static" --web
+then
+  exit -1
+fi
+
+if [ -f "${base_dir}/index.html" ]
+then
+  cp "${base_dir}/index.html" "${base_dir}/static/index.html"
+else
   echo '<!DOCTYPE html>
 <html>
   <head>
@@ -30,6 +39,7 @@ wasm-bindgen "${base_dir}/target/wasm32-unknown-unknown/release/${output}.wasm" 
     </script>
   </body>
 </html>' > "${base_dir}/static/index.html"
+fi
 
 shift
 
