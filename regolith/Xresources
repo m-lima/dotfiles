@@ -68,7 +68,7 @@ gnome.terminal.font: JetBrains Mono 9
 ###############################
 ## Gray and orange theme
 ###############################
-gnome.wallpaper: ~/Pictures/point-7-wallpaper-gray-big.png
+gnome.wallpaper: ~/Pictures/sports-darker.png
 gnome.gtk.theme: Ultimate-Dark-(Flat)-Orange
 gnome.wm.theme: Ultimate-Dark-(Flat)-Orange
 rofi.theme: ~/.config/regolith/rofi.rasi
