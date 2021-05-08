@@ -232,6 +232,22 @@ gpg --edit-key <KEY>
 > expire
 
 ##################################################
+# FFMPEG
+##################################################
+
+# Make mp4 of gource
+gource -r 30 -o - | ffmpeg -y -an -r 30 -f image2pipe -vcodec ppm -i - -vcodec libx264 -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 output.mp4
+
+# Accelerate video
+ffmpeg -an -itsscale 0.001 -i <INPUT> <OUTPUT>[.mp4]
+        ^ No audio
+
+# Concatenate videos
+ffmpeg -an -f concat -i list.txt -c copy <OUTPUT>[.mp4]
+        ^ No audio
+                            ^ Each line looks like: file '<PATH>'
+
+##################################################
 # Misc
 ##################################################
 
