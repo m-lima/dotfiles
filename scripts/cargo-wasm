@@ -8,16 +8,28 @@ if ! command -v wasm-bindgen; then
   exit -1
 fi
 
-workspace_dir=`cargo metadata | jq -r '.workspace_root'`
+workspace_dir=`cargo metadata --format-version 1 | jq -r '.workspace_root'`
 base_dir=`cargo locate-project | jq -r '.root' | xargs dirname`
-if ! cargo build --target wasm32-unknown-unknown --release --lib
+
+shift
+
+if [[ "${1}" == "wasi" ]]
+then
+  target='wasm32-wasi'
+  shift
+else
+  target='wasm32-unknown-unknown'
+fi
+
+echo 'Building target "'${target}'" in release mode'
+if ! cargo build --target ${target} --release --lib
 then
   exit -1
 fi
 
-output=`ls "${workspace_dir}"/target/wasm32-unknown-unknown/release/*.wasm | head -1 | xargs basename | cut -d'.' -f1`
+output=`ls "${workspace_dir}"/target/${target}/release/*.wasm | head -1 | xargs basename | cut -d'.' -f1`
 
-if ! wasm-bindgen "${workspace_dir}/target/wasm32-unknown-unknown/release/${output}.wasm" --out-dir "${base_dir}/static" --web
+if ! wasm-bindgen "${workspace_dir}/target/${target}/release/${output}.wasm" --out-dir "${base_dir}/static" --web
 then
   exit -1
 fi
@@ -41,8 +53,6 @@ else
   </body>
 </html>' > "${base_dir}/static/index.html"
 fi
-
-shift
 
 if [[ "${1}" == "--run" ]]; then
   simple-server "${base_dir}/static"
