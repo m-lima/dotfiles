@@ -238,10 +238,9 @@ if has('node')
   " VimInspector
   nmap <F2> <Plug>VimspectorLaunch
   nnoremap <silent> <leader><F2> :VimspectorReset<CR>
-  nmap <F11> <Plug>VimspectorReset
-  nmap <F5> <Plug>VimspectorContinue
-  nmap <F4> <Plug>VimspectorRestart
   nmap <F3> <Plug>VimspectorStop
+  nmap <F4> <Plug>VimspectorRestart
+  nmap <F5> <Plug>VimspectorContinue
   nmap <F6> <Plug>VimspectorRunToCursor
   nmap <F7> <Plug>VimspectorStepInto
   nmap <F8> <Plug>VimspectorStepOver
