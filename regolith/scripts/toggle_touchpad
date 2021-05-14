@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [[ "${1}" == "on" ]]
+then
+  gsettings set org.gnome.desktop.peripherals.touchpad send-events enabled
+elif [[ "${1}" == "off" ]]
+then
+  gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled
+else
+  echo 'Expected parameter: [on off]'
+fi
