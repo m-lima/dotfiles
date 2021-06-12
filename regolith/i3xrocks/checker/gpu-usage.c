@@ -39,7 +39,7 @@ int main() {
 
         char *font = "JetBrains Mono Medium 13";
         char *color = "#FFD580";
-        char *label = "";
+        char *label = "";
 
         if (XrmGetResource(db, "i3xrocks.value.font", "i3xrocks.value.font", &type, &value)) {
           font = value.addr;
