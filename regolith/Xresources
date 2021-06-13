@@ -57,7 +57,7 @@ St.color15: #fdf6e3
 ###############################
 ## GPU usage
 ###############################
-i3xrocks.label.gpu: 
+i3xrocks.label.gpu: 
 i3xrocks.label.hdd: 
 
 ###############################
