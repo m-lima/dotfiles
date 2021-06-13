@@ -162,9 +162,15 @@ endif
 let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeDirArrowCollapsible = '▾'
 
-nnoremap <Leader>n :NERDTreeToggle<CR>
-nnoremap <Leader>f :NERDTreeFind<CR>
-" let NERDTreeMapOpenInTab='<CR>'
+function! s:toggle_nerdtree()
+  if exists('g:NERDTree') && g:NERDTree.IsOpen()
+    NERDTreeToggle
+  else
+    NERDTreeFind
+  endif
+endfunction
+
+nnoremap <Leader>n :call <SID>toggle_nerdtree()<CR>
 let NERDTreeMinimalUI=1
 
 " Quit if only NERDTree is left
@@ -175,7 +181,17 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
 " Sync NERDTree across tabs
-autocmd BufWinEnter * if exists("g:NERDTree") | silent NERDTreeMirror | endif
+autocmd BufWinEnter * if exists('g:NERDTree') | silent NERDTreeMirror | endif
+
+" Sync NERDTree with current buffer
+" [wincmd p] is equivalent to <C-w>p
+autocmd BufEnter * if &modifiable
+      \ && !&diff
+      \ && exists('g:NERDTree')
+      \ && NERDTree.IsOpen()
+      \ && strlen(expand('%')) > 0
+      \ && bufname('%') !~ 'NERD_tree_\d\+'
+      \ | NERDTreeFind | wincmd p | endif
 
 """ Fugitive
 nnoremap <Leader>b :Gblame<CR>
