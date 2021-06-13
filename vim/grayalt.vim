@@ -34,7 +34,7 @@ highlight String guifg=#5e8759 ctermfg=065 guibg=NONE ctermbg=NONE gui=NONE cter
 highlight Title guifg=#afff87 ctermfg=156 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight Todo guifg=#ffdfaf ctermfg=223 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight Type guifg=#c57825 ctermfg=172 guibg=NONE ctermbg=NONE gui=bold cterm=bold
-highlight VertSplit guifg=#3a3a3a ctermfg=237 guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
+highlight VertSplit guifg=#3a3a3a ctermfg=237 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
 " Cursor lines {{{1
 

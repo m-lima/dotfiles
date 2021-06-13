@@ -13,4 +13,3 @@ endif
 set cul
 
 colorscheme grayalt
-
