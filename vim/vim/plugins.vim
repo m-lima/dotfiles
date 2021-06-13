@@ -35,17 +35,15 @@ endif
 Plug 'kana/vim-textobj-user'
 " Depenency for vim-scripts/ReplaceWithRegister
 Plug 'tpope/vim-repeat'
-" Dependency for jistr/vim-nerdtree-tabs
-Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle', 'NERDTreeTabsToggle'] }
 
 """ Util
 Plug 'kien/ctrlp.vim'
-Plug 'jistr/vim-nerdtree-tabs', { 'on': ['NERDTree', 'NERDTreeTabsOpen', 'NERDTreeToggle','NERDTreeTabsToggle'] }
+Plug 'preservim/nerdtree', { 'on': ['NERDTree', 'NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTree', 'NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
 Plug 'ryanoasis/vim-devicons'
-" Plug 'terryma/vim-multiple-cursors'
 Plug 'aserebryakov/vim-todo-lists'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -161,12 +159,22 @@ else
 endif
 
 """ NerdTree
-nnoremap <Leader>n :NERDTreeTabsToggle<CR>
+let g:NERDTreeDirArrowExpandable = ''
+let g:NERDTreeDirArrowCollapsible = '▾'
+
+nnoremap <Leader>n :NERDTreeToggle<CR>
+nnoremap <Leader>f :NERDTreeFind<CR>
 " let NERDTreeMapOpenInTab='<CR>'
 let NERDTreeMinimalUI=1
 
 " Quit if only NERDTree is left
-autocmd bufenter * if (winnr("$") == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
+autocmd BufEnter * if (winnr("$") == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
+
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+
+autocmd BufWinEnter * if  exists('t:NERDTreeBufName') && (bufwinnr(t:NERDTreeBufName) != 1) | silent NERDTreeMirror | endif
 
 """ Fugitive
 nnoremap <Leader>b :Gblame<CR>
