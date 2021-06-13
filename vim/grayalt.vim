@@ -12,7 +12,7 @@ endif
 
 let g:colors_name = 'grayalt'
 
-highlight Normal guifg=#909090 ctermfg=245 guibg=#202020 gui=NONE cterm=NONE
+highlight Normal guifg=#909090 ctermfg=245 guibg=#262626 gui=NONE cterm=NONE
 
 " Misc {{{1
 
