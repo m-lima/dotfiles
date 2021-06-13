@@ -38,8 +38,8 @@ Plug 'tpope/vim-repeat'
 
 """ Util
 Plug 'kien/ctrlp.vim'
-Plug 'preservim/nerdtree', { 'on': ['NERDTree', 'NERDTreeToggle', 'NERDTreeFind'] }
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTree', 'NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'preservim/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeToggle', 'NERDTreeFind' ] }
+Plug 'xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeToggle', 'NERDTreeFind' ] }
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
@@ -174,7 +174,8 @@ autocmd BufEnter * if (winnr("$") == 1 && exists('b:NERDTree') && b:NERDTree.isT
 autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
-autocmd BufWinEnter * if  exists('t:NERDTreeBufName') && (bufwinnr(t:NERDTreeBufName) != 1) | silent NERDTreeMirror | endif
+" Sync NERDTree across tabs
+autocmd BufWinEnter * if exists("g:NERDTree") | silent NERDTreeMirror | endif
 
 """ Fugitive
 nnoremap <Leader>b :Gblame<CR>
