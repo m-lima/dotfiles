@@ -7,3 +7,9 @@ cmake -G "NMake Makefiles" ../..
 
 # Build for x64 (in this case VS 15 2017)
 cmake .. -G "Visual Studio 15 2017 Win64"
+
+##################################################
+# Print color names
+##################################################
+
+[System.Enum]::GetValues('ConsoleColor') | ForEach-Object { Write-Host $_ -ForegroundColor $_ }

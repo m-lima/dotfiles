@@ -12,11 +12,7 @@ endif
 
 let g:colors_name = 'grayalt'
 
-if exists('g:gui_oni')
-  highlight Normal guifg=#909090 ctermfg=245 guibg=#202020 gui=NONE cterm=NONE
-else
-  highlight Normal guifg=#909090 ctermfg=245
-endif
+highlight Normal guifg=#909090 ctermfg=245 guibg=#202020 gui=NONE cterm=NONE
 
 " Misc {{{1
 
