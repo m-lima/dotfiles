@@ -53,10 +53,16 @@ noremap gk <C-W>k
 noremap gl <C-W>l
 
 " Navigate through buffers
-noremap <silent> bt :bn<CR>
-noremap <silent> bT :bp<CR>
-noremap <silent> bd :bn<CR>:bd #<CR>
-nnoremap B b
+noremap <silent> ]b :bn<CR>
+noremap <silent> [b :bp<CR>
+
+" Navigate through tabs
+noremap <silent> ]t gt
+noremap <silent> [t gT
+
+" Close buffer
+noremap <silent> d] :bn<CR>:bd #<CR>
+noremap <silent> d[ :bp<CR>:bd #<CR>
 
 " I hate using ^ and $
 nnoremap H ^
