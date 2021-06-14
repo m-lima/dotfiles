@@ -1,0 +1,15 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\*\Shell\NeoVim]
+@="Open with Neo&Vim"
+"Icon"="\"C:\\Users\\lima\\scoop\\apps\\neovim\\current\\bin\\nvim-qt.exe\""
+
+[HKEY_CLASSES_ROOT\*\Shell\NeoVim\command]
+@="\"C:\\Users\\lima\\scoop\\apps\\neovim\\current\\bin\\nvim-qt.exe\" \"%1\""
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\NeoVim]
+@="Open with Neo&Vim"
+"Icon"="\"C:\\Users\\lima\\scoop\\apps\\neovim\\current\\bin\\nvim-qt.exe\""
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\NeoVim\command]
+@="\"C:\\Users\\lima\\scoop\\apps\\neovim\\current\\bin\\nvim-qt.exe\" \"%V\""
