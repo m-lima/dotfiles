@@ -137,9 +137,16 @@ ssh -o ProxyCommand='ssh -ax -W localhost:2020 -l cool_user cool_server -p 2222'
 ssh -D <WHATEVER_PORT> -N <SERVER_TO_PROXY_THROUGH>
 
 # Usage
-Say that example.com has IP filtering and only accepts connections form proxy.com. The socks proxy
+Say that example.com has IP filtering and only accepts connections form proxy.com.
+
+The socks proxy
 can be setup as such:
-ssh -D 4321 -N proxy.com
+ssh -D 4321 -C -N proxy.com
+        ^ Arbitrary port that will be open on cool_server
+             ^ Compress data in the tunnel
+                ^ Dont execute commands
+
+Then on the client:
 curl -x socks5h://localhost:4321 https://example.com
 
 ##################################################
