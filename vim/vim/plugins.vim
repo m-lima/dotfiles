@@ -163,7 +163,7 @@ let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeDirArrowCollapsible = '▾'
 
 function! s:toggle_nerdtree()
-  if exists('g:NERDTree') && g:NERDTree.IsOpen()
+  if (exists('g:NERDTree') && g:NERDTree.IsOpen()) || !(&modifiable && !&diff && strlen(expand('%')) > 0 && bufname('%') !~ 'NERD_tree_\d\+')
     NERDTreeToggle
   else
     NERDTreeFind
@@ -180,8 +180,8 @@ autocmd BufEnter * if (winnr("$") == 1 && exists('b:NERDTree') && b:NERDTree.isT
 autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
-" Sync NERDTree across tabs
-autocmd BufWinEnter * if exists('g:NERDTree') | silent NERDTreeMirror | endif
+" " Sync NERDTree across tabs
+" autocmd BufWinEnter * if exists('g:NERDTree') | silent NERDTreeMirror | endif
 
 " Sync NERDTree with current buffer
 " [wincmd p] is equivalent to <C-w>p
