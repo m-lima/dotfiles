@@ -410,6 +410,9 @@ else
   endif
 endif
 
+""" My own todo listing
+nnoremap <silent> <Leader>t :cgetexpr system('rg -s --trim --vimgrep TODO')<CR>:copen<CR>
+
 """"""""""""""""""""
 " Tips
 """"""""""""""""""""
