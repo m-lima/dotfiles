@@ -31,10 +31,8 @@ if !exists('g:gui_oni')
 endif
 
 """ Dependencies
-" Dependency for text objects
-Plug 'kana/vim-textobj-user'
-" Depenency for vim-scripts/ReplaceWithRegister
-Plug 'tpope/vim-repeat'
+Plug 'kana/vim-textobj-user' " Dependency for text objects
+Plug 'tpope/vim-repeat' " Depenency for vim-scripts/ReplaceWithRegister
 
 """ Util
 Plug 'kien/ctrlp.vim'
@@ -60,8 +58,10 @@ Plug 'glts/vim-textobj-comment'        " c
 
 """ Languages
 if has('node')
+
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
   Plug 'puremourning/vimspector', { 'on': [ '<Plug>VimspectorLaunch', '<Plug>VimspectorToggleBreakpoint' ] }
+
 else
 
   " Go
@@ -197,7 +197,12 @@ autocmd BufEnter * if &modifiable
 nnoremap <Leader>b :Gblame<CR>
 
 """ GitGutter
-nnoremap <Leader>g :GitGutterToggle<CR>
+nnoremap <Leader>g  :GitGutterToggle<CR>
+nnoremap <Leader>gs <Plug>(GitGutterStageHunk)
+nnoremap <Leader>gu <Plug>(GitGutterUndoHunk)
+nnoremap <Leader>gp <Plug>(GitGutterPreviewHunk)
+nnoremap ]g         <Plug>(GitGutterNextHunk)
+nnoremap [g         <Plug>(GitGutterPrevHunk)
 
 " Increase the update speed to allow faster signing
 " set updatetime=400
@@ -220,6 +225,7 @@ autocmd FileType * setlocal formatoptions-=o
 " Grep current directory
 nnoremap ? :Rg 
 " nnoremap ? :Ag 
+let g:fzf_layout = { 'down': '40%' }
 
 """ Completion navigation overload
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -245,10 +251,10 @@ if has('node')
   nmap     <silent> <leader>f  <Plug>(coc-references)
 
   " Error
-  nmap g[ <Plug>(coc-diagnostic-prev-error)
-  nmap g] <Plug>(coc-diagnostic-next-error)
-  nmap G[ <Plug>(coc-diagnostic-prev)
-  nmap G] <Plug>(coc-diagnostic-next)
+  nmap [e <Plug>(coc-diagnostic-prev-error)
+  nmap ]e <Plug>(coc-diagnostic-next-error)
+  nmap [E <Plug>(coc-diagnostic-prev)
+  nmap ]E <Plug>(coc-diagnostic-next)
 
   " Pop-up scrolling
   " nnoremap <expr><C-k> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
