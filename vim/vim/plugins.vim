@@ -197,12 +197,15 @@ autocmd BufEnter * if &modifiable
 nnoremap <Leader>b :Gblame<CR>
 
 """ GitGutter
-nnoremap <Leader>g  :GitGutterToggle<CR>
-nnoremap <Leader>gs <Plug>(GitGutterStageHunk)
-nnoremap <Leader>gu <Plug>(GitGutterUndoHunk)
-nnoremap <Leader>gp <Plug>(GitGutterPreviewHunk)
-nnoremap ]g         <Plug>(GitGutterNextHunk)
-nnoremap [g         <Plug>(GitGutterPrevHunk)
+let g:gitgutter_map_keys = 0 " Disable default mappings
+nnoremap <silent> <Leader>g  :GitGutterToggle<CR>
+nnoremap <silent> <Leader>gs :GitGutterStageHunk<CR>
+nnoremap <silent> <Leader>gu :GitGutterUndoHunk<CR>
+nnoremap <silent> <Leader>gp :GitGutterPreviewHunk<CR>
+nnoremap <silent> <Leader>gl :GitGutterQuickFix<CR>:copen<CR>
+nnoremap <silent> <Leader>gf :GitGutterFold<CR>
+nnoremap <silent> ]g         :GitGutterNextHunk<CR>
+nnoremap <silent> [g         :GitGutterPrevHunk<CR>
 
 " Increase the update speed to allow faster signing
 " set updatetime=400
