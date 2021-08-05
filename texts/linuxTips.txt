@@ -111,15 +111,15 @@ ssh -f -N -T '-R<WHATEVER_PORT>:localhost:<LOCAL_PORT>' -p <PUBLIC_PORT> <PUBLIC
 # This should be run in the target computer, not the tunnel (which runs only sshd)
 # Example
 
-# Target runs:
-ssh -f -N -T -R2020:localhost:22 -p 2222 cool_user@cool_server
-                ^ Arbitrary port that will be open on cool_server
+# Target (box to be accessed by `source`) runs:
+ssh -f -N -T -R2020:localhost:22 -p 2222 proxy_user@proxy_server
+                ^ Arbitrary port that will be open on proxy_server
                               ^ Port for target sshd
-                                     ^ Port for the proxy server ssh
+                                     ^ Port for the tunnel server ssh
                                              ^ Proxy server ssh login
 
-# Source runs:
-ssh -o ProxyCommand='ssh -ax -W localhost:2020 -l cool_user cool_server -p 2222' -p 2020 target_user@localhost
+# Source (box which will access `target`) runs:
+ssh -o ProxyCommand='ssh -ax -W localhost:2020 -l proxy_user proxy_server -p 2222' -p 2020 target_user@localhost
                                   ^ Points to the reverse proxy (localhost and the arbitrary port)
                                                      ^ User on proxy server ssh
                                                                 ^ Proxy server ssh
