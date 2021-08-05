@@ -265,6 +265,10 @@ if has('node')
     call add(g:coc_global_extensions, 'coc-go')
   endif
 
+  if executable('clangd')
+    call add(g:coc_global_extensions, 'coc-clangd')
+  endif
+
   if executable('tsserver')
     call add(g:coc_global_extensions, 'coc-tsserver')
   endif

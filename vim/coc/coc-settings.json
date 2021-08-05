@@ -1,5 +1,5 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["rust", "go"],
+  "coc.preferences.formatOnSaveFiletypes": ["rust", "go", "c", "cpp" ],
   "coc.preferences.hoverTarget": "float",
   "coc.preferences.useQuickfixForLocations": true,
 
