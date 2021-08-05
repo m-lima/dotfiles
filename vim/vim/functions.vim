@@ -61,7 +61,7 @@ nnoremap <silent> <Leader>t :call <SID>toggle_todo()<CR>
 if executable('qmlformat')
   function! s:formatQml()
     let prev_view=winsaveview()
-    silent execute '!qmlformat -i -w ' . &tabstop . ' %'
+    call system('qmlformat -i -w ' . &tabstop . ' ' . expand('%'))
     e %
     call winrestview(prev_view)
   endfunction
