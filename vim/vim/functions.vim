@@ -43,3 +43,16 @@ function! SynStack ()
 endfunction
 nnoremap gm :call SynStack()<CR>
 
+""" List TODOs
+function! s:toggle_todo()
+  if &ft == 'qf'
+    ccl
+  else
+    cgetexpr system('rg -s --trim --vimgrep TODO')
+    call setqflist([], 'a', {'title': 'TODO'})
+    cope
+  endif
+endfunction
+
+" Map to <leader>t
+nnoremap <silent> <Leader>t :call <SID>toggle_todo()<CR>

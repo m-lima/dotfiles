@@ -410,9 +410,6 @@ else
   endif
 endif
 
-""" My own todo listing
-nnoremap <silent> <Leader>t :cgetexpr system('rg -s --trim --vimgrep TODO')<CR>:call setqflist([], 'a', {'title': 'TODO'})<CR>:cw<CR>
-
 """"""""""""""""""""
 " Tips
 """"""""""""""""""""
