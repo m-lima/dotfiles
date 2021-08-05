@@ -68,6 +68,7 @@ augroup optionsFileTypes
   autocmd!
   autocmd BufRead,BufNewFile *.cl set filetype=c
   autocmd BufRead,BufNewFile *.toml set filetype=toml
+  autocmd BufRead,BufNewFile *.qml set filetype=qml
 augroup END
 
 " UTF

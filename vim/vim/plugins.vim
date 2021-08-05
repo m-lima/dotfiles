@@ -57,6 +57,13 @@ Plug 'kana/vim-textobj-entire'         " e
 Plug 'glts/vim-textobj-comment'        " c
 
 """ Languages
+
+" Simple syntax highlight for TOML
+Plug 'cespare/vim-toml', { 'for': 'toml' }
+
+" QML has no LSP
+Plug 'peterhoeg/vim-qml', { 'for': 'qml' }
+
 if has('node')
 
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
