@@ -48,19 +48,19 @@
         },
         {
             "before": ["L"],
-            "after": ["$"],
+            "after": ["$"]
         },
         {
             "before": ["gY"],
-            "after": ["\"*y$"],
+            "after": ["\"*y$"]
         },
         {
             "before": ["gyy"],
-            "after": ["\"*yy"],
+            "after": ["\"*yy"]
         },
         {
             "before": ["de"],
-            "after": ["0D"],
+            "after": ["0D"]
         }
     ],
 
@@ -91,7 +91,7 @@
         },
         {
             "before": ["gy"],
-            "after": ["\"*y"],
+            "after": ["\"*y"]
         }
     ],
     "npm.enableScriptExplorer": true,
