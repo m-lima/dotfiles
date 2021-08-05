@@ -248,10 +248,6 @@ nnoremap ? :Rg
 " nnoremap ? :Ag 
 let g:fzf_layout = { 'down': '40%' }
 
-""" Completion navigation overload
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-
 if has('node')
 
   let g:coc_global_extensions = [ "coc-rust-analyzer", "coc-go", "coc-json", "coc-tsserver" ]

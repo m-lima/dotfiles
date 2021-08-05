@@ -107,3 +107,7 @@ elseif has('unix')
   nnoremap <Esc>[63~ <C-Y>
 endif
 
+""" Completion navigation overload
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+inoremap <expr><CR> pumvisible() ? "\<C-y>" : "\<CR>"
