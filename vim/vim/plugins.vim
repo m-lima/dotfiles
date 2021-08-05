@@ -45,6 +45,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'aserebryakov/vim-todo-lists'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'unblevable/quick-scope'
 
 " Verbs
 Plug 'tpope/vim-surround'              " s
@@ -247,6 +248,12 @@ let g:rooter_patterns = ['.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'C
 nnoremap ? :Rg 
 " nnoremap ? :Ag 
 let g:fzf_layout = { 'down': '40%' }
+
+""" Quick-scope
+let g:qs_max_chars=100
+let g:qs_highlight_on_keys = ['f', 'F']
+highlight link QuickScopePrimary Search
+highlight link QuickScopeSecondary Visual
 
 if has('node')
 
