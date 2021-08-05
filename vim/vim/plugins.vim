@@ -191,7 +191,7 @@ autocmd BufEnter * if &modifiable
       \ && NERDTree.IsOpen()
       \ && strlen(expand('%')) > 0
       \ && bufname('%') !~ 'NERD_tree_\d\+'
-      \ | NERDTreeFind | wincmd p | endif
+      \ | NERDTreeFind | NERDTreeCWD | wincmd p | endif
 
 """ Fugitive
 nnoremap <Leader>b :Gblame<CR>
