@@ -63,6 +63,11 @@ if executable('qmlformat')
     let prev_view=winsaveview()
     call system('qmlformat -i -w ' . &tabstop . ' ' . expand('%'))
     e %
+
+    " This autocmd comes after GitGutter's autocmd
+    " This is on purpose, so that functions.vim can refer to plugins
+    " Therefore, here GitGutter gets reloaded with the formatted buffer
+    GitGutter
     call winrestview(prev_view)
   endfunction
 
