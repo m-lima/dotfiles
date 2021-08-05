@@ -250,10 +250,9 @@ nnoremap ? :Rg
 let g:fzf_layout = { 'down': '40%' }
 
 """ Quick-scope
-let g:qs_max_chars=100
 let g:qs_highlight_on_keys = ['f', 'F']
-highlight link QuickScopePrimary Search
-highlight link QuickScopeSecondary Visual
+highlight link QuickScopePrimary Visual
+highlight link QuickScopeSecondary Search
 
 if has('node')
 
