@@ -256,7 +256,22 @@ highlight link QuickScopeSecondary Search
 
 if has('node')
 
-  let g:coc_global_extensions = [ "coc-rust-analyzer", "coc-go", "coc-json", "coc-tsserver" ]
+  let g:coc_global_extensions = [ 'coc-json' ]
+  if executable('rustc')
+    call add(g:coc_global_extensions, 'coc-rust-analyzer')
+  endif
+
+  if executable('go')
+    call add(g:coc_global_extensions, 'coc-go')
+  endif
+
+  if executable('tsserver')
+    call add(g:coc_global_extensions, 'coc-tsserver')
+  endif
+
+  if executable('javac')
+    call add(g:coc_global_extensions, 'coc-java')
+  endif
 
   function! s:show_documentation()
     if &filetype == 'vim'

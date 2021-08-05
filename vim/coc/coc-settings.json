@@ -2,16 +2,7 @@
   "coc.preferences.formatOnSaveFiletypes": ["rust", "go"],
   "coc.preferences.hoverTarget": "float",
   "coc.preferences.useQuickfixForLocations": true,
+
   "rust-analyzer.checkOnSave.command": "clippy",
-  "rust-analyzer.checkOnSave.extraArgs": ["--", "-W", "clippy::pedantic"],
-  "languageserver": {
-    "golang": {
-      "command": "gopls",
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
-      "filetypes": ["go"],
-      "initializationOptions": {
-        "usePlaceholders": true
-      }
-    }
-  }
+  "rust-analyzer.checkOnSave.extraArgs": ["--", "-W", "clippy::pedantic"]
 }
