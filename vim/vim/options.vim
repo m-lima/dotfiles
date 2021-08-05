@@ -64,8 +64,11 @@ set timeoutlen=400
 set wildmenu
 
 " File types
-autocmd BufRead,BufNewFile *.cl set filetype=c
-autocmd BufRead,BufNewFile *.toml set filetype=toml
+augroup optionsFileTypes
+  autocmd!
+  autocmd BufRead,BufNewFile *.cl set filetype=c
+  autocmd BufRead,BufNewFile *.toml set filetype=toml
+augroup END
 
 " UTF
 set encoding=utf-8
@@ -74,7 +77,10 @@ set encoding=utf-8
 let g:netrw_banner = 0
 
 " Personal help files
-autocmd BufRead *.help set tw=78 ts=8 ft=help norl
+augroup optionsHelpFile
+  autocmd!
+  autocmd BufRead *.help set tw=78 ts=8 ft=help norl
+augroup END
 
 " Pyenv root
 if filereadable(expand('$HOME/code/python/env/vim/bin/python'))

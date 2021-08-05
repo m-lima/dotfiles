@@ -141,9 +141,17 @@ let g:go_doc_keywordprg_enabled = 0
 nnoremap <C-E> :<C-U>CtrlPBuffer<CR>
 
 """ Vim-commentary
-autocmd FileType cmake setlocal commentstring=#\ %s
-autocmd FileType cpp,hpp,c,h,cc,hh,cl,tf setlocal commentstring=//\ %s
-autocmd FileType toml setlocal commentstring=#\ %s
+augroup pluginsVimComentary
+  autocmd!
+
+  " Do not add comment when using 'o'
+  autocmd FileType * setlocal formatoptions-=o
+
+  " Custom comment strings
+  autocmd FileType cmake setlocal commentstring=#\ %s
+  autocmd FileType cpp,hpp,c,h,cc,hh,cl,tf setlocal commentstring=//\ %s
+  autocmd FileType toml setlocal commentstring=#\ %s
+augroup END
 
 """ Vim-airline
 if !exists('g:gui_oni')
@@ -173,25 +181,29 @@ endfunction
 nnoremap <Leader>n :call <SID>toggle_nerdtree()<CR>
 let NERDTreeMinimalUI=1
 
-" Quit if only NERDTree is left
-autocmd BufEnter * if (winnr("$") == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
+augroup pluginsNERDTree
+  autocmd!
 
-" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
-autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
-    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+  " Quit if only NERDTree is left
+  autocmd BufEnter * if (winnr("$") == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
 
-" " Sync NERDTree across tabs
-" autocmd BufWinEnter * if exists('g:NERDTree') | silent NERDTreeMirror | endif
+  " If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+  autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+      \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
-" Sync NERDTree with current buffer
-" [wincmd p] is equivalent to <C-w>p
-autocmd BufEnter * if &modifiable
-      \ && !&diff
-      \ && exists('g:NERDTree')
-      \ && NERDTree.IsOpen()
-      \ && strlen(expand('%')) > 0
-      \ && bufname('%') !~ 'NERD_tree_\d\+'
-      \ | NERDTreeFind | NERDTreeCWD | wincmd p | endif
+  " " Sync NERDTree across tabs
+  " autocmd BufWinEnter * if exists('g:NERDTree') | silent NERDTreeMirror | endif
+
+  " Sync NERDTree with current buffer
+  " [wincmd p] is equivalent to <C-w>p
+  autocmd BufEnter * if &modifiable
+        \ && !&diff
+        \ && exists('g:NERDTree')
+        \ && NERDTree.IsOpen()
+        \ && strlen(expand('%')) > 0
+        \ && bufname('%') !~ 'NERD_tree_\d\+'
+        \ | NERDTreeFind | NERDTreeCWD | wincmd p | endif
+augroup END
 
 """ Fugitive
 nnoremap <Leader>b :Gblame<CR>
@@ -210,7 +222,10 @@ nnoremap <silent> [g         :GitGutterPrevHunk<CR>
 " Increase the update speed to allow faster signing
 " set updatetime=400
 " Optionally, gitgutter can run on saves:
-autocmd BufWritePost * GitGutter
+augroup pluginVimGutter
+  autocmd!
+  autocmd BufWritePost * GitGutter
+augroup END
 " In the file: .vim/after/plugin/gitgutter.vim
 " autocmd! gitgutter CursorHold,CursorHoldI
 
@@ -219,10 +234,6 @@ autocmd BufWritePost * GitGutter
 
 """ Vim-rooter
 let g:rooter_patterns = ['.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'Cargo.toml', 'build.gradle', 'CMakeLists.txt']
-
-""" Vim-commentary
-" Do not add comment when using 'o'
-autocmd FileType * setlocal formatoptions-=o
 
 """ Fzf
 " Grep current directory
@@ -322,7 +333,7 @@ else
     let g:rustfmt_autosave = 1
 
     if s:rust > 1
-      augroup Racer
+      augroup pluginRacer
         autocmd!
         autocmd FileType rust nmap <buffer> gd         <Plug>(rust-def)
         autocmd FileType rust nmap <buffer> gD         <Plug>(rust-def-tab)
@@ -335,14 +346,16 @@ else
   """ Javascript
   if exists('s:npm')
     if has('nvim')
-      augroup Ts
+      augroup pluginTs
+        autocmd!
         autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gd        :TSDef<CR>
         autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gD        :TSDefPreview<CR>
         autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> <leader>e :TSRename<CR>
       augroup END
     else
       let g:tsuquyomi_disable_quickfix = 1
-      augroup Ts
+      augroup pluginTs
+        autocmd!
         autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gd        :TsuDefinition<CR>
         autocmd FileType typescript,typescriptreact,typescript.tsx nnoremap <silent> gD        :TsuTypeDefinition<CR>
         autocmd FileType typescript,typescriptreact,typescript.tsx nmap     <buffer> <leader>e <Plug>(TsuquyomiRenameSymbolC)
@@ -351,7 +364,10 @@ else
   endif
 
   if exists('s:go')
-    autocmd FileType go nmap <buffer> <leader>e <Plug>(go-rename)
+    augroup pluginGoMap
+      autocmd!
+      autocmd FileType go nmap <buffer> <leader>e <Plug>(go-rename)
+    augroup END
   endif
 
   """ Lint
@@ -362,8 +378,8 @@ else
     " Run `:Neomake clear` to clear the screen from Neomake
     let g:neomake_clear_maker = {}
 
-    augroup neomake_highlights
-      au!
+    augroup pluginNeomakeHighlights
+      autocmd!
       autocmd ColorScheme *
             \ highlight NeomakeVirtualtextError cterm=bold ctermfg=203 ctermbg=52 gui=bold guifg=#ff5f5f guibg=#5f0000 |
             \ highlight NeomakeVirtualtextWarning ctermfg=227 guifg=#ffff5f
