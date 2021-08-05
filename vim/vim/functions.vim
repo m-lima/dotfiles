@@ -56,3 +56,17 @@ endfunction
 
 " Map to <leader>t
 nnoremap <silent> <Leader>t :call <SID>toggle_todo()<CR>
+
+""" QML support
+if executable('qmlformat')
+  function! s:formatQml()
+    let prev_view=winsaveview()
+    execute '%!qmlformat -w ' . &tabstop . ' %'
+    call winrestview(prev_view)
+  endfunction
+
+  augroup functionsQmlFormat
+    autocmd!
+    autocmd BufWritePre *.qml call <SID>formatQml()
+  augroup END
+endif
