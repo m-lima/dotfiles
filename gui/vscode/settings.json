@@ -95,7 +95,6 @@
         }
     ],
     "npm.enableScriptExplorer": true,
-    "window.zoomLevel": 3,
     "editor.minimap.enabled": false,
     "vscode-neovim.neovimPath": "/usr/local/bin/nvim",
     "workbench.enableExperiments": false,
