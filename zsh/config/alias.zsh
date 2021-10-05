@@ -36,6 +36,7 @@ alias ghelp='cat ~/.oh-my-zsh/plugins/git/git.plugin.zsh'
 alias ggal="git branch -a | tr -d \* | sed '/->/d' | xargs git grep -HI"
 alias gdc='git diff --cached'
 alias gdb='git diff --stat'
+alias gsti='git stash push --keep-index'
 
 ### Copy path
 if [[ "$(uname)" == "Darwin" ]]
