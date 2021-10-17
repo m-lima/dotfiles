@@ -35,7 +35,6 @@ Plug 'kana/vim-textobj-user' " Dependency for text objects
 Plug 'tpope/vim-repeat' " Depenency for vim-scripts/ReplaceWithRegister
 
 """ Util
-Plug 'kien/ctrlp.vim'
 Plug 'preservim/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeToggle', 'NERDTreeFind' ] }
 Plug 'xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeToggle', 'NERDTreeFind' ] }
 Plug 'tpope/vim-fugitive'
@@ -145,9 +144,6 @@ call plug#end()
 let g:go_fmt_fail_silently = 1
 let g:go_doc_keywordprg_enabled = 0
 
-""" Ctrl-P
-nnoremap <C-E> :<C-U>CtrlPBuffer<CR>
-
 """ Vim-commentary
 augroup pluginsVimComentary
   autocmd!
@@ -246,7 +242,8 @@ let g:rooter_patterns = ['.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'C
 """ Fzf
 " Grep current directory
 nnoremap ? :Rg 
-" nnoremap ? :Ag 
+nnoremap <C-E> :Buffers<CR>
+nnoremap <C-P> :GFiles<CR>
 let g:fzf_layout = { 'down': '40%' }
 
 """ Quick-scope
