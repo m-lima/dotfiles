@@ -65,6 +65,7 @@ set wildmenu
 augroup optionsFileTypes
   autocmd!
   autocmd BufRead,BufNewFile *.cl set filetype=c
+  autocmd BufRead,BufNewFile *.zig set filetype=zig
 augroup END
 
 " UTF

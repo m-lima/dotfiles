@@ -1,8 +1,15 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["rust", "go", "c", "cpp" ],
+  "coc.preferences.formatOnSaveFiletypes": ["rust", "go", "c", "cpp", "zig" ],
   "coc.preferences.hoverTarget": "float",
   "coc.preferences.useQuickfixForLocations": true,
 
   "rust-analyzer.checkOnSave.command": "clippy",
-  "rust-analyzer.checkOnSave.extraArgs": ["--", "-W", "clippy::pedantic"]
+  "rust-analyzer.checkOnSave.extraArgs": ["--", "-W", "clippy::pedantic"],
+
+  "languageserver": {
+    "zls": {
+      "command": "zls",
+      "filetypes": [ "zig" ]
+    }
+  }
 }

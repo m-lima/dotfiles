@@ -153,7 +153,7 @@ augroup pluginsVimComentary
 
   " Custom comment strings
   autocmd FileType cmake setlocal commentstring=#\ %s
-  autocmd FileType cpp,hpp,c,h,cc,hh,cl,tf setlocal commentstring=//\ %s
+  autocmd FileType cpp,hpp,c,h,cc,hh,cl,tf,zig setlocal commentstring=//\ %s
   autocmd FileType toml setlocal commentstring=#\ %s
 augroup END
 
