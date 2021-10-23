@@ -77,23 +77,25 @@ if executable('qmlformat')
   augroup END
 endif
 
-""" Insert into scope
-function! s:insertIntoScope()
-  " (  40
-  " )  41
-  " { 123
-  " } 125
-  " [  91
-  " ]  93
-  let cur_char = strgetchar(getline('.')[col('.') - 1:], 0)
-  if (cur_char == 123 && strgetchar(getline('.')[col('.'):], 0) == 125)
-        \ || (cur_char == 40 && strgetchar(getline('.')[col('.'):], 0) == 41)
-        \ || (cur_char == 91 && strgetchar(getline('.')[col('.'):], 0) == 93)
-    call feedkeys("a\<CR>\<ESC>O")
-  elseif (cur_char == 125 && strgetchar(getline('.')[col('.') - 2:], 0) == 123)
-        \ || (cur_char == 41 && strgetchar(getline('.')[col('.') - 2:], 0) == 40)
-        \ || (cur_char == 93 && strgetchar(getline('.')[col('.') - 2:], 0) == 91)
-    call feedkeys("i\<CR>\<ESC>O")
-  endif
-endfunction
-nnoremap <silent> <CR> :call <SID>insertIntoScope()<CR>
+" Disabled because it breaks quickfix
+" TODO: Move it to a plugin that loads on modifiable
+" """ Insert into scope
+" function! s:insertIntoScope()
+"   " (  40
+"   " )  41
+"   " { 123
+"   " } 125
+"   " [  91
+"   " ]  93
+"   let cur_char = strgetchar(getline('.')[col('.') - 1:], 0)
+"   if (cur_char == 123 && strgetchar(getline('.')[col('.'):], 0) == 125)
+"         \ || (cur_char == 40 && strgetchar(getline('.')[col('.'):], 0) == 41)
+"         \ || (cur_char == 91 && strgetchar(getline('.')[col('.'):], 0) == 93)
+"     call feedkeys("a\<CR>\<ESC>O")
+"   elseif (cur_char == 125 && strgetchar(getline('.')[col('.') - 2:], 0) == 123)
+"         \ || (cur_char == 41 && strgetchar(getline('.')[col('.') - 2:], 0) == 40)
+"         \ || (cur_char == 93 && strgetchar(getline('.')[col('.') - 2:], 0) == 91)
+"     call feedkeys("i\<CR>\<ESC>O")
+"   endif
+" endfunction
+" nnoremap <silent> <CR> :call <SID>insertIntoScope()<CR>
