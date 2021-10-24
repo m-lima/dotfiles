@@ -2,30 +2,35 @@
 
 shift
 
+if [[ "${1}" == "nightly" ]]; then
+  nightly='+nightly'
+  shift
+fi
+
 if [[ "${1}" == "--run" ]]; then
   run=1
   shift
 fi
 
 echo "[34mFormatting[m" && \
-cargo fmt --all && \
+cargo ${nightly} fmt --all && \
 echo "[34mBuilding main[m" && \
-cargo build --workspace --all-features ${@} && \
+cargo ${nightly} build --workspace --all-features ${@} && \
 echo "[34mBuilding targets[m" && \
-cargo build --workspace --all-targets ${@} && \
+cargo ${nightly} build --workspace --all-targets ${@} && \
 echo "[34mBuilding examples[m" && \
-cargo build --workspace --examples ${@} && \
+cargo ${nightly} build --workspace --examples ${@} && \
 echo "[34mLinting main[m" && \
-cargo clippy --workspace --all-features ${@} && \
+cargo ${nightly} clippy --workspace --all-features ${@} && \
 echo "[34mLinting targets[m" && \
-cargo clippy --workspace --all-targets ${@} && \
+cargo ${nightly} clippy --workspace --all-targets ${@} && \
 echo "[34mLinting examples[m" && \
-cargo clippy --workspace --examples ${@} && \
+cargo ${nightly} clippy --workspace --examples ${@} && \
 echo "[34mTesting main[m" && \
-cargo test --workspace --all-features ${@} && \
+cargo ${nightly} test --workspace --all-features ${@} && \
 echo "[34mTesting targets[m" && \
-cargo test --workspace --all-targets ${@}
+cargo ${nightly} test --workspace --all-targets ${@}
 if [ "${run}" ]; then
   echo "[34mRunning[m" && \
-  cargo run ${@}
+  cargo ${nightly} run ${@}
 fi
