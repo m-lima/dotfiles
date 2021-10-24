@@ -268,6 +268,7 @@ if has('node')
 
   if executable('tsserver')
     call add(g:coc_global_extensions, 'coc-tsserver')
+    call add(g:coc_global_extensions, 'coc-prettier')
   endif
 
   if executable('javac')

@@ -1,15 +1,33 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["rust", "go", "c", "cpp", "zig" ],
-  "coc.preferences.hoverTarget": "float",
+  "coc.preferences.formatOnSaveFiletypes": [
+    "rust",
+    "go",
+    "c",
+    "cpp",
+    "zig",
+    "css",
+    "typescriptreact",
+    "typescript",
+    "html",
+    "yaml",
+    "json",
+    "less",
+    "scss"
+  ],
   "coc.preferences.useQuickfixForLocations": true,
 
   "rust-analyzer.checkOnSave.command": "clippy",
   "rust-analyzer.checkOnSave.extraArgs": ["--", "-W", "clippy::pedantic"],
 
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5",
+  "prettier.arrowParens": "avoid",
+  "prettier.jsxSingleQuote": true,
+
   "languageserver": {
     "zls": {
       "command": "zls",
-      "filetypes": [ "zig" ]
+      "filetypes": ["zig"]
     }
   }
 }
