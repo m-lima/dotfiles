@@ -38,6 +38,19 @@ alias gdc='git diff --cached'
 alias gdb='git diff --stat'
 alias gsti='git stash push --keep-index'
 
+function grbf {
+  local branch
+
+  if [ $1 ]
+  then
+    branch=$1
+  else
+    branch="origin/$(git_main_branch)"
+  fi
+
+  git fetch --all --prune --jobs=10 && git rebase "${branch}"
+}
+
 ### Copy path
 if [[ "$(uname)" == "Darwin" ]]
 then
