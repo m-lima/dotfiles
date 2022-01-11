@@ -182,7 +182,7 @@ function! s:toggle_nerdtree()
   endif
 endfunction
 
-nnoremap <Leader>n :call <SID>toggle_nerdtree()<CR>
+nnoremap <silent> <Leader>n :call <SID>toggle_nerdtree()<CR>
 let NERDTreeMinimalUI=1
 
 augroup pluginsNERDTree
@@ -210,7 +210,7 @@ augroup pluginsNERDTree
 augroup END
 
 """ Fugitive
-nnoremap <Leader>b :Gblame<CR>
+nnoremap <Leader>b :Git blame<CR>
 
 """ GitGutter
 let g:gitgutter_map_keys = 0 " Disable default mappings
