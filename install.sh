@@ -690,6 +690,13 @@ else
   echo "[33mSkipping IdeaVim links[m"
 fi
 
+if [ $(command -v nvim) ] || [ $(command -v vim) ]
+then
+  installFile s vim/coc coc-settings.json .config/nvim
+else
+  echo "[33mSkipping Coc config[m"
+fi
+
 if [ $(command -v tmux) ]
 then
   installFile s scripts tmx bin
