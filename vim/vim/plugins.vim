@@ -172,7 +172,7 @@ endif
 
 """ NerdTree
 let g:NERDTreeDirArrowExpandable = ''
-let g:NERDTreeDirArrowCollapsible = '▾'
+let g:NERDTreeDirArrowCollapsible = ''
 
 function! s:toggle_nerdtree()
   if (exists('g:NERDTree') && g:NERDTree.IsOpen()) || !(&modifiable && !&diff && strlen(expand('%')) > 0 && bufname('%') !~ 'NERD_tree_\d\+')
