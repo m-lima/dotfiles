@@ -15,19 +15,25 @@
     "scss"
   ],
   "coc.preferences.useQuickfixForLocations": true,
-
+  "codeLens.enable": true,
+  "rust-analyzer.debug.runtime": "vimspector",
+  "rust-analyzer.debug.vimspector.configuration.name": "RustAnalyzer",
   "rust-analyzer.checkOnSave.command": "clippy",
-  "rust-analyzer.checkOnSave.extraArgs": ["--", "-W", "clippy::pedantic"],
-
+  "rust-analyzer.checkOnSave.extraArgs": [
+    "--",
+    "-W",
+    "clippy::pedantic"
+  ],
   "prettier.singleQuote": true,
   "prettier.trailingComma": "es5",
   "prettier.arrowParens": "avoid",
   "prettier.jsxSingleQuote": true,
-
   "languageserver": {
     "zls": {
       "command": "zls",
-      "filetypes": ["zig"]
+      "filetypes": [
+        "zig"
+      ]
     }
   }
 }

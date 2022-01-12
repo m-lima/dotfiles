@@ -1,0 +1,24 @@
+{
+  "configurations": {
+    "RustAnalyzer": {
+      "adapter": "CodeLLDB",
+      "configuration": {
+        "type": "lldb",
+        "request": "launch",
+        "program": "${Executable}",
+        "args": [
+          "*${Args} ${args}"
+        ],
+        "sourceLanguages": [
+          "rust"
+        ]
+      },
+      "breakpoints": {
+        "exception": {
+          "cpp_throw": "",
+          "cpp_catch": ""
+        }
+      }
+    }
+  }
+}
