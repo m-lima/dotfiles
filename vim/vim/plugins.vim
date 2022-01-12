@@ -163,6 +163,8 @@ if !exists('g:gui_oni')
   let g:airline_theme='deus'
   let g:airline#extensions#tabline#enabled = 1
   let g:airline#extensions#tabline#formatter = 'unique_tail'
+  let g:airline#extensions#tabline#show_tabs = 0
+  let g:airline#extensions#tabline#ignore_bufadd_pat = '!|defx|gundo|nerd_tree|startify|tagbar|term://|undotree|vimfiler|vimspector'
   set laststatus=2
 else
   set noruler
