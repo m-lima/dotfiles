@@ -58,6 +58,9 @@ set scrolloff=4
 " Timeout length for command sequences
 set timeoutlen=400
 
+" Timeout for update (e.g. CursorHold)
+set updatetime=400
+
 " Show suggestions on top
 set wildmenu
 

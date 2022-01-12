@@ -225,9 +225,6 @@ nnoremap <silent> <Leader>gf :GitGutterFold<CR>
 nnoremap <silent> ]g         :GitGutterNextHunk<CR>
 nnoremap <silent> [g         :GitGutterPrevHunk<CR>
 
-" Increase the update speed to allow faster signing
-" set updatetime=400
-" Optionally, gitgutter can run on saves:
 augroup pluginVimGutter
   autocmd!
   autocmd BufWritePost * GitGutter
@@ -255,6 +252,7 @@ highlight link QuickScopeSecondary Search
 
 if has('node')
 
+  """ Coc
   let g:coc_global_extensions = [ 'coc-json' ]
   if executable('rustc')
     call add(g:coc_global_extensions, 'coc-rust-analyzer')
@@ -285,6 +283,16 @@ if has('node')
     endif
   endfunction
 
+  " Highlight
+  augroup pluginCoc
+    autocmd!
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+  augroup end
+
+  " Action
+  nmap <silent><nowait> <leader>a <Plug>(coc-codeaction-cursor)
+  nmap <silent><nowait> <leader>r <Plug>(coc-codelens-action)
+
   " Definition
   nmap     <silent> gd         <Plug>(coc-definition)
   nnoremap <silent> gD         :call <SID>show_documentation()<CR>
@@ -307,8 +315,9 @@ if has('node')
   " More readable colors
   highlight link CocErrorSign DiffDelete
   highlight link CocWarningSign DiffChange
+  highlight CocHighlightText ctermfg=255 guifg=#ffffff
 
-  " VimInspector
+  """ VimInspector
   nmap <F2> <Plug>VimspectorLaunch
   nnoremap <silent> <leader><F2> :VimspectorReset<CR>
   nmap <F3> <Plug>VimspectorStop

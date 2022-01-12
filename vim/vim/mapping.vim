@@ -71,7 +71,7 @@ nnoremap L $
 vnoremap L $
 
 " Toggle relative numbering
-noremap <Leader>r :set rnu!<CR>
+noremap <Leader>l :set rnu!<CR>
 
 " Global modify [Shift-S]
 nnoremap S :%s//gc<LEFT><LEFT><LEFT>
