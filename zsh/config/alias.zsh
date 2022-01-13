@@ -73,9 +73,19 @@ function penv {
 
   if [ "$1" ]
   then
-    newEnv="$1"
+    if [ "$1" = "-l" ]
+    then
+      newEnv="${PWD}/.venv"
+    else
+      newEnv="$1"
+    fi
   else
-    newEnv="main"
+    if [ -d "${PWD}/.venv" ]
+    then
+      newEnv="${PWD}/.venv"
+    else
+      newEnv="main"
+    fi
   fi
   oldEnv="${VIRTUAL_ENV}"
 
@@ -86,7 +96,10 @@ function penv {
       deactivate
     fi
 
-    newEnv="${base}/${newEnv}"
+    if ! [ "${newEnv}" = "${PWD}/.venv" ]
+    then
+      newEnv="${base}/${newEnv}"
+    fi
 
     if [ ! -d "${newEnv}" ]
     then
