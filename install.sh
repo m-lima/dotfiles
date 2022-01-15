@@ -628,6 +628,10 @@ fi
 checkInstall "Bat" "${PACKAGE_INSTALL} bat" '[ $(command -v "bat") ] || [ $(command -v "batcat") ]'
 
 ########################################
+# Install delta
+[ "${SYS_TYPE}" = "Ubuntu"] || checkInstall "Delta" "${PACKAGE_INSTALL} git-delta" '[ $(command -v "delta") ]'
+
+########################################
 # Install fzf
 checkInstall "fzf" 'git clone --depth 1 https://github.com/junegunn/fzf.git ${HOME}/code/others/fzf && "${HOME}/code/others/fzf/install" --no-fish' '[ $(command -v "fzf") ]'
 
