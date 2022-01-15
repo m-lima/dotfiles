@@ -128,6 +128,14 @@ function penv {
   fi
 }
 
+### Netstat replacement for macos
+if [[ "$(uname)" == "Darwin" ]]
+then
+  function nstat {
+    lsof -PiTCP -sTCP:LISTEN
+  }
+fi
+
 ### Dictionary
 function def {
   if [ "$1" ]
