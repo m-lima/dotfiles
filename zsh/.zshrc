@@ -1,8 +1,8 @@
-# Load options
-source "${HOME}/.config/m-lima/zsh/options.zsh"
-
 # Load local config
 source "${HOME}/.config/m-lima/zsh/local.zsh"
+
+# Load options
+source "${HOME}/.config/m-lima/zsh/options.zsh"
 
 # If using zgen, load plugins
 source "${HOME}/.config/m-lima/zsh/plugins.zsh"
@@ -29,3 +29,6 @@ if ! command -v _fd &> /dev/null
 then
   autoload -U compinit && compinit
 fi
+
+# Load final
+source "${HOME}/.config/m-lima/zsh/final.zsh"

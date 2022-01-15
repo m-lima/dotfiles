@@ -755,6 +755,11 @@ then
     vi "${HOME}/.config/m-lima/zsh/local.zsh"
   fi
 
+  if installFile c zsh final.zsh .config/m-lima/zsh
+  then
+    vi "${HOME}/.config/m-lima/zsh/final.zsh"
+  fi
+
   if installFile c config/fd config .config/m-lima/fd
   then
     vi "${HOME}/.config/m-lima/fd/config"
