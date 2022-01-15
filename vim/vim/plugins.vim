@@ -275,6 +275,10 @@ if has('node')
     call add(g:coc_global_extensions, 'coc-java')
   endif
 
+  if has('python3')
+    call add(g:coc_global_extensions, 'coc-pyright')
+  endif
+
   function! s:show_documentation()
     if &filetype == 'vim'
       execute 'h '.expand('<cword>')
