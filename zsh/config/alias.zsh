@@ -128,6 +128,20 @@ function penv {
   fi
 }
 
+function _penv {
+  if (( CURRENT == 2 ))
+  then
+    _path_files -W "${HOME}/code/python/env" -/
+    if [ -d "./.venv" ]
+    then
+      local completion=('-l:Local venv')
+      _describe 'venv' completion
+    fi
+  fi
+}
+
+compdef _penv penv
+
 ### Netstat replacement for macos
 if [[ "$(uname)" == "Darwin" ]]
 then
