@@ -22,3 +22,9 @@ then
   export SDKMAN_DIR="${HOME}/.sdkman"
   source "${SDKMAN_DIR}/bin/sdkman-init.sh"
 fi
+
+# Haskel
+if [ -s "${HOME}/.ghcup/env" ]
+then
+  source "${HOME}/.ghcup/env"
+fi
