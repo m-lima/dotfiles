@@ -97,10 +97,10 @@ vnoremap <C-j> 5<C-E>
 vnoremap <C-k> 5<C-Y>
 
 " Resize
-nnoremap <silent> <C-w>m :vertical resize -5<CR>
-nnoremap <silent> <C-w>, :resize -5<CR>
-nnoremap <silent> <C-w>. :resize +5<CR>
-nnoremap <silent> <C-w>/ :vertical resize +5<CR>
+nnoremap <silent> gm :vertical resize -5<CR>
+nnoremap <silent> g, :resize -5<CR>
+nnoremap <silent> g. :resize +5<CR>
+nnoremap <silent> g/ :vertical resize +5<CR>
 
 if has('macunix')
   " Get a proper delete on Mac

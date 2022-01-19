@@ -1,3 +1,6 @@
+# Load paths
+source "${HOME}/.config/m-lima/zsh/paths.zsh"
+
 # Load local config
 source "${HOME}/.config/m-lima/zsh/local.zsh"
 
@@ -17,13 +20,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.config/m-lim
 unset pluginManager
 unset zshFramework
 unset localPlugins
-
-# If using sdkman
-if [[ -s "${HOME}/.sdkman/bin/sdkman-init.sh" ]]
-then
-  export SDKMAN_DIR="${HOME}/.sdkman"
-  source "${SDKMAN_DIR}/bin/sdkman-init.sh"
-fi
 
 if ! command -v _fd &> /dev/null
 then

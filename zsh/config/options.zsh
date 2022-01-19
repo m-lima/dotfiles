@@ -1,6 +1,3 @@
-# Adding local bin to path
-export PATH="$HOME"/bin:$PATH
-
 # Preferred editor for local and remote sessions
 export EDITOR='vim'
 export VISUAL='vim'

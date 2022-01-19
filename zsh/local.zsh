@@ -12,7 +12,7 @@ export COMPUTER_SYMBOL='§'
 # export COMPUTER_SYMBOL='τ'
 # export COMPUTER_SYMBOL='⏾'
 
-# localPlugins+=("load git@ghe.telenordigital.com:marcelo-lima/DDT-helper.git" "oh-my-zsh plugins/aws")
+# localPlugins+=("load git@ghe.telenordigital.com:marcelo-lima/DDT-helper.git" "oh-my-zsh plugins/cargo")
 
 # alias pc='pacaur --color always'
 # alias pcm='pacman --color always'

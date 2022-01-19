@@ -41,7 +41,7 @@ function! SynStack ()
         echo n1 "->" n2
     endfor
 endfunction
-nnoremap gm :call SynStack()<CR>
+nnoremap <leader>hi :call SynStack()<CR>
 
 """ List TODOs
 function! s:toggle_todo()
