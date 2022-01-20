@@ -43,8 +43,8 @@ nnoremap <silent> <Leader>h :noh<CR>
 nnoremap <silent> <Leader>z :let &scrolloff=999-&scrolloff<CR>
 
 " More sensible scrolling
-noremap <C-E> 3<C-E>
-noremap <C-Y> 3<C-Y>
+noremap <C-E> 5<C-E>
+noremap <C-Y> 5<C-Y>
 
 " Navigate through panes
 noremap gh <C-W>h
@@ -92,7 +92,7 @@ if &diff
   hi DiffText   ctermfg=233  ctermbg=yellow  guifg=#000033 guibg=#DDDDFF gui=none cterm=none
 endif
 
-" Scrolling using Ctrl
+" Scrolling in the home row
 nnoremap <C-j> 5<C-E>
 nnoremap <C-k> 5<C-Y>
 vnoremap <C-j> 5<C-E>
