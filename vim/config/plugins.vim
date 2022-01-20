@@ -43,7 +43,6 @@ Plug 'airblade/vim-rooter'
 Plug 'ryanoasis/vim-devicons'
 Plug 'aserebryakov/vim-todo-lists'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 Plug 'unblevable/quick-scope'
 
 " Verbs
@@ -70,6 +69,9 @@ if has('node')
   Plug 'puremourning/vimspector', { 'on': [ '<Plug>VimspectorLaunch', '<Plug>VimspectorToggleBreakpoint' ] }
 
 else
+
+  " Regular fzf
+  Plug 'junegunn/fzf.vim'
 
   " Go
   if exists('s:go')
@@ -239,11 +241,62 @@ augroup END
 let g:rooter_patterns = ['.vim/', '.git/', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'build.gradle', 'CMakeLists.txt']
 
 """ Fzf
-" Grep current directory
-nnoremap ? :Rg 
-nnoremap <C-E> :Buffers<CR>
-nnoremap <C-P> :GFiles<CR>
-let g:fzf_layout = { 'down': '40%' }
+if has('node')
+
+  """ Fzf-Preview
+  " TODO: Use Delta
+  " TODO: More git actions
+  " TODO: Highlight matched text in line and in preview
+  " TODO: Show processing, e.g. coc-references, in the statusline
+  " TODO: Allow calling the preview without having to rewrite it
+  nnoremap <silent> <leader>mp     :<C-u>CocCommand fzf-preview.FromResources project_mru git<CR>
+  nnoremap <silent> <leader>mf     :<C-u>CocCommand fzf-preview.DirectoryFiles<CR>
+  nnoremap <silent> <leader>mb     :<C-u>CocCommand fzf-preview.Buffers<CR>
+  nnoremap <silent> <leader>mB     :<C-u>CocCommand fzf-preview.AllBuffers<CR>
+  nnoremap <silent> <leader>mo     :<C-u>CocCommand fzf-preview.FromResources buffer project_mru<CR>
+
+  nnoremap <silent> <leader>mgs    :<C-u>CocCommand fzf-preview.GitStatus<CR>
+  nnoremap <silent> <leader>mga    :<C-u>CocCommand fzf-preview.GitActions<CR>
+  nnoremap <silent> <leader>mg;    :<C-u>CocCommand fzf-preview.Changes<CR>
+
+  nnoremap <silent> <leader>m/     :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="'"<CR>
+  nnoremap <silent> <leader>m8     :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
+  nnoremap          <leader>m*     :<C-u>Rg <C-r>=expand('<cword>')<CR><CR>
+  nnoremap          ?              :<C-u>Rg<Space>
+
+  nnoremap <silent> <leader>m<C-o> :<C-u>CocCommand fzf-preview.Jumps<CR>
+  nnoremap <silent> <leader>mt     :<C-u>CocCommand fzf-preview.BufferTags<CR>
+  nnoremap <silent> <leader>mq     :<C-u>CocCommand fzf-preview.QuickFix<CR>
+  nnoremap <silent> <leader>ml     :<C-u>CocCommand fzf-preview.LocationList<CR>
+
+  command! -bang -nargs=* Rg CocCommand fzf-preview.ProjectGrep --add-fzf-arg=--prompt="Rg> " <q-args>
+
+  let g:fzf_preview_use_dev_icons = 1
+
+  " TODO: Broken with the Coc version of fzf-preview :(
+  if executable('delta')
+    augroup pluginFzfPreview
+      autocmd!
+      autocmd User CocNvimInit once silent CocRestart
+      autocmd User fzf_preview#coc#initialized call s:fzf_preview_settings()
+    augroup END
+
+    function! s:fzf_preview_settings() abort
+      let g:fzf_preview_git_status_preview_command = "[[ $(git diff --cached -- {-1}) != \"\" ]] && git diff --cached --color=always -- {-1} | delta || " .
+        \ "[[ $(git diff -- {-1}) != \"\" ]] && git diff --color=always -- {-1} | delta || " .
+        \ g:fzf_preview_command
+    endfunction
+  endif
+else
+
+  """ Fzf.vim
+  nnoremap ? :Rg<Space>
+
+  nnoremap <C-B> :Buffers<CR>
+  nnoremap <C-G> :GFiles<CR>
+  nnoremap <C-F> :Files<CR>
+  let g:fzf_layout = { 'down': '40%' }
+endif
 
 """ Quick-scope
 let g:qs_highlight_on_keys = ['f', 'F']
@@ -254,6 +307,9 @@ if has('node')
 
   """ Coc
   let g:coc_global_extensions = [ 'coc-json' ]
+
+  call add(g:coc_global_extensions, 'coc-fzf-preview')
+
   if executable('rustc')
     call add(g:coc_global_extensions, 'coc-rust-analyzer')
   endif
@@ -299,10 +355,12 @@ if has('node')
 
   " Definition
   nmap     <silent> gd         <Plug>(coc-definition)
-  nnoremap <silent> gD         :call <SID>show_documentation()<CR>
-  nmap     <silent> <leader>e  <Plug>(coc-rename)
-  nmap     <silent> <leader>E  <Plug>(coc-refactor)
-  nmap     <silent> <leader>f  <Plug>(coc-references)
+  nnoremap <silent> gD         :<C-u>call <SID>show_documentation()<CR>
+  nnoremap <silent> <leader>cc :<C-u>CocCommand fzf-preview.CocReferences<CR>
+  nnoremap <silent> <leader>ci :<C-u>CocCommand fzf-preview.CocImplementations<CR>
+  nnoremap <silent> <leader>cd :<C-u>CocCommand fzf-preview.CocDiagnostics<CR>
+  nmap     <silent> <leader>cn <Plug>(coc-rename)
+  nmap     <silent> <leader>cr <Plug>(coc-refactor)
 
   " Error
   nmap [e <Plug>(coc-diagnostic-prev-error)

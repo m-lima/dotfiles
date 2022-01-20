@@ -67,6 +67,8 @@ noremap <silent> ][b :bwipe<CR>
 noremap <silent> ]db :bn<CR>:bd #<CR>
 noremap <silent> [db :bp<CR>:bd #<CR>
 
+" TODO: Can I copy then comment a block?
+
 " I hate using ^ and $
 nnoremap H ^
 vnoremap H ^
