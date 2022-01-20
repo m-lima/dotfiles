@@ -106,7 +106,7 @@ function penv {
       python3 -m venv "${newEnv}"
       source "${newEnv}/bin/activate"
       python -m ensurepip
-      python3 -m pip install --upgrade pip
+      python3 -m pip install --upgrade pip wheel setuptools
       echo "Virtual environment \x1b[1mcreated\x1b[m at $\x1b[34m${newEnv}\x1b[m"
     else
       source "${newEnv}/bin/activate"
