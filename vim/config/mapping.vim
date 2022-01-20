@@ -61,6 +61,8 @@ noremap <silent> ]t gt
 noremap <silent> [t gT
 
 " Close buffer
+noremap <silent> []b :bwipe<CR>
+noremap <silent> ][b :bwipe<CR>
 noremap <silent> ]db :bn<CR>:bd #<CR>
 noremap <silent> [db :bp<CR>:bd #<CR>
 
