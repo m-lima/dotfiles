@@ -21,6 +21,7 @@ highlight Comment guifg=#ff557c ctermfg=204 guibg=NONE ctermbg=NONE gui=NONE cte
 " highlight Constant guifg=#5e8759 ctermfg=202 guibg=NONE ctermbg=NONE gui=bold cterm=bold
 highlight Constant guifg=#78a67d ctermfg=108 guibg=NONE ctermbg=NONE gui=bold cterm=bold
 " highlight Constant guifg=#87afdf ctermfg=110 guibg=NONE ctermbg=NONE gui=bold cterm=bold
+highlight Conceal guifg=#606060 ctermfg=240 guibg=NONE ctermbg=NONE
 highlight Directory guifg=#ffaf87 ctermfg=216 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight EndOfBuffer guifg=#262626 ctermfg=235 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight Identifier guifg=#ffaf87 ctermfg=216 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
