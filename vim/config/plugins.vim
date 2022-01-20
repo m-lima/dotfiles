@@ -236,7 +236,7 @@ augroup END
 " let g:gitgutter_enabled = 0
 
 """ Vim-rooter
-let g:rooter_patterns = ['.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'build.gradle', 'CMakeLists.txt']
+let g:rooter_patterns = ['.vim/', '.git/', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'build.gradle', 'CMakeLists.txt']
 
 """ Fzf
 " Grep current directory
