@@ -61,6 +61,7 @@ noremap <silent> ]t gt
 noremap <silent> [t gT
 
 " Close buffer
+" TODO: This is broken (when using NERDTree at least)
 noremap <silent> []b :bwipe<CR>
 noremap <silent> ][b :bwipe<CR>
 noremap <silent> ]db :bn<CR>:bd #<CR>
