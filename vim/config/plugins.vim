@@ -349,10 +349,6 @@ if has('node')
     autocmd CursorHold * silent call CocActionAsync('highlight')
   augroup end
 
-  " Action
-  nmap <silent><nowait> <leader>a <Plug>(coc-codeaction-cursor)
-  nmap <silent><nowait> <leader>r <Plug>(coc-codelens-action)
-
   " Definition
   nmap     <silent> gd         <Plug>(coc-definition)
   nnoremap <silent> gD         :<C-u>call <SID>show_documentation()<CR>
@@ -361,6 +357,10 @@ if has('node')
   nnoremap <silent> <leader>cd :<C-u>CocCommand fzf-preview.CocDiagnostics<CR>
   nmap     <silent> <leader>cn <Plug>(coc-rename)
   nmap     <silent> <leader>cr <Plug>(coc-refactor)
+
+  " Action
+  nmap <silent><nowait> <leader>ca <Plug>(coc-codeaction-cursor)
+  nmap <silent><nowait> <leader>cr <Plug>(coc-codelens-action)
 
   " Error
   nmap [e <Plug>(coc-diagnostic-prev-error)
