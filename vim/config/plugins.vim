@@ -166,7 +166,7 @@ if !exists('g:gui_oni')
   let g:airline#extensions#tabline#enabled = 1
   let g:airline#extensions#tabline#formatter = 'unique_tail'
   let g:airline#extensions#tabline#show_tabs = 0
-  let g:airline#extensions#tabline#ignore_bufadd_pat = '!|defx|gundo|nerd_tree|startify|tagbar|term://|undotree|vimfiler|vimspector'
+  let g:airline#extensions#tabline#ignore_bufadd_pat = '!|defx|gundo|nerd_tree|startify|tagbar|term://|undotree|vimfiler'
   set laststatus=2
 else
   set noruler
@@ -214,11 +214,11 @@ augroup pluginsNERDTree
 augroup END
 
 """ Fugitive
-nnoremap <Leader>b :Git blame<CR>
+nnoremap <silent> <Leader>gb :Git blame<CR>
 
 """ GitGutter
 let g:gitgutter_map_keys = 0 " Disable default mappings
-nnoremap <silent> <Leader>g  :GitGutterToggle<CR>
+nnoremap <silent> <Leader>gg :GitGutterToggle<CR>
 nnoremap <silent> <Leader>gs :GitGutterStageHunk<CR>
 nnoremap <silent> <Leader>gu :GitGutterUndoHunk<CR>
 nnoremap <silent> <Leader>gp :GitGutterPreviewHunk<CR>
@@ -248,7 +248,8 @@ if has('node')
   " TODO: More git actions
   " TODO: Highlight matched text in line and in preview
   " TODO: Show processing, e.g. coc-references, in the statusline
-  " TODO: Allow calling the preview without having to rewrite it
+  " TODO: Allow calling the preview without having to rewrite it (just reopen)
+  " TODO: Diagnostics preview currently broken (fork/exec /bin/zsh: invalid argument)
   nnoremap <silent> <leader>mp     :<C-u>CocCommand fzf-preview.FromResources project_mru git<CR>
   nnoremap <silent> <leader>mf     :<C-u>CocCommand fzf-preview.DirectoryFiles<CR>
   nnoremap <silent> <leader>mb     :<C-u>CocCommand fzf-preview.Buffers<CR>
@@ -351,10 +352,10 @@ if has('node')
 
   " Definition
   nmap     <silent> gd         <Plug>(coc-definition)
-  nnoremap <silent> gD         :<C-u>call <SID>show_documentation()<CR>
-  nnoremap <silent> <leader>cc :<C-u>CocCommand fzf-preview.CocReferences<CR>
-  nnoremap <silent> <leader>ci :<C-u>CocCommand fzf-preview.CocImplementations<CR>
-  nnoremap <silent> <leader>cd :<C-u>CocCommand fzf-preview.CocDiagnostics<CR>
+  nnoremap <silent> ge         :<C-u>CocCommand fzf-preview.CocReferences<CR>
+  nnoremap <silent> gi         :<C-u>CocCommand fzf-preview.CocImplementations<CR>
+  nnoremap <silent> <leader>cd :<C-u>call <SID>show_documentation()<CR>
+  nnoremap <silent> <leader>ce :<C-u>CocCommand fzf-preview.CocDiagnostics<CR>
   nmap     <silent> <leader>cn <Plug>(coc-rename)
   nmap     <silent> <leader>cr <Plug>(coc-refactor)
 
@@ -378,6 +379,46 @@ if has('node')
   highlight link CocErrorSign DiffDelete
   highlight link CocWarningSign DiffChange
   highlight CocHighlightText ctermfg=255 guifg=#ffffff
+
+  " TODO: FzfPreviewCoc does not show loading at the bottom, neither it is cancelabe.. This does it with caveats such as ESC not working and repeated lines
+  " " Attach to CocLocations
+  " augroup pluginCocLocation
+  "   autocmd!
+  "   let g:coc_enable_locationlist = 0
+  "   autocmd User CocLocationsChange call s:coc_fzf_set_locations()
+  " augroup END
+
+  " function! s:coc_fzf_set_locations() abort
+  "   " Todo ESC is not working
+  "   let locations = deepcopy(get(g:, 'coc_jump_locations', ''))
+  "   call setloclist(0, locations)
+  "   FzfPreviewLocationList --add-fzf-arg=--prompt="Coc> "
+  " endfunction
+
+  " function! s:format_coc_diagnostic(item) abort
+  "   if has_key(a:item, 'file')
+  "     let filename = substitute(a:item.file, getcwd() . "/" , "", "")
+  "     let text = substitute(a:item.message, "\n", " ", "g")
+  "     let type = get({'Error': 'E', 'Warning': 'W', 'Information': 'I', 'Hint': 'H'}, a:item.severity, '')
+  "     " let hl = get({'Error': 'cocerrorsign', 'Warning': 'cocwarningsign',
+  "     "       \ 'Information': 'cocinfosign', 'Hint': 'cochintsign'}, a:item.severity, '')
+  "     return { 'filename': filename, 'lnum': a:item.lnum, 'col': a:item.col, 'text': text, 'nr': a:item.code, 'type': type }
+  "     " return coc_fzf#common_fzf_vim#green(printf("%s:%s:%s ",
+  "     "       \ file, a:item.lnum, a:item.col), 'Comment') .
+  "     "       \ coc_fzf#common_fzf_vim#red(a:item.severity, hl) . ' ' .
+  "     "       \ msg
+  "   endif
+  "   return ''
+  " endfunction
+
+  " function! s:coc_fzf_set_diagnostics() abort
+  "   let diagnostics = map(CocAction('diagnosticList'), 's:format_coc_diagnostic(v:val)')
+  "   if !empty(diagnostics)
+  "     " cgetexpr diagnostics
+  "     call setqflist(diagnostics)
+  "     FzfPreviewQuickFix --add-fzf-arg=--prompt="Diagnostics> "
+  "   endif
+  " endfunction
 
   """ VimInspector
   nmap <F2> <Plug>VimspectorLaunch

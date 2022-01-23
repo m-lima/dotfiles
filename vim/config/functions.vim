@@ -15,22 +15,32 @@ endfunction
 com! DiffSaved call s:DiffWithSaved()
 
 """ Show extended lines
-function! HighlightColumn()
-  if g:HighlightingColumn
-    let g:HighlightingColumn = 0
+function! s:highlightColumn(...) abort
+  if s:highlightingColumn && !a:0
+    let s:highlightingColumn = 0
     match OverLength //
+    echo 'Column overlength highlight: off'
   else
-    let g:HighlightingColumn = 1
-    match OverLength /\%101v.\+/
+    let s:highlightingColumn = 1
+    if !exists('w:highlightColumnWidth')
+      let w:highlightColumnWidth = 100
+    endif
+    if a:0
+      let w:highlightColumnWidth = g:highlightColumnWidth + a:1
+    endif
+    execute 'match OverLength /\%' . (g:highlightColumnWidth + 1). 'v.\+/'
+    echo 'Column overlength highlight: ' . g:highlightColumnWidth
   endif
 endfunction
 
 " Prepare the coloring
 highlight OverLength ctermbg=darkred guibg=#A00000
-let g:HighlightingColumn=0
 
 " Map to a short hand
-nnoremap <Leader>c :call HighlightColumn()<CR>
+nnoremap <silent> <Leader>ww :call <SID>highlightColumn()<CR>
+nnoremap <silent> <Leader>wq :call <SID>highlightColumn(-10)<CR>
+nnoremap <silent> <Leader>we :call <SID>highlightColumn(+10)<CR>
+let s:highlightingColumn = 0
 
 " Show current highlight rules for cursor
 function! SynStack ()
