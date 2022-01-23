@@ -19,7 +19,11 @@ set hlsearch
 
 " Persistent undo
 set undofile
-set undodir=~/tmp/vim_undo
+if has('nvim')
+  set undodir=~/tmp/nvim_undo
+else
+  set undodir=~/tmp/vim_undo
+endif
 
 " More sensible splitting
 set splitright
