@@ -629,7 +629,7 @@ checkInstall "Bat" "${PACKAGE_INSTALL} bat" '[ $(command -v "bat") ] || [ $(comm
 
 ########################################
 # Install delta
-[ "${SYS_TYPE}" = "Ubuntu"] || checkInstall "Delta" "${PACKAGE_INSTALL} git-delta" '[ $(command -v "delta") ]'
+[ "${SYS_TYPE}" = "Ubuntu" ] || checkInstall "Delta" "${PACKAGE_INSTALL} git-delta" '[ $(command -v "delta") ]'
 
 ########################################
 # Install fzf
@@ -775,11 +775,10 @@ then
   if [ ! -d "${HOME}/code/python/env/vim" ] || [ -z ${NO_OVERWRITE} ]
   then
     echo "[34mInstalling vim pyenv..[m"
-    echo -n "Create pyenv for vim? [Y/n] "
+    echo -n "Create pyenv for vim? [y/N] "
     read input
     case ${input} in
-      [Nn] ) ;;
-      * )
+      [Yy] )
         python3 -m venv "${HOME}/code/python/env/vim"
         source "${HOME}/code/python/env/vim/bin/activate"
         pip3 install pynvim
