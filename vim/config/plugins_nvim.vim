@@ -24,26 +24,25 @@ endif
 
 call plug#begin()
 
-""" Visual
-if !exists('g:gui_oni')
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
-endif
-
 """ Dependencies
 Plug 'kana/vim-textobj-user' " Dependency for text objects
 Plug 'tpope/vim-repeat' " Depenency for vim-scripts/ReplaceWithRegister
+Plug 'ryanoasis/vim-devicons'
+
+""" Visual
+Plug 'nvim-lualine/lualine.nvim' " TODO: Double check
 
 """ Util
-Plug 'preservim/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeToggle', 'NERDTreeFind' ] }
-Plug 'xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeToggle', 'NERDTreeFind' ] }
+Plug 'kyazdani42/nvim-tree.lua' " TODO: Configure, LazyLoad
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'airblade/vim-rooter'
-Plug 'ryanoasis/vim-devicons'
+Plug 'airblade/vim-rooter' " Broke nvim-tree
 Plug 'aserebryakov/vim-todo-lists'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'unblevable/quick-scope'
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' } " TODO: Configure
+" Plug 'ygm2/rooter.nvim' " TODO: Kinda broken
+" Add session manaher
 
 " Verbs
 Plug 'tpope/vim-surround'              " s
@@ -57,90 +56,25 @@ Plug 'glts/vim-textobj-comment'        " c
 
 """ Languages
 
-" Simple syntax highlight for TOML
-Plug 'cespare/vim-toml', { 'for': 'toml' }
-
 " QML has no LSP
 Plug 'peterhoeg/vim-qml', { 'for': 'qml' }
 
-if has('node')
+" LSP
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
-  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-  Plug 'puremourning/vimspector', { 'on': [ '<Plug>VimspectorLaunch', '<Plug>VimspectorToggleBreakpoint' ] }
-
-else
-
-  " Regular fzf
-  Plug 'junegunn/fzf.vim'
-
-  " Go
-  if exists('s:go')
-    " Language server
-    Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
-  endif
-
-  " JS stuff
-  if exists('s:npm')
-    " Javascript highlight
-    Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-
-    " Typescript highlight
-    Plug 'HerringtonDarkholme/yats.vim', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ] }
-
-    " Language server
-    if has('nvim')
-      Plug 'mhartington/nvim-typescript', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ], 'do': './install.sh' }
-    else
-      Plug 'shougo/vimproc.vim', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ], 'do': 'make' }
-      Plug 'quramy/tsuquyomi', { 'for': [ 'typescript', 'typescriptreact', 'typescript.tsx' ] }
-    endif
-  endif
-
-  " Rust
-  if exists('s:rust')
-    " Rust commands
-    Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-
-    if s:rust > 1
-      " Language server
-      Plug 'racer-rust/vim-racer', { 'for': 'rust' }
-    endif
-  endif
-
-  " Nginx
-  Plug 'vim-scripts/nginx.vim'
-
-  """ Language helpers
-
-  " Lint
-  if has('nvim')
-    Plug 'neomake/neomake'
-  else
-    Plug 'vim-syntastic/syntastic'
-  endif
-
-  " Completion
-  if has('nvim')
-    if has('python3')
-      Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-      if exists('s:clang')
-        Plug 'zchee/deoplete-clang', { 'for': ['cpp', 'c'] }
-      endif
-    endif
-  else
-    if has('lua')
-      Plug 'Quramy/tsuquyomi', { 'for': 'typescript', 'do': 'make' }
-      Plug 'shougo/neocomplete'
-    endif
-  endif
-endif
+" Debugging
+Plug 'puremourning/vimspector', { 'on': [ '<Plug>VimspectorLaunch', '<Plug>VimspectorToggleBreakpoint' ] }
 
 call plug#end()
 
 """"""""""""""""""""
 " Plugins config
 """"""""""""""""""""
+
+lua require('config.nvim-treesitter')
+lua require('config.nvim-tree')
+lua require('config.lualine')
+" lua require('config.rooter')
 
 """ Vim-go
 let g:go_fmt_fail_silently = 1
@@ -156,61 +90,6 @@ augroup pluginsVimComentary
   " Custom comment strings
   autocmd FileType cmake setlocal commentstring=#\ %s
   autocmd FileType cpp,hpp,c,h,cc,hh,cl,tf,zig setlocal commentstring=//\ %s
-  autocmd FileType toml setlocal commentstring=#\ %s
-augroup END
-
-""" Vim-airline
-if !exists('g:gui_oni')
-  let g:airline_powerline_fonts = 1
-  let g:airline_theme='deus'
-  let g:airline#extensions#tabline#enabled = 1
-  let g:airline#extensions#tabline#formatter = 'unique_tail'
-  let g:airline#extensions#tabline#show_tabs = 0
-  let g:airline#extensions#tabline#ignore_bufadd_pat = '!|defx|gundo|nerd_tree|startify|tagbar|term://|undotree|vimfiler'
-  set laststatus=2
-else
-  set noruler
-  set laststatus=0
-  set noshowcmd
-endif
-
-""" NerdTree
-let g:NERDTreeDirArrowExpandable = ''
-let g:NERDTreeDirArrowCollapsible = ''
-
-function! s:toggle_nerdtree()
-  if (exists('g:NERDTree') && g:NERDTree.IsOpen()) || !(&modifiable && !&diff && strlen(expand('%')) > 0 && bufname('%') !~ 'NERD_tree_\d\+')
-    NERDTreeToggle
-  else
-    NERDTreeFind
-  endif
-endfunction
-
-nnoremap <silent> <Leader>n :call <SID>toggle_nerdtree()<CR>
-let NERDTreeMinimalUI=1
-
-augroup pluginsNERDTree
-  autocmd!
-
-  " Quit if only NERDTree is left
-  autocmd BufEnter * if (winnr("$") == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
-
-  " If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
-  autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
-      \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
-
-  " " Sync NERDTree across tabs
-  " autocmd BufWinEnter * if exists('g:NERDTree') | silent NERDTreeMirror | endif
-
-  " Sync NERDTree with current buffer
-  " [wincmd p] is equivalent to <C-w>p
-  autocmd BufEnter * if &modifiable
-        \ && !&diff
-        \ && exists('g:NERDTree')
-        \ && NERDTree.IsOpen()
-        \ && strlen(expand('%')) > 0
-        \ && bufname('%') !~ 'NERD_tree_\d\+'
-        \ | NERDTreeFind | NERDTreeCWD | wincmd p | endif
 augroup END
 
 """ Fugitive
@@ -356,6 +235,7 @@ if has('node')
   nnoremap <silent> gi         :<C-u>CocCommand fzf-preview.CocImplementations<CR>
   nnoremap <silent> <leader>cd :<C-u>call <SID>show_documentation()<CR>
   nnoremap <silent> <leader>ce :<C-u>CocCommand fzf-preview.CocDiagnostics<CR>
+  nnoremap <silent> <leader>co :<C-u>CocCommand fzf-preview.CocOutline<CR>
   nmap     <silent> <leader>cn <Plug>(coc-rename)
   nmap     <silent> <leader>cr <Plug>(coc-refactor)
 

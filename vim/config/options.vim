@@ -30,8 +30,7 @@ set splitright
 set splitbelow
 
 " Leader mapping
-let mapleader = ","
-let g:mapleader = ","
+let g:mapleader = ' '
 
 " Mouse support
 set mouse=a
