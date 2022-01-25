@@ -10,8 +10,7 @@ require('lualine').setup({
       'diff',
       {
         'diagnostics',
-        -- TODO: When coc replaced:
-        -- sources = { 'nvim_diagnostics' },
+        sources = { 'nvim_lsp' },
         diagnostics_color = {
           error = {
             fg = '#df5f5f',
@@ -29,11 +28,13 @@ require('lualine').setup({
           readonly = ' ',
         },
       },
-      'g:coc_status',
-      -- TODO: When coc replaced:
-      -- require'lsp-status'.status()
+      {
+        'lsp_progress',
+        display_components = {{ 'title', 'percentage', 'message' }},
+      },
     },
-    lualine_x = {'filetype'},
+    lualine_x = { 'filetype' },
+    lualine_y = {},
   },
   inactive_sections = {
     lualine_c = {

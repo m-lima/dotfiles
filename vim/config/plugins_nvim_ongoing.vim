@@ -31,7 +31,10 @@ Plug 'nvim-lua/plenary.nvim'           " Dependency for:
 Plug 'kyazdani42/nvim-web-devicons'    " Dependency for:
                                        "  - telescope.nvim
                                        "  - nvim-tree.lua
-                                       "  - lualina.nvim
+                                       "  - lualine.nvim
+Plug 'arkav/lualine-lsp-progress'      " Depency for:
+                                       "  - lualine.nvim
+
 " Verbs
 Plug 'tpope/vim-surround'              " s
 Plug 'tpope/vim-commentary'            " gc
@@ -49,13 +52,27 @@ Plug 'nvim-lualine/lualine.nvim' " TODO: Double check
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
-" Util
+" Navigation
 Plug 'nvim-telescope/telescope.nvim' " TODO: Configure
 Plug 'kyazdani42/nvim-tree.lua' " TODO: Configure
+
+" Telescope extensions
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " LSP
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' } " TODO: Configure
 Plug 'neovim/nvim-lspconfig' " TODO: Configure
+Plug 'williamboman/nvim-lsp-installer' " TODO: Configure
+
+" Misc
+Plug 'unblevable/quick-scope'
+Plug 'aserebryakov/vim-todo-lists'
+
+" Trash
+" Plug 'nvim-lua/lsp-status.nvim'        " Depency for:
+"                                        "  - lualine.nvim
+" Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+" Plug 'fannheyward/telescope-coc.nvim' " Telescope coc
 
 call plug#end()
 
@@ -65,15 +82,22 @@ call plug#end()
 " Plug 'hrsh7th/cmp-buffer'
 " Plug 'hrsh7th/cmp-path'
 " Plug 'hrsh7th/cmp-cmdline'
-" Plug 'rmagatti/auto-session'
+" Plug 'rmagatti/auto-session' " Session management
 " vim-rooter does not like nvim-tree, apparently
-" Plug 'ygm2/rooter.nvim'
-" Plug 'ahmedkhalf/project.nvim'
+" Plug 'ygm2/rooter.nvim' " Rooter
+" Plug 'ahmedkhalf/project.nvim' " Rooter
+" Plug 'mfussenegger/nvim-dap' " Debugger
+" Plug 'simrat39/rust-tools.nvim' " Extras for rust-analyzer " TODO: Configure
+" Plug 'glepnir/lspsaga.nvim' " Extra UI functionilty for LSP
 
 lua require('config.nvim-treesitter')
 lua require('config.nvim-tree')
 lua require('config.lualine')
-" lua require('config.nvim-lspconfig')
+lua require('config.telescope')
+" lua require('config.lsp-status')
+lua require('config.nvim-lspconfig')
+lua require('config.nvim-lsp-installer')
+" lua require('rust-tools').setup({})
 
 """ Fugitive
 nnoremap <silent> <Leader>gb :Git blame<CR>
@@ -88,3 +112,29 @@ nnoremap <silent> <Leader>gl :GitGutterQuickFix<CR>:copen<CR>
 nnoremap <silent> <Leader>gf :GitGutterFold<CR>
 nnoremap <silent> ]g         :GitGutterNextHunk<CR>
 nnoremap <silent> [g         :GitGutterPrevHunk<CR>
+
+""" Quick-scope
+let g:qs_highlight_on_keys = ['f', 'F']
+highlight link QuickScopePrimary Visual
+highlight link QuickScopeSecondary Search
+
+
+""" Current main gripes
+" Telescope: buffer ordering (sometimes the current buffer is selected, preferably, the # should be selected)
+" Lualine: modified file is not easy to notice
+" Lsp: codelens is called at the bottom (maybe custom 'nvim-lua/popup.nvim')
+" Lsp: when typing in parameters, the documentation or param list should appear
+" Telescope: start a search from Ex
+" Telescope: change layout depending on screen size (maybe use autocmd)
+" Telescope: change layout size based on results
+" Lualine: status spinner not working
+" Lsp: highlight usages
+" Lsp: rust-analyzer doesn't respect cargo.toml on parent directory
+" Lsp: rust-analyzer complains that it hasn't completed (maybe because of autocmd)
+
+""" Missing from before
+" Telescope: recent files when opening project (maybe 'nvim-telescope/telescope-frecency.nvim')
+" Telescope: equivalent for '/'
+
+""" Wishes
+" Lualine: Reduce the 'MODE' to a small bar
