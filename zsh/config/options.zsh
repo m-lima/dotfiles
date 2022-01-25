@@ -1,6 +1,12 @@
 # Preferred editor for local and remote sessions
-export EDITOR='vim'
-export VISUAL='vim'
+if [ `command -v nvim 2> /dev/null` ]
+then
+  export EDITOR='nvim'
+  export VISUAL='nvim'
+else
+  export EDITOR='vim'
+  export VISUAL='vim'
+fi
 export PAGER='less'
 export LESS='-F -g -i -M -R -S -w -X -z-4'
 
