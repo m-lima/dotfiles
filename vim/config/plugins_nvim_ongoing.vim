@@ -98,6 +98,9 @@ EOF
 " Plug 'simrat39/rust-tools.nvim' " Extras for rust-analyzer " TODO: Configure
 " Plug 'glepnir/lspsaga.nvim' " Extra UI functionilty for LSP
 
+""" TODO
+" Maybe need to move the whole folder from `fd cg` to `/.config/nvim` so that the rtp is correct
+"
 """ Current main gripes
 " Telescope: buffer ordering (sometimes the current buffer is selected, preferably, the # should be selected)
 " Lualine: modified file is not easy to notice
