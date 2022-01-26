@@ -5,7 +5,6 @@
 call plug#begin()
 
 """ Dependencies
-Plug 'kana/vim-textobj-user'           " Dependency for text objects
 Plug 'tpope/vim-repeat'                " Depenency for vim-scripts/ReplaceWithRegister
 Plug 'nvim-lua/plenary.nvim'           " Dependency for:
                                        "  - telescope.nvim
@@ -22,9 +21,7 @@ Plug 'numToStr/Comment.nvim'           " gc
 Plug 'vim-scripts/ReplaceWithRegister' " gr
 
 " Text objects
-Plug 'kana/vim-textobj-indent'         " i
-Plug 'kana/vim-textobj-entire'         " e
-Plug 'glts/vim-textobj-comment'        " c
+Plug 'nvim-treesitter/nvim-treesitter-textobjects' " TODO: Completely not configured
 
 " Rice
 Plug 'nvim-lualine/lualine.nvim' " TODO: Double check
@@ -86,6 +83,7 @@ EOF
 " Plug 'fannheyward/telescope-coc.nvim' " Telescope coc
 
 """ To check
+" Great reference: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
 "
 "" Completion
 " "" Raw

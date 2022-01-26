@@ -25,7 +25,6 @@ endif
 call plug#begin()
 
 """ Dependencies
-Plug 'kana/vim-textobj-user' " Dependency for text objects
 Plug 'tpope/vim-repeat' " Depenency for vim-scripts/ReplaceWithRegister
 Plug 'ryanoasis/vim-devicons'
 
@@ -51,9 +50,7 @@ Plug 'numToStr/Comment.nvim'           " gc
 Plug 'vim-scripts/ReplaceWithRegister' " gr
 
 " Text objects
-Plug 'kana/vim-textobj-indent'         " i
-Plug 'kana/vim-textobj-entire'         " e
-Plug 'glts/vim-textobj-comment'        " c
+Plug 'nvim-treesitter/nvim-treesitter-textobjects' " TODO: Completely not configured
 
 """ Languages
 
