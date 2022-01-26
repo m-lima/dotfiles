@@ -68,6 +68,9 @@ else
   fi
 fi
 
+### Netstat for macos
+[[ "$(uname)" == "Darwin" ]] && alias netst='lsof -nP -iTCP -sTCP:LISTEN'
+
 ### Pyenv
 function penv {
   base="${HOME}/code/python/env"
