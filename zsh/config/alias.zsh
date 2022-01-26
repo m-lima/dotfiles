@@ -30,6 +30,7 @@ pw() {
 
 ### Git stuff
 alias gsu='git submodule update --init --recursive'
+alias gsur='git submodule update --init --recursive --remote'
 alias gpp='git push --set-upstream origin ${$(git symbolic-ref HEAD)/refs\/heads\//}'
 alias gppf='git push --set-upstream origin +${$(git symbolic-ref HEAD)/refs\/heads\//}'
 alias ghelp='cat ~/.oh-my-zsh/plugins/git/git.plugin.zsh'
