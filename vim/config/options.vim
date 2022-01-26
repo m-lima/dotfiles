@@ -94,3 +94,9 @@ endif
 
 " Allow stepping away from buffer without saving
 set hidden
+
+" Flash yanked text
+augroup yankHighlight
+  autocmd!
+  autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+augroup end
