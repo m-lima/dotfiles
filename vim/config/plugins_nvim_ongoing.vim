@@ -18,7 +18,7 @@ Plug 'arkav/lualine-lsp-progress'      " Depency for:
 
 " Verbs
 Plug 'tpope/vim-surround'              " s
-Plug 'tpope/vim-commentary'            " gc
+Plug 'numToStr/Comment.nvim'           " gc
 Plug 'vim-scripts/ReplaceWithRegister' " gr
 
 " Text objects
@@ -57,6 +57,7 @@ call plug#end()
 """"""""""""""""""""
 
 lua <<EOF
+require('config.comment')
 require('config.gitgutter')
 require('config.lualine')
 require('config.nvim-lsp-installer')
@@ -85,30 +86,52 @@ EOF
 " Plug 'fannheyward/telescope-coc.nvim' " Telescope coc
 
 """ To check
+"
+"" Completion
+" "" Raw
+" Raw with omni (lua vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc'))
+"   Check `:h ins-completion`
+" mucomplete
+" "" Plugin
 " Plug 'hrsh7th/nvim-cmp' " TODO: Configure
 " Plug 'hrsh7th/cmp-nvim-lsp'
 " Plug 'hrsh7th/cmp-buffer'
 " Plug 'hrsh7th/cmp-path'
 " Plug 'hrsh7th/cmp-cmdline'
+"
+"" Session
+" Plug 'skanehira/vsession'
 " Plug 'rmagatti/auto-session' " Session management
-" vim-rooter does not like nvim-tree, apparently
+"
+"" Rooter
 " Plug 'ygm2/rooter.nvim' " Rooter
 " Plug 'ahmedkhalf/project.nvim' " Rooter
+" vim-rooter does not like nvim-tree, apparently
+" With CoC: https://github.com/iamcco/coc-project
+"
+"" LSP
 " Plug 'mfussenegger/nvim-dap' " Debugger
 " Plug 'simrat39/rust-tools.nvim' " Extras for rust-analyzer " TODO: Configure
 " Plug 'glepnir/lspsaga.nvim' " Extra UI functionilty for LSP
+" "" Rust
+" https://github.com/Saecki/crates.nvim
+"
+"" Util
+" Github integration to jump to PRs?
 
 """ TODO
 " Maybe need to move the whole folder from `fd cg` to `/.config/nvim` so that the rtp is correct
 "
 """ Current main gripes
 " Telescope: buffer ordering (sometimes the current buffer is selected, preferably, the # should be selected)
-" Lualine: modified file is not easy to notice
+" !! Lualine: modified file is not easy to notice
+" Lualine: current active is hard to notice
 " Lsp: codelens is called at the bottom (maybe custom 'nvim-lua/popup.nvim')
 " Lsp: when typing in parameters, the documentation or param list should appear
 " Telescope: start a search from Ex
 " Telescope: change layout depending on screen size (maybe use autocmd)
 " Telescope: change layout size based on results
+" !! Rooter: Sooooo finnicky!
 " Lualine: status spinner not working
 " Lsp: highlight usages
 " Lsp: rust-analyzer doesn't respect cargo.toml on parent directory
@@ -116,6 +139,7 @@ EOF
 " NvimTree: sometimes it breaks with CWD. Not sure how to replicate
 " NvimTree: problem when deleting an open buffer
 " NvimTree: keeps multiple lines selected when open and update_cwd
+" Telesope: CocOutline
 
 """ Missing from before
 " Telescope: recent files when opening project (maybe 'nvim-telescope/telescope-frecency.nvim')
@@ -124,3 +148,4 @@ EOF
 """ Wishes
 " Lualine: Reduce the 'MODE' to a small bar
 " Write a plugin to simulate `CMD + UP`
+" Write a plugin for session management

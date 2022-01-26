@@ -43,6 +43,7 @@ set relativenumber
 exec "set listchars=tab:\uB7\uA0,trail:\uAB,nbsp:\u268B"
 set list
 
+" TODO: Doesn't seem to be working
 " Do not add comment when using 'o'
 autocmd FileType * setlocal formatoptions-=o
 

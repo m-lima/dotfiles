@@ -1,5 +1,5 @@
 ---- Fugitive
-vim.api.nvim_set_keymap('n', '<leader>gb', '<cmd>Git blame<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gb', '<cmd>Git blame --date short<CR>', { noremap = true, silent = true })
 
 ---- GitGutter
 vim.api.nvim_set_keymap('n', '<leader>gg', '<cmd>GitGutterToggle<CR>', { noremap = true, silent = true })

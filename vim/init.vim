@@ -6,7 +6,7 @@ source ~/.config/m-lima/vim/coloring.vim
 
 " Plugins
 if has('nvim')
-  source ~/.config/m-lima/vim/plugins_nvim_ongoing.vim
+  source ~/.config/m-lima/vim/plugins_nvim.vim
 else
   source ~/.config/m-lima/vim/plugins_vim.vim
 endif

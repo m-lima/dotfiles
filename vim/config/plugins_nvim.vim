@@ -41,12 +41,13 @@ Plug 'aserebryakov/vim-todo-lists'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'unblevable/quick-scope'
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' } " TODO: Configure
+Plug 'skanehira/vsession'
 " Plug 'ygm2/rooter.nvim' " TODO: Kinda broken
 " Add session manaher
 
 " Verbs
 Plug 'tpope/vim-surround'              " s
-Plug 'tpope/vim-commentary'            " gc
+Plug 'numToStr/Comment.nvim'           " gc
 Plug 'vim-scripts/ReplaceWithRegister' " gr
 
 " Text objects
@@ -71,11 +72,12 @@ call plug#end()
 " Plugins config
 """"""""""""""""""""
 lua <<EOF
+require('config.comment')
 require('config.gitgutter')
-require('config.transition.lualine')
 require('config.nvim-tree')
 require('config.nvim-treesitter')
 require('config.quick-scope')
+require('config.transition.lualine')
 EOF
 
 """"""""""""""""""""
@@ -92,7 +94,10 @@ EOF
 """"""""""""""""""""
 
 """ Vim-rooter
-let g:rooter_patterns = ['.vim/', '.git/', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'build.gradle', 'CMakeLists.txt']
+let g:rooter_patterns = ['.vim/', '.git/', '_darcs', '.hg', '.bzr', '.svn', 'Cargo.toml', 'Makefile', 'build.gradle', 'CMakeLists.txt']
+
+""" Vsession
+let g:vsession_ui = 'fzf'
 
 """ Fzf-Preview
 " TODO: Use Delta
@@ -178,6 +183,7 @@ augroup end
 nmap     <silent> gd                <Plug>(coc-definition)
 nnoremap <silent> ge                :<C-u>CocCommand fzf-preview.CocReferences<CR>
 nnoremap <silent> gi                :<C-u>CocCommand fzf-preview.CocImplementations<CR>
+nnoremap <silent> gI                :<C-u>CocCommand fzf-preview.CocTypeDefinition<CR>
 nnoremap <silent> <leader>d        :<C-u>call <SID>show_documentation()<CR>
 nnoremap <silent> <leader>e        :<C-u>CocCommand fzf-preview.CocDiagnostics<CR>
 nnoremap <silent> <leader>s        :<C-u>CocCommand fzf-preview.CocOutline<CR>
