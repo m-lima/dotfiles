@@ -1,14 +1,23 @@
----- Fugitive
-vim.api.nvim_set_keymap('n', '<leader>gb', '<cmd>Git blame --date short<CR>', { noremap = true, silent = true })
+---- GitSigns
+-- Navigation
+vim.api.nvim_set_keymap('n', ']g', "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", { noremap = true, silent = true, expr = true })
+vim.api.nvim_set_keymap('n', '[g', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", { noremap = true, silent = true, expr = true })
 
----- GitGutter
-vim.api.nvim_set_keymap('n', '<leader>gg', '<cmd>GitGutterToggle<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>gg', '<cmd>GitGutterToggle<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>gg', '<cmd>GitGutterToggle<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>gs', '<cmd>GitGutterStageHunk<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>gu', '<cmd>GitGutterUndoHunk<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>gp', '<cmd>GitGutterPreviewHunk<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>gl', '<cmd>GitGutterQuickFix<CR>:copen<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>gf', '<cmd>GitGutterFold<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', ']g',         '<cmd>GitGutterNextHunk<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '[g',         '<cmd>GitGutterPrevHunk<CR>', { noremap = true, silent = true })
+-- Actions
+vim.api.nvim_set_keymap('n', '<leader>gs', '<cmd>Gitsigns stage_hunk<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>gs', '<cmd>Gitsigns stage_hunk<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gr', '<cmd>Gitsigns reset_hunk<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>gr', '<cmd>Gitsigns reset_hunk<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gS', '<cmd>Gitsigns stage_buffer<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gu', '<cmd>Gitsigns undo_stage_hunk<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gR', '<cmd>Gitsigns reset_buffer<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gp', '<cmd>Gitsigns preview_hunk<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gb', '<cmd>lua require"gitsigns".blame_line{full=true}<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader><leader>gb', '<cmd>Gitsigns toggle_current_line_blame<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gd', '<cmd>Gitsigns diffthis<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gD', '<cmd>lua require"gitsigns".diffthis("~")<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader><leader>gd', '<cmd>Gitsigns toggle_deleted<CR>', { noremap = true, silent = true })
+
+-- Text objects
+vim.api.nvim_set_keymap('o', 'ih', ':<C-U>Gitsigns select_hunk<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('x', 'ih', ':<C-U>Gitsigns select_hunk<CR>', { noremap = true, silent = true })

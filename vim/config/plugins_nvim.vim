@@ -27,6 +27,8 @@ call plug#begin()
 """ Dependencies
 Plug 'tpope/vim-repeat' " Depenency for vim-scripts/ReplaceWithRegister
 Plug 'ryanoasis/vim-devicons'
+Plug 'nvim-lua/plenary.nvim'           " Dependency for:
+                                       "  - gitsigns
 
 """ Visual
 Plug 'nvim-lualine/lualine.nvim' " TODO: Double check
@@ -34,7 +36,7 @@ Plug 'nvim-lualine/lualine.nvim' " TODO: Double check
 """ Util
 Plug 'kyazdani42/nvim-tree.lua' " TODO: Configure, LazyLoad
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+Plug 'lewis6991/gitsigns.nvim' " TODO: Configure this beauty!!!
 Plug 'airblade/vim-rooter' " Broke nvim-tree
 Plug 'aserebryakov/vim-todo-lists'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -70,7 +72,7 @@ call plug#end()
 """"""""""""""""""""
 lua <<EOF
 require('config.comment')
-require('config.gitgutter')
+require('config.gitsigns')
 require('config.nvim-tree')
 require('config.nvim-treesitter')
 require('config.quick-scope')
@@ -82,7 +84,6 @@ EOF
 """"""""""""""""""""
 
 lua <<EOF
-require('mapping.git')
 require('mapping.rice')
 EOF
 

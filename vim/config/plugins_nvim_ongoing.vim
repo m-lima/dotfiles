@@ -8,6 +8,7 @@ call plug#begin()
 Plug 'tpope/vim-repeat'                " Depenency for vim-scripts/ReplaceWithRegister
 Plug 'nvim-lua/plenary.nvim'           " Dependency for:
                                        "  - telescope.nvim
+                                       "  - gitsigns
 Plug 'kyazdani42/nvim-web-devicons'    " Dependency for:
                                        "  - telescope.nvim
                                        "  - nvim-tree.lua
@@ -28,7 +29,7 @@ Plug 'nvim-lualine/lualine.nvim' " TODO: Double check
 
 " Git
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+Plug 'lewis6991/gitsigns.nvim' " TODO: Configure this beauty!!!
 
 " Navigation
 Plug 'nvim-telescope/telescope.nvim' " TODO: Configure
@@ -55,7 +56,7 @@ call plug#end()
 
 lua <<EOF
 require('config.comment')
-require('config.gitgutter')
+require('config.gitsigns')
 require('config.lualine')
 require('config.nvim-lsp-installer')
 require('config.nvim-tree')
