@@ -5,7 +5,7 @@
 call plug#begin()
 
 """ Dependencies
-Plug 'tpope/vim-repeat'                " Depenency for vim-scripts/ReplaceWithRegister
+Plug 'tpope/vim-repeat'                " Dependency for vim-scripts/ReplaceWithRegister
 Plug 'nvim-lua/plenary.nvim'           " Dependency for:
                                        "  - telescope.nvim
                                        "  - gitsigns
@@ -45,8 +45,9 @@ Plug 'neovim/nvim-lspconfig' " TODO: Configure
 Plug 'williamboman/nvim-lsp-installer' " TODO: Configure
 
 " Misc
-Plug 'unblevable/quick-scope'
-Plug 'aserebryakov/vim-todo-lists'
+Plug 'unblevable/quick-scope'        " Highlight on `f`
+Plug 'aserebryakov/vim-todo-lists'   " TODO md file helper
+Plug 'skanehira/vsession'            " Save/load sessions
 
 call plug#end()
 
@@ -146,6 +147,8 @@ EOF
 
 """ Wishes
 " Lualine: Reduce the 'MODE' to a small bar
+" Lualine: Show paste mode
+" Lualine: rewrite the location to show total lines (remove percentage)
 " Write a plugin to simulate `CMD + UP`
 " Write a plugin for session management
 " Write an extension to `completion` that searches within path selected on nvimtree

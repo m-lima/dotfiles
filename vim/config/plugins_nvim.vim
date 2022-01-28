@@ -25,26 +25,15 @@ endif
 call plug#begin()
 
 """ Dependencies
-Plug 'tpope/vim-repeat' " Depenency for vim-scripts/ReplaceWithRegister
-Plug 'ryanoasis/vim-devicons'
+Plug 'tpope/vim-repeat'                " Dependency for vim-scripts/ReplaceWithRegister
+""""" Transitional """""
+Plug 'ryanoasis/vim-devicons'          " Dependency for fzf
 Plug 'nvim-lua/plenary.nvim'           " Dependency for:
                                        "  - gitsigns
-
-""" Visual
-Plug 'nvim-lualine/lualine.nvim' " TODO: Double check
-
-""" Util
-Plug 'kyazdani42/nvim-tree.lua' " TODO: Configure, LazyLoad
-Plug 'tpope/vim-fugitive'
-Plug 'lewis6991/gitsigns.nvim' " TODO: Configure this beauty!!!
-Plug 'airblade/vim-rooter' " Broke nvim-tree
-Plug 'aserebryakov/vim-todo-lists'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'unblevable/quick-scope'
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' } " TODO: Configure
-Plug 'skanehira/vsession'
-" Plug 'ygm2/rooter.nvim' " TODO: Kinda broken
-" Add session manaher
+Plug 'kyazdani42/nvim-web-devicons'    " Dependency for:
+                                       "  - telescope.nvim
+                                       "  - nvim-tree.lua
+                                       "  - lualine.nvim
 
 " Verbs
 Plug 'tpope/vim-surround'              " s
@@ -54,16 +43,35 @@ Plug 'vim-scripts/ReplaceWithRegister' " gr
 " Text objects
 Plug 'nvim-treesitter/nvim-treesitter-textobjects' " TODO: Completely not configured
 
-""" Languages
+" Rice
+Plug 'nvim-lualine/lualine.nvim' " TODO: Double check
 
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'lewis6991/gitsigns.nvim' " TODO: Configure this beauty!!!
+
+""" Navigation
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'kyazdani42/nvim-tree.lua' " TODO: Configure, LazyLoad
+""""" Transitional """""
+Plug 'airblade/vim-rooter' " Broke nvim-tree 
+
+""" LSP
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' } " TODO: Configure
+""""" Transitional """""
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+""""" Transitional """""
 " QML has no LSP
 Plug 'peterhoeg/vim-qml', { 'for': 'qml' }
 
-" LSP
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-
-" Debugging
+""" Debugging
+""""" Transitional """""
 Plug 'puremourning/vimspector', { 'on': [ '<Plug>VimspectorLaunch', '<Plug>VimspectorToggleBreakpoint' ] }
+
+""" Misc
+Plug 'unblevable/quick-scope'
+Plug 'aserebryakov/vim-todo-lists'
+Plug 'skanehira/vsession'
 
 call plug#end()
 
@@ -104,22 +112,22 @@ let g:vsession_ui = 'fzf'
 " TODO: Show processing, e.g. coc-references, in the statusline
 " TODO: Allow calling the preview without having to rewrite it (just reopen)
 " TODO: Diagnostics preview currently broken (fork/exec /bin/zsh: invalid argument)
-nnoremap <silent> <leader>p     :<C-u>CocCommand fzf-preview.FromResources project_mru git<CR>
-nnoremap <silent> <leader>P     :<C-u>CocCommand fzf-preview.DirectoryFiles<CR>
-nnoremap <silent> <leader>b     :<C-u>CocCommand fzf-preview.Buffers<CR>
-nnoremap <silent> <leader>B     :<C-u>CocCommand fzf-preview.AllBuffers<CR>
-nnoremap <silent> <leader>o     :<C-u>CocCommand fzf-preview.FromResources buffer project_mru<CR>
+nnoremap <silent> <leader>p      :<C-u>CocCommand fzf-preview.FromResources project_mru git<CR>
+nnoremap <silent> <leader>P      :<C-u>CocCommand fzf-preview.DirectoryFiles<CR>
+nnoremap <silent> <leader>b      :<C-u>CocCommand fzf-preview.Buffers<CR>
+nnoremap <silent> <leader>B      :<C-u>CocCommand fzf-preview.AllBuffers<CR>
+nnoremap <silent> <leader>o      :<C-u>CocCommand fzf-preview.FromResources buffer project_mru<CR>
 
 nnoremap <silent> <leader>mgs    :<C-u>CocCommand fzf-preview.GitStatus<CR>
 nnoremap <silent> <leader>mga    :<C-u>CocCommand fzf-preview.GitActions<CR>
 nnoremap <silent> <leader>mg;    :<C-u>CocCommand fzf-preview.Changes<CR>
 
-nnoremap <silent> <leader>/     :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="'"<CR>
-nnoremap <silent> <leader>8     :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
-nnoremap          <leader>*     :<C-u>Rg <C-r>=expand('<cword>')<CR><CR>
+nnoremap <silent> <leader>/      :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="'"<CR>
+nnoremap <silent> <leader>8      :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
+nnoremap          <leader>*      :<C-u>Rg <C-r>=expand('<cword>')<CR><CR>
 nnoremap          ?              :<C-u>Rg<Space>
 
-nnoremap <silent> <leader><C-o> :<C-u>CocCommand fzf-preview.Jumps<CR>
+nnoremap <silent> <leader><C-o>  :<C-u>CocCommand fzf-preview.Jumps<CR>
 nnoremap <silent> <leader>mt     :<C-u>CocCommand fzf-preview.BufferTags<CR>
 nnoremap <silent> <leader>mq     :<C-u>CocCommand fzf-preview.QuickFix<CR>
 nnoremap <silent> <leader>ml     :<C-u>CocCommand fzf-preview.LocationList<CR>
@@ -127,11 +135,6 @@ nnoremap <silent> <leader>ml     :<C-u>CocCommand fzf-preview.LocationList<CR>
 command! -bang -nargs=* Rg CocCommand fzf-preview.ProjectGrep --add-fzf-arg=--prompt="Rg> " <q-args>
 
 let g:fzf_preview_use_dev_icons = 1
-
-""" Quick-scope
-let g:qs_highlight_on_keys = ['f', 'F']
-highlight link QuickScopePrimary Visual
-highlight link QuickScopeSecondary Search
 
 """ Coc
 let g:coc_global_extensions = [ 'coc-json' ]
@@ -182,9 +185,9 @@ nmap     <silent> gd                <Plug>(coc-definition)
 nnoremap <silent> ge                :<C-u>CocCommand fzf-preview.CocReferences<CR>
 nnoremap <silent> gi                :<C-u>CocCommand fzf-preview.CocImplementations<CR>
 nnoremap <silent> gI                :<C-u>CocCommand fzf-preview.CocTypeDefinition<CR>
-nnoremap <silent> <leader>d        :<C-u>call <SID>show_documentation()<CR>
-nnoremap <silent> <leader>e        :<C-u>CocCommand fzf-preview.CocDiagnostics<CR>
-nnoremap <silent> <leader>s        :<C-u>CocCommand fzf-preview.CocOutline<CR>
+nnoremap <silent> <leader>d         :<C-u>call <SID>show_documentation()<CR>
+nnoremap <silent> <leader>e         :<C-u>CocCommand fzf-preview.CocDiagnostics<CR>
+nnoremap <silent> <leader>s         :<C-u>CocCommand fzf-preview.CocOutline<CR>
 nmap     <silent> <leader><leader>r <Plug>(coc-rename)
 
 " Action
