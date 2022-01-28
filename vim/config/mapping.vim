@@ -52,18 +52,18 @@ noremap gj <C-W>j
 noremap gk <C-W>k
 noremap gl <C-W>l
 
-" Navigate through buffers
-noremap <silent> ]b :<C-u>exe v:count'bn'<CR>
-noremap <silent> [b :<C-u>exe v:count'bp'<CR>
-
 " Navigate through tabs
 noremap <silent> ]t gt
 noremap <silent> [t gT
 
+" Navigate through buffers
+noremap <silent> ]b :<C-u>exe v:count'bn'<CR>
+noremap <silent> [b :<C-u>exe v:count'bp'<CR>
+
 " Close buffer
 " TODO: This is broken (when using NERDTree at least)
-noremap <silent> []b :bwipe<CR>
-noremap <silent> ][b :bwipe<CR>
+noremap <silent> []b :b #<CR>:bwipe #<CR>
+noremap <silent> ][b :b #<CR>:bwipe #<CR>
 noremap <silent> ]db :bn<CR>:bd #<CR>
 noremap <silent> [db :bp<CR>:bd #<CR>
 
