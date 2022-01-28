@@ -148,3 +148,4 @@ EOF
 " Lualine: Reduce the 'MODE' to a small bar
 " Write a plugin to simulate `CMD + UP`
 " Write a plugin for session management
+" Write an extension to `completion` that searches within path selected on nvimtree
