@@ -115,30 +115,26 @@ EOF
 "" Util
 " Github integration to jump to PRs?
 
-""" TODO
-" Maybe need to move the whole folder from `fd cg` to `/.config/nvim` so that the rtp is correct
-"
 """ Current main gripes
 " Telescope: buffer ordering (sometimes the current buffer is selected, preferably, the # should be selected)
 " Lsp: codelens is called at the bottom (maybe custom 'nvim-lua/popup.nvim')
-" Lsp: when typing in parameters, the documentation or param list should appear
 " Telescope: start a search from Ex
-" Telescope: change layout depending on screen size (maybe use autocmd)
 " Telescope: change layout size based on results
 " !! Rooter: Sooooo finnicky!
 " Lualine: status spinner not working
-" Lsp: highlight usages
 " Lsp: rust-analyzer doesn't respect cargo.toml on parent directory
 " Lsp: rust-analyzer complains that it hasn't completed (maybe because of autocmd)
 " NvimTree: sometimes it breaks with CWD. Not sure how to replicate
 " NvimTree: problem when deleting an open buffer
 " NvimTree: keeps multiple lines selected when open and update_cwd
 " Telesope: CocOutline
+" Lsp: Format on save
 
 """ Missing from before
 " Telescope: recent files when opening project (maybe 'nvim-telescope/telescope-frecency.nvim')
 " Telescope: equivalent for '/'
 " Telescope: launch TODO
+" Lsp: when typing in parameters, the documentation or param list should appear
 
 """ Wishes
 " Write a plugin to simulate `CMD + UP`
