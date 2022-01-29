@@ -57,7 +57,9 @@ call plug#end()
 
 lua <<EOF
 require('config.comment')
+require('config.fugitive')
 require('config.gitsigns')
+require('config.lspconfig')
 require('config.lualine')
 require('config.nvim-lsp-installer')
 require('config.nvim-tree')
@@ -69,15 +71,8 @@ require('config.vsession')
 EOF
 
 """"""""""""""""""""
-" Plugins mapping
+" Notes
 """"""""""""""""""""
-
-" lua <<EOF
-" require('mapping.git')
-" require('mapping.lsp')
-" require('mapping.navigation')
-" require('mapping.rice')
-" EOF
 
 """ Trash
 " Plug 'nvim-lua/lsp-status.nvim'        " Depency for:

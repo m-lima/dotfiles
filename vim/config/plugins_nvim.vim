@@ -60,20 +60,13 @@ call plug#end()
 """"""""""""""""""""
 lua <<EOF
 require('config.comment')
+require('config.fugitive')
 require('config.gitsigns')
 require('config.nvim-tree')
 require('config.nvim-treesitter')
 require('config.quick-scope')
 require('config.transition.lualine')
 require('config.vsession')
-EOF
-
-""""""""""""""""""""
-" Plugins mapping
-""""""""""""""""""""
-
-lua <<EOF
-require('mapping.rice')
 EOF
 
 """"""""""""""""""""

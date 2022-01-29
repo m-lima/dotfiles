@@ -15,4 +15,4 @@ require('nvim-tree').setup({
   },
 })
 
-vim.api.nvim_set_keymap('n', '<leader>n', ':NvimTreeFindFileToggle<CR>', { noremap = true, silent = true })
+require('script.helper').map('n', '<leader>n', '<cmd>NvimTreeFindFileToggle<CR>')

@@ -1,3 +1,5 @@
 vim.g.qs_highlight_on_keys = { 'f', 'F' }
-vim.highlight.link('QuickScopePrimary', 'Visual')
-vim.highlight.link('QuickScopeSecondary', 'Search')
+
+local h = require('script.helper')
+h.hi.link('QuickScopePrimary', 'Visual')
+h.hi.link('QuickScopeSecondary', 'Search')
