@@ -7,7 +7,7 @@ require('gitsigns').setup({
 local h = require('script.helper')
 
 h.hi.create('SignifySignAdd', { ctermbg = 'None', guibg = 'None' })
-h.hi.create('SignifySignChange', { ctermfg = 141, ctermbg = 'None', guifg = '#af87ff', guibg = 'None' })
+h.hi.create('SignifySignChange', { ctermbg = 'None', guibg = 'None', ctermfg = 74, guifg = '#51a0cf' })
 h.hi.create('SignifySignDelete', { ctermbg = 'None', guibg = 'None' })
 
 -- Navigation

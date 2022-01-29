@@ -1,5 +1,3 @@
-local M = {}
-
 local function map_override(mode, key, action, opts)
   opts = vim.tbl_extend('force', { noremap = true, silent = true }, opts or {})
   vim.api.nvim_set_keymap(mode, key, action, opts)
@@ -20,8 +18,8 @@ local function map_check(mode, key, action, opts)
   map_override(mode, key, action, opts)
 end
 
--- TODO: Remove check once done with edits
-M.map = map_check
-M.hi = vim.highlight
-
-return M
+return {
+  -- TODO: Remove check once done with edits
+  map = map_check,
+  hi = vim.highlight,
+}

@@ -120,8 +120,6 @@ EOF
 "
 """ Current main gripes
 " Telescope: buffer ordering (sometimes the current buffer is selected, preferably, the # should be selected)
-" !! Lualine: modified file is not easy to notice
-" Lualine: current active is hard to notice
 " Lsp: codelens is called at the bottom (maybe custom 'nvim-lua/popup.nvim')
 " Lsp: when typing in parameters, the documentation or param list should appear
 " Telescope: start a search from Ex
@@ -143,9 +141,6 @@ EOF
 " Telescope: launch TODO
 
 """ Wishes
-" Lualine: Reduce the 'MODE' to a small bar
-" Lualine: Show paste mode
-" Lualine: rewrite the location to show total lines (remove percentage)
 " Write a plugin to simulate `CMD + UP`
 " Write a plugin for session management
 " Write an extension to `completion` that searches within path selected on nvimtree

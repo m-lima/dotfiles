@@ -1,3 +1,5 @@
+local components = require('config.lualine.components')
+
 require('lualine').setup({
   extensions = { 'quickfix', 'nvim-tree' },
   options = {
@@ -5,7 +7,10 @@ require('lualine').setup({
     component_separators = { left = '╲', right = '╱' },
   },
   sections = {
-    -- TODO: add a buffer counter
+    lualine_a = {
+      components.paste,
+      'mode'
+    },
     lualine_b = {
       'diff',
       {
@@ -20,9 +25,8 @@ require('lualine').setup({
     },
     lualine_c = {
       {
-        'filename',
+        components.filename,
         path = 1,
-        -- TODO: Make it more obvious when modified `if vim.bo.modified`
         symbols = {
           modified = ' ',
           readonly = ' ',
@@ -34,19 +38,20 @@ require('lualine').setup({
       },
     },
     lualine_x = { 'filetype' },
-    lualine_y = {},
+    lualine_y = { components.changed_buffers },
+    lualine_z = { components.location },
   },
   inactive_sections = {
     lualine_c = {
       {
-        'filename',
+        components.filename,
         path = 1,
-        -- TODO: Make it more obvious when modified `if vim.bo.modified`
         symbols = {
           modified = ' ',
           readonly = ' ',
         },
       },
     },
+    lualine_x = {},
   },
 })
