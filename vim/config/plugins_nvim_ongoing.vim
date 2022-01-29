@@ -47,7 +47,7 @@ Plug 'williamboman/nvim-lsp-installer' " TODO: Configure
 " Misc
 Plug 'unblevable/quick-scope'        " Highlight on `f`
 Plug 'aserebryakov/vim-todo-lists'   " TODO md file helper
-Plug 'skanehira/vsession'            " Save/load sessions
+Plug 'skanehira/vsession'            " Save/load sessions " TODO: Configure. I think now it keeps saving the session
 
 call plug#end()
 
@@ -65,6 +65,7 @@ require('config.nvim-treesitter')
 require('config.project')
 require('config.quick-scope')
 require('config.telescope')
+require('config.vsession')
 EOF
 
 """"""""""""""""""""
@@ -144,6 +145,7 @@ EOF
 """ Missing from before
 " Telescope: recent files when opening project (maybe 'nvim-telescope/telescope-frecency.nvim')
 " Telescope: equivalent for '/'
+" Telescope: launch TODO
 
 """ Wishes
 " Lualine: Reduce the 'MODE' to a small bar
@@ -152,3 +154,4 @@ EOF
 " Write a plugin to simulate `CMD + UP`
 " Write a plugin for session management
 " Write an extension to `completion` that searches within path selected on nvimtree
+" Write a plugin for copy + comment

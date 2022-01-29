@@ -2,26 +2,6 @@
 " Plugins install
 """"""""""""""""""""
 
-if executable('rustc')
-  if executable('racer')
-    let s:rust = 2
-  else
-    let s:rust = 1
-  endif
-endif
-
-if executable('npm')
-  let s:npm = 1
-endif
-
-if executable('clang')
-  let s:clang = 1
-endif
-
-if executable('go')
-  let s:go = 1
-endif
-
 call plug#begin()
 
 """ Dependencies
@@ -85,6 +65,7 @@ require('config.nvim-tree')
 require('config.nvim-treesitter')
 require('config.quick-scope')
 require('config.transition.lualine')
+require('config.vsession')
 EOF
 
 """"""""""""""""""""
@@ -99,11 +80,28 @@ EOF
 " Old config
 """"""""""""""""""""
 
+if executable('rustc')
+  if executable('racer')
+    let s:rust = 2
+  else
+    let s:rust = 1
+  endif
+endif
+
+if executable('npm')
+  let s:npm = 1
+endif
+
+if executable('clang')
+  let s:clang = 1
+endif
+
+if executable('go')
+  let s:go = 1
+endif
+
 """ Vim-rooter
 let g:rooter_patterns = ['.vim/', '.git/', '_darcs', '.hg', '.bzr', '.svn', 'Cargo.toml', 'Makefile', 'build.gradle', 'CMakeLists.txt']
-
-""" Vsession
-let g:vsession_ui = 'fzf'
 
 """ Fzf-Preview
 " TODO: Use Delta
