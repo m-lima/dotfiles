@@ -72,12 +72,12 @@ EOF
 " Plugins mapping
 """"""""""""""""""""
 
-lua <<EOF
-require('mapping.git')
-require('mapping.lsp')
-require('mapping.navigation')
-require('mapping.rice')
-EOF
+" lua <<EOF
+" require('mapping.git')
+" require('mapping.lsp')
+" require('mapping.navigation')
+" require('mapping.rice')
+" EOF
 
 """ Trash
 " Plug 'nvim-lua/lsp-status.nvim'        " Depency for:
