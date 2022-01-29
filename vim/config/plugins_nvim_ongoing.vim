@@ -29,7 +29,7 @@ Plug 'nvim-lualine/lualine.nvim' " TODO: Double check
 
 " Git
 Plug 'tpope/vim-fugitive'
-Plug 'lewis6991/gitsigns.nvim' " TODO: Configure this beauty!!!
+Plug 'lewis6991/gitsigns.nvim'
 
 " Navigation
 Plug 'nvim-telescope/telescope.nvim' " TODO: Configure
@@ -44,6 +44,16 @@ Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' } " TODO: Configure
 Plug 'neovim/nvim-lspconfig' " TODO: Configure
 Plug 'williamboman/nvim-lsp-installer' " TODO: Configure
 
+" Completion
+Plug 'hrsh7th/nvim-cmp' " TODO: Configure
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
+
 " Misc
 Plug 'unblevable/quick-scope'        " Highlight on `f`
 Plug 'aserebryakov/vim-todo-lists'   " TODO md file helper
@@ -56,6 +66,7 @@ call plug#end()
 """"""""""""""""""""
 
 lua <<EOF
+require('config.cmp')
 require('config.comment')
 require('config.fugitive')
 require('config.gitsigns')
@@ -128,13 +139,15 @@ EOF
 " NvimTree: problem when deleting an open buffer
 " NvimTree: keeps multiple lines selected when open and update_cwd
 " Telesope: CocOutline
-" Lsp: Format on save
+" Lsp: Hightlight usages is wonky for some languages (highlights too much)
 
 """ Missing from before
 " Telescope: recent files when opening project (maybe 'nvim-telescope/telescope-frecency.nvim')
 " Telescope: equivalent for '/'
 " Telescope: launch TODO
 " Lsp: when typing in parameters, the documentation or param list should appear
+" Lsp: Format on save
+" Lsp: Per-project configuration (e.g. clippy vs check)
 
 """ Wishes
 " Write a plugin to simulate `CMD + UP`
