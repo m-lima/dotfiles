@@ -60,15 +60,12 @@ noremap <silent> ]t gt
 noremap <silent> [t gT
 
 " Navigate through buffers
-noremap <silent> ]b :<C-u>exe v:count'bn'<CR>
-noremap <silent> [b :<C-u>exe v:count'bp'<CR>
+noremap <expr><silent> ]B '<cmd>' . v:count . 'bn<CR>'
+noremap <expr><silent> [B '<cmd>' . v:count . 'bp<CR>'
 
 " Close buffer
 " TODO: This is broken (when using NERDTree at least)
-noremap <silent> []b :b #<CR>:bwipe #<CR>
-noremap <silent> ][b :b #<CR>:bwipe #<CR>
-noremap <silent> ]db :bn<CR>:bd #<CR>
-noremap <silent> [db :bp<CR>:bd #<CR>
+noremap <expr><silent> ][B expand('#') ? '<cmd>b #<CR><cmd>bwipe #<CR>' : '<cmd>bp<CR><cmd>bwipe #<CR>'
 
 " I hate using ^ and $
 nnoremap H ^
@@ -88,6 +85,7 @@ vnoremap S :s//g<LEFT><LEFT>
 " Current line modify [Control-S]
 nnoremap <C-S> :s//g<LEFT><LEFT>
 
+" TODO: Revise this.. It looks weird
 if &diff
   map ] ]c
   map [ [c

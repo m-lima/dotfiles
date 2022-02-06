@@ -83,6 +83,7 @@ require('config.toggleterm')
 require('config.vsession')
 
 -- Personal
+require('plugin.buffer_stack')
 require('plugin.dupe_comment')
 EOF
 
@@ -133,7 +134,6 @@ EOF
 " Github integration to jump to PRs?
 
 """ Current main gripes
-" Telescope: buffer ordering (sometimes the current buffer is selected, preferably, the # should be selected)
 " Lsp: codelens is called at the bottom (maybe custom 'nvim-lua/popup.nvim')
 " Telescope: start a search from Ex
 " Telescope: change layout size based on results
@@ -144,6 +144,7 @@ EOF
 " NvimTree: sometimes it breaks with CWD. Not sure how to replicate
 " NvimTree: problem when deleting an open buffer
 " NvimTree: keeps multiple lines selected when open and update_cwd
+" NvimTree: polutes the jumplist (reproducible by opening two files from cmdline)
 " Telesope: CocOutline
 " Lsp: Hightlight usages is wonky for some languages (highlights too much)
 

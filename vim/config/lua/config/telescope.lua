@@ -30,6 +30,10 @@ telescope.setup({
     lsp_code_actions = {
       theme = 'dropdown',
     },
+    buffers = {
+      sort_lastused = true,
+      sort_mru = true,
+    },
   },
 })
 

@@ -38,7 +38,7 @@ function changed_buffers:init(options)
 end
 
 function changed_buffers:update_status()
-  local current = vim.api.nvim_buf_get_number(0)
+  local current = vim.api.nvim_get_current_buf()
   local buf_count =  #vim.tbl_filter(function(b)
       return b.changed == 1 and b.bufnr ~= current
     end, vim.fn.getbufinfo({ bufmodified = 1 }))
