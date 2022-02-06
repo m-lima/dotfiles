@@ -4,7 +4,20 @@ require('nvim-lsp-installer').on_server_ready(
   function(server)
     local opts = {
       capabilities = capabilities,
+      on_attach = function()
+        -- TODO: Update this when the API for autocmd stabilizes
+        vim.cmd([[
+          augroup pluginLsp
+            autocmd! * <buffer>
+            autocmd CursorHold                       <buffer> silent! lua vim.lsp.buf.document_highlight()
+            autocmd CursorMoved,InsertEnter          <buffer> silent! lua vim.lsp.buf.clear_references()
+            autocmd TextChanged,InsertLeave,BufEnter <buffer> silent! lua vim.lsp.codelens.refresh()
+            autocmd BufWritePre                      <buffer> silent! lua vim.lsp.buf.formatting_sync()
+          augroup END
+        ]])
+      end,
     }
+
     if server.name == 'rust_analyzer' then
       opts.on_attach = function()
         -- TODO: Update this when the API for autocmd stabilizes
@@ -19,19 +32,35 @@ require('nvim-lsp-installer').on_server_ready(
           augroup END
         ]])
       end
-    else
-      opts.on_attach = function()
-        -- TODO: Update this when the API for autocmd stabilizes
-        vim.cmd([[
-          augroup pluginLsp
-            autocmd! * <buffer>
-            autocmd CursorHold                       <buffer> silent! lua vim.lsp.buf.document_highlight()
-            autocmd CursorMoved,InsertEnter          <buffer> silent! lua vim.lsp.buf.clear_references()
-            autocmd TextChanged,InsertLeave,BufEnter <buffer> silent! lua vim.lsp.codelens.refresh()
-            autocmd BufWritePre                      <buffer> silent! lua vim.lsp.buf.formatting_sync()
-          augroup END
-        ]])
-      end
+      opts.settings = {
+        -- TODO: Make this project specific
+        ['rust-analyzer'] = {
+          checkOnSave = {
+            command = 'clippy',
+            extraArgs = { '--', '-W', 'clippy::pedantic' },
+          },
+        },
+      }
+    elseif server.name == 'sumneko_lua' then
+      -- TODO: Do this only if working with vim files
+      opts.settings = {
+        Lua = {
+          runtime = {
+            version = 'LuaJIT',
+            path = vim.split(package.path, ';'),
+          },
+          diagnostics = {
+            globals = {'vim'},
+          },
+          workspace = {
+            library = {
+              [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+              [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+            },
+          },
+        }
+      }
+
     end
     server:setup(opts)
 end
