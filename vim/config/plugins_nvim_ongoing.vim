@@ -83,7 +83,7 @@ require('config.toggleterm')
 require('config.vsession')
 
 -- Personal
-require('plugins.dupe_comment')
+require('plugin.dupe_comment')
 EOF
 
 """"""""""""""""""""
@@ -98,6 +98,7 @@ EOF
 
 """ To check
 " Great reference: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
+" Plugin building example: https://www.2n.pl/blog/how-to-write-neovim-plugins-in-lua
 "
 "" Completion
 " "" Raw

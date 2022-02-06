@@ -3,7 +3,7 @@ local map = require('script.helper').map
 
 map('v', 'gp', [[:copy '><CR>'>+1<cmd>lua require('Comment.api').comment_linewise_op('v')<CR>]])
 map('n', 'gpp', '<cmd>.copy .<CR>k<cmd>lua require("Comment.api").comment_current_linewise()<CR>j')
-map('n', 'gp', [[<cmd>lua vim.api.nvim_set_option('operatorfunc', "v:lua.require'plugins.dupe_comment'.dupe")<CR>g@]])
+map('n', 'gp', [[<cmd>lua vim.api.nvim_set_option('operatorfunc', "v:lua.require'plugin.dupe_comment'.dupe")<CR>g@]])
 
 return {
   dupe = function(motion)

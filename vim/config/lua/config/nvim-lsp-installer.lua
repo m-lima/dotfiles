@@ -28,7 +28,7 @@ require('nvim-lsp-installer').on_server_ready(
             autocmd CursorMoved,InsertEnter          <buffer> silent! lua vim.lsp.buf.clear_references()
             autocmd BufEnter,TextChanged,InsertLeave <buffer> silent! lua vim.lsp.codelens.refresh()
             autocmd BufWritePre                      <buffer> silent! lua vim.lsp.buf.formatting_sync()
-            autocmd BufEnter,TextChanged,InsertLeave <buffer> silent! lua require('plugins.inlay').hints()
+            autocmd BufEnter,TextChanged,InsertLeave <buffer> silent! lua require('plugin.inlay').hints()
           augroup END
         ]])
       end
