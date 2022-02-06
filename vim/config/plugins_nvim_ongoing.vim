@@ -58,7 +58,7 @@ Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'unblevable/quick-scope'        " Highlight on `f`
 Plug 'aserebryakov/vim-todo-lists'   " TODO md file helper
 Plug 'skanehira/vsession'            " Save/load sessions " TODO: Configure. I think now it keeps saving the session
-Plug 'akinsho/toggleterm.nvim'       " More usable terminal " TODO configure
+Plug 'akinsho/toggleterm.nvim'       " More usable terminal
 
 call plug#end()
 

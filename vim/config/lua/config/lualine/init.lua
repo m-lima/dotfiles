@@ -1,7 +1,8 @@
 local components = require('config.lualine.components')
+local extensions = require('config.lualine.extensions')
 
 require('lualine').setup({
-  extensions = { 'quickfix', 'nvim-tree' },
+  extensions = { 'quickfix', 'nvim-tree', extensions.toggleterm },
   options = {
     section_separators = { left = '', right = '' },
     component_separators = { left = '╲', right = '╱' },

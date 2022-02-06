@@ -80,4 +80,5 @@ return {
   changed_buffers = changed_buffers,
   filename = filename,
   location = '%l/%L:%-1v',
+  toggleterm = 'b:toggle_number',
 }
