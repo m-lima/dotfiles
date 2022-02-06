@@ -6,13 +6,13 @@ end
 local function map_check(mode, key, action, opts)
   local params = '"' .. key .. '","' .. mode .. '"'
   local previous = vim.api.nvim_eval('maparg(' .. params .. ')')
-  if previous  and not previous == '' then
-    return error('Mapping conflict for ' .. params .. ' -> ' .. previous)
+  if previous and previous ~= '' then
+    vim.notify('Mapping prefix conflict for ' .. params .. '\nNew: ' .. action .. '\nOld: ' .. previous, vim.log.levels.ERROR)
   end
 
   previous = vim.api.nvim_eval('mapcheck(' .. params .. ')')
-  if previous  and not previous == '' then
-    return error('Mapping prefix conflict for ' .. params .. ' -> ' .. previous)
+  if previous and previous ~= '' then
+    vim.notify('Mapping prefix conflict for ' .. params .. '\nNew: ' .. action .. '\nOld: ' .. previous, vim.log.levels.WARN)
   end
 
   map_override(mode, key, action, opts)
