@@ -150,9 +150,6 @@ let g:go_doc_keywordprg_enabled = 0
 augroup pluginsVimComentary
   autocmd!
 
-  " Do not add comment when using 'o'
-  autocmd FileType * setlocal formatoptions-=o
-
   " Custom comment strings
   autocmd FileType cmake setlocal commentstring=#\ %s
   autocmd FileType cpp,hpp,c,h,cc,hh,cl,tf,zig setlocal commentstring=//\ %s

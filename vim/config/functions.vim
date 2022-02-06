@@ -43,6 +43,7 @@ nnoremap <silent> <Leader>we :call <SID>highlightColumn(+10)<CR>
 let s:highlightingColumn = 0
 
 " Show current highlight rules for cursor
+" TODO: Does not work with TreeSitter
 function! SynStack ()
     for i1 in synstack(line("."), col("."))
         let i2 = synIDtrans(i1)

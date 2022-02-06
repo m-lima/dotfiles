@@ -43,9 +43,13 @@ set relativenumber
 exec "set listchars=tab:\uB7\uA0,trail:\uAB,nbsp:\u268B"
 set list
 
-" TODO: Doesn't seem to be working
 " Do not add comment when using 'o'
-autocmd FileType * setlocal formatoptions-=o
+" Needs to be an autocmd because `ftplugin` of multiple filetypes set this
+" value
+augroup optionsOverruleFileTypesOptions
+  autocmd!
+  autocmd BufEnter * set formatoptions-=o
+augroup END
 
 " Identation
 set autoindent
@@ -96,7 +100,9 @@ endif
 set hidden
 
 " Flash yanked text
-augroup yankHighlight
-  autocmd!
-  autocmd TextYankPost * silent! lua vim.highlight.on_yank()
-augroup end
+if has('nvim')
+  augroup yankHighlight
+    autocmd!
+    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+  augroup end
+end
