@@ -16,7 +16,7 @@ vnoremap <C-\> \
 
 " Use ESC to exit insert mode in :term
 if has("nvim")
-  tnoremap <Esc> <C-\><C-n>
+  tnoremap <C-\> <C-\><C-n>
 endif
 
 " Y should follow the pattern and yank until the end
