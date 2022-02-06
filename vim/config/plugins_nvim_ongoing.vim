@@ -33,16 +33,16 @@ Plug 'lewis6991/gitsigns.nvim'
 
 " Navigation
 Plug 'nvim-telescope/telescope.nvim' " TODO: Configure
-Plug 'kyazdani42/nvim-tree.lua' " TODO: Configure
-Plug 'ahmedkhalf/project.nvim' " TODO: Double check
+Plug 'kyazdani42/nvim-tree.lua'      " TODO: Configure
+Plug 'ahmedkhalf/project.nvim'       " TODO: Double check
 
 " Telescope extensions
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " LSP
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' } " TODO: Configure
-Plug 'neovim/nvim-lspconfig' " TODO: Configure
-Plug 'williamboman/nvim-lsp-installer' " TODO: Configure
+Plug 'neovim/nvim-lspconfig'                                  " TODO: Configure
+Plug 'williamboman/nvim-lsp-installer'                        " TODO: Configure
 
 " Completion
 Plug 'hrsh7th/nvim-cmp' " TODO: Configure
@@ -57,8 +57,9 @@ Plug 'saadparwaiz1/cmp_luasnip'
 " Misc
 Plug 'unblevable/quick-scope'        " Highlight on `f`
 Plug 'aserebryakov/vim-todo-lists'   " TODO md file helper
-Plug 'skanehira/vsession'            " Save/load sessions " TODO: Configure. I think now it keeps saving the session
+Plug 'skanehira/vsession'            " Save/load sessions TODO: Configure. I think now it keeps saving the session
 Plug 'akinsho/toggleterm.nvim'       " More usable terminal
+Plug 'mbbill/undotree'               " A local changes tracker TODO: configure (colors)
 
 call plug#end()
 
@@ -80,6 +81,7 @@ require('config.project')
 require('config.quick-scope')
 require('config.telescope')
 require('config.toggleterm')
+require('config.undotree')
 require('config.vsession')
 
 -- Personal
