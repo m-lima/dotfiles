@@ -19,9 +19,6 @@ if has("nvim")
   tnoremap <Esc> <C-\><C-n>
 endif
 
-" Copy line
-nnoremap yp yyp
-
 " Y should follow the pattern and yank until the end
 nnoremap Y y$
 
@@ -73,8 +70,6 @@ noremap <silent> ][b :b #<CR>:bwipe #<CR>
 noremap <silent> ]db :bn<CR>:bd #<CR>
 noremap <silent> [db :bp<CR>:bd #<CR>
 
-" TODO: Can I copy then comment a block?
-
 " I hate using ^ and $
 nnoremap H ^
 vnoremap H ^
@@ -125,6 +120,7 @@ elseif has('unix')
 endif
 
 """ Completion navigation overload
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-inoremap <expr><CR> pumvisible() ? "\<C-y>" : "\<CR>"
+" TODO: Make this more sensible to my expectations
+inoremap <expr> <TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+" inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"
