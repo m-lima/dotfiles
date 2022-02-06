@@ -13,6 +13,9 @@ require('nvim-tree').setup({
   view = {
     width = '33%',
   },
+  git = {
+    ignore = false,
+  },
 })
 
 require('script.helper').map('n', '<leader>n', '<cmd>NvimTreeFindFileToggle<CR>')
