@@ -175,3 +175,4 @@ EOF
 " Color of inlay errors
 " C-O that skips jumps within the same file
 " Show marks in the gutter
+" Change grayalt to highlight matches on completion popup (maybe also make telescope matches more visible as well)

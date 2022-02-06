@@ -138,9 +138,9 @@ highlight RFCTitle guifg=#eeeeee ctermfg=255 guibg=NONE ctermbg=NONE gui=NONE ct
 highlight RFCDelim guifg=#585858 ctermfg=240 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
 " Plugin: vim-signify {{{1
-highlight SignifySignAdd guifg=#87ff5f ctermfg=119 guibg=#3a3a3a ctermbg=237 gui=bold cterm=bold
-highlight SignifySignDelete guifg=#df5f5f ctermfg=167 guibg=#3a3a3a ctermbg=237 gui=bold cterm=bold
-highlight SignifySignChange guifg=#ffff5f ctermfg=227 guibg=#3a3a3a ctermbg=237 gui=bold cterm=bold
+highlight SignifySignAdd guifg=#87ff5f ctermfg=119 guibg=NONE ctermbg=NONE gui=bold cterm=bold
+highlight SignifySignDelete guifg=#df5f5f ctermfg=167 guibg=NONE ctermbg=NONE gui=bold cterm=bold
+highlight SignifySignChange guifg=#51a0cf ctermfg=74 guibg=NONE ctermbg=NONE gui=bold cterm=bold
 
 " Plugin: vim-startify {{{1
 highlight StartifyBracket guifg=#585858 ctermfg=240 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
