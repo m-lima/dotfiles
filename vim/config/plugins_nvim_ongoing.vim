@@ -79,6 +79,9 @@ require('config.project')
 require('config.quick-scope')
 require('config.telescope')
 require('config.vsession')
+
+-- Personal
+require('plugins.dupe_comment')
 EOF
 
 """"""""""""""""""""
@@ -148,9 +151,23 @@ EOF
 " Lsp: when typing in parameters, the documentation or param list should appear
 " Lsp: Format on save
 " Lsp: Per-project configuration (e.g. clippy vs check)
+" Lsp: Code outline. There are symbols, but the outline shows hierarchy better (maybe custom plugin?)
+" Lsp: Show that the request is running in the background (get references e.g.)
 
 """ Wishes
 " Write a plugin to simulate `CMD + UP`
 " Write a plugin for session management
 " Write an extension to `completion` that searches within path selected on nvimtree
-" Write a plugin for copy + comment
+" Warn if overwriting a mark
+
+""" TO FIX
+" Autoformatting not always working
+" Wait for rust-analyzer to be ready
+  " Spinner
+" Todo List with telescope (maybe an extension)
+" Auto-close of braces does not follow the format
+" Match gutter icons with statusline diagnostics
+" Syntax highlight of inlay hints (bg on cursor line is not respected.. Worth checking what diagnostics do for this)
+" Color of inlay errors
+" C-O that skips jumps within the same file
+" Show marks in the gutter
