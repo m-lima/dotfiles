@@ -13,11 +13,7 @@ local backward = function()
     return false
   end
 
-  if last_jump > #jumplist then
-    last_jump = #jumplist
-  end
-
-  local curr_index = last_jump
+  local curr_index = last_jump > #jumplist and #jumplist or last_jump
   local curr_bufnr = vim.api.nvim_get_current_buf()
 
   while curr_index > 0 do
