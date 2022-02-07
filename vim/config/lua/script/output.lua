@@ -1,5 +1,5 @@
 local function buffer(cmd)
-  local str = no_inspect and cmd or vim.inspect(cmd)
+  local str = vim.inspect(cmd)
 
   local lines = {}
   for line in str:gmatch('([^\n]+)') do
@@ -17,10 +17,10 @@ local function buffer(cmd)
 
   local target = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_option(target, 'bufhidden', 'wipe')
-  if not no_inspect then
-    vim.api.nvim_buf_set_option(target, 'filetype', 'lua')
-  end
+  vim.api.nvim_buf_set_keymap(target, '', '<Esc>', '<cmd>q!<CR>', { noremap = true, silent = true })
+  vim.api.nvim_buf_set_option(target, 'filetype', 'lua')
   vim.api.nvim_buf_set_lines(target, 0, #lines, false, lines)
+  vim.api.nvim_buf_set_option(target, 'readonly', true)
 
   vim.api.nvim_open_win(target, true, {
     style = 'minimal',
@@ -31,6 +31,8 @@ local function buffer(cmd)
     col = col,
   })
 end
+
+vim.cmd([[command! -bang -nargs=1 LuaOut lua require('script.output').buffer(<args>)]])
 
 return {
   buffer = buffer
