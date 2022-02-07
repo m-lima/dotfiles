@@ -2,6 +2,9 @@
 " Options config
 """"""""""""""""""""
 
+" Don't make noise
+set belloff=all
+
 " Don't show mode
 set noshowmode
 
