@@ -52,6 +52,11 @@ function grbf {
   git fetch --all --prune --jobs=10 && git rebase "${branch}"
 }
 
+if command -v lazygit &> /dev/null
+then
+  alias lg=lazygit
+fi
+
 ### Copy path
 if [[ "$(uname)" == "Darwin" ]]
 then
