@@ -38,6 +38,7 @@ Plug 'ahmedkhalf/project.nvim'       " TODO: Double check
 
 " Telescope extensions
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'nvim-telescope/telescope-ui-select.nvim'
 
 " LSP
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' } " TODO: Configure
@@ -93,6 +94,8 @@ require('config.vsession')
 -- Personal
 require('plugin.buffer_stack')
 require('plugin.dupe_comment')
+-- TODO: Temporary
+require('script.output')
 EOF
 
 """"""""""""""""""""
@@ -178,6 +181,7 @@ EOF
   " Don't autosave session, but have a `:W` or something like that
 " Write an extension to `completion` that searches within path selected on nvimtree
 " Warn if overwriting a mark
+" Telescope ougoing and incoming calls
 
 """ TO FIX
 " Autoformatting not always working

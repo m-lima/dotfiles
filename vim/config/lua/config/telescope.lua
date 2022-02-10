@@ -35,10 +35,16 @@ telescope.setup({
       sort_mru = true,
     },
   },
+  extensions = {
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown {}
+    }
+  }
 })
 
 telescope.load_extension('fzf')
 telescope.load_extension('projects')
+telescope.load_extension('ui-select')
 
 local map = require('script.helper').map
 

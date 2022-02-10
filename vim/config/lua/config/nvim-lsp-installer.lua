@@ -1,11 +1,11 @@
 require('rust-tools').setup({})
 
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-local initialized = {}
+local clients = {}
 
 -- TODO: BUG: If we change buffers while the initialization is happening, that `0` down there will cause breakage
-local function get_server_id_by_name(name)
-  for id, client in pairs(vim.lsp.buf_get_clients(0)) do
+local function get_server_id_by_name(bufnr, name)
+  for id, client in pairs(vim.lsp.buf_get_clients(bufnr)) do
     if client.name == name then
       return id
     end
@@ -31,31 +31,60 @@ require('nvim-lsp-installer').on_server_ready(
     }
 
     if server.name == 'rust_analyzer' then
-      local on_initialized = function()
-        -- TODO: Update this when the API for autocmd stabilizes
-        vim.cmd([[
-          augroup pluginLsp
-            autocmd! * <buffer>
-            autocmd CursorHold                       <buffer> silent! lua vim.lsp.buf.document_highlight()
-            autocmd CursorMoved,InsertEnter          <buffer> silent! lua vim.lsp.buf.clear_references()
-            autocmd BufEnter,TextChanged,InsertLeave <buffer> silent! lua vim.lsp.codelens.refresh()
-            autocmd BufWritePre                      <buffer> silent! lua vim.lsp.buf.formatting_sync()
-            autocmd BufEnter,TextChanged,InsertLeave <buffer> silent! lua require('plugin.inlay').hints()
-          augroup END
-        ]])
-        vim.lsp.codelens.refresh()
-        require('plugin.inlay').hints()
-        initialized[get_server_id_by_name('rust_analyzer')] = true
+      local auCmd = function(bufnr)
+        vim.api.nvim_buf_call(bufnr, function()
+          vim.cmd([[
+            augroup pluginLsp
+              autocmd! * <buffer>
+              autocmd CursorHold                       <buffer> silent! lua vim.lsp.buf.document_highlight()
+              autocmd CursorMoved,InsertEnter          <buffer> silent! lua vim.lsp.buf.clear_references()
+              autocmd BufEnter,TextChanged,InsertLeave <buffer> silent! lua vim.lsp.codelens.refresh()
+              autocmd BufWritePre                      <buffer> silent! lua vim.lsp.buf.formatting_sync()
+              autocmd BufEnter,TextChanged,InsertLeave <buffer> silent! lua require('plugin.inlay').hints()
+            augroup END
+          ]])
+          vim.lsp.codelens.refresh()
+          require('plugin.inlay').hints()
+        end)
       end
-      opts.on_attach = function()
-        local id = get_server_id_by_name('rust_analyzer')
-        if id and initialized[id] then
-          print('Initialized')
-          on_initialized()
+
+      opts.handlers = {
+        ["experimental/serverStatus"] = function(err, res, ctx, _config)
+          if not err and res.quiescent then
+            local client_instance = clients[ctx.client_id]
+            if client_instance then
+              client_instance.done = true
+              if client_instance.queue then
+                for _, bufnr in ipairs(client_instance.queue) do
+                  auCmd(bufnr)
+                end
+                client_instance = nil
+              end
+            else
+              clients[ctx.client_id] = {
+                done = true
+              }
+            end
+          end
+        end
+      }
+
+      opts.on_attach = function(client)
+        local client_instance = clients[client.id]
+        local bufnr = vim.api.nvim_get_current_buf()
+        if client_instance then
+          if client_instance.done then
+            auCmd(bufnr)
+          else
+            table.insert(client_instance.queue, bufnr)
+          end
         else
-          print('Not ready yet')
+          clients[client.id] = {
+            queue = { bufnr }
+          }
         end
       end
+
       -- opts.settings = {
       --   -- TODO: Make this project specific
       --   ['rust-analyzer'] = {
