@@ -41,6 +41,9 @@ local forward = function()
   while curr_index <= #jumplist do
     local target_bufnr = jumplist[curr_index].bufnr
     if curr_bufnr ~= target_bufnr and vim.api.nvim_buf_is_loaded(target_bufnr) then
+      while curr_index < #jumplist and target_bufnr == jumplist[curr_index + 1].bufnr do
+        curr_index = curr_index + 1
+      end
       vim.cmd('execute "normal! ' .. curr_index - last_jump .. [[\<c-i>"]])
       return true
     end
