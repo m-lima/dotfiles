@@ -43,6 +43,12 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' } " TODO: Configure
 Plug 'neovim/nvim-lspconfig'                                  " TODO: Configure
 Plug 'williamboman/nvim-lsp-installer'                        " TODO: Configure
+" Plug 'm-lima/rust-tools.nvim' " Extras for rust-analyzer " TODO: Configure
+" TODO: Watch out for this dependecy.. Changes must be upstream for
+  " `on_initialized` : Currently required
+  " `inlay_hints` : Not required. Using local plugin
+  " `toggle_term` : Using local plugin
+Plug '~/code/fork/rust-tools.nvim' " Extras for rust-analyzer " TODO: Configure
 
 " Completion
 Plug 'hrsh7th/nvim-cmp' " TODO: Configure
@@ -149,6 +155,9 @@ EOF
 " NvimTree: polutes the jumplist (reproducible by opening two files from cmdline)
 " Telesope: CocOutline
 " Lsp: Hightlight usages is wonky for some languages (highlights too much)
+" Telescope: When on buffers and start typing, cursor should jump to the bottom (or the bottom should have the previous buffer already)
+" Telescope: grep-string breks when searching for anything more complex than a single word
+" Lsp: Rust: When opening a cargo file, the root of the project breaks (i,e, a cargo workspace)
 
 """ Missing from before
 " Telescope: recent files when opening project (maybe 'nvim-telescope/telescope-frecency.nvim')
@@ -163,6 +172,10 @@ EOF
 """ Wishes
 " Write a plugin to simulate `CMD + UP`
 " Write a plugin for session management
+  " Sessions per branch if for example no name is provided
+    " Check for deleted branches to clean session files
+  " Telescope integration
+  " Don't autosave session, but have a `:W` or something like that
 " Write an extension to `completion` that searches within path selected on nvimtree
 " Warn if overwriting a mark
 
@@ -175,6 +188,9 @@ EOF
 " Match gutter icons with statusline diagnostics
 " Syntax highlight of inlay hints (bg on cursor line is not respected.. Worth checking what diagnostics do for this)
 " Color of inlay errors
-" C-O that skips jumps within the same file
 " Show marks in the gutter
 " Change grayalt to highlight matches on completion popup (maybe also make telescope matches more visible as well)
+" LSP: Really need to know when the async process is running (some kind of status or spineer)
+
+""" Done
+" C-O that skips jumps within the same file
