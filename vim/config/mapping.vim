@@ -36,6 +36,12 @@ nnoremap de 0D
 nnoremap U O<Esc>
 nnoremap K o<Esc>
 
+" Move text
+nnoremap <silent> <C-h> <cmd>m .-2<CR>
+nnoremap <silent> <C-l> <cmd>m .+1<CR>
+vnoremap <silent> <C-h> :m '<-2<CR>gv
+vnoremap <silent> <C-l> :m '>+1<CR>gv
+
 " Remove the search highlights
 nnoremap <silent> <Leader>h :noh<CR>
 
