@@ -1,0 +1,12 @@
+****************************************
+* To remap keys on the Ducky
+****************************************
+
+1: Fn + 2 to switch to profile 2
+2: Hold Fn + Ctrl until the indicator lights start to blink
+3: Press Windows Key
+4: Press Alt
+5: Press Fn + Ctrl
+Repeat for the same keys on the other side of the space bar. Then repeat everything again, but using Alt in step 3 and Windows Key in step 4.
+
+Fn + L doesn't do right arrow on this particular keyboard by default, but I programmed it to do so, and I was then able to go to the end of the line by doing Cmd + Fn + L.
