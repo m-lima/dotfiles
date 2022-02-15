@@ -182,6 +182,7 @@ EOF
 " Write an extension to `completion` that searches within path selected on nvimtree
 " Warn if overwriting a mark
 " Telescope ougoing and incoming calls
+" Telescope remove repeats
 
 """ TO FIX
 " Autoformatting not always working

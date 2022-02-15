@@ -3,9 +3,11 @@ local utils = require("rust-tools.utils.utils")
 local M = {}
 
 function M.execute_command(command, args, cwd)
+  local cmd = utils.make_command_from_args(command, args)
+  cmd = 'echo "' .. cmd .. '" && ' .. cmd
   return require('toggleterm.terminal').Terminal:new({
     dir = cwd,
-    cmd = utils.make_command_from_args(command, args),
+    cmd = cmd,
     close_on_exit = false,
     direction = 'float',
     on_open = function(term)
