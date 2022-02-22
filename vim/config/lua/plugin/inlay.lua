@@ -21,12 +21,12 @@ M.hints = function()
             local var = string.sub(vim.api.nvim_buf_get_lines(ctx.bufnr, start.line, start.line + 1, false)[1], start.character + 1, finish.character)
             local line = start.line
             local str = var .. ': ' .. v.label
-            vim.api.nvim_buf_set_extmark(ctx.bufnr, M.namespace, line, 0, { virt_text = {{ str, M.hl }} })
+            vim.api.nvim_buf_set_extmark(ctx.bufnr, M.namespace, line, 0, { virt_text = {{ str, M.hl }}, hl_mode = 'combine' })
           end
         elseif v.kind == 'ChainingHint' then
           local line = v.range['end'].line
           local str = '‣' .. v.label
-          vim.api.nvim_buf_set_extmark(ctx.bufnr, M.namespace, line, 0, { virt_text = {{ str, M.hl }} })
+          vim.api.nvim_buf_set_extmark(ctx.bufnr, M.namespace, line, 0, { virt_text = {{ str, M.hl }}, hl_mode = 'combine' })
         end
       end
     end
