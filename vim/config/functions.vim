@@ -26,10 +26,10 @@ function! s:highlightColumn(...) abort
       let w:highlightColumnWidth = 100
     endif
     if a:0
-      let w:highlightColumnWidth = g:highlightColumnWidth + a:1
+      let w:highlightColumnWidth = w:highlightColumnWidth + a:1
     endif
-    execute 'match OverLength /\%' . (g:highlightColumnWidth + 1). 'v.\+/'
-    echo 'Column overlength highlight: ' . g:highlightColumnWidth
+    execute 'match OverLength /\%' . (w:highlightColumnWidth + 1). 'v.\+/'
+    echo 'Column overlength highlight: ' . w:highlightColumnWidth
   endif
 endfunction
 
