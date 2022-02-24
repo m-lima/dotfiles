@@ -46,16 +46,19 @@ telescope.load_extension('fzf')
 telescope.load_extension('projects')
 telescope.load_extension('ui-select')
 
+vim.cmd([[command! -bang -nargs=1 Rg lua require('telescope.builtin').grep_string({ disable_coordinates=true, search=<q-args> })]])
+
 local map = require('script.helper').map
 
 -- General
 map('n', '<leader><leader><leader>', '<cmd>Telescope resume<CR>')
 
 -- Search
-map('n', '<leader>*', '<cmd>Telescope grep_string<CR>')
-map('n', '<leader>8', '<cmd>Telescope current_buffer_fuzzy_find<CR>')
-map('n', '<leader>/', '<cmd>Telescope live_grep<CR>')
-map('n', '?',         ':<C-u>Telescope grep_string disable_coordinates=true search=', { silent = false })
+map('n', '<leader>8', '"<cmd>Telescope current_buffer_fuzzy_find<CR>" . expand("<cword>") . "<Esc>"', { expr = true })
+map('n', '<leader>*', '<cmd>Telescope grep_string disable_coordinates=true<CR>')
+map('n', '<leader>/', '<cmd>Telescope current_buffer_fuzzy_find<CR>')
+map('n', '<leader>?', '<cmd>Telescope live_grep disable_coordinates=true<CR>')
+map('n', '?',         ':<C-u>Rg ', { silent = false })
 
 -- Navigation
 map('n', '<leader>p',     '<cmd>Telescope find_files<CR>')
@@ -64,6 +67,7 @@ map('n', '<leader>o',     '<cmd>Telescope oldfiles<CR>')
 map('n', '<leader>b',     '<cmd>Telescope buffers<CR>')
 map('n', '<leader><c-o>', '<cmd>Telescope jumplist<CR>')
 map('n', '<leader>m',     '<cmd>Telescope marks<CR>')
+map('n', '<leader>gt',    '<cmd>Telescope git_status<CR>')
 
 ---- Projects
 map('n', '<leader><leader>p', '<cmd>Telescope projects<CR>')

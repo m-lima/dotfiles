@@ -145,13 +145,8 @@ EOF
 " Github integration to jump to PRs?
 
 """ Current main gripes
-" Lsp: codelens is called at the bottom (maybe custom 'nvim-lua/popup.nvim')
-" Telescope: start a search from Ex
 " Telescope: change layout size based on results
-" !! Rooter: Sooooo finnicky!
 " Lualine: status spinner not working
-" Lsp: rust-analyzer doesn't respect cargo.toml on parent directory
-" Lsp: rust-analyzer complains that it hasn't completed (maybe because of autocmd)
 " NvimTree: sometimes it breaks with CWD. Not sure how to replicate
 " NvimTree: problem when deleting an open buffer
 " NvimTree: keeps multiple lines selected when open and update_cwd
@@ -159,18 +154,16 @@ EOF
 " Telesope: CocOutline
 " Lsp: Hightlight usages is wonky for some languages (highlights too much)
 " Telescope: When on buffers and start typing, cursor should jump to the bottom (or the bottom should have the previous buffer already)
-" Telescope: grep-string breks when searching for anything more complex than a single word
-" Lsp: Rust: When opening a cargo file, the root of the project breaks (i,e, a cargo workspace)
 
 """ Missing from before
 " Telescope: recent files when opening project (maybe 'nvim-telescope/telescope-frecency.nvim')
-" Telescope: equivalent for '/'
 " Telescope: launch TODO
 " Lsp: when typing in parameters, the documentation or param list should appear
 " Lsp: Format on save
 " Lsp: Per-project configuration (e.g. clippy vs check)
 " Lsp: Code outline. There are symbols, but the outline shows hierarchy better (maybe custom plugin?)
 " Lsp: Show that the request is running in the background (get references e.g.)
+" Debug: Codelens compatible with vimspector
 
 """ Wishes
 " Write a plugin to simulate `CMD + UP`
@@ -186,9 +179,6 @@ EOF
 
 """ TO FIX
 " Autoformatting not always working
-" Wait for rust-analyzer to be ready
-  " Spinner
-" Todo List with telescope (maybe an extension)
 " Auto-close of braces does not follow the format
 " Match gutter icons with statusline diagnostics
 " Syntax highlight of inlay hints (bg on cursor line is not respected.. Worth checking what diagnostics do for this)
@@ -199,3 +189,12 @@ EOF
 
 """ Done
 " C-O that skips jumps within the same file
+" Telescope: equivalent for '/'
+" Telescope: start a search from Ex
+" Telescope: grep-string breks when searching for anything more complex than a single word
+" Lsp: Rust: When opening a cargo file, the root of the project breaks (i,e, a cargo workspace) [Removed TOML lsp]
+" Wait for rust-analyzer to be ready
+" Lsp: rust-analyzer complains that it hasn't completed (maybe because of autocmd)
+" Lsp: rust-analyzer doesn't respect cargo.toml on parent directory
+" !! Rooter: Sooooo finnicky!
+" Lsp: codelens is called at the bottom (maybe custom 'nvim-lua/popup.nvim')
