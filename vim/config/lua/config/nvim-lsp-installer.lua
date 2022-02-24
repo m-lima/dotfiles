@@ -3,7 +3,6 @@ require('rust-tools').setup({})
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 local clients = {}
 
--- TODO: BUG: If we change buffers while the initialization is happening, that `0` down there will cause breakage
 local function get_server_id_by_name(bufnr, name)
   for id, client in pairs(vim.lsp.buf_get_clients(bufnr)) do
     if client.name == name then
@@ -112,7 +111,6 @@ require('nvim-lsp-installer').on_server_ready(
             border = {},
             auto_focus = true,
           },
-          on_initialized = on_initialized,
         },
       }
       server:attach_buffers()
@@ -137,7 +135,6 @@ require('nvim-lsp-installer').on_server_ready(
           },
         }
       }
-
     end
     server:setup(opts)
 end
