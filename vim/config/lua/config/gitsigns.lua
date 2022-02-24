@@ -1,7 +1,7 @@
 require('gitsigns').setup({
-  -- on_attach = function(bufnr)
-  --   -- Do mapping here?
-  -- end
+  preview_config = {
+    border = 'none',
+  },
 })
 
 local map = require('script.helper').map
