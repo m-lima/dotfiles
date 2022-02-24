@@ -23,9 +23,12 @@ telescope.setup({
       sorting_strategy = 'ascending',
       layout_config = {
         horizontal = {
-          preview_width = .75,
+          preview_width = .5,
         },
       },
+    },
+    lsp_document_symbols = {
+      sorting_strategy = 'ascending',
     },
     lsp_code_actions = {
       theme = 'dropdown',
