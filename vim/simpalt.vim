@@ -151,7 +151,7 @@ highlight TSStringRegex        guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE
 highlight TSString             guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
 highlight TSCharacter          guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
 highlight TSTextReference      guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSStringEscape       guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=BOLD   cterm=BOLD
+highlight TSStringEscape       guifg=#b5cea8 ctermfg=151 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
 highlight TSNumber             guifg=#b5cea8 ctermfg=151 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
 highlight TSFloat              guifg=#b5cea8 ctermfg=151 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
 highlight TSParameter          guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
