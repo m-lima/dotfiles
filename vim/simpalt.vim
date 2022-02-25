@@ -1,3 +1,5 @@
+" TODO: Match TreeSitter with regular hl
+
 """ Prepare
 highlight clear
 
@@ -23,6 +25,7 @@ endif
 """ General
 highlight Directory    guifg=#a8a8a8 ctermfg=248  guibg=NONE    ctermbg=NONE gui=BOLD cterm=BOLD
 highlight EndOfBuffer  guifg=#262626 ctermfg=235  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
+highlight! link QuickFixLine PmenuSel
 highlight StatusLine   guifg=#e4e4e4 ctermfg=254  guibg=#3a3a3a ctermbg=237  gui=NONE cterm=NONE
 highlight StatusLineNC guifg=#808080 ctermfg=244  guibg=#3a3a3a ctermbg=237  gui=NONE cterm=NONE
 highlight Title        guifg=#afff87 ctermfg=156  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
@@ -48,65 +51,48 @@ highlight DiffDelete   guifg=#df5f5f ctermfg=167  guibg=NONE    ctermbg=NONE gui
 highlight link DiffText DiffDelete
 
 """ Highlights
-" Too long of a line
-highlight ColorColumn  guifg=NONE    ctermfg=NONE guibg=#3a3a3a ctermbg=237  gui=NONE cterm=NONE
-" Search
-highlight Search       guifg=NONE    ctermfg=NONE guibg=#264f78 ctermbg=24   gui=NONE cterm=NONE
+highlight ColorColumn  guifg=NONE    ctermfg=NONE guibg=#3a3a3a ctermbg=237  gui=NONE cterm=NONE " Too long of a line
+highlight Search       guifg=NONE    ctermbg=NONE guibg=#005510 ctermbg=22   gui=NONE cterm=NONE " Search
 highlight! link IncSearch Search
-" Selection
-highlight Visual       guifg=NONE    ctermbg=NONE guibg=#005510 ctermbg=22   gui=NONE cterm=NONE
+highlight Visual       guifg=NONE    ctermfg=NONE guibg=#264f78 ctermbg=24   gui=NONE cterm=NONE " Selection
 highlight! link VisualNOS Visual
-" Parens
-highlight MatchParen   guifg=#ff307f ctermfg=198  guibg=NONE    ctermbg=NONE gui=BOLD cterm=BOLD
-" Whitespace
-highlight NonText      guifg=#ff00af ctermfg=199  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-" The opposite of highlight
-highlight Conceal      guifg=#606060 ctermfg=240  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-" Todo
-highlight Todo         guifg=#d7ba7d ctermfg=180  guibg=NONE    ctermbg=NONE gui=BOLD cterm=BOLD
+highlight MatchParen   guifg=#ff307f ctermfg=198  guibg=NONE    ctermbg=NONE gui=BOLD cterm=BOLD " Parens
+highlight NonText      guifg=#ff00af ctermfg=199  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE " Whitespace
+highlight Conceal      guifg=#606060 ctermfg=240  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE " The opposite of highlight
+highlight Todo         guifg=#d7ba7d ctermfg=180  guibg=NONE    ctermbg=NONE gui=BOLD cterm=BOLD " Todo
 
 """ Text
 highlight Comment      guifg=#ff557c ctermfg=204  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
 highlight! link SpecialComment Comment
-
 highlight Statement    guifg=#c586c0 ctermfg=175  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
 highlight! link Define      Statement
 highlight! link Exception   Statement
 highlight! link Label       Statement
 highlight! link PreProc     Statement
 highlight! link Repeat      Statement
-
 highlight Keyword      guifg=#26a087 ctermfg=36   guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
 highlight! link Conditional Keyword
 highlight! link Include     Keyword
-
 highlight Macro        guifg=#ce9178 ctermfg=174  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-
 highlight String       guifg=#6a9955 ctermfg=65   guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
 highlight! link Character String
-
 highlight Constant     guifg=#26a087 ctermfg=36   guibg=NONE    ctermbg=NONE gui=BOLD cterm=BOLD
 highlight! link Boolean      Constant
 highlight! link SpecialKey   Constant
-
 highlight Type         guifg=#569cd6 ctermfg=74   guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
 highlight! link StorageClass Type
 highlight! link Structure    Type
 highlight! link Typedef      Type
 highlight! link SpecialKey   Type
-
 highlight Operator     guifg=#909090 ctermfg=245  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
 highlight! link SpecialChar Operator
 highlight! link Tag         Operator
-
 highlight Delimiter    guifg=#707070 ctermfg=241  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-
-highlight Number       guifg=#b5cea8 ctermfg=151   guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
+highlight Number       guifg=#b5cea8 ctermfg=151  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
 highlight! link Float Number
-
-highlight Identifier   guifg=#9cdcfe ctermfg=117   guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-highlight Special      guifg=#d7ba7d ctermfg=180   guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-highlight Function     guifg=#dcdcaa ctermfg=187   guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
+highlight Identifier   guifg=#9cdcfe ctermfg=117  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
+highlight Special      guifg=#d7ba7d ctermfg=180  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
+highlight Function     guifg=#dcdcaa ctermfg=187  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
 
 """ Plugins
 " NvimTree
@@ -133,7 +119,7 @@ highlight DiagnosticWarn    guifg=#ffaf00 ctermfg=214 guibg=NONE ctermbg=NONE gu
 highlight DiagnosticInfo    guifg=#51a0cf ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
 highlight DiagnosticHint    guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
 
-""" TreeSitter
+" TreeSitter
 highlight TSOperator           guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
 highlight TSPunctBracket       guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
 highlight TSPunctDelimiter     guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
@@ -205,19 +191,23 @@ highlight CmpItemKindUnit        guifg=#909090 ctermfg=245 guibg=NONE ctermbg=NO
 highlight CmpItemKindConstructor guifg=#f28b25 ctermfg=208 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
 highlight CmpItemAbbrDeprecated  guifg=#51504f ctermfg=239 guibg=NONE ctermbg=NONE gui=STRIKETHROUGH cterm=STRIKETHROUGH 
 highlight CmpItemAbbrMatch       guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=BOLD          cterm=BOLD
-highlight! link CmpItemKindClass CmpItemKindConstructor
-highlight! link CmpItemKindModule CmpItemKindKeyword
-highlight! link CmpItemKindOperator TSOperator
-highlight! link CmpItemKindReference TSParameterReference
-highlight! link CmpItemKindValue TSField
-highlight! link CmpItemKindField TSField
-highlight! link CmpItemKindEnum TSField
-highlight! link CmpItemKindSnippet TSText
-highlight! link CmpItemKindColor cssColor
-highlight! link CmpItemKindFile TSURI
-highlight! link CmpItemKindFolder TSURI
-highlight! link CmpItemKindEvent TSConstant
-highlight! link CmpItemKindEnumMember TSField
-highlight! link CmpItemKindConstant TSConstant
-highlight! link CmpItemKindStruct TSStructure
+highlight! link CmpItemKindClass         CmpItemKindConstructor
+highlight! link CmpItemKindModule        CmpItemKindKeyword
+highlight! link CmpItemKindOperator      TSOperator
+highlight! link CmpItemKindReference     TSParameterReference
+highlight! link CmpItemKindValue         TSField
+highlight! link CmpItemKindField         TSField
+highlight! link CmpItemKindEnum          TSField
+highlight! link CmpItemKindSnippet       TSText
+highlight! link CmpItemKindColor         TSConstant
+highlight! link CmpItemKindFile          TSURI
+highlight! link CmpItemKindFolder        TSURI
+highlight! link CmpItemKindEvent         TSConstant
+highlight! link CmpItemKindEnumMember    TSField
+highlight! link CmpItemKindConstant      TSConstant
+highlight! link CmpItemKindStruct        TSStructure
 highlight! link CmpItemKindTypeParameter TSParamete
+
+" Telescope
+highlight! link TelescopeSelection PmenuSel
+highlight! link TelescopeMatching  CmpItemAbbrMatch
