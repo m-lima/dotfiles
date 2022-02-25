@@ -1,7 +1,6 @@
 local lualine_require = require('lualine_require')
 local modules = lualine_require.lazy_require({
   highlight = 'lualine.highlight',
-  utils = 'lualine.utils.utils',
 })
 local filename = require('lualine.components.filename'):extend()
 
@@ -13,9 +12,15 @@ local function paste()
   end
 end
 
--- TODO: This appears to be broken
 local function color_from_hl(name, default)
-  return modules.utils.extract_color_from_hllist('fg', { name }, default)
+  if vim.fn.hlexists(name) == 0 then
+    return default
+  end
+  local color = vim.api.nvim_get_hl_by_name(name, true)
+  if color.foreground ~= nil then
+    return string.format('#%06x', color.foreground)
+  end
+  return default
 end
 
 local changed_buffers = require('lualine.component'):extend()
@@ -27,7 +32,7 @@ function changed_buffers:init(options)
 
   if type(color) == 'string' then
     if string.sub(color, 1, 1) ~= '#' then
-      color = color_from_hl(self.options.color, '#87ff5f')
+      color = color_from_hl(color, '#87ff5f')
     end
   elseif type(color) ~= 'number' then
     return error('Unrecognized color type')
@@ -56,7 +61,7 @@ function filename:init(options)
 
   if type(color) == 'string' then
     if string.sub(color, 1, 1) ~= '#' then
-      color = color_from_hl(self.options.color, '#51a0cf')
+      color = color_from_hl(color, '#51a0cf')
     end
   elseif type(color) ~= 'number' then
     return error('Unrecognized color type')

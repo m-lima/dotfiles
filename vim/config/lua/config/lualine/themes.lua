@@ -1,13 +1,14 @@
-local base_gray = '#3a3a3a'
+local base_fg = '#949494'
+local base_bg = '#3a3a3a'
 
-local middle = { bg = base_gray, fg = '#909090' }
+local middle = { bg = base_bg, fg = '#909090' }
 
 return {
   grayalt = {
     normal = {
       a = {
         bg = '#444444',
-        fg = '#949494',
+        fg = base_fg,
         gui = 'bold',
       },
       b = middle,
@@ -25,7 +26,7 @@ return {
     visual = {
       a = {
         bg = '#5e8759',
-        fg = base_gray,
+        fg = base_bg,
         gui = 'bold',
       },
       b = middle,
@@ -34,7 +35,7 @@ return {
     replace = {
       a = {
         bg = '#0a7aca',
-        fg = base_gray,
+        fg = base_bg,
         gui = 'bold',
       },
       b = middle,
@@ -43,7 +44,7 @@ return {
     terminal = {
       a = {
         bg = '#ffaf87',
-        fg = base_gray,
+        fg = base_bg,
         gui = 'bold',
       },
       b = middle,
@@ -51,8 +52,8 @@ return {
     },
     command = {
       a = {
-        bg = '#874444',
-        fg = '#949494',
+        bg = '#b03030',
+        fg = base_fg,
         gui = 'bold',
       },
       b = middle,
@@ -61,7 +62,7 @@ return {
     inactive = {
       a = {
         bg = '#444444',
-        fg = '#949494',
+        fg = base_fg,
         gui = 'bold',
       },
       b = middle,
