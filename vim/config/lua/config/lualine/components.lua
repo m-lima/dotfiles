@@ -3,7 +3,6 @@ local modules = lualine_require.lazy_require({
   highlight = 'lualine.highlight',
   utils = 'lualine.utils.utils',
 })
--- local highlight = require('lualine.highlight')
 local filename = require('lualine.components.filename'):extend()
 
 local function paste()
@@ -14,7 +13,7 @@ local function paste()
   end
 end
 
-
+-- TODO: This appears to be broken
 local function color_from_hl(name, default)
   return modules.utils.extract_color_from_hllist('fg', { name }, default)
 end
@@ -24,7 +23,7 @@ local changed_buffers = require('lualine.component'):extend()
 function changed_buffers:init(options)
   changed_buffers.super.init(self, options)
 
-  local color = self.options.color and self.options.color or 'GitSignsAdd'
+  local color = self.options.color and self.options.color or 'DiffAdd'
 
   if type(color) == 'string' then
     if string.sub(color, 1, 1) ~= '#' then
@@ -53,7 +52,7 @@ end
 function filename:init(options)
   filename.super.init(self, options)
 
-  local color = self.options.color and self.options.color or 'GitSignsChanged'
+  local color = self.options.color and self.options.color or 'DiffChange'
 
   if type(color) == 'string' then
     if string.sub(color, 1, 1) ~= '#' then
