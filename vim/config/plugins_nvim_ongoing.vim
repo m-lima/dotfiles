@@ -25,7 +25,7 @@ Plug 'vim-scripts/ReplaceWithRegister' " gr
 Plug 'nvim-treesitter/nvim-treesitter-textobjects' " TODO: Completely not configured
 
 " Rice
-Plug 'nvim-lualine/lualine.nvim' " TODO: Double check
+Plug 'nvim-lualine/lualine.nvim'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -33,17 +33,17 @@ Plug 'lewis6991/gitsigns.nvim'
 
 " Navigation
 Plug 'nvim-telescope/telescope.nvim' " TODO: Configure
-Plug 'kyazdani42/nvim-tree.lua'      " TODO: Configure
 Plug 'ahmedkhalf/project.nvim'       " TODO: Double check
+Plug 'kyazdani42/nvim-tree.lua'
 
 " Telescope extensions
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 
 " LSP
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' } " TODO: Configure
-Plug 'neovim/nvim-lspconfig'                                  " TODO: Configure
-Plug 'williamboman/nvim-lsp-installer'                        " TODO: Configure
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/nvim-lsp-installer'
 " Plug 'm-lima/rust-tools.nvim' " Extras for rust-analyzer " TODO: Configure
 " TODO: Watch out for this dependecy.. Changes must be upstream for
   " `on_initialized` : Currently required
@@ -51,6 +51,10 @@ Plug 'williamboman/nvim-lsp-installer'                        " TODO: Configure
   " `toggle_term` : Using local plugin
 Plug '~/code/fork/rust-tools.nvim' " Extras for rust-analyzer " TODO: Configure
 
+" Debugging
+" TODO: Test vim-ldap
+" TODO: Integrate with rust
+Plug 'puremourning/vimspector', { 'on': [ '<Plug>VimspectorLaunch', '<Plug>VimspectorToggleBreakpoint' ] }
 " Completion
 Plug 'hrsh7th/nvim-cmp' " TODO: Configure
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -89,6 +93,7 @@ require('config.quick-scope')
 require('config.telescope')
 require('config.toggleterm')
 require('config.undotree')
+require('config.vimspector')
 require('config.vsession')
 
 -- Personal
