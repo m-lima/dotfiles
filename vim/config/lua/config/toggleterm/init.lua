@@ -1,5 +1,6 @@
 require('toggleterm').setup({
   size = 30,
+  shade_terminals = false,
 })
 
 local map = require('script.helper').map
