@@ -1,13 +1,18 @@
-local h = require('script.helper')
+local map = require('script.helper').map
 
-h.map('n', ']e',                '<cmd>lua vim.diagnostic.goto_next()<CR>')
-h.map('n', '[e',                '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-h.map('n', '<leader>d',         '<cmd>lua vim.lsp.buf.hover()<CR>')
-h.map('n', '<leader><leader>r', '<cmd>lua vim.lsp.buf.rename()<CR>')
-h.map('n', '<leader>r',         '<cmd>lua vim.lsp.codelens.run()<CR>')
+map('n', ']e',                '<cmd>lua vim.diagnostic.goto_next()<CR>')
+map('n', '[e',                '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+map('n', '<leader>d',         '<cmd>lua vim.lsp.buf.hover()<CR>')
+map('n', '<leader><leader>r', '<cmd>lua vim.lsp.buf.rename()<CR>')
+map('n', '<leader>r',         '<cmd>lua vim.lsp.codelens.run()<CR>')
 
--- TODO: Move to grayalt
-h.hi.create('LspReferenceText', { ctermfg = 15, guifg = '#ffffff', gui='underline' })
-h.hi.create('LspReferenceWrite', { ctermfg = 15, guifg = '#ffffff', gui='underline' })
-h.hi.create('LspReferenceRead', { ctermfg = 15, guifg = '#ffffff', gui='underline' })
-h.hi.create('LspCodeLens', { ctermfg = 23, guifg = '#005f5f' })
+vim.diagnostic.config({
+  severity_sort = true,
+})
+
+vim.cmd([[
+  sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=
+  sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=
+  sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=
+  sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=
+]])

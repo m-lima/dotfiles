@@ -21,5 +21,4 @@ end
 return {
   -- TODO: Remove check once done with edits
   map = map_check,
-  hi = vim.highlight,
 }

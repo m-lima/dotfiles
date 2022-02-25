@@ -176,16 +176,19 @@ EOF
 " Warn if overwriting a mark
 " Telescope ougoing and incoming calls
 " Telescope remove repeats
+" Open file from toggleterm
+" Open file from lazygit
 
 """ TO FIX
 " Autoformatting not always working
 " Auto-close of braces does not follow the format
 " Match gutter icons with statusline diagnostics
 " Syntax highlight of inlay hints (bg on cursor line is not respected.. Worth checking what diagnostics do for this)
-" Color of inlay errors
 " Show marks in the gutter
 " Change grayalt to highlight matches on completion popup (maybe also make telescope matches more visible as well)
 " LSP: Really need to know when the async process is running (some kind of status or spineer)
+" Lualine: Modified file color should not be hardcoded. Maybe derive from git modified color
+" Lualine: Lockdown the theme
 
 """ Done
 " C-O that skips jumps within the same file
@@ -198,3 +201,5 @@ EOF
 " Lsp: rust-analyzer doesn't respect cargo.toml on parent directory
 " !! Rooter: Sooooo finnicky!
 " Lsp: codelens is called at the bottom (maybe custom 'nvim-lua/popup.nvim')
+" Selection on grayalt should not override foreground
+" Color of inlay errors
