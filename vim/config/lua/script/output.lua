@@ -1,4 +1,4 @@
-local function buffer(cmd)
+local function float(cmd)
   local str = vim.inspect(cmd)
 
   local lines = {}
@@ -32,9 +32,8 @@ local function buffer(cmd)
   })
 end
 
--- TODO: Temporary
-vim.cmd([[command! -bang -nargs=1 LuaOut lua require('script.output').buffer(<args>)]])
+vim.cmd([[command! -bang -nargs=1 LuaOut lua require('script.output').float(<args>)]])
 
 return {
-  buffer = buffer
+  float = float
 }
