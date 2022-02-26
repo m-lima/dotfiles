@@ -1,5 +1,6 @@
 local M = {}
 
+-- TODO: Customize the colors
 M.namespace = vim.api.nvim_create_namespace('m-lima.inlay')
 M.hl = vim.api.nvim_get_hl_id_by_name('LspCodeLens')
 M.hints = function()

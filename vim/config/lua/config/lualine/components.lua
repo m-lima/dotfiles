@@ -12,7 +12,7 @@ local function paste()
   end
 end
 
-local function color_from_hl(name, default)
+local function extract_fg(name, default)
   if vim.fn.hlexists(name) == 0 then
     return default
   end
@@ -32,7 +32,7 @@ function changed_buffers:init(options)
 
   if type(color) == 'string' then
     if string.sub(color, 1, 1) ~= '#' then
-      color = color_from_hl(color, '#87ff5f')
+      color = extract_fg(color, '#87ff5f')
     end
   elseif type(color) ~= 'number' then
     return error('Unrecognized color type')
@@ -61,7 +61,7 @@ function filename:init(options)
 
   if type(color) == 'string' then
     if string.sub(color, 1, 1) ~= '#' then
-      color = color_from_hl(color, '#51a0cf')
+      color = extract_fg(color, '#51a0cf')
     end
   elseif type(color) ~= 'number' then
     return error('Unrecognized color type')

@@ -1,4 +1,5 @@
 " TODO: Match TreeSitter with regular hl
+" TODO: Shuffle the plugins (bring LSP and TS to the top and link below?)
 
 """ Prepare
 highlight clear
@@ -61,8 +62,19 @@ highlight NonText      guifg=#ff00af ctermfg=199  guibg=NONE    ctermbg=NONE gui
 highlight Conceal      guifg=#606060 ctermfg=240  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE " The opposite of highlight
 highlight Todo         guifg=#d7ba7d ctermfg=180  guibg=NONE    ctermbg=NONE gui=BOLD cterm=BOLD " Todo
 
+""" Diagnostics (LSP Plugin)
+highlight DiagnosticError   guifg=#df5f5f ctermfg=167 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight DiagnosticWarn    guifg=#ffaf00 ctermfg=214 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight DiagnosticInfo    guifg=#51a0cf ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight DiagnosticHint    guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+
+""" Command
+highligh MsgArea guifg=#eeeeee ctermfg=255 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight! link ErrorMsg   DiagnosticError
+highlight! link WarningMsg DiagnosticWarn
+
 """ Text
-highlight Comment      guifg=#ff557c ctermfg=204  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
+highlight Comment      guifg=#ff5faf ctermfg=205  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
 highlight! link SpecialComment Comment
 highlight Statement    guifg=#c586c0 ctermfg=175  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
 highlight! link Define      Statement
@@ -114,10 +126,6 @@ highlight LspReferenceText  guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gu
 highlight LspReferenceWrite guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=UNDERLINE cterm=UNDERLINE
 highlight LspReferenceRead  guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=UNDERLINE cterm=UNDERLINE
 highlight LspCodeLens       guifg=#005f5f ctermfg=23  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
-highlight DiagnosticError   guifg=#df5f5f ctermfg=167 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
-highlight DiagnosticWarn    guifg=#ffaf00 ctermfg=214 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
-highlight DiagnosticInfo    guifg=#51a0cf ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
-highlight DiagnosticHint    guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
 
 " TreeSitter
 highlight TSOperator           guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
