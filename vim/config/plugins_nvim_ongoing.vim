@@ -32,13 +32,14 @@ Plug 'tpope/vim-fugitive'
 Plug 'lewis6991/gitsigns.nvim'
 
 " Navigation
-Plug 'nvim-telescope/telescope.nvim' " TODO: Configure
 Plug 'ahmedkhalf/project.nvim'       " TODO: Double check
+Plug 'nvim-telescope/telescope.nvim'
 Plug 'kyazdani42/nvim-tree.lua'
 
 " Telescope extensions
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-ui-select.nvim'
+Plug 'nvim-telescope/telescope-dap.nvim'
 
 " LSP
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
@@ -49,12 +50,14 @@ Plug 'williamboman/nvim-lsp-installer'
   " `on_initialized` : Currently required
   " `inlay_hints` : Not required. Using local plugin
   " `toggle_term` : Using local plugin
-Plug '~/code/fork/rust-tools.nvim' " Extras for rust-analyzer " TODO: Configure
+" Plug '~/code/fork/rust-tools.nvim' " Extras for rust-analyzer " TODO: Configure
 
 " Debugging
 " TODO: Test vim-ldap
 " TODO: Integrate with rust
-Plug 'puremourning/vimspector', { 'on': [ '<Plug>VimspectorLaunch', '<Plug>VimspectorToggleBreakpoint' ] }
+" Plug 'puremourning/vimspector', { 'on': [ '<Plug>VimspectorLaunch', '<Plug>VimspectorToggleBreakpoint' ] }
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
 " Completion
 Plug 'hrsh7th/nvim-cmp' " TODO: Configure
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -81,6 +84,7 @@ call plug#end()
 lua <<EOF
 require('config.cmp')
 require('config.comment')
+require('config.dap')
 require('config.fugitive')
 require('config.gitsigns')
 require('config.lspconfig')
@@ -93,7 +97,7 @@ require('config.quick-scope')
 require('config.telescope')
 require('config.toggleterm')
 require('config.undotree')
-require('config.vimspector')
+-- require('config.vimspector')
 require('config.vsession')
 
 -- Personal
@@ -190,7 +194,6 @@ EOF
 " Match gutter icons with statusline diagnostics
 " Syntax highlight of inlay hints (bg on cursor line is not respected.. Worth checking what diagnostics do for this)
 " Show marks in the gutter
-" Change grayalt to highlight matches on completion popup (maybe also make telescope matches more visible as well)
 " LSP: Really need to know when the async process is running (some kind of status or spineer)
 " Lualine: Modified file color should not be hardcoded. Maybe derive from git modified color
 " Lualine: Lockdown the theme
@@ -208,3 +211,4 @@ EOF
 " Lsp: codelens is called at the bottom (maybe custom 'nvim-lua/popup.nvim')
 " Selection on grayalt should not override foreground
 " Color of inlay errors
+" Change grayalt to highlight matches on completion popup (maybe also make telescope matches more visible as well)

@@ -108,7 +108,7 @@ highlight Function     guifg=#dcdcaa ctermfg=187  guibg=NONE    ctermbg=NONE gui
 
 """ Plugins
 " NvimTree
-if !(exists('g:simpalt_transparent_nvimtree') &&g:simpalt_transparent_nvimtree)
+if !(exists('g:simpalt_transparent_nvimtree') && g:simpalt_transparent_nvimtree)
   highlight NvimTreeNormal      guifg=#909090 ctermfg=245  guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
   highlight NvimTreeVertSplit   guifg=#262626 ctermfg=235  guibg=#262626 ctermbg=235 gui=NONE cterm=NONE
   highlight NvimTreeEndOfBuffer guifg=#303030 ctermfg=236  guibg=#303030 ctermbg=236 gui=NONE cterm=NONE

@@ -41,13 +41,17 @@ telescope.setup({
   extensions = {
     ["ui-select"] = {
       require("telescope.themes").get_dropdown {}
-    }
+    },
+    ["dap"] = {
+      require("telescope.themes").get_dropdown {}
+    },
   }
 })
 
 telescope.load_extension('fzf')
 telescope.load_extension('projects')
 telescope.load_extension('ui-select')
+telescope.load_extension('dap')
 
 vim.cmd([[command! -bang -nargs=1 Rg lua require('telescope.builtin').grep_string({ disable_coordinates=true, search=<q-args> })]])
 
