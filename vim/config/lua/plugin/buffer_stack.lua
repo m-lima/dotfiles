@@ -1,6 +1,3 @@
--- Hops through the jumplist while jumps are within the same file
--- TODO: Maybe keep a stack that gets populated on autocommand? This would work separately from the jumplist
-
 local get_jumplist = function()
   local raw_jumplist = vim.fn.getjumplist()
   return raw_jumplist[1], raw_jumplist[2] + 1

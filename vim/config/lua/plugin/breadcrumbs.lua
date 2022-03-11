@@ -7,28 +7,6 @@ local default_config = {
   open_selected = { 'o', '<CR>' },
 }
 
--- local prepare_hl = function()
---   local hl = {}
---   local normal = {}
---
---   hl = vim.api.nvim_get_hl_by_name('Pmenu', true)
---   normal.gui
---
---   local normal = {
---     gui = string.format('#%06x', vim.api.nvim_get_hl_by_name('Pmenu', true)),
---     cterm = string.format('#%06x', vim.api.nvim_get_hl_by_name('Pmenu', false)),
---   }
---
---   local selected = {
---     gui = string.format('#%06x', vim.api.nvim_get_hl_by_name('Visual', true)),
---     cterm = string.format('#%06x', vim.api.nvim_get_hl_by_name('Visual', false)),
---   }
---
---   vim.highlight.create('mlima_breadcrumbs_normal',   { guifg = selected.gui, ctermfg = selected.cterm, guibg = normal.gui, ctermbg = normal.cterm })
---   vim.highlight.create('mlima_breadcrumbs_selected', { guifg = normal.gui, ctermfg = normal.cterm, guibg = selected.gui, ctermbg = selected.cterm })
---   vim.highlight.create('mlima_breadcrumbs_cursor',   { guifg = 1, ctermfg = 1, guibg = 1, ctermbg = 1, blend = 100 })
--- end
-
 local prepare_hl = function()
   local normal = vim.api.nvim_get_hl_by_name('Pmenu', true)
   local visual = vim.api.nvim_get_hl_by_name('Visual', true)
