@@ -30,8 +30,6 @@ local default_config = {
 -- end
 
 local prepare_hl = function()
-  vim.notify('Updating hl')
-
   local normal = vim.api.nvim_get_hl_by_name('Pmenu', true)
   local visual = vim.api.nvim_get_hl_by_name('Visual', true)
 
@@ -82,7 +80,6 @@ end
 local render = function(breadcrumbs)
   vim.api.nvim_buf_clear_namespace(breadcrumbs.bufnr, namespace, 0, -1)
 
-  -- TODO: Avoid repeating adding the text and only replace the divs
   local stringified = ' ' .. breadcrumbs.names[1]
   local divs = {}
   for i = 2,#breadcrumbs.names do
@@ -127,6 +124,25 @@ local render = function(breadcrumbs)
   if breadcrumbs.selected < #breadcrumbs.names then
     vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_normal', 0, stop, stop + 2)
   end
+end
+
+local create_popup = function(config, names, locations)
+  if #names == 0 then return end
+
+  local width = #names - 1
+  for _, v in ipairs(names) do
+    width = width + vim.api.nvim_strwidth(v) + 2
+  end
+  local bufnr = prepare_popup(config, width)
+  local selected = #names
+  vim.opt.guicursor:append('a:mlima_breadcrumbs_cursor')
+
+  return {
+    bufnr = bufnr,
+    names = names,
+    locations = locations,
+    selected = selected,
+  }
 end
 
 local make_location_param = function(location)
@@ -194,32 +210,7 @@ local traverse_parents = function(err, res, ctx)
   return names, locations
 end
 
-local create_popup = function(config, names, locations)
-  if #names == 0 then return end
-
-  local width = #names - 1
-  for _, v in ipairs(names) do
-    width = width + vim.api.nvim_strwidth(v) + 2
-  end
-  local bufnr = prepare_popup(config, width)
-  local selected = #names
-  vim.opt.guicursor:append('a:mlima_breadcrumbs_cursor')
-
-  return {
-    bufnr = bufnr,
-    names = names,
-    locations = locations,
-    selected = selected,
-  }
-end
-
 local M = {}
-
-local traverse_and_show = function(err, res, ctx)
-  local names, locations = traverse_parents(err, res, ctx)
-  M.breadcrumbs = create_popup(names, locations)
-  render(M.breadcrumbs)
-end
 
 M.show = function(config)
   config = vim.tbl_extend('force', default_config, config or {})
