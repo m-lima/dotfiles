@@ -17,7 +17,6 @@ require('nvim-lsp-installer').on_server_ready(
             autocmd BufWritePre                     <buffer> silent! lua vim.lsp.buf.formatting_sync()
           augroup END
         ]])
-        vim.lsp.codelens.refresh()
       end,
     }
 

@@ -69,6 +69,7 @@ local prepare = function(opts)
       augroup END
     ]])
     require('plugin.inlay').refresh()
+    vim.lsp.codelens.refresh()
   end
 
   return require('plugin.defer_lsp').make_deferred(opts)
