@@ -33,7 +33,7 @@ highlight Title        guifg=#afff87 ctermfg=156  guibg=NONE    ctermbg=NONE gui
 
 """ Windowing
 highlight FloatBorder  guifg=#585858 ctermfg=240  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-highlight Pmenu        guifg=#bcbcbc ctermfg=250  guibg=#222222 ctermbg=234  gui=NONE cterm=NONE
+highlight Pmenu        guifg=#bcbcbc ctermfg=250  guibg=#1c1c1c ctermbg=234  gui=NONE cterm=NONE
 highlight PmenuSbar    guifg=NONE    ctermfg=NONE guibg=#3a3a3a ctermbg=237  gui=NONE cterm=NONE
 highlight PmenuSel     guifg=NONE    ctermfg=NONE guibg=#004b72 ctermbg=24   gui=NONE cterm=NONE
 highlight PmenuThumb   guifg=NONE    ctermfg=NONE guibg=#bcbcbc ctermbg=250  gui=NONE cterm=NONE

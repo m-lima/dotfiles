@@ -32,9 +32,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'lewis6991/gitsigns.nvim'
 
 " Navigation
-Plug 'ahmedkhalf/project.nvim'       " TODO: Double check
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'kyazdani42/nvim-tree.lua'
+Plug 'ahmedkhalf/project.nvim'
 
 " Telescope extensions
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
@@ -58,6 +58,7 @@ Plug 'williamboman/nvim-lsp-installer'
 " Plug 'puremourning/vimspector', { 'on': [ '<Plug>VimspectorLaunch', '<Plug>VimspectorToggleBreakpoint' ] }
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
+
 " Completion
 Plug 'hrsh7th/nvim-cmp' " TODO: Configure
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -87,9 +88,9 @@ require('config.comment')
 require('config.dap')
 require('config.fugitive')
 require('config.gitsigns')
+require('config.lsp-installer')
 require('config.lspconfig')
 require('config.lualine')
-require('config.nvim-lsp-installer')
 require('config.nvim-tree')
 require('config.nvim-treesitter')
 require('config.project')
@@ -103,7 +104,7 @@ require('config.vsession')
 -- Personal
 require('plugin.buffer_stack')
 require('plugin.dupe_comment')
--- TODO: Temporary
+require('plugin.breadcrumbs')
 require('script.output')
 EOF
 
@@ -197,6 +198,7 @@ EOF
 " LSP: Really need to know when the async process is running (some kind of status or spineer)
 " Lualine: Modified file color should not be hardcoded. Maybe derive from git modified color
 " Lualine: Lockdown the theme
+" Telescope opening a file while focused on nvimtree, does not open on main pane
 
 """ Done
 " C-O that skips jumps within the same file

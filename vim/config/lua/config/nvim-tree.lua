@@ -11,7 +11,7 @@ require('nvim-tree').setup({
     update_cwd = true,
   },
   view = {
-    width = '20%',
+    width = '30%',
     hide_root_folder = true,
   },
   git = {

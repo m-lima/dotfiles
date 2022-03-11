@@ -1,7 +1,7 @@
-local namespace = vim.api.nvim_create_namespace('m-lima.inlay')
+local namespace = vim.api.nvim_create_namespace('mlima.inlay')
 local hl = vim.api.nvim_get_hl_id_by_name('LspCodeLens')
 
-local hints = function()
+local refresh = function()
   vim.lsp.buf_request(
     0,
     'rust-analyzer/inlayHints',
@@ -36,11 +36,11 @@ end
 local set_hl_group = function(name)
   if vim.fn.hlexists(name) ~= 0 then
     hl = vim.api.nvim_get_hl_id_by_name(name)
-    hints()
+    refresh()
   end
 end
 
 return {
-  hints = hints,
+  refresh = refresh,
   set_hl_group = set_hl_group,
 }
