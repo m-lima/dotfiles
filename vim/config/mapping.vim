@@ -14,7 +14,7 @@ inoremap <C-\> \
 vnoremap \ <Esc>
 vnoremap <C-\> \
 
-" Use ESC to exit insert mode in :term
+" Configure term "quit insert mode"
 if has("nvim")
   tnoremap <C-\> <C-\><C-n>
 endif
