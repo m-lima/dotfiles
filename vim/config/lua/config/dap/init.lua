@@ -10,7 +10,8 @@ map('n', '<F6>',  '<cmd>lua require("dap").run_last()<CR>')
 map('n', '<F7>',  '<cmd>lua require("dap").step_into()<CR>')
 map('n', '<F8>',  '<cmd>lua require("dap").step_over()<CR>')
 map('n', '<F9>',  '<cmd>lua require("dap").step_out()<CR>')
-map('n', '<F10>', '<cmd>lua require("dap").repl.open()<CR>')
+map('n', '<F10>', '<cmd>lua require("dap").terminate()<CR>')
+map('n', '<F11>', '<cmd>lua require("dap").repl.open()<CR>')
 
 vim.cmd([[
   sign define DapBreakpoint          text=●  texthl=DiagnosticError linehl= numhl=
