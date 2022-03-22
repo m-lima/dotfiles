@@ -14,8 +14,16 @@ vim.lsp.commands['rust-analyzer.runSingle'] = function(cmd)
     for _,v in ipairs(arguments.args.executableArgs or {}) do
       cmd = cmd .. ' ' .. v
     end
+
+    if arguments.args.cargoArgs[1] == 'run' then
+      local args = vim.fn.input('Args: ')
+      if args and #args > 0 then
+        cmd = cmd .. ' ' .. args
+      end
+    end
+
     local cwd = arguments.workspaceRoot
-    require('config.toggleterm.extension.runner').execute_command(cmd, cwd)
+    require('config.toggleterm.extension').runner(cmd, cwd)
   end
 end
 
