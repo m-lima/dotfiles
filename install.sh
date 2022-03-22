@@ -676,7 +676,7 @@ then
   installFile s vim init.vim .config/nvim
   installFile s vim grayalt.vim .config/nvim/colors
   installFile s vim simpalt.vim .config/nvim/colors
-  installFile s vim config/lua .config/nvim
+  installFile s vim/config lua .config/nvim
 else
   echo "[33mSkipping NeoVim links[m"
 fi
