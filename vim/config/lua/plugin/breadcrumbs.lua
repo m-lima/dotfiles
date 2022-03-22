@@ -105,8 +105,6 @@ local render = function(breadcrumbs)
 end
 
 local create_popup = function(config, names, locations)
-  if #names == 0 then return end
-
   local width = #names - 1
   for _, v in ipairs(names) do
     width = width + vim.api.nvim_strwidth(v) + 2
@@ -198,7 +196,14 @@ M.show = function(config)
     'experimental/parentModule',
     vim.lsp.util.make_position_params(),
     function(err, res, ctx)
+      if err or res == nil or vim.tbl_isempty(res) then
+        vim.notify('Could not find parent module', vim.log.levels.INFO)
+        return
+      end
+
       local names, locations = traverse_parents(err, res, ctx)
+
+      if #names == 0 then return end
       M.breadcrumbs = create_popup(config, names, locations)
       render(M.breadcrumbs)
     end
