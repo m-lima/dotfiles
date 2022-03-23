@@ -121,6 +121,20 @@ local prepare = function(opts)
     vim.lsp.codelens.refresh()
   end
 
+  opts.settings = {
+    ['rust-analyzer'] = {
+      inlayHints = {
+        chainingHints = true,
+        parameterHints = false,
+        reborrowHints = true,
+        typeHints = true,
+        closureReturnTypeHints = true,
+        maxLength = 100,
+        renderColons = true,
+      },
+    },
+  }
+
   return require('plugin.defer_lsp').make_deferred(opts)
 end
 

@@ -4,7 +4,7 @@ local hl = vim.api.nvim_get_hl_id_by_name('LspCodeLens')
 local refresh = function()
   vim.lsp.buf_request(
     0,
-    'rust-analyzer/inlayHints',
+    'experimental/inlayHints',
     { textDocument = vim.lsp.util.make_text_document_params(), },
     function(err, res, ctx)
       if err then
@@ -12,21 +12,19 @@ local refresh = function()
       end
 
       vim.api.nvim_buf_clear_namespace(ctx.bufnr, namespace, 0, -1)
+      local root = vim.treesitter.get_parser(ctx.bufnr):parse()[1]:root()
 
       for _, v in ipairs(res) do
-        if v.kind == 'TypeHint' then
-          if v.range.start.line == v.range['end'].line then
-            local start = v.range.start
-            local finish = v.range['end']
-            local var = string.sub(vim.api.nvim_buf_get_lines(ctx.bufnr, start.line, start.line + 1, false)[1], start.character + 1, finish.character)
-            local line = start.line
-            local str = var .. ': ' .. v.label
-            vim.api.nvim_buf_set_extmark(ctx.bufnr, namespace, line, 0, { virt_text = {{ str, hl }}, hl_mode = 'combine' })
+        if v.kind == 1 then
+          local str = nil
+          if v.label:find(': ', 1, true) == 1 then
+            local _, start, _, finish = root:named_descendant_for_range(v.position.line, v.position.character - 1, v.position.line, v.position.character - 1):range()
+            local var = string.sub(vim.api.nvim_buf_get_lines(ctx.bufnr, v.position.line, v.position.line + 1, false)[1], start + 1, finish)
+            str = var .. v.label
+          else
+            str = '‣' .. v.label
           end
-        elseif v.kind == 'ChainingHint' then
-          local line = v.range['end'].line
-          local str = '‣' .. v.label
-          vim.api.nvim_buf_set_extmark(ctx.bufnr, namespace, line, 0, { virt_text = {{ str, hl }}, hl_mode = 'combine' })
+          vim.api.nvim_buf_set_extmark(ctx.bufnr, namespace, v.position.line, 0, { virt_text = {{ str, hl }}, hl_mode = 'combine' })
         end
       end
     end
