@@ -1,4 +1,4 @@
-local clients = {}
+local trackers = {}
 
 local make_deferred = function(opts, one_shot)
   if not opts.handlers then
@@ -6,27 +6,27 @@ local make_deferred = function(opts, one_shot)
   end
 
   local on_attach = opts.on_attach
-  local deferred_attach = function(bufnr)
-    vim.api.nvim_buf_call(bufnr, on_attach)
+  local deferred_attach = function(client, bufnr)
+    vim.api.nvim_buf_call(bufnr, function() on_attach(client, bufnr) end)
   end
 
   opts.handlers = {
     ['experimental/serverStatus'] = function(err, res, ctx)
       if not err and res.quiescent then
-        local client_instance = clients[ctx.client_id]
+        local tracked_instance = trackers[ctx.client_id]
         if one_shot then
           one_shot()
         end
-        if client_instance then
-          client_instance.done = true
-          if client_instance.queue then
-            for _, bufnr in ipairs(client_instance.queue) do
-              deferred_attach(bufnr)
+        if tracked_instance then
+          tracked_instance.done = true
+          if tracked_instance.queue then
+            local tracked_client = vim.lsp.get_client_by_id(ctx.client_id)
+            for _, bufnr in ipairs(tracked_instance.queue) do
+              deferred_attach(tracked_client, bufnr)
             end
-            client_instance = nil
           end
         else
-          clients[ctx.client_id] = {
+          trackers[ctx.client_id] = {
             done = true
           }
         end
@@ -35,15 +35,15 @@ local make_deferred = function(opts, one_shot)
   }
 
   opts.on_attach = function(client, bufnr)
-    local client_instance = clients[client.id]
-    if client_instance then
-      if client_instance.done then
-        deferred_attach(bufnr)
+    local tracked_instance = trackers[client.id]
+    if tracked_instance then
+      if tracked_instance.done then
+        deferred_attach(client, bufnr)
       else
-        table.insert(client_instance.queue, bufnr)
+        table.insert(tracked_instance.queue, bufnr)
       end
     else
-      clients[client.id] = {
+      trackers[client.id] = {
         queue = { bufnr }
       }
     end

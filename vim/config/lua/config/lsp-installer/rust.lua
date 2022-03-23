@@ -109,8 +109,8 @@ local prepare = function(opts)
   opts.root_dir = root_dir
 
   local on_attach = opts.on_attach
-  opts.on_attach = function()
-    on_attach()
+  opts.on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
     vim.cmd([[
       augroup pluginRustLsp
         autocmd! * <buffer>

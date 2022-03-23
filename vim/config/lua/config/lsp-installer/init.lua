@@ -2,25 +2,52 @@
 
 local cmp_capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+local make_on_attach = function(opts)
+  return function(client)
+    local autocmd = ''
+    if opts.codelens and client.resolved_capabilities.code_lens then
+      autocmd = autocmd .. '\nautocmd BufEnter,CursorHold,InsertLeave <buffer> silent! lua vim.lsp.codelens.refresh()'
+    end
+    if opts.format then
+      if type(opts.format) == 'string' then
+        autocmd = autocmd .. '\nautocmd BufWritePre                   <buffer> ' .. opts.format
+      elseif client.resolved_capabilities.document_formatting then
+        autocmd = autocmd .. '\nautocmd BufWritePre                   <buffer> silent! lua vim.lsp.buf.formatting_sync()'
+      end
+    end
+    if opts.highlight and client.resolved_capabilities.document_highlight then
+      autocmd = autocmd .. '\nautocmd CursorHold                      <buffer> silent! lua vim.lsp.buf.document_highlight()'
+      autocmd = autocmd .. '\nautocmd CursorMoved,InsertEnter         <buffer> silent! lua vim.lsp.buf.clear_references()'
+    end
+
+    if #autocmd > 0 then
+      autocmd = 'augroup pluginLsp_' .. client.name .. '\nautocmd! * <buffer>' .. autocmd .. '\naugroup END'
+      vim.cmd(autocmd)
+    end
+  end
+end
+
 require('nvim-lsp-installer').on_server_ready(
   function(server)
+    local on_attach_opts = {
+      codelens = true,
+      format = true,
+      highlight = true,
+      mapping = {
+        error = true,
+        hover = true,
+        rename = true,
+        run = true,
+        telescope = true,
+      },
+    }
+
     local opts = {
       capabilities = cmp_capabilities,
-      on_attach = function()
-        -- TODO: Update this when the API for autocmd stabilizes
-        vim.cmd([[
-          augroup pluginLsp
-            autocmd! * <buffer>
-            autocmd CursorHold                      <buffer> silent! lua vim.lsp.buf.document_highlight()
-            autocmd CursorMoved,InsertEnter         <buffer> silent! lua vim.lsp.buf.clear_references()
-            autocmd BufEnter,CursorHold,InsertLeave <buffer> silent! lua vim.lsp.codelens.refresh()
-            autocmd BufWritePre                     <buffer> silent! lua vim.lsp.buf.formatting_sync()
-          augroup END
-        ]])
-      end,
     }
 
     if server.name == 'rust_analyzer' then
+      opts.on_attach = make_on_attach(on_attach_opts)
       require('config.lsp-installer.rust').prepare(opts)
 
       -- -- opts.settings = {
@@ -74,7 +101,14 @@ require('nvim-lsp-installer').on_server_ready(
           },
         }
       }
+    elseif server.name == 'volar' then
+      on_attach_opts.format = false
+    elseif server.name == 'eslint' then
+      on_attach_opts.format = 'EslintFixAll'
+    end
+
+    if not opts.on_attach then
+      opts.on_attach = make_on_attach(on_attach_opts)
     end
     server:setup(opts)
-end
-)
+end)
