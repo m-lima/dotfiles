@@ -177,7 +177,7 @@ local traverse_parents = function(err, res, ctx)
 
     res, err =  vim.lsp.buf_request_sync(0, 'experimental/parentModule', make_location_param(res), 1000)
     if err then
-      vim.notify(err, vim.log.levels.ERR)
+      vim.notify('Error while building breadcrumbs: ' .. err, vim.log.levels.ERR)
       break
     end
     res = res[client].result
