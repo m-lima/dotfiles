@@ -6,18 +6,23 @@ local make_on_attach = function(opts)
   return function(client)
     local autocmd = ''
     if opts.codelens and client.resolved_capabilities.code_lens then
-      autocmd = autocmd .. '\nautocmd BufEnter,CursorHold,InsertLeave <buffer> silent! lua vim.lsp.codelens.refresh()'
+      autocmd = autocmd .. '\nautocmd BufEnter,CursorHold,InsertLeave  <buffer> silent! lua vim.lsp.codelens.refresh()'
+      vim.lsp.codelens.refresh()
     end
     if opts.format then
       if type(opts.format) == 'string' then
-        autocmd = autocmd .. '\nautocmd BufWritePre                   <buffer> ' .. opts.format
+        autocmd = autocmd .. '\nautocmd BufWritePre                    <buffer> ' .. opts.format
       elseif client.resolved_capabilities.document_formatting then
-        autocmd = autocmd .. '\nautocmd BufWritePre                   <buffer> silent! lua vim.lsp.buf.formatting_sync()'
+        autocmd = autocmd .. '\nautocmd BufWritePre                    <buffer> silent! lua vim.lsp.buf.formatting_sync()'
       end
     end
     if opts.highlight and client.resolved_capabilities.document_highlight then
-      autocmd = autocmd .. '\nautocmd CursorHold                      <buffer> silent! lua vim.lsp.buf.document_highlight()'
-      autocmd = autocmd .. '\nautocmd CursorMoved,InsertEnter         <buffer> silent! lua vim.lsp.buf.clear_references()'
+      autocmd = autocmd .. '\nautocmd CursorHold                       <buffer> silent! lua vim.lsp.buf.document_highlight()'
+      autocmd = autocmd .. '\nautocmd CursorMoved,InsertEnter          <buffer> silent! lua vim.lsp.buf.clear_references()'
+    end
+    if opts.inlay and client.server_capabilities.experimental and client.server_capabilities.experimental.inlayHints then
+      autocmd = autocmd .. '\nautocmd BufEnter,TextChanged,InsertLeave <buffer> silent! lua require("plugin.inlay").refresh()'
+      require('plugin.inlay').refresh()
     end
 
     if #autocmd > 0 then
@@ -33,6 +38,7 @@ require('nvim-lsp-installer').on_server_ready(
       codelens = true,
       format = true,
       highlight = true,
+      inlay = true,
       mapping = {
         error = true,
         hover = true,
