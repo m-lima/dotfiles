@@ -1,4 +1,4 @@
-local utils = require('lspconfig.util')
+vim.cmd([[command! -bang RustReload lua vim.lsp.buf_request(0, 'rust-analyzer/reloadWorkspace', nil, function(err, res, ctx) if err then vim.notify(err) end end)]])
 
 vim.lsp.commands['rust-analyzer.runSingle'] = function(cmd)
   if cmd then
