@@ -2365,7 +2365,7 @@ Show Toolbelt</string>
 			<key>Non-ASCII Ligatures</key>
 			<false/>
 			<key>Normal Font</key>
-			<string>DejaVuSansMonoNerdFontCompleteM-Book 11</string>
+			<string>DejaVuSansMonoNerdFontCompleteM-Book 10</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<true/>
 			<key>Option Key Sends</key>
@@ -2793,7 +2793,7 @@ Show Toolbelt</string>
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Use Non-ASCII Font</key>
-			<true/>
+			<false/>
 			<key>Use Tab Color</key>
 			<false/>
 			<key>Vertical Spacing</key>
