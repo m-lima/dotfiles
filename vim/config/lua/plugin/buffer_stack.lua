@@ -59,6 +59,7 @@ local delete = function()
   end
 
   local bufnr = vim.api.nvim_get_current_buf()
+  local modified = vim.bo.modified
 
   if not backward() then
     for b in bufs do
@@ -69,7 +70,14 @@ local delete = function()
     vim.notify('Seems like this is the last loaded buffer', vim.log.levels.WARN)
     return
   end
-  vim.api.nvim_buf_delete(bufnr, {})
+
+  if modified then
+    local should_force = vim.fn.input('Buffer is modified. Force quit? [Y/n] ')
+    if should_force == 'n' or should_force == 'N' then
+      return
+    end
+  end
+  vim.api.nvim_buf_delete(bufnr, { force = true })
 end
 
 local map = require('script.helper').map
