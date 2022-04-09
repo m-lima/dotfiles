@@ -33,7 +33,7 @@ function fullPath {
   cd `dirname "${targetFile}"`
   targetFile=`basename "${targetFile}"`
 
-  # Compute the canonicalized name by finding the physical path 
+  # Compute the canonicalized name by finding the physical path
   # for the directory we're in and appending the target file.
   physDir=`pwd -P`
   result="${physDir}/${targetFile}"
@@ -57,9 +57,7 @@ function checkContinue {
   echo -n "Continue? [y/N] "
   read input
   case ${input} in
-    [Yy] )
-      return 0;
-      ;;
+    [Yy] ) return 0 ;;
   esac
 
   exit
