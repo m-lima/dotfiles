@@ -1,6 +1,4 @@
-local function float(cmd)
-  local str = vim.inspect(cmd)
-
+local float_raw = function(str, ft)
   local lines = {}
   for line in str:gmatch('([^\n]+)') do
     table.insert(lines, line)
@@ -18,7 +16,7 @@ local function float(cmd)
   local target = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_option(target, 'bufhidden', 'wipe')
   vim.api.nvim_buf_set_keymap(target, '', '<Esc>', '<cmd>q!<CR>', { noremap = true, silent = true })
-  vim.api.nvim_buf_set_option(target, 'filetype', 'lua')
+  vim.api.nvim_buf_set_option(target, 'filetype', ft)
   vim.api.nvim_buf_set_lines(target, 0, #lines, false, lines)
   vim.api.nvim_buf_set_option(target, 'readonly', true)
 
@@ -32,8 +30,15 @@ local function float(cmd)
   })
 end
 
+local float = function(cmd)
+  local str = vim.inspect(cmd)
+
+  float_raw(str, 'lua')
+end
+
 vim.cmd([[command! -bang -nargs=1 LuaOut lua require('script.output').float(<args>)]])
 
 return {
-  float = float
+  float = float,
+  float_raw = float_raw
 }

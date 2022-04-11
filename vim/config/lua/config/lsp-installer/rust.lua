@@ -1,17 +1,15 @@
-vim.cmd([[command! -bang RustReload lua vim.lsp.buf_request(0, 'rust-analyzer/reloadWorkspace', nil, function(err, res, ctx) if err then vim.notify(err) end end)]])
-
 vim.lsp.commands['rust-analyzer.runSingle'] = function(cmd)
   if cmd then
     local arguments = cmd.arguments[1]
     cmd = 'cargo'
-    for _,v in ipairs(arguments.args.cargoArgs or {}) do
+    for _, v in ipairs(arguments.args.cargoArgs or {}) do
       cmd = cmd .. ' ' .. v
     end
-    for _,v in ipairs(arguments.args.cargoExtraArgs or {}) do
+    for _, v in ipairs(arguments.args.cargoExtraArgs or {}) do
       cmd = cmd .. ' ' .. v
     end
     cmd = cmd .. ' --'
-    for _,v in ipairs(arguments.args.executableArgs or {}) do
+    for _, v in ipairs(arguments.args.executableArgs or {}) do
       cmd = cmd .. ' ' .. v
     end
 
@@ -64,8 +62,7 @@ vim.lsp.commands['rust-analyzer.debugSingle'] = function(cmd)
         end
       end)
     end,
-  })
-  :start()
+  }):start()
 end
 
 local prepare = function(opts)
@@ -82,6 +79,13 @@ local prepare = function(opts)
       },
     },
   }
+
+  local on_attach = opts.on_attach
+  opts.on_attach = function(client)
+    on_attach(client)
+    vim.cmd([[command! -buffer -bang RustReload lua vim.lsp.buf_request(0, 'rust-analyzer/reloadWorkspace', nil, function(err, res, ctx) if err then vim.notify(err, vim.log.level.ERROR) end end)]])
+    vim.cmd([[command! -buffer -bang RustExpand lua vim.lsp.buf_request(0, 'rust-analyzer/expandMacro', vim.lsp.util.make_position_params(), function(err, res, ctx) if err then notify(err, vim.log.level.ERROR) else require('script.output').float_raw(res.expansion, 'rust') end end)]])
+  end
 
   return require('plugin.defer_lsp').make_deferred(opts)
 end
