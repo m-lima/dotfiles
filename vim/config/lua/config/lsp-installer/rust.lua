@@ -77,6 +77,10 @@ local prepare = function(opts)
         maxLength = 100,
         renderColons = true,
       },
+      checkOnSave = {
+        command = 'clippy',
+        extraArgs = { '--', '-W', 'clippy::pedantic' },
+      },
     },
   }
 

@@ -1,5 +1,3 @@
--- require('rust-tools').setup({})
-
 local cmp_capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local make_on_attach = function(opts)
@@ -50,43 +48,25 @@ require('nvim-lsp-installer').on_server_ready(
 
     local opts = {
       capabilities = cmp_capabilities,
+      on_init = function(client)
+        local root = client.config.root_dir or vim.fn.getcwd()
+        if root then
+          local ok, cfg = pcall(dofile, root .. '/.vim/lspconfig.lua')
+          if ok then
+            client.config.settings = vim.tbl_deep_extend('force', client.config.settings, cfg)
+            return true
+          end
+        end
+      end
     }
 
     if server.name == 'rust_analyzer' then
       opts.on_attach = make_on_attach(on_attach_opts)
       require('config.lsp-installer.rust').prepare(opts)
-
-      -- -- opts.settings = {
-      -- --   -- TODO: Make this project specific
-      -- --   ['rust-analyzer'] = {
-      -- --     checkOnSave = {
-      -- --       command = 'clippy',
-      -- --       extraArgs = { '--', '-W', 'clippy::pedantic' },
-      -- --     },
-      -- --   },
-      -- -- }
-      -- -- TODO: PR upstream with toggleterm config
-      -- -- TODO: PR upstream with inlayTrigger
-      -- require('rust-tools').setup {
-      --   server = vim.tbl_deep_extend('force', opts, server:get_default_options()),
-      --   tools = {
-      --     autoSetHints = false,
-      --     -- inlay_hints = {
-      --     --   show_variable_name = true,
-      --     --   show_parameter_hints = false,
-      --     --   parameter_hints_prefix = '',
-      --     --   other_hints_prefix = '‣',
-      --     --   highlight = 'LspCodeLens',
-      --     -- },
-      --     executor = require('config.toggleterm.extension.rust_tools'),
-      --     hover_actions = {
-      --       border = {},
-      --       auto_focus = true,
-      --     },
-      --   },
-      -- }
-      -- server:attach_buffers()
-      -- return
+      -- TODO: PR rust-tools with toggleterm config
+      -- TODO: PR rust-tools with inlayTrigger
+      -- TODO: PR rust-tools with new inlays
+      -- TODO: PR rust-tools with module popup
     elseif server.name == 'sumneko_lua' then
       -- TODO: Do this only if working with vim files
       -- TODO: Not quite working.. The global is ok, but the inspection into library is not
@@ -97,7 +77,7 @@ require('nvim-lsp-installer').on_server_ready(
             path = vim.split(package.path, ';'),
           },
           diagnostics = {
-            globals = {'vim'},
+            globals = { 'vim' },
           },
           workspace = {
             library = {
@@ -117,4 +97,5 @@ require('nvim-lsp-installer').on_server_ready(
       opts.on_attach = make_on_attach(on_attach_opts)
     end
     server:setup(opts)
-end)
+  end
+)
