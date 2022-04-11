@@ -12,14 +12,17 @@ local function paste()
   end
 end
 
-local function extract_fg(name, default)
+local function extract_color(name, default, background)
   if vim.fn.hlexists(name) == 0 then
     return default
   end
+
   local color = vim.api.nvim_get_hl_by_name(name, true)
-  if color.foreground ~= nil then
-    return string.format('#%06x', color.foreground)
+  local ref = background and color.background or color.foreground
+  if ref then
+    return string.format('#%06x', ref)
   end
+
   return default
 end
 
@@ -28,24 +31,32 @@ local changed_buffers = require('lualine.component'):extend()
 function changed_buffers:init(options)
   changed_buffers.super.init(self, options)
 
-  local color = self.options.color and self.options.color or 'DiffAdd'
+  local fg = self.options.color and self.options.color.fg and self.options.color.fg or '#3a3a3a'
+  local bg = self.options.color and self.options.color.bg and self.options.color.bg or 'DiffChange'
 
-  if type(color) == 'string' then
-    if string.sub(color, 1, 1) ~= '#' then
-      color = extract_fg(color, '#87ff5f')
+  if type(fg) == 'string' then
+    if string.sub(fg, 1, 1) ~= '#' then
+      fg = extract_color(fg, '#3a3a3a')
     end
-  elseif type(color) ~= 'number' then
-    return error('Unrecognized color type')
+  elseif type(fg) ~= 'number' then
+    return error('Unrecognized foreground color type')
   end
 
-  self.color = modules.highlight.create_component_highlight_group({ fg = color }, 'changed_buffers', self.options)
+  if type(bg) == 'string' then
+    if string.sub(bg, 1, 1) ~= '#' then
+      bg = extract_color(bg, '#51a0cf')
+    end
+  elseif type(bg) ~= 'number' then
+    return error('Unrecognized background color type')
+  end
+
+  self.color = modules.highlight.create_component_highlight_group({ fg = fg, bg = bg }, 'changed_buffers', self.options)
 end
 
 function changed_buffers:update_status()
-  local current = vim.api.nvim_get_current_buf()
-  local buf_count =  #vim.tbl_filter(function(b)
-      return b.changed == 1 and b.bufnr ~= current
-    end, vim.fn.getbufinfo({ bufmodified = 1 }))
+  local buf_count = #vim.tbl_filter(function(b)
+    return b.changed == 1
+  end, vim.fn.getbufinfo({ bufmodified = 1 }))
 
   if buf_count > 0 then
     return modules.highlight.component_format_highlight(self.color) .. buf_count
@@ -61,7 +72,7 @@ function filename:init(options)
 
   if type(color) == 'string' then
     if string.sub(color, 1, 1) ~= '#' then
-      color = extract_fg(color, '#51a0cf')
+      color = extract_color(color, '#51a0cf')
     end
   elseif type(color) ~= 'number' then
     return error('Unrecognized color type')
