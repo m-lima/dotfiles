@@ -85,6 +85,9 @@ require('nvim-lsp-installer').on_server_ready(
               [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
             },
           },
+          telemetry = {
+            enable = false,
+          },
         }
       }
     elseif server.name == 'volar' then
