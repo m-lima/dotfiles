@@ -45,18 +45,9 @@ Plug 'nvim-telescope/telescope-dap.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
-" Plug 'm-lima/rust-tools.nvim' " Extras for rust-analyzer " TODO: Configure
-" TODO: Watch out for this dependecy.. Changes must be upstream for
-  " `on_initialized` : Currently required
-  " `inlay_hints` : Not required. Using local plugin
-  " `toggle_term` : Using local plugin
-" Plug '~/code/fork/rust-tools.nvim' " Extras for rust-analyzer " TODO: Configure
 
 " Debugging
-" TODO: Test vim-ldap
-" TODO: Integrate with rust
-" Plug 'puremourning/vimspector', { 'on': [ '<Plug>VimspectorLaunch', '<Plug>VimspectorToggleBreakpoint' ] }
-Plug 'mfussenegger/nvim-dap'
+Plug 'mfussenegger/nvim-dap' " TODO: Lots!
 Plug 'rcarriga/nvim-dap-ui'
 
 " Completion
@@ -64,7 +55,6 @@ Plug 'hrsh7th/nvim-cmp' " TODO: Configure
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
@@ -98,7 +88,6 @@ require('config.quick-scope')
 require('config.telescope')
 require('config.toggleterm')
 require('config.undotree')
--- require('config.vimspector')
 require('config.vsession')
 
 -- Personal
@@ -112,12 +101,6 @@ EOF
 " Notes
 """"""""""""""""""""
 
-""" Trash
-" Plug 'nvim-lua/lsp-status.nvim'        " Depency for:
-"                                        "  - lualine.nvim
-" Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-" Plug 'fannheyward/telescope-coc.nvim' " Telescope coc
-
 """ To check
 " Great reference: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
 " Plugin building example: https://www.2n.pl/blog/how-to-write-neovim-plugins-in-lua
@@ -127,12 +110,6 @@ EOF
 " Raw with omni (lua vim.api.nvim_buf_set_option(0, 'omnifunc', 'v:lua.vim.lsp.omnifunc'))
 "   Check `:h ins-completion`
 " mucomplete
-" "" Plugin
-" Plug 'hrsh7th/nvim-cmp' " TODO: Configure
-" Plug 'hrsh7th/cmp-nvim-lsp'
-" Plug 'hrsh7th/cmp-buffer'
-" Plug 'hrsh7th/cmp-path'
-" Plug 'hrsh7th/cmp-cmdline'
 "
 "" Session
 " Plug 'skanehira/vsession'
@@ -154,29 +131,28 @@ EOF
 "" Util
 " Github integration to jump to PRs?
 
-""" Current main gripes
-" Telescope: change layout size based on results
-" Lualine: status spinner not working
-" NvimTree: sometimes it breaks with CWD. Not sure how to replicate
-" NvimTree: problem when deleting an open buffer
-" NvimTree: keeps multiple lines selected when open and update_cwd
-" NvimTree: polutes the jumplist (reproducible by opening two files from cmdline)
-" Telesope: CocOutline
-" Lsp: Hightlight usages is wonky for some languages (highlights too much)
-" Telescope: When on buffers and start typing, cursor should jump to the bottom (or the bottom should have the previous buffer already)
-
-""" Missing from before
-" Telescope: recent files when opening project (maybe 'nvim-telescope/telescope-frecency.nvim')
-" Telescope: launch TODO
-" Lsp: when typing in parameters, the documentation or param list should appear
-" Lsp: Format on save
-" Lsp: Per-project configuration (e.g. clippy vs check)
-" Lsp: Code outline. There are symbols, but the outline shows hierarchy better (maybe custom plugin?)
-" Lsp: Show that the request is running in the background (get references e.g.)
-" Debug: Codelens compatible with vimspector
-
-""" Wishes
-" Write a plugin to simulate `CMD + UP`
+""" TO FIX
+" TELESCOPE: change layout size based on results
+" LUALINE: status spinner not working
+" NVIMTREE: sometimes it breaks with CWD. Not sure how to replicate
+" NVIMTREE: problem when deleting an open buffer
+" NVIMTREE: keeps multiple lines selected when open and update_cwd
+" NVIMTREE: polutes the jumplist (reproducible by opening two files from cmdline)
+" TELESOPE: CocOutline
+" LSP: Hightlight usages is wonky for some languages (highlights too much)
+" TELESCOPE: When on buffers and start typing, cursor should jump to the bottom (or the bottom should have the previous buffer already)
+" Auto-close of braces does not follow the format
+" LSP: Really need to know when the async process is running (some kind of status or spineer)
+" Telescope opening a file while focused on nvimtree, does not open on main pane
+"
+"" Missing from before
+" TELESCOPE: recent files when opening project (maybe 'nvim-telescope/telescope-frecency.nvim')
+" TELESCOPE: launch TODO
+" LSP: when typing in parameters, the documentation or param list should appear
+" LSP: Code outline. There are symbols, but the outline shows hierarchy better (maybe custom plugin?)
+" LSP: Show that the request is running in the background (get references e.g.)
+"
+"" Wishes
 " Write a plugin for session management
   " Sessions per branch if for example no name is provided
     " Check for deleted branches to clean session files
@@ -189,28 +165,27 @@ EOF
 " Open file from toggleterm
 " Open file from lazygit
 
-""" TO FIX
-" Autoformatting not always working
-" Auto-close of braces does not follow the format
-" Match gutter icons with statusline diagnostics
-" Syntax highlight of inlay hints (bg on cursor line is not respected.. Worth checking what diagnostics do for this)
-" Show marks in the gutter
-" LSP: Really need to know when the async process is running (some kind of status or spineer)
-" Lualine: Modified file color should not be hardcoded. Maybe derive from git modified color
-" Lualine: Lockdown the theme
-" Telescope opening a file while focused on nvimtree, does not open on main pane
-
 """ Done
+" Write a plugin to simulate `CMD + UP`
+" Autoformatting not always working
+" Show marks in the gutter
+" Syntax highlight of inlay hints (bg on cursor line is not respected.. Worth checking what diagnostics do for this)
+" DEBUG: Codelens compatible with vimspector
+" LSP: Per-project configuration (e.g. clippy vs check)
+" LSP: Format on save
+" LUALINE: Lockdown the theme
 " C-O that skips jumps within the same file
-" Telescope: equivalent for '/'
-" Telescope: start a search from Ex
-" Telescope: grep-string breks when searching for anything more complex than a single word
-" Lsp: Rust: When opening a cargo file, the root of the project breaks (i,e, a cargo workspace) [Removed TOML lsp]
+" LUALINE: Modified file color should not be hardcoded. Maybe derive from git modified color
+" Match gutter icons with statusline diagnostics
+" TELESCOPE: equivalent for '/'
+" TELESCOPE: start a search from Ex
+" TELESCOPE: grep-string breks when searching for anything more complex than a single word
+" LSP: RUST: When opening a cargo file, the root of the project breaks (i,e, a cargo workspace) [Removed TOML lsp]
 " Wait for rust-analyzer to be ready
-" Lsp: rust-analyzer complains that it hasn't completed (maybe because of autocmd)
-" Lsp: rust-analyzer doesn't respect cargo.toml on parent directory
-" !! Rooter: Sooooo finnicky!
-" Lsp: codelens is called at the bottom (maybe custom 'nvim-lua/popup.nvim')
+" LSP: rust-analyzer complains that it hasn't completed (maybe because of autocmd)
+" LSP: rust-analyzer doesn't respect cargo.toml on parent directory
+" !! ROOTER: Sooooo finnicky!
+" LSP: codelens is called at the bottom (maybe custom 'nvim-lua/popup.nvim')
 " Selection on grayalt should not override foreground
 " Color of inlay errors
 " Change grayalt to highlight matches on completion popup (maybe also make telescope matches more visible as well)
