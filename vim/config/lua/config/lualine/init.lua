@@ -21,7 +21,7 @@ require('lualine').setup({
       },
     },
     lualine_c = {
-      components.git_status,
+      require('config.lualine.components.git-status'),
       {
         components.filename,
         path = 1,
