@@ -15,13 +15,13 @@ require('lualine').setup({
       'mode'
     },
     lualine_b = {
-      'diff',
       {
         'diagnostics',
         sources = { 'nvim_lsp' },
       },
     },
     lualine_c = {
+      components.git_status,
       {
         components.filename,
         path = 1,
@@ -32,7 +32,7 @@ require('lualine').setup({
       },
       {
         'lsp_progress',
-        display_components = {{ 'title', 'percentage', 'message' }},
+        display_components = { { 'title', 'percentage', 'message' } },
       },
     },
     lualine_x = { 'filetype' },

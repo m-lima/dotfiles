@@ -18,7 +18,22 @@ local function map_check(mode, key, action, opts)
   map(mode, key, action, opts)
 end
 
+local function extract_color(name, default, background)
+  if vim.fn.hlexists(name) == 0 then
+    return default
+  end
+
+  local color = vim.api.nvim_get_hl_by_name(name, true)
+  local ref = background and color.background or color.foreground
+  if ref then
+    return string.format('#%06x', ref)
+  end
+
+  return default
+end
+
 return {
   map = map,
   map_check = map_check,
+  extract_color = extract_color,
 }
