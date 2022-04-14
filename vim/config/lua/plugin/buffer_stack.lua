@@ -62,7 +62,7 @@ local delete = function()
   local modified = vim.bo.modified
 
   if not backward() then
-    for b in bufs do
+    for _, b in ipairs(bufs) do
       if b.bufnr ~= bufnr then
         vim.api.nvim_set_current_buf(b.bufnr)
       end
