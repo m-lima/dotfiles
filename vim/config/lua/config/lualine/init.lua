@@ -19,9 +19,9 @@ require('lualine').setup({
         'diagnostics',
         sources = { 'nvim_lsp' },
       },
+      require('config.lualine.components.git-status'),
     },
     lualine_c = {
-      require('config.lualine.components.git-status'),
       {
         components.filename,
         path = 1,
