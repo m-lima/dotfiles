@@ -3,7 +3,7 @@ local extensions = require('config.lualine.extensions')
 local themes = require('config.lualine.themes')
 
 require('lualine').setup({
-  extensions = { 'quickfix', 'nvim-tree', extensions.toggleterm },
+  extensions = { 'quickfix', extensions.toggleterm, extensions.neotree },
   options = {
     section_separators = { left = '', right = '' },
     component_separators = { left = '╲', right = '╱' },

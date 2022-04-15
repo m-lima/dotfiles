@@ -107,19 +107,13 @@ highlight Special      guifg=#d7ba7d ctermfg=180  guibg=NONE    ctermbg=NONE gui
 highlight Function     guifg=#dcdcaa ctermfg=187  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
 
 """ Plugins
-" NvimTree
+" NeoTree
 if !(exists('g:simpalt_transparent_nvimtree') && g:simpalt_transparent_nvimtree)
-  highlight NvimTreeNormal      guifg=#909090 ctermfg=245  guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
-  highlight NvimTreeVertSplit   guifg=#262626 ctermfg=235  guibg=#262626 ctermbg=235 gui=NONE cterm=NONE
-  highlight NvimTreeEndOfBuffer guifg=#303030 ctermfg=236  guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
-  highlight NvimTreeCursorLine  guifg=NONE    ctermfg=NONE guibg=#262626 ctermbg=235 gui=NONE cterm=NONE
+  highlight NeoTreeNormal      guifg=#909090 ctermfg=245  guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
+  highlight NeoTreeNormalNC    guifg=#909090 ctermfg=245  guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
+  highlight NeoTreeVertSplit   guifg=#262626 ctermfg=235  guibg=#262626 ctermbg=235 gui=NONE cterm=NONE
+  highlight NeoTreeCursorLine  guifg=NONE    ctermfg=NONE guibg=#262626 ctermbg=235 gui=NONE cterm=NONE
 endif
-highlight NvimTreeRootFolder    guifg=#ffffff ctermfg=15   guibg=NONE    ctermbg=NONE gui=BOLD cterm=BOLD
-highlight NvimTreeGitDirty      guifg=#dcdcaa ctermfg=187  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-highlight NvimTreeGitRenamed    guifg=#dcdcaa ctermfg=187  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-highlight! link NvimTreeGitNew     DiffAdd
-highlight! link NvimTreeGitStaged  DiffAdd
-highlight! link NvimTreeGitDeleted DiffDelete
 
 " LSP
 highlight LspReferenceText  guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=UNDERLINE cterm=UNDERLINE

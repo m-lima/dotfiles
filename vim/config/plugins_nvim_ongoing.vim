@@ -5,16 +5,20 @@
 call plug#begin()
 
 """ Dependencies
-Plug 'tpope/vim-repeat'                " Dependency for vim-scripts/ReplaceWithRegister
+Plug 'tpope/vim-repeat'                " Dependency for:
+                                       "  - vim-scripts/ReplaceWithRegister
 Plug 'nvim-lua/plenary.nvim'           " Dependency for:
-                                       "  - telescope.nvim
+                                       "  - telescope
+                                       "  - neo-tree
                                        "  - gitsigns
 Plug 'kyazdani42/nvim-web-devicons'    " Dependency for:
-                                       "  - telescope.nvim
-                                       "  - nvim-tree.lua
-                                       "  - lualine.nvim
+                                       "  - telescope
+                                       "  - neo-tree
+                                       "  - lualine
 Plug 'arkav/lualine-lsp-progress'      " Depency for:
                                        "  - lualine.nvim
+Plug 'MunifTanjim/nui.nvim'            " Dependency for:
+                                       "  - neo-tree
 
 " Verbs
 Plug 'tpope/vim-surround'              " s
@@ -33,7 +37,7 @@ Plug 'lewis6991/gitsigns.nvim'
 
 " Navigation
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'kyazdani42/nvim-tree.lua'
+Plug 'nvim-neo-tree/neo-tree.nvim', { 'branch': 'v2.x' }
 Plug 'ahmedkhalf/project.nvim'
 
 " Telescope extensions
@@ -81,7 +85,7 @@ require('config.gitsigns')
 require('config.lsp-installer')
 require('config.lspconfig')
 require('config.lualine')
-require('config.nvim-tree')
+require('config.neo-tree')
 require('config.nvim-treesitter')
 require('config.project')
 require('config.quick-scope')
@@ -134,9 +138,6 @@ EOF
 """ TO FIX
 " TELESCOPE: change layout size based on results
 " LUALINE: status spinner not working
-" NVIMTREE: sometimes it breaks with CWD. Not sure how to replicate
-" NVIMTREE: problem when deleting an open buffer
-" NVIMTREE: polutes the jumplist (reproducible by opening two files from cmdline)
 " TELESOPE: CocOutline
 " Auto-close of braces does not follow the format
 " LSP: Really need to know when the async process is running (some kind of status or spineer)
@@ -191,3 +192,6 @@ EOF
 
 """Won't do
 " LSP: Hightlight usages is wonky for some languages (highlights too much)
+" NVIMTREE: sometimes it breaks with CWD. Not sure how to replicate
+" NVIMTREE: problem when deleting an open buffer
+" NVIMTREE: polutes the jumplist (reproducible by opening two files from cmdline)
