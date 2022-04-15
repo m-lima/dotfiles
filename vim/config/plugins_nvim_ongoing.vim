@@ -136,7 +136,6 @@ EOF
 " LUALINE: status spinner not working
 " NVIMTREE: sometimes it breaks with CWD. Not sure how to replicate
 " NVIMTREE: problem when deleting an open buffer
-" NVIMTREE: keeps multiple lines selected when open and update_cwd
 " NVIMTREE: polutes the jumplist (reproducible by opening two files from cmdline)
 " TELESOPE: CocOutline
 " LSP: Hightlight usages is wonky for some languages (highlights too much)
@@ -165,6 +164,7 @@ EOF
 " Open file from lazygit
 
 """ Done
+" NVIMTREE: keeps multiple lines selected when open and update_cwd
 " TELESCOPE: When on buffers and start typing, cursor should jump to the bottom (or the bottom should have the previous buffer already)
 " Write a plugin to simulate `CMD + UP`
 " Autoformatting not always working
