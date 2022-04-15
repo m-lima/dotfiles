@@ -1,5 +1,11 @@
 require('toggleterm').setup({
-  size = 30,
+  size = function(term)
+    if term.direction == 'horizontal' then
+      return vim.o.lines * 0.3
+    elseif term.direction == 'vertical' then
+      return vim.o.columns * 0.3
+    end
+  end,
   shade_terminals = false,
 })
 
@@ -7,7 +13,8 @@ local map = require('script.helper').map
 
 map('n', '<C-q>',       '<cmd>1ToggleTerm direction=float<CR>')
 map('t', '<C-q>',       '<cmd>ToggleTerm<CR>')
-map('n', '<leader>qn',  '<cmd>exec v:count1 "ToggleTerm direction=horizontal"<CR>')
+map('n', '<leader>qs',  '<cmd>exec v:count1 "ToggleTerm direction=horizontal"<CR>')
+map('n', '<leader>qv',  '<cmd>exec v:count1 "ToggleTerm direction=vertical"<CR>')
 map('n', '<leader>qf',  '<cmd>exec v:count1 "ToggleTerm direction=float"<CR>')
 map('n', '<leader>qq',  '<cmd>ToggleTermToggleAll<CR>')
 map('n', '<leader>qg',  '<cmd>lua require("config.toggleterm.extension").lazygit():toggle()<CR>')

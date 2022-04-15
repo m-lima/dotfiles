@@ -138,7 +138,6 @@ EOF
 " NVIMTREE: problem when deleting an open buffer
 " NVIMTREE: polutes the jumplist (reproducible by opening two files from cmdline)
 " TELESOPE: CocOutline
-" LSP: Hightlight usages is wonky for some languages (highlights too much)
 " Auto-close of braces does not follow the format
 " LSP: Really need to know when the async process is running (some kind of status or spineer)
 " Telescope opening a file while focused on nvimtree, does not open on main pane
@@ -189,3 +188,6 @@ EOF
 " Selection on grayalt should not override foreground
 " Color of inlay errors
 " Change grayalt to highlight matches on completion popup (maybe also make telescope matches more visible as well)
+
+"""Won't do
+" LSP: Hightlight usages is wonky for some languages (highlights too much)
