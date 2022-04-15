@@ -140,7 +140,6 @@ EOF
 " NVIMTREE: polutes the jumplist (reproducible by opening two files from cmdline)
 " TELESOPE: CocOutline
 " LSP: Hightlight usages is wonky for some languages (highlights too much)
-" TELESCOPE: When on buffers and start typing, cursor should jump to the bottom (or the bottom should have the previous buffer already)
 " Auto-close of braces does not follow the format
 " LSP: Really need to know when the async process is running (some kind of status or spineer)
 " Telescope opening a file while focused on nvimtree, does not open on main pane
@@ -166,6 +165,7 @@ EOF
 " Open file from lazygit
 
 """ Done
+" TELESCOPE: When on buffers and start typing, cursor should jump to the bottom (or the bottom should have the previous buffer already)
 " Write a plugin to simulate `CMD + UP`
 " Autoformatting not always working
 " Show marks in the gutter
