@@ -1,7 +1,8 @@
 local M = {}
 
-M.run = function(cmd, no_toggle)
+M.run = function(cmd, id, no_toggle)
   local opts = {
+    id = id,
     cmd = cmd,
     direction = 'float',
     hidden = true,
@@ -14,31 +15,31 @@ M.run = function(cmd, no_toggle)
   return require('toggleterm.terminal').Terminal:new(opts)
 end
 
-M.evcxr = function()
-  return M.run('evcxr')
+M.lazygit = function()
+  return M.run('lazygit', 100)
 end
 
-M.lazygit = function()
-  return M.run('lazygit', true)
+M.evcxr = function()
+  return M.run('evcxr', 101)
 end
 
 M.luajit = function()
-  return M.run('luajit', true)
+  return M.run('luajit', 102)
 end
 
 M.node = function()
-  return M.run('node', true)
+  return M.run('node', 103)
 end
 
 M.python = function()
-  return M.run('python', true)
+  return M.run('python', 104)
 end
 
 M.runner = function(cmd, cwd)
-  local t, new = require('toggleterm.terminal').get_or_create_term(9)
+  local t, new = require('toggleterm.terminal').get_or_create_term(109)
 
   if cwd then
-    cmd = '(cd ' .. cwd ..' && ' .. cmd .. ')'
+    cmd = '(cd ' .. cwd .. ' && ' .. cmd .. ')'
   end
   cmd = '\x15' .. cmd
 
