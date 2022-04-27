@@ -36,7 +36,16 @@ local float = function(cmd)
   float_raw(str, 'lua')
 end
 
-vim.cmd([[command! -bang -nargs=1 LuaOut lua require('script.output').float(<args>)]])
+vim.api.nvim_create_user_command(
+  'LuaOut',
+  function(args)
+    require('script.output').float(args.args)
+  end,
+  {
+    desc = 'Display lua output as a floating window',
+    nargs = 1,
+  }
+)
 
 return {
   float = float,

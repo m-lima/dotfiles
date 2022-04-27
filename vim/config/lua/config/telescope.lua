@@ -54,9 +54,26 @@ telescope.load_extension('projects')
 telescope.load_extension('ui-select')
 telescope.load_extension('dap')
 
--- TODO: replace with `vim.api.nvim_add_user_command()` when Neovim 0.7 is out
-vim.cmd([[command! -bang -nargs=1 Rg  lua require('telescope.builtin').grep_string({ disable_coordinates=true, search=<q-args> })]])
-vim.cmd([[command! -bang -nargs=1 Rgs lua require('telescope.builtin').lsp_workspace_symbols({ query=<q-args> })]])
+vim.api.nvim_create_user_command(
+  'Rg',
+  function(args)
+    require('telescope.builtin').grep_string({ disable_coordinates = true, search = args.args })
+  end,
+  {
+    desc = 'Search globally for strings',
+    nargs = 1,
+  }
+)
+vim.api.nvim_create_user_command(
+  'Rgs',
+  function(args)
+    require('telescope.builtin').lsp_workspace_symbols({ query = args.args })
+  end,
+  {
+    desc = 'Search globally for symbols',
+    nargs = 1,
+  }
+)
 
 local map = require('script.helper').map
 

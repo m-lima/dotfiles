@@ -87,8 +87,46 @@ local prepare = function(opts)
   local on_attach = opts.on_attach
   opts.on_attach = function(client)
     on_attach(client)
-    vim.cmd([[command! -buffer -bang RustReload lua vim.lsp.buf_request(0, 'rust-analyzer/reloadWorkspace', nil, function(err, res, ctx) if err then vim.notify(err, vim.log.level.ERROR) end end)]])
-    vim.cmd([[command! -buffer -bang RustExpand lua vim.lsp.buf_request(0, 'rust-analyzer/expandMacro', vim.lsp.util.make_position_params(), function(err, res, ctx) if err then notify(err, vim.log.level.ERROR) else require('script.output').float_raw(res.expansion, 'rust') end end)]])
+    vim.api.nvim_create_user_command(
+      'RustReload',
+      function()
+        vim.lsp.buf_request(
+          0,
+          'rust-analyzer/reloadWorkspace',
+          nil,
+          function(err, res, ctx)
+            if err then
+              vim.notify(err, vim.log.level.ERROR)
+            end
+          end
+        )
+      end,
+      {
+        desc = 'Reload rust',
+        buffer = true,
+      }
+    )
+    vim.api.nvim_create_user_command(
+      'RustExpand',
+      function()
+        vim.lsp.buf_request(
+          0,
+          'rust-analyzer/expandMacro',
+          vim.lsp.util.make_position_params(),
+          function(err, res, ctx)
+            if err then
+              notify(err, vim.log.level.ERROR)
+            else
+              require('script.output').float_raw(res.expansion, 'rust')
+            end
+          end
+        )
+      end,
+      {
+        desc = 'Expand rust macro',
+        buffer = true,
+      }
+    )
   end
 
   return require('plugin.defer_lsp').make_deferred(opts)

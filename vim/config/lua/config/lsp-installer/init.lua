@@ -1,5 +1,6 @@
 local cmp_capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+-- TODO: Update to nvim 0.7 vim.api.nvim_create_autocmd
 local make_on_attach = function(opts)
   return function(client)
     local autocmd = ''
