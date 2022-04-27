@@ -48,9 +48,18 @@ local prepare_popup = function(config, width)
     row = 1,
   })
 
-  vim.cmd([[
-    autocmd BufLeave <buffer> ++nested ++once lua require('plugin.breadcrumbs').close()
-  ]])
+  vim.api.nvim_create_autocmd(
+    'BufLeave',
+    {
+      desc = 'Close the breadcrumb popup',
+      callback = function()
+        require('plugin.breadcrumbs').close()
+      end,
+      buffer = bufnr,
+      nested = true,
+      once = true,
+    }
+  )
 
   return bufnr
 end
@@ -60,7 +69,7 @@ local render = function(breadcrumbs)
 
   local stringified = ' ' .. breadcrumbs.names[1]
   local divs = {}
-  for i = 2,#breadcrumbs.names do
+  for i = 2, #breadcrumbs.names do
     table.insert(divs, #stringified + 2)
     if i == breadcrumbs.selected or i == breadcrumbs.selected + 1 then
       stringified = stringified .. '  ' .. breadcrumbs.names[i]
@@ -90,7 +99,7 @@ local render = function(breadcrumbs)
   end
 
   local start = breadcrumbs.selected * 5 - 5
-  for i = 1,breadcrumbs.selected-1 do
+  for i = 1, breadcrumbs.selected - 1 do
     start = start + #breadcrumbs.names[i]
   end
 
@@ -141,11 +150,11 @@ end
 
 local repeated_response = function(curr, prev)
   return prev and curr
-    and curr.targetUri == prev.targetUri
-    and curr.targetRange['start'].line == prev.targetRange['start'].line
-    and curr.targetRange['start'].character == prev.targetRange['start'].character
-    and curr.targetRange['end'].line == prev.targetRange['end'].line
-    and curr.targetRange['end'].character == prev.targetRange['end'].character
+      and curr.targetUri == prev.targetUri
+      and curr.targetRange['start'].line == prev.targetRange['start'].line
+      and curr.targetRange['start'].character == prev.targetRange['start'].character
+      and curr.targetRange['end'].line == prev.targetRange['end'].line
+      and curr.targetRange['end'].character == prev.targetRange['end'].character
 end
 
 local traverse_parents = function(err, res, ctx)
@@ -175,7 +184,7 @@ local traverse_parents = function(err, res, ctx)
     table.insert(names, 1, name)
     table.insert(locations, 1, res)
 
-    res, err =  vim.lsp.buf_request_sync(0, 'experimental/parentModule', make_location_param(res), 1000)
+    res, err = vim.lsp.buf_request_sync(0, 'experimental/parentModule', make_location_param(res), 1000)
     if err then
       vim.notify('Error while building breadcrumbs: ' .. err, vim.log.levels.ERR)
       break

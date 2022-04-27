@@ -1,32 +1,108 @@
 local cmp_capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
--- TODO: Update to nvim 0.7 vim.api.nvim_create_autocmd
 local make_on_attach = function(opts)
-  return function(client)
-    local autocmd = ''
-    if opts.codelens and client.resolved_capabilities.code_lens then
-      autocmd = autocmd .. '\nautocmd BufEnter,CursorHold,InsertLeave  <buffer> silent! lua vim.lsp.codelens.refresh()'
-      vim.lsp.codelens.refresh()
-    end
-    if opts.format then
-      if type(opts.format) == 'string' then
-        autocmd = autocmd .. '\nautocmd BufWritePre                    <buffer> ' .. opts.format
-      elseif client.resolved_capabilities.document_formatting then
-        autocmd = autocmd .. '\nautocmd BufWritePre                    <buffer> silent! lua vim.lsp.buf.formatting_sync()'
+  return function(client, bufnr)
+
+    local augroupnr = nil
+    local augroup = function()
+      if not augroupnr then
+        augroupnr = vim.api.nvim_create_augroup('pluginLsp_' .. client.name, { clear = true })
       end
-    end
-    if opts.highlight and client.resolved_capabilities.document_highlight then
-      autocmd = autocmd .. '\nautocmd CursorHold                       <buffer> silent! lua vim.lsp.buf.document_highlight()'
-      autocmd = autocmd .. '\nautocmd CursorMoved,InsertEnter          <buffer> silent! lua vim.lsp.buf.clear_references()'
-    end
-    if opts.inlay and client.server_capabilities.experimental and client.server_capabilities.experimental.inlayHints then
-      autocmd = autocmd .. '\nautocmd BufEnter,TextChanged,InsertLeave <buffer> silent! lua require("plugin.inlay").refresh()'
-      require('plugin.inlay').refresh()
+      return augroupnr
     end
 
-    if #autocmd > 0 then
-      autocmd = 'augroup pluginLsp_' .. client.name .. '\nautocmd! * <buffer>' .. autocmd .. '\naugroup END'
-      vim.cmd(autocmd)
+    if opts.codelens and client.resolved_capabilities.code_lens then
+      vim.api.nvim_create_autocmd(
+        {
+          'BufEnter',
+          'CursorHold',
+          'InsertLeave',
+        },
+        {
+          desc = 'Refresh codelens',
+          group = augroup(),
+          buffer = bufnr,
+          callback = vim.lsp.codelens.refresh,
+        }
+      )
+      vim.lsp.codelens.refresh()
+    end
+
+    if opts.format then
+      if type(opts.format) == 'string' then
+        vim.api.nvim_create_autocmd(
+          'BufWritePre',
+          {
+            desc = 'Format code',
+            group = augroup(),
+            buffer = bufnr,
+            command = opts.format,
+          }
+        )
+      elseif type(opts.format) == 'function' then
+        vim.api.nvim_create_autocmd(
+          'BufWritePre',
+          {
+            desc = 'Format code',
+            group = augroup(),
+            buffer = bufnr,
+            callback = opts.format,
+          }
+        )
+      elseif client.resolved_capabilities.document_formatting then
+        vim.api.nvim_create_autocmd(
+          'BufWritePre',
+          {
+            desc = 'Format code',
+            group = augroup(),
+            buffer = bufnr,
+            callback = vim.lsp.buf.formatting_sync,
+          }
+        )
+      end
+    end
+
+    if opts.highlight and client.resolved_capabilities.document_highlight then
+      vim.api.nvim_create_autocmd(
+        'CursorHold',
+        {
+          desc = 'Highlight symbol',
+          group = augroup(),
+          buffer = bufnr,
+          callback = vim.lsp.buf.document_highlight,
+        }
+      )
+      vim.api.nvim_create_autocmd(
+        {
+          'CursorMoved',
+          'InsertEnter',
+        },
+        {
+          desc = 'Clear symbol highlight',
+          group = augroup(),
+          buffer = bufnr,
+          callback = vim.lsp.buf.clear_references,
+        }
+      )
+    end
+
+    if opts.inlay and client.server_capabilities.experimental and client.server_capabilities.experimental.inlayHints then
+      vim.api.nvim_create_autocmd(
+        {
+          'BufEnter',
+          'TextChanged',
+          'InsertLeave',
+        },
+        {
+          desc = 'Display inlay hints',
+          group = augroup(),
+          buffer = bufnr,
+          callback = function()
+            require('plugin.inlay').refresh()
+          end,
+        }
+      )
+      require('plugin.inlay').refresh()
     end
   end
 end

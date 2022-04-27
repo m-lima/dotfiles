@@ -32,13 +32,29 @@ local git_status = require('lualine.component'):extend()
 function git_status:init(options)
   git_status.super.init(self, options)
 
-  vim.cmd([[
-    augroup pluginLualineGitstatus
-      autocmd! *
-      autocmd BufEnter * silent! lua require('config.lualine.components.git-status').deep_refresh()
-      autocmd BufWritePre * silent! lua require('config.lualine.components.git-status').refresh()
-    augroup END
-  ]])
+  local augroup = vim.api.nvim_create_augroup('pluginLualineGitstatus', { clear = true })
+  vim.api.nvim_create_autocmd(
+    'BufEnter',
+    {
+      group = augroup,
+      pattern = '*',
+      callback = function()
+        require('config.lualine.components.git-status').deep_refresh()
+      end,
+      desc = 'Perform a deep refresh of the git status',
+    }
+  )
+  vim.api.nvim_create_autocmd(
+    'BufWritePre',
+    {
+      group = augroup,
+      pattern = '*',
+      callback = function()
+        require('config.lualine.components.git-status').refresh()
+      end,
+      desc = 'Perform a shallow refresh of the git status',
+    }
+  )
   git_status.deep_refresh()
 end
 
