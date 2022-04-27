@@ -85,9 +85,10 @@ local prepare = function(opts)
   }
 
   local on_attach = opts.on_attach
-  opts.on_attach = function(client)
+  opts.on_attach = function(client, bufnr)
     on_attach(client)
-    vim.api.nvim_create_user_command(
+    vim.api.nvim_buf_create_user_command(
+      bufnr,
       'RustReload',
       function()
         vim.lsp.buf_request(
@@ -101,12 +102,10 @@ local prepare = function(opts)
           end
         )
       end,
-      {
-        desc = 'Reload rust',
-        buffer = true,
-      }
+      { desc = 'Reload Rust' }
     )
-    vim.api.nvim_create_user_command(
+    vim.api.nvim_buf_create_user_command(
+      bufnr,
       'RustExpand',
       function()
         vim.lsp.buf_request(
@@ -122,10 +121,7 @@ local prepare = function(opts)
           end
         )
       end,
-      {
-        desc = 'Expand rust macro',
-        buffer = true,
-      }
+      { desc = 'Expand Rust macro' }
     )
   end
 
