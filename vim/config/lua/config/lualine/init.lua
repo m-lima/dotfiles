@@ -36,7 +36,10 @@ require('lualine').setup({
         display_components = { { 'title', 'percentage', 'message' } },
       },
     },
-    lualine_x = { 'filetype' },
+    lualine_x = {
+      'filetype',
+      components.active_lsp,
+    },
     lualine_y = { components.changed_buffers },
     lualine_z = { components.location },
   },

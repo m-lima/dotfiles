@@ -75,10 +75,46 @@ function filename:update_status()
   return data
 end
 
+local active_lsp = require('lualine.component'):extend()
+
+function active_lsp:init(options)
+  active_lsp.super.init(self, options)
+
+  self.color = highlight.create_component_highlight_group({ fg = '#ffffff' }, 'active_lsp', self.options)
+end
+
+function active_lsp:update_status()
+  local clients = ''
+  local current = false
+  local bufnr = vim.api.nvim_get_current_buf()
+
+  for _, client in ipairs(vim.lsp.get_active_clients()) do
+    if client.attached_buffers[bufnr] then
+      if not current then
+        clients = clients .. highlight.component_format_highlight(self.color)
+        current = true
+      end
+    else
+      if current then
+        clients = clients .. active_lsp.super.get_default_hl(self)
+        current = false
+      end
+    end
+    if #clients > 0 then
+      clients = clients .. ' ' .. client.id .. ':' .. client.name
+    else
+      clients = clients .. client.id .. ':' .. client.name
+    end
+  end
+
+  return clients
+end
+
 return {
   paste = paste,
   changed_buffers = changed_buffers,
   filename = filename,
+  active_lsp = active_lsp,
   location = '%l/%L:%-1v',
   toggleterm = 'b:toggle_number',
 }
