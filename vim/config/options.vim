@@ -109,3 +109,8 @@ if has('nvim')
     autocmd TextYankPost * silent! lua vim.highlight.on_yank()
   augroup end
 end
+
+if has('nvim')
+  let g:do_filetype_lua = 1
+  let g:did_load_filetypes = 0
+end
