@@ -38,10 +38,12 @@ require('neo-tree').setup({
       border = {
         style = 'none',
       },
-      size = {
-        width = '40',
-        height = vim.o.lines - vim.o.cmdheight - 1,
-      },
+      size = function()
+        return {
+          width = 40,
+          height = vim.o.lines - vim.o.cmdheight - 1,
+        }
+      end,
     },
     mappings = {
       ['<space>'] = '',
@@ -86,13 +88,13 @@ require('neo-tree').setup({
     {
       event = 'neo_tree_buffer_enter',
       handler = function()
-        vim.opt.guicursor:append('a:mlima_breadcrumbs_cursor')
+        vim.opt.guicursor:append('a:mlima_neotree_cursor')
       end
     },
     {
       event = 'neo_tree_buffer_leave',
       handler = function()
-        vim.opt.guicursor:remove('a:mlima_breadcrumbs_cursor')
+        vim.opt.guicursor:remove('a:mlima_neotree_cursor')
       end
     },
   },
