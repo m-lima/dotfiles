@@ -12,7 +12,7 @@ M.codelldb = function()
 
     local handle, pid_or_err
     local opts = {
-      stdio = {nil, stdout, stderr},
+      stdio = { nil, stdout, stderr },
       detached = true,
     }
     handle, pid_or_err = vim.loop.spawn(cmd, opts, function(code)
@@ -55,7 +55,7 @@ M.codelldb = function()
     end)
   end
 
-  dap.configurations.rust = {{
+  dap.configurations.rust = { {
     name = 'Launch',
     type = 'codelldb',
     request = 'launch',
@@ -75,7 +75,7 @@ M.codelldb = function()
       return args
     end,
     runInTerminal = false,
-  }}
+  } }
   dap.configurations.c = dap.configurations.rust
   dap.configurations.cpp = dap.configurations.rust
 end

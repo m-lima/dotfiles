@@ -86,7 +86,7 @@ local prepare = function(opts)
 
   local on_attach = opts.on_attach
   opts.on_attach = function(client, bufnr)
-    on_attach(client)
+    on_attach(client, bufnr)
     vim.api.nvim_buf_create_user_command(
       bufnr,
       'RustReload',
