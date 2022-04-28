@@ -162,6 +162,8 @@ EOF
 " Telescope remove repeats
 " Open file from toggleterm
 " Open file from lazygit
+" Gitsigns is rendering badly on iterm2
+" NEOTREE: Incredibly slow
 
 """ Done
 " NVIMTREE: keeps multiple lines selected when open and update_cwd
@@ -189,6 +191,7 @@ EOF
 " Selection on grayalt should not override foreground
 " Color of inlay errors
 " Change grayalt to highlight matches on completion popup (maybe also make telescope matches more visible as well)
+" NEOTREE: Border is broken on 0.7 (PR merged)
 
 """Won't do
 " LSP: Hightlight usages is wonky for some languages (highlights too much)

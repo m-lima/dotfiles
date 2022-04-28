@@ -38,9 +38,7 @@ end
 
 vim.api.nvim_create_user_command(
   'LuaOut',
-  function(args)
-    require('script.output').float(args.args)
-  end,
+  'lua require("script.output").float(<args>)',
   {
     desc = 'Display lua output as a floating window',
     nargs = 1,
