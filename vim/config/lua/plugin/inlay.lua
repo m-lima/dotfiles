@@ -16,7 +16,7 @@ local refresh = function()
     { textDocument = vim.lsp.util.make_text_document_params(), },
     function(err, res, ctx)
       if err then
-        return
+        vim.notify(err, vim.log.levels.ERR)
       end
 
       vim.api.nvim_buf_clear_namespace(ctx.bufnr, namespace, 0, -1)
@@ -36,7 +36,7 @@ local refresh = function()
           else
             str = '‣' .. v.label
           end
-          vim.api.nvim_buf_set_extmark(ctx.bufnr, namespace, v.position.line, 0, { virt_text = {{ str, hl }}, hl_mode = 'combine' })
+          vim.api.nvim_buf_set_extmark(ctx.bufnr, namespace, v.position.line, 0, { virt_text = { { str, hl } }, hl_mode = 'combine' })
         end
       end
     end

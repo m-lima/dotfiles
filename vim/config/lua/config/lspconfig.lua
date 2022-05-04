@@ -5,6 +5,7 @@ map('n', '[e',                '<cmd>lua vim.diagnostic.goto_prev()<CR>')
 map('n', '<leader>d',         '<cmd>lua vim.lsp.buf.hover()<CR>')
 map('n', '<leader><leader>r', '<cmd>lua vim.lsp.buf.rename()<CR>')
 map('n', '<leader>r',         '<cmd>lua vim.lsp.codelens.run()<CR>')
+map('n', '<leader>a',         '<cmd>lua vim.lsp.buf.code_action()<CR>')
 
 vim.diagnostic.config({
   severity_sort = true,
