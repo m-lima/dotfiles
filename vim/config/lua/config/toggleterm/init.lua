@@ -1,4 +1,8 @@
-require('toggleterm').setup({
+local toggleterm = require('toggleterm')
+local extension = require('config.toggleterm.extension')
+local map = require('script.helper').map
+
+toggleterm.setup({
   size = function(term)
     if term.direction == 'horizontal' then
       return vim.o.lines * 0.3
@@ -9,19 +13,23 @@ require('toggleterm').setup({
   shade_terminals = false,
 })
 
-local map = require('script.helper').map
-
-map('n', '<C-q>',      '<cmd>1ToggleTerm direction=float<CR>')
-map('t', '<C-q>',      '<cmd>ToggleTerm<CR>')
-map('n', '<leader>qs', '<cmd>exec v:count1 "ToggleTerm direction=horizontal"<CR>')
-map('n', '<leader>qv', '<cmd>exec v:count1 "ToggleTerm direction=vertical"<CR>')
-map('n', '<leader>qf', '<cmd>exec v:count1 "ToggleTerm direction=float"<CR>')
-map('n', '<leader>qq', '<cmd>ToggleTermToggleAll<CR>')
-map('n', '<leader>qg', '<cmd>lua require("config.toggleterm.extension").lazygit():toggle()<CR>')
-map('n', '<leader>qe', '<cmd>109ToggleTerm<CR>')
+map('n', '<C-q>',      function() toggleterm.toggle(1, nil, nil, 'float') end)
+map('t', '<C-q>',      function() toggleterm.toggle(0) end)
+map('n', '<leader>qq', toggleterm.toggle_all)
+map('n', '<leader>qg', function() extension.lazygit():toggle() end)
+map('n', '<leader>qe', function() toggleterm.toggle(109) end)
+map('n', '<leader>qs', function() toggleterm.toggle(1, nil, nil, 'horizontal') end)
+map('n', '<leader>qv', function() toggleterm.toggle(1, nil, nil, 'vertical') end)
+map('n', '<leader>qf', function() toggleterm.toggle(1, nil, nil, 'float') end)
+map('n', '<leader><leader>qs', function() toggleterm.toggle(2, nil, nil, 'horizontal') end)
+map('n', '<leader><leader>qv', function() toggleterm.toggle(2, nil, nil, 'vertical') end)
+map('n', '<leader><leader>qf', function() toggleterm.toggle(2, nil, nil, 'float') end)
+map('n', '<leader><leader><leader>qs', function() toggleterm.toggle(3, nil, nil, 'horizontal') end)
+map('n', '<leader><leader><leader>qv', function() toggleterm.toggle(3, nil, nil, 'vertical') end)
+map('n', '<leader><leader><leader>qf', function() toggleterm.toggle(3, nil, nil, 'float') end)
 
 -- REPL
-map('n', '<leader>qrr', '<cmd>lua require("config.toggleterm.extension").evcxr():toggle()<CR>')
-map('n', '<leader>qrn', '<cmd>lua require("config.toggleterm.extension").node():toggle()<CR>')
-map('n', '<leader>qrp', '<cmd>lua require("config.toggleterm.extension").python():toggle()<CR>')
-map('n', '<leader>qrl', '<cmd>lua require("config.toggleterm.extension").luajit():toggle()<CR>')
+map('n', '<leader>qrr', function() extension.evcxr():toggle() end)
+map('n', '<leader>qrn', function() extension.node():toggle() end)
+map('n', '<leader>qrp', function() extension.python():toggle() end)
+map('n', '<leader>qrl', function() extension.luajit():toggle() end)

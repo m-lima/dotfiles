@@ -54,10 +54,12 @@ telescope.load_extension('projects')
 telescope.load_extension('ui-select')
 telescope.load_extension('dap')
 
+local builtin = require('telescope.builtin')
+
 vim.api.nvim_create_user_command(
   'Rg',
   function(args)
-    require('telescope.builtin').grep_string({ disable_coordinates = true, search = args.args })
+    builtin.grep_string({ disable_coordinates = true, search = args.args })
   end,
   {
     desc = 'Search globally for strings',
@@ -67,7 +69,7 @@ vim.api.nvim_create_user_command(
 vim.api.nvim_create_user_command(
   'Rgs',
   function(args)
-    require('telescope.builtin').lsp_workspace_symbols({ query = args.args })
+    builtin.lsp_workspace_symbols({ query = args.args })
   end,
   {
     desc = 'Search globally for symbols',
@@ -78,32 +80,32 @@ vim.api.nvim_create_user_command(
 local map = require('script.helper').map
 
 -- General
-map('n', '<leader><leader><leader>', '<cmd>Telescope resume<CR>')
+map('n', '<leader><leader><leader>', builtin.resume)
 
 -- Search
 map('n', '<leader>8', '"<cmd>Telescope current_buffer_fuzzy_find<CR>" . expand("<cword>") . "<Esc>"', { expr = true })
-map('n', '<leader>*', '<cmd>Telescope grep_string disable_coordinates=true<CR>')
-map('n', '<leader>/', '<cmd>Telescope current_buffer_fuzzy_find<CR>')
-map('n', '<leader>?', '<cmd>Telescope live_grep disable_coordinates=true<CR>')
-map('n', '?', ':<C-u>Rg ', { silent = false })
+map('n', '<leader>*', function() builtin.grep_string({ disable_coordinates = true }) end)
+map('n', '<leader>/', builtin.current_buffer_fuzzy_find)
+map('n', '<leader>?', function() builtin.live_grep({ disable_coordinates = true }) end)
+map('n', '?',         ':<C-u>Rg ', { silent = false })
 
--- Navigation
-map('n', '<leader>p', '<cmd>Telescope find_files<CR>')
-map('n', '<leader>P', '<cmd>Telescope find_files no_ignore=true<CR>')
-map('n', '<leader>o', '<cmd>Telescope oldfiles<CR>')
-map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
-map('n', '<leader><c-o>', '<cmd>Telescope jumplist<CR>')
-map('n', '<leader>m', '<cmd>Telescope marks<CR>')
-map('n', '<leader>gt', '<cmd>Telescope git_status<CR>')
+-- Navigatio
+map('n', '<leader>p',     builtin.find_files)
+map('n', '<leader>P',     function() builtin.find_files({ no_ignore = true }) end)
+map('n', '<leader>o',     builtin.oldfiles)
+map('n', '<leader>b',     builtin.buffers)
+map('n', '<leader><c-o>', builtin.jumplist)
+map('n', '<leader>m',     builtin.marks)
+map('n', '<leader>gt',    builtin.git_status)
 
 ---- Projects
-map('n', '<leader><leader>p', '<cmd>Telescope projects<CR>')
+map('n', '<leader><leader>p', telescope.extensions.projects.projects)
 
 ---- LSP
-map('n', 'gd', '<cmd>Telescope lsp_definitions<CR>')
-map('n', 'ge', '<cmd>Telescope lsp_references<CR>')
-map('n', 'gi', '<cmd>Telescope lsp_implementations<CR>')
-map('n', 'gI', '<cmd>Telescope lsp_type_definitions<CR>')
-map('n', '<leader>s', '<cmd>Telescope lsp_document_symbols<CR>')
-map('n', '<leader>S', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>')
-map('n', '<leader>e', '<cmd>Telescope diagnostics<CR>')
+map('n', 'gd',        builtin.lsp_definitions)
+map('n', 'ge',        builtin.lsp_references)
+map('n', 'gi',        builtin.lsp_implementations)
+map('n', 'gI',        builtin.lsp_type_definitions)
+map('n', '<leader>s', builtin.lsp_document_symbols)
+map('n', '<leader>S', builtin.lsp_dynamic_workspace_symbols)
+map('n', '<leader>e', builtin.diagnostics)

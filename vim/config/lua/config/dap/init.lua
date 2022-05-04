@@ -1,17 +1,17 @@
-require('dap')
+local dap = require('dap')
 require('config.dap.adapters').codelldb()
 
 local map = require('script.helper').map
-map('n', '<F2>',  '<cmd>lua require("dap").toggle_breakpoint()<CR>')
-map('n', '<F3>',  '<cmd>lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
-map('n', '<F4>',  '<cmd>lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>')
-map('n', '<F5>',  '<cmd>lua require("dap").continue()<CR>')
-map('n', '<F6>',  '<cmd>lua require("dap").run_last()<CR>')
-map('n', '<F7>',  '<cmd>lua require("dap").step_into()<CR>')
-map('n', '<F8>',  '<cmd>lua require("dap").step_over()<CR>')
-map('n', '<F9>',  '<cmd>lua require("dap").step_out()<CR>')
-map('n', '<F10>', '<cmd>lua require("dap").terminate()<CR>')
-map('n', '<F11>', '<cmd>lua require("dap").repl.open()<CR>')
+map('n', '<F2>',  dap.toggle_breakpoint)
+map('n', '<F3>',  function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end)
+map('n', '<F4>',  function() dap.set_breakpoint(nil, nil, vim.fn.input("Log point message: ")) end)
+map('n', '<F5>',  dap.continue)
+map('n', '<F6>',  dap.run_last)
+map('n', '<F7>',  dap.step_into)
+map('n', '<F8>',  dap.step_over)
+map('n', '<F9>',  dap.step_out)
+map('n', '<F10>', dap.terminate)
+map('n', '<F11>', dap.repl.open)
 
 vim.cmd([[
   sign define DapBreakpoint          text=●  texthl=DiagnosticError linehl= numhl=

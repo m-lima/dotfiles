@@ -1,5 +1,3 @@
-local map = require('script.helper').map
-
 vim.highlight.create('mlima_neotree_cursor', { guifg = 1, ctermfg = 1, guibg = 1, ctermbg = 1, blend = 100 })
 
 local function getTelescopeOpts(state, path)
@@ -100,6 +98,9 @@ require('neo-tree').setup({
   },
 })
 
-map('n', '<leader>n', '<cmd>Neotree toggle float reveal<CR>')
-map('n', '<leader>N', '<cmd>Neotree focus left reveal<CR>')
-map('n', '<leader><leader>n', '<cmd>Neotree show toggle left reveal<CR>')
+local map = require('script.helper').map
+local command = require('neo-tree.command')
+
+map('n', '<leader>n',         function() command.execute({ position = 'float', toggle = true, reveal = true }) end)
+map('n', '<leader>N',         function() command.execute({ position = 'left', reveal = true }) end)
+map('n', '<leader><leader>N', function() command.execute({ action = 'show', position = 'left', toggle = true, reveal = true }) end)

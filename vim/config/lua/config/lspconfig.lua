@@ -1,11 +1,11 @@
 local map = require('script.helper').map
 
-map('n', ']e',                '<cmd>lua vim.diagnostic.goto_next()<CR>')
-map('n', '[e',                '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-map('n', '<leader>d',         '<cmd>lua vim.lsp.buf.hover()<CR>')
-map('n', '<leader><leader>r', '<cmd>lua vim.lsp.buf.rename()<CR>')
-map('n', '<leader>r',         '<cmd>lua vim.lsp.codelens.run()<CR>')
-map('n', '<leader>a',         '<cmd>lua vim.lsp.buf.code_action()<CR>')
+map('n', ']e',                vim.diagnostic.goto_next)
+map('n', '[e',                vim.diagnostic.goto_prev)
+map('n', '<leader>d',         vim.lsp.buf.hover)
+map('n', '<leader><leader>r', vim.lsp.buf.rename)
+map('n', '<leader>r',         vim.lsp.codelens.run)
+map('n', '<leader>a',         vim.lsp.buf.code_action)
 
 vim.diagnostic.config({
   severity_sort = true,

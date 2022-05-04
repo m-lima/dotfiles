@@ -1,3 +1,7 @@
+local map = require('script.helper').map
+
+local M = {}
+
 local namespace = vim.api.nvim_create_namespace('mlima.breadcrumbs')
 
 local default_config = {
@@ -22,10 +26,10 @@ end
 local map_action = function(bufnr, config, action)
   if vim.tbl_islist(config[action]) then
     for _, key in ipairs(config[action]) do
-      vim.api.nvim_buf_set_keymap(bufnr, '', key, '<cmd>lua require("plugin.breadcrumbs").' .. action .. '()<CR>', { noremap = true, silent = true })
+      map('', key,  M[action], { buffer = bufnr })
     end
   else
-    vim.api.nvim_buf_set_keymap(bufnr, '', config[action], '<cmd>lua require("plugin.breadcrumbs").' .. action .. '()<CR>', { noremap = true, silent = true })
+    map('', config[action],  M[action], { buffer = bufnr })
   end
 end
 
@@ -195,8 +199,6 @@ local traverse_parents = function(err, res, ctx)
   return names, locations
 end
 
-local M = {}
-
 M.show = function(config)
   config = vim.tbl_extend('force', default_config, config or {})
   M.close()
@@ -275,8 +277,7 @@ end
 
 prepare_hl()
 
-local map = require('script.helper').map
-map('n', 'gu', '<cmd>lua require("plugin.breadcrumbs").show()<CR>')
-map('n', 'gU', '<cmd>lua require("plugin.breadcrumbs").jump_to_parent()<CR>')
+map('n', 'gu', M.show)
+map('n', 'gU', M.jump_to_parent)
 
 return M

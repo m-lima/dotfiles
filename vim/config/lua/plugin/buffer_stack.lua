@@ -82,9 +82,9 @@ end
 
 local map = require('script.helper').map
 
-map('', '[b', '<cmd>lua require("plugin.buffer_stack").backward()<CR>')
-map('', ']b', '<cmd>lua require("plugin.buffer_stack").forward()<CR>')
-map('', '][b', '<cmd>lua require("plugin.buffer_stack").delete()<CR>')
+map('', '[b',  backward)
+map('', ']b',  forward)
+map('', '][b', delete)
 
 return {
   backward = backward,

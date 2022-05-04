@@ -1,8 +1,6 @@
 local function map(mode, key, action, opts)
   opts = vim.tbl_extend('force', { noremap = true, silent = true }, opts or {})
-  -- TODO: Update to 0.7 syntax
-  -- vim.keymap.set(mode, key, action, opts)
-  vim.api.nvim_set_keymap(mode, key, action, opts)
+  vim.keymap.set(mode, key, action, opts)
 end
 
 local function map_check(mode, key, action, opts)
