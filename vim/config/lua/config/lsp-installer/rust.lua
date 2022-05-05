@@ -114,7 +114,7 @@ local prepare = function(opts)
           vim.lsp.util.make_position_params(),
           function(err, res, ctx)
             if err then
-              notify(err, vim.log.level.ERROR)
+              vim.notify(err, vim.log.level.ERROR)
             else
               require('script.output').float_raw(res.expansion, 'rust')
             end
