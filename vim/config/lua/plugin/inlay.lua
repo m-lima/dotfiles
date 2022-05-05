@@ -9,37 +9,62 @@ local get_root = function(bufnr)
   end
 end
 
+local get_params = function()
+  local params = {
+    range = {
+      start = {
+        character = 0,
+        line = 0,
+      },
+    },
+    textDocument = {
+      uri = vim.uri_from_bufnr(0),
+    },
+  }
+  params.range['end'] = {
+    character = 0,
+    line = vim.api.nvim_buf_line_count(0) - 1,
+  }
+  return params
+end
+
 local refresh = function()
   vim.lsp.buf_request(
     0,
-    'experimental/inlayHints',
-    { textDocument = vim.lsp.util.make_text_document_params(), },
+    'textDocument/inlayHint',
+    get_params(),
     function(err, res, ctx)
-      if err then
-        vim.notify(err, vim.log.levels.ERR)
-      end
+    if err then
+      vim.notify(vim.inspect(err), vim.log.levels.ERR)
+    end
 
-      vim.api.nvim_buf_clear_namespace(ctx.bufnr, namespace, 0, -1)
-      local root = should_display_var_name and get_root(ctx.bufnr)
+    if not res then return end
 
-      for _, v in ipairs(res) do
-        if v.kind == 1 then
-          local str = nil
-          if v.label:find(': ', 1, true) == 1 then
-            if root then
-              local _, start, _, finish = root:named_descendant_for_range(v.position.line, v.position.character - 1, v.position.line, v.position.character - 1):range()
-              local var = string.sub(vim.api.nvim_buf_get_lines(ctx.bufnr, v.position.line, v.position.line + 1, false)[1], start + 1, finish)
-              str = var .. v.label
-            else
-              str = v.label:sub(3)
-            end
+    if not vim.tbl_islist(res) then
+      vim.notify('Unrecognized response: ' .. res, vim.log.levels.ERR)
+    end
+
+    vim.api.nvim_buf_clear_namespace(ctx.bufnr, namespace, 0, -1)
+    local root = should_display_var_name and get_root(ctx.bufnr)
+
+    for _, v in ipairs(res) do
+      if v.kind == 1 then
+        local str = nil
+        if v.label:find(': ', 1, true) == 1 then
+          if root then
+            local _, start, _, finish = root:named_descendant_for_range(v.position.line, v.position.character - 1, v.position.line, v.position.character - 1):range()
+            local var = string.sub(vim.api.nvim_buf_get_lines(ctx.bufnr, v.position.line, v.position.line + 1, false)[1], start + 1, finish)
+            str = var .. v.label
           else
-            str = '‣' .. v.label
+            str = v.label:sub(3)
           end
-          vim.api.nvim_buf_set_extmark(ctx.bufnr, namespace, v.position.line, 0, { virt_text = { { str, hl } }, hl_mode = 'combine' })
+        else
+          str = '‣' .. v.label
         end
+        vim.api.nvim_buf_set_extmark(ctx.bufnr, namespace, v.position.line, 0, { virt_text = { { str, hl } }, hl_mode = 'combine' })
       end
     end
+  end
   )
 end
 

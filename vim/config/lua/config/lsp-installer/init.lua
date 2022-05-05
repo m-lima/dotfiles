@@ -86,7 +86,7 @@ local make_on_attach = function(opts)
       )
     end
 
-    if opts.inlay and client.server_capabilities.experimental and client.server_capabilities.experimental.inlayHints then
+    if opts.inlay and client.server_capabilities.inlayHintProvider then
       vim.api.nvim_create_autocmd(
         {
           'BufEnter',
