@@ -124,7 +124,7 @@ function penv {
 
     if [[ ! `which python` =~ "${newEnv}/bin/*" ]]
     then
-      echo -e "\e[31mFailed to swithc virtual environment:\e[m python binary does not belong to ${newEnv}"
+      echo -e "\e[31mFailed to switch virtual environment:\e[m python binary does not belong to ${newEnv})"
       deactivate
       return -1
     fi
