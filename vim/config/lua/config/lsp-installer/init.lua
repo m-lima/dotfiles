@@ -6,7 +6,7 @@ local make_on_attach = function(opts)
     local augroupnr = nil
     local augroup = function()
       if not augroupnr then
-        augroupnr = vim.api.nvim_create_augroup('pluginLsp_' .. client.name, { clear = true })
+        augroupnr = vim.api.nvim_create_augroup('pluginLsp_' .. client.name .. bufnr, { clear = true })
       end
       return augroupnr
     end
