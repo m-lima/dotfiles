@@ -29,6 +29,9 @@ highlight EndOfBuffer  guifg=#262626 ctermfg=235  guibg=NONE    ctermbg=NONE gui
 highlight! link QuickFixLine PmenuSel
 highlight StatusLine   guifg=#e4e4e4 ctermfg=254  guibg=#3a3a3a ctermbg=237  gui=NONE cterm=NONE
 highlight StatusLineNC guifg=#808080 ctermfg=244  guibg=#3a3a3a ctermbg=237  gui=NONE cterm=NONE
+highlight! link TabLine Normal
+highlight! link TabLineFill Normal
+highlight TabLineSel   guifg=#aaaaaa ctermfg=244  guibg=#303030 ctermbg=236  gui=NONE cterm=NONE
 highlight Title        guifg=#afff87 ctermfg=156  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
 
 """ Windowing
