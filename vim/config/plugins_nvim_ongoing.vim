@@ -136,11 +136,12 @@ EOF
 " Github integration to jump to PRs?
 
 """ TO FIX
+" LSP: Really need to know when the async process is running (some kind of status or spineer)
+" LSP: It is not idempotent. Keeps servers running and augroups configured
 " TELESCOPE: change layout size based on results
 " LUALINE: status spinner not working
 " TELESOPE: CocOutline
 " Auto-close of braces does not follow the format
-" LSP: Really need to know when the async process is running (some kind of status or spineer)
 " Telescope opening a file while focused on nvimtree, does not open on main pane
 "
 "" Missing from before
