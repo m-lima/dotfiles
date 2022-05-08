@@ -77,7 +77,7 @@ function filename:init(options)
 end
 
 function filename:update_status()
-  local data = string.gsub(vim.fn.getcwd(), vim.env.HOME, '~') .. '/'
+  local data = string.gsub(vim.fn.getcwd(), vim.env.HOME, '~') .. '  '
 
   if vim.bo.modified then
     data = data .. highlight.component_format_highlight(self.changed)
