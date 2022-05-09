@@ -1,5 +1,28 @@
 local cmp_capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+vim.api.nvim_create_user_command(
+  'Slsp',
+  function(args)
+    local id = tonumber(args.args)
+    if id then
+      local client = vim.lsp.get_client_by_id(id)
+      if client then
+        for bufnr, _ in pairs(client.attached_buffers) do
+          vim.api.nvim_del_augroup_by_name(string.format('lsp_c_%d_b_%d_did_save', id, bufnr))
+          vim.api.nvim_del_augroup_by_name('pluginLsp_' .. client.name .. bufnr)
+        end
+      end
+      vim.lsp.stop_client(id)
+    else
+      vim.notify('Expected a LSP client ID. Got: `' .. args.args .. '`', vim.log.levels.ERROR)
+    end
+  end,
+  {
+    desc = 'Stop a running LSP',
+    nargs = 1,
+  }
+)
+
 local make_on_attach = function(opts)
   return function(client, bufnr)
 

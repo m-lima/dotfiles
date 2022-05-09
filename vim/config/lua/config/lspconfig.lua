@@ -19,19 +19,3 @@ vim.cmd([[
   sign define DiagnosticSignInfo  text= texthl=DiagnosticSignInfo  linehl= numhl=
   sign define DiagnosticSignHint  text= texthl=DiagnosticSignHint  linehl= numhl=
 ]])
-
-vim.api.nvim_create_user_command(
-  'Slsp',
-  function(args)
-    local id = tonumber(args.args)
-    if id then
-      vim.lsp.stop_client(id)
-    else
-      vim.notify('Expected a LSP client ID. Got: `' .. args.args ..'`', vim.log.levels.ERROR)
-    end
-  end,
-  {
-    desc = 'Stop a running LSP',
-    nargs = 1,
-  }
-)

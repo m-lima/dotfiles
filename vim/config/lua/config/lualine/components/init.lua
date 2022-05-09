@@ -96,31 +96,68 @@ function active_lsp:init(options)
   self.color = highlight.create_component_highlight_group({ fg = '#ffffff' }, 'active_lsp', self.options)
 end
 
-function active_lsp:update_status()
-  local clients = ''
-  local current = false
-  local bufnr = vim.api.nvim_get_current_buf()
+local group_clients = function()
+  local clients = {}
+  local curr_bufnr = vim.api.nvim_get_current_buf()
 
   for _, client in ipairs(vim.lsp.get_active_clients()) do
-    if client.attached_buffers[bufnr] then
-      if not current then
-        clients = clients .. highlight.component_format_highlight(self.color)
-        current = true
-      end
-    else
-      if current then
-        clients = clients .. active_lsp.super.get_default_hl(self)
-        current = false
-      end
+    local client_object = {
+      id = client.id,
+      current = false,
+    }
+
+    if client.attached_buffers[curr_bufnr] then
+      client_object.current = true
     end
-    if #clients > 0 then
-      clients = clients .. ' ' .. client.id .. ':' .. client.name
+
+    if clients[client.name] then
+      table.insert(clients[client.name], client_object)
     else
-      clients = clients .. client.id .. ':' .. client.name
+      clients[client.name] = { client_object }
     end
   end
 
-  return clients
+  local multiple = 0
+  for _, _ in pairs(clients) do
+    multiple = multiple + 1
+  end
+
+  return clients, multiple > 1
+end
+
+function active_lsp:update_status()
+  local clients, multiple = group_clients()
+  local output = ''
+  local empty = true
+
+  for k, v in pairs(clients) do
+    local current = false
+
+    if not empty then
+      output = output .. ' '
+    else
+      empty = false
+    end
+
+    for i, c in ipairs(v) do
+      if i > 1 then
+        output = output .. ':'
+      end
+
+      if c.current then
+        output = output .. highlight.component_format_highlight(self.color) .. c.id .. active_lsp.super.get_default_hl(self)
+        current = true
+      else
+        output = output .. c.id
+      end
+    end
+
+    if not current or multiple then
+      output = output .. ':' .. k
+    end
+  end
+
+  return output
 end
 
 return {
