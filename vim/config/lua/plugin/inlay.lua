@@ -34,11 +34,7 @@ local refresh = function()
     'textDocument/inlayHint',
     get_params(),
     function(err, res, ctx)
-    if err then
-      vim.notify(vim.inspect(err), vim.log.levels.ERR)
-    end
-
-    if not res then return end
+    if err or not res then return end
 
     if not vim.tbl_islist(res) then
       vim.notify('Unrecognized response: ' .. res, vim.log.levels.ERR)
