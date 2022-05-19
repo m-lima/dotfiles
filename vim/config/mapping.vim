@@ -117,6 +117,9 @@ elseif has('unix')
   nnoremap <Esc>[63~ <C-Y>
 endif
 
+" Copy file name to clipboard
+nnoremap gyf <cmd>let @+=@%<CR>
+
 """ Completion navigation overload
 " TODO: Make this more sensible to my expectations
 inoremap <expr> <TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
