@@ -38,8 +38,6 @@ alias ggal="git branch -a | tr -d \* | sed '/->/d' | xargs git grep -HI"
 alias gdc='git diff --cached'
 alias gdb='git diff --stat'
 alias gsti='git stash push --keep-index'
-alias gcmsgs='git commit -S -m'
-alias gcams='git commit -a -S -m'
 
 function grbf {
   local branch
