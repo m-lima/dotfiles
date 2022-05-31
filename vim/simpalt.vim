@@ -40,7 +40,7 @@ highlight Pmenu        guifg=#bcbcbc ctermfg=250  guibg=#1c1c1c ctermbg=234  gui
 highlight PmenuSbar    guifg=NONE    ctermfg=NONE guibg=#3a3a3a ctermbg=237  gui=NONE cterm=NONE
 highlight PmenuSel     guifg=NONE    ctermfg=NONE guibg=#004b72 ctermbg=24   gui=NONE cterm=NONE
 highlight PmenuThumb   guifg=NONE    ctermfg=NONE guibg=#bcbcbc ctermbg=250  gui=NONE cterm=NONE
-highlight VertSplit    guifg=#444444 ctermfg=238  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
+highlight WinSeparator guifg=#444444 ctermfg=238  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
 
 """ Position
 highlight CursorLine   guifg=NONE    ctermfg=NONE guibg=#303030 ctermbg=236  gui=NONE cterm=NONE
@@ -112,10 +112,11 @@ highlight Function     guifg=#dcdcaa ctermfg=187  guibg=NONE    ctermbg=NONE gui
 """ Plugins
 " NeoTree
 if !(exists('g:simpalt_transparent_nvimtree') && g:simpalt_transparent_nvimtree)
-  highlight NeoTreeNormal      guifg=#909090 ctermfg=245  guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
-  highlight NeoTreeNormalNC    guifg=#909090 ctermfg=245  guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
-  highlight NeoTreeVertSplit   guifg=#262626 ctermfg=235  guibg=#262626 ctermbg=235 gui=NONE cterm=NONE
-  highlight NeoTreeCursorLine  guifg=NONE    ctermfg=NONE guibg=#262626 ctermbg=235 gui=NONE cterm=NONE
+  highlight NeoTreeNormal       guifg=#909090 ctermfg=245  guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
+  highlight NeoTreeNormalNC     guifg=#909090 ctermfg=245  guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
+  highlight NeoTreeVertSplit    guifg=#262626 ctermfg=235  guibg=#262626 ctermbg=235 gui=NONE cterm=NONE
+  highlight NeoTreeWinSeparator guifg=#262626 ctermfg=235  guibg=#262626 ctermbg=235 gui=NONE cterm=NONE
+  highlight NeoTreeCursorLine   guifg=NONE    ctermfg=NONE guibg=#262626 ctermbg=235 gui=NONE cterm=NONE
 endif
 
 " LSP
