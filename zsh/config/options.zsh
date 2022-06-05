@@ -13,11 +13,6 @@ export LESS='-F -g -i -M -R -S -w -X -z-4'
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-if [[ $TERM = xterm* ]]
-then
-  export TERM=xterm-256color
-fi
-
 # History Substring Config
 setopt HIST_IGNORE_ALL_DUPS
 
