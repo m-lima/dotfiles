@@ -27,7 +27,7 @@ require('neo-tree').setup({
   close_if_last_window = true,
   window = {
     position = 'left',
-    width = 40,
+    width = 50,
     popup = {
       position = {
         row = 0,
@@ -38,7 +38,7 @@ require('neo-tree').setup({
       },
       size = function()
         return {
-          width = 40,
+          width = 50,
           height = vim.o.lines - vim.o.cmdheight - 1,
         }
       end,
