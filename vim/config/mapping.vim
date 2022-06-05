@@ -14,13 +14,10 @@ inoremap <C-\> \
 vnoremap \ <Esc>
 vnoremap <C-\> \
 
-" Use ESC to exit insert mode in :term
+" Configure term "quit insert mode"
 if has("nvim")
-  tnoremap <Esc> <C-\><C-n>
+  tnoremap <C-\> <C-\><C-n>
 endif
-
-" Copy line
-nnoremap yp yyp
 
 " Y should follow the pattern and yank until the end
 nnoremap Y y$
@@ -63,17 +60,12 @@ noremap <silent> ]t gt
 noremap <silent> [t gT
 
 " Navigate through buffers
-noremap <silent> ]b :<C-u>exe v:count'bn'<CR>
-noremap <silent> [b :<C-u>exe v:count'bp'<CR>
+noremap <expr><silent> ]B '<cmd>' . v:count . 'bn<CR>'
+noremap <expr><silent> [B '<cmd>' . v:count . 'bp<CR>'
 
 " Close buffer
 " TODO: This is broken (when using NERDTree at least)
-noremap <silent> []b :b #<CR>:bwipe #<CR>
-noremap <silent> ][b :b #<CR>:bwipe #<CR>
-noremap <silent> ]db :bn<CR>:bd #<CR>
-noremap <silent> [db :bp<CR>:bd #<CR>
-
-" TODO: Can I copy then comment a block?
+noremap <expr><silent> ][B expand('#') ? '<cmd>b #<CR><cmd>bwipe #<CR>' : '<cmd>bp<CR><cmd>bwipe #<CR>'
 
 " I hate using ^ and $
 nnoremap H ^
@@ -93,6 +85,7 @@ vnoremap S :s//g<LEFT><LEFT>
 " Current line modify [Control-S]
 nnoremap <C-S> :s//g<LEFT><LEFT>
 
+" TODO: Revise this.. It looks weird
 if &diff
   map ] ]c
   map [ [c
@@ -124,7 +117,11 @@ elseif has('unix')
   nnoremap <Esc>[63~ <C-Y>
 endif
 
+" Copy file name to clipboard
+nnoremap gyf <cmd>let @+=@%<CR>
+
 """ Completion navigation overload
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-inoremap <expr><CR> pumvisible() ? "\<C-y>" : "\<CR>"
+" TODO: Make this more sensible to my expectations
+inoremap <expr> <TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+" inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"

@@ -2,6 +2,9 @@
 " Options config
 """"""""""""""""""""
 
+" Don't make noise
+set belloff=all
+
 " Don't show mode
 set noshowmode
 
@@ -30,8 +33,7 @@ set splitright
 set splitbelow
 
 " Leader mapping
-let mapleader = ","
-let g:mapleader = ","
+let g:mapleader = ' '
 
 " Mouse support
 set mouse=a
@@ -45,7 +47,12 @@ exec "set listchars=tab:\uB7\uA0,trail:\uAB,nbsp:\u268B"
 set list
 
 " Do not add comment when using 'o'
-autocmd FileType * setlocal formatoptions-=o
+" Needs to be an autocmd because `ftplugin` of multiple filetypes set this
+" value
+augroup optionsOverruleFileTypesOptions
+  autocmd!
+  autocmd BufEnter * set formatoptions-=o
+augroup END
 
 " Identation
 set autoindent
@@ -94,3 +101,16 @@ endif
 
 " Allow stepping away from buffer without saving
 set hidden
+
+" Flash yanked text
+if has('nvim')
+  augroup yankHighlight
+    autocmd!
+    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+  augroup end
+end
+
+if has('nvim')
+  let g:do_filetype_lua = 1
+  let g:did_load_filetypes = 0
+end

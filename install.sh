@@ -33,7 +33,7 @@ function fullPath {
   cd `dirname "${targetFile}"`
   targetFile=`basename "${targetFile}"`
 
-  # Compute the canonicalized name by finding the physical path 
+  # Compute the canonicalized name by finding the physical path
   # for the directory we're in and appending the target file.
   physDir=`pwd -P`
   result="${physDir}/${targetFile}"
@@ -57,9 +57,7 @@ function checkContinue {
   echo -n "Continue? [y/N] "
   read input
   case ${input} in
-    [Yy] )
-      return 0;
-      ;;
+    [Yy] ) return 0 ;;
   esac
 
   exit
@@ -675,6 +673,8 @@ if [ $(command -v nvim) ]
 then
   installFile s vim init.vim .config/nvim
   installFile s vim grayalt.vim .config/nvim/colors
+  installFile s vim simpalt.vim .config/nvim/colors
+  installFile s vim/config lua .config/nvim
 else
   echo "[33mSkipping NeoVim links[m"
 fi
@@ -683,6 +683,7 @@ if [ $(command -v vim) ]
 then
   installFile s vim init.vim . .vimrc
   installFile s vim grayalt.vim .vim/colors
+  installFile s vim simpalt.vim .vim/colors
 else
   echo "[33mSkipping Vim links[m"
 fi

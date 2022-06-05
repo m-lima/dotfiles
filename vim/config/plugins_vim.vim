@@ -24,15 +24,16 @@ endif
 
 call plug#begin()
 
+""" Dependencies
+Plug 'kana/vim-textobj-user' " Dependency for text objects
+Plug 'tpope/vim-repeat' " Depenency for vim-scripts/ReplaceWithRegister
+Plug 'ryanoasis/vim-devicons'
+
 """ Visual
 if !exists('g:gui_oni')
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
 endif
-
-""" Dependencies
-Plug 'kana/vim-textobj-user' " Dependency for text objects
-Plug 'tpope/vim-repeat' " Depenency for vim-scripts/ReplaceWithRegister
 
 """ Util
 Plug 'preservim/nerdtree', { 'on': [ 'NERDTree', 'NERDTreeToggle', 'NERDTreeFind' ] }
@@ -40,7 +41,6 @@ Plug 'xuyuanp/nerdtree-git-plugin', { 'on': [ 'NERDTree', 'NERDTreeToggle', 'NER
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
-Plug 'ryanoasis/vim-devicons'
 Plug 'aserebryakov/vim-todo-lists'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'unblevable/quick-scope'
@@ -149,9 +149,6 @@ let g:go_doc_keywordprg_enabled = 0
 """ Vim-commentary
 augroup pluginsVimComentary
   autocmd!
-
-  " Do not add comment when using 'o'
-  autocmd FileType * setlocal formatoptions-=o
 
   " Custom comment strings
   autocmd FileType cmake setlocal commentstring=#\ %s
@@ -356,6 +353,7 @@ if has('node')
   nnoremap <silent> gi         :<C-u>CocCommand fzf-preview.CocImplementations<CR>
   nnoremap <silent> <leader>cd :<C-u>call <SID>show_documentation()<CR>
   nnoremap <silent> <leader>ce :<C-u>CocCommand fzf-preview.CocDiagnostics<CR>
+  nnoremap <silent> <leader>co :<C-u>CocCommand fzf-preview.CocOutline<CR>
   nmap     <silent> <leader>cn <Plug>(coc-rename)
   nmap     <silent> <leader>cr <Plug>(coc-refactor)
 

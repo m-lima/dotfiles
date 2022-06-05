@@ -38,6 +38,8 @@ alias ggal="git branch -a | tr -d \* | sed '/->/d' | xargs git grep -HI"
 alias gdc='git diff --cached'
 alias gdb='git diff --stat'
 alias gsti='git stash push --keep-index'
+alias gcmsgs='git commit -S -m'
+alias gcams='git commit -a -S -m'
 
 function grbf {
   local branch
@@ -124,7 +126,7 @@ function penv {
 
     if [[ ! `which python` =~ "${newEnv}/bin/*" ]]
     then
-      echo -e "\e[31mFailed to swithc virtual environment:\e[m python binary does not belong to ${newEnv}"
+      echo -e "\e[31mFailed to switch virtual environment:\e[m python binary does not belong to ${newEnv})"
       deactivate
       return -1
     fi
