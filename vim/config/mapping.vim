@@ -76,6 +76,9 @@ vnoremap L $
 " Toggle relative numbering
 noremap <Leader>l :set rnu!<CR>
 
+" Make asterisk case-sensitive and not move
+nnoremap <silent> * <cmd>let @/='\C\<' . expand('<cword>') . '\>'<CR>
+
 " Global modify [Shift-S]
 nnoremap S :%s//gc<LEFT><LEFT><LEFT>
 
