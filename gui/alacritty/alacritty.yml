@@ -748,6 +748,7 @@ colors:
 # in the order they were defined in.
 key_bindings:
   - { key: Return, mods: Super,   action: ToggleFullscreen }
+  - { key: N,      mods: Super,   action: SpawnNewInstance }
   - { key: Q,      mods: Control, chars: "\x11" }
   - { key: Left,   mods: Super,   chars: "\x1bb" }
   - { key: Right,  mods: Super,   chars: "\x1bf" }
