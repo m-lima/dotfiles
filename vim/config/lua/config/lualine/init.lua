@@ -8,7 +8,7 @@ require('lualine').setup({
     section_separators = { left = '', right = '' },
     component_separators = { left = '╲', right = '╱' },
     theme = themes.grayalt,
-    globalstatus = true,
+    globalstatus = false,
   },
   sections = {
     lualine_a = {
@@ -46,7 +46,7 @@ require('lualine').setup({
   inactive_sections = {
     lualine_c = {
       {
-        components.filename,
+        '%F',
         path = 1,
         symbols = {
           modified = ' ',
