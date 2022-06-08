@@ -5,8 +5,10 @@ source ~/.config/m-lima/vim/base.vim
 source ~/.config/m-lima/vim/coloring.vim
 
 " Plugins
-if has('nvim')
+if has('nvim-0.7')
   source ~/.config/m-lima/vim/plugins_nvim.vim
+elseif has('nvim')
+  source ~/.config/m-lima/vim/plugins_nvim_old.vim
 else
   source ~/.config/m-lima/vim/plugins_vim.vim
 endif
