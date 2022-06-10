@@ -30,10 +30,10 @@ if [ -z $TMUX_POWERLINE_LEFT_STATUS_SEGMENTS ]; then
 		"load 237 246" \
 		# "lan_ip 24 255 ${TMUX_POWERLINE_SEPARATOR_RIGHT_THIN}" \
 		# "wan_ip 24 255" \
-		#"vcs_branch 29 88" \
-		#"vcs_compare 60 255" \
-		#"vcs_staged 64 255" \
-		#"vcs_modified 9 255" \
+		"vcs_branch 235 246" \
+		"vcs_compare 235 60" \
+		"vcs_staged 235 64" \
+		"vcs_modified 235 9" \
 		#"vcs_others 245 0" \
 	)
 fi
