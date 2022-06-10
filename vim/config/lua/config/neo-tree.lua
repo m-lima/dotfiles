@@ -56,6 +56,7 @@ require('neo-tree').setup({
       ['<C-t>'] = 'open_tabnew',
       ['h'] = 'close_node',
       ['l'] = 'open',
+      ['<leader>?'] = 'show_help',
     },
   },
   filesystem = {
