@@ -100,7 +100,7 @@ augroup END
 
 " Pyenv root
 if filereadable(expand('$HOME/code/python/env/vim/bin/python'))
-  let g:python3_host_prog = '$HOME/code/python/env/vim/bin/python'
+  let g:python3_host_prog = expand('$HOME/code/python/env/vim/bin/python')
 endif
 
 " Allow stepping away from buffer without saving
