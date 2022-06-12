@@ -62,6 +62,7 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'ray-x/lsp_signature.nvim'
 
 " Misc
 Plug 'unblevable/quick-scope'        " Highlight on `f`
@@ -89,6 +90,7 @@ require('config.neo-tree')
 require('config.nvim-treesitter')
 require('config.project')
 require('config.quick-scope')
+require('config.signature')
 require('config.telescope')
 require('config.toggleterm')
 require('config.undotree')

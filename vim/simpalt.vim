@@ -125,6 +125,8 @@ highlight LspReferenceWrite guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gu
 highlight LspReferenceRead  guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=UNDERLINE cterm=UNDERLINE
 highlight LspCodeLens       guifg=#005f5f ctermfg=23  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
 
+highlight! link LspSignatureActiveParameter Search
+
 " TreeSitter
 highlight TSOperator           guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
 highlight TSPunctBracket       guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
