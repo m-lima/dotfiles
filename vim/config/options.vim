@@ -6,7 +6,11 @@
 set belloff=all
 
 " Don't show mode
-set noshowmode
+if has('nvim')
+  set noshowmode
+else
+  set laststatus=2
+endif
 
 " No *.swp file
 set noswapfile
