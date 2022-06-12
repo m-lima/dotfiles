@@ -8,8 +8,8 @@
 #
 # All imports must either be absolute paths starting with `/`, or paths relative
 # to the user's home directory starting with `~/`.
-#import:
-#  - /path/to/alacritty.yml
+import:
+  - ~/.config/m-lima/alacritty/alacritty.yml
 
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
@@ -61,7 +61,7 @@ window:
   # Values for `decorations` (macOS only):
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background and no title bar buttons
-  decorations: buttonless
+  ### DEFERRED ### decorations: buttonless
 
   # Background opacity
   #
@@ -108,16 +108,16 @@ window:
   #multiplier: 3
 
 # Font configuration
-font:
+### DEFERRED ### font:
   # Normal (roman) font face
-  normal:
+  #normal:
     # Font family
     #
     # Default:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: DejaVuSansMono Nerd Font Mono
+    #family: DejaVuSansMono Nerd Font Mono
 
     # The `style` can be specified to pick a specific face.
     #style: Regular
@@ -747,10 +747,10 @@ colors:
 # in the order they were defined in.
 key_bindings:
   - { key: Return, mods: Super,   action: ToggleFullscreen }
-  - { key: N,      mods: Super,   action: SpawnNewInstance }
+  - { key: N,      mods: Super,   action: CreateNewWindow }
   - { key: Q,      mods: Control, chars: "\x11" }
-  - { key: Left,   mods: Super,   chars: "\x1bb" }
-  - { key: Right,  mods: Super,   chars: "\x1bf" }
+  - { key: Left,   mods: Alt,   chars: "\x1bb" }
+  - { key: Right,  mods: Alt,   chars: "\x1bf" }
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
