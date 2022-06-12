@@ -8,9 +8,13 @@ syntax enable
 set cul
 
 " Force true color on Vim
-if !has('nvim') && !has('gui_running') && &term =~ '^\%(alacritty\|screen\|tmux\)'
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+if !has('nvim') && !has('gui_running')
+  if &term =~ '^alacritty'
+    let &term = "xterm-256color"
+  elseif &term =~  '^\%(screen\|tmux\)'
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  endif
 endif
 
 " colorscheme grayalt
