@@ -57,26 +57,26 @@ nnoremap <leader>hi :call SynStack()<CR>
 """"" Below this point be quasi-plugins
 
 """ List TODOs
-" TODO: This references a plugin!! Make into a plugin?
-if executable('node')
-  function! s:toggle_todo()
-    cgetexpr system('rg -s --trim --vimgrep TODO')
-    CocCommand fzf-preview.QuickFix --add-fzf-arg="+s" --add-fzf-arg=--prompt="TODO> "
-  endfunction
-else
-  function! s:toggle_todo()
-    if &ft == 'qf'
-      ccl
-    else
-      cgetexpr system('rg -s --trim --vimgrep TODO')
-      call setqflist([], 'a', {'title': 'TODO'})
-      cope
-    endif
-  endfunction
-endif
-
-" Map to <leader>t
-nnoremap <silent> <Leader>t :call <SID>toggle_todo()<CR>
+" " TODO: This references a plugin!! Make into a plugin?
+" if executable('node')
+"   function! s:toggle_todo()
+"     cgetexpr system('rg -s --trim --vimgrep TODO')
+"     CocCommand fzf-preview.QuickFix --add-fzf-arg="+s" --add-fzf-arg=--prompt="TODO> "
+"   endfunction
+" else
+"   function! s:toggle_todo()
+"     if &ft == 'qf'
+"       ccl
+"     else
+"       cgetexpr system('rg -s --trim --vimgrep TODO')
+"       call setqflist([], 'a', {'title': 'TODO'})
+"       cope
+"     endif
+"   endfunction
+" endif
+"
+" " Map to <leader>t
+" nnoremap <silent> <Leader>t :call <SID>toggle_todo()<CR>
 
 " TODO: Save all buffers into context
 
