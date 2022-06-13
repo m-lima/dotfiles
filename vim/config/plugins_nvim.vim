@@ -24,6 +24,7 @@ Plug 'MunifTanjim/nui.nvim'            " Dependency for:
 Plug 'tpope/vim-surround'              " s
 Plug 'numToStr/Comment.nvim'           " gc
 Plug 'vim-scripts/ReplaceWithRegister' " gr
+Plug 'phaazon/hop.nvim'                " <leader>f/t/g
 
 " Text objects
 Plug 'nvim-treesitter/nvim-treesitter-textobjects' " TODO: Completely not configured
@@ -65,7 +66,6 @@ Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'ray-x/lsp_signature.nvim'
 
 " Misc
-Plug 'unblevable/quick-scope'        " Highlight on `f`
 Plug 'aserebryakov/vim-todo-lists'   " TODO md file helper
 Plug 'skanehira/vsession'            " Save/load sessions TODO: Configure. I think now it keeps saving the session
 Plug 'akinsho/toggleterm.nvim'       " More usable terminal
@@ -83,6 +83,7 @@ require('config.comment')
 require('config.dap')
 require('config.fugitive')
 require('config.gitsigns')
+require('config.hop')
 require('config.lsp-installer')
 require('config.lspconfig')
 require('config.lualine')
