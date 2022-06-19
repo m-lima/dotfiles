@@ -1,0 +1,9 @@
+window:
+  decorations: full
+
+font:
+  normal:
+    family: DejaVuSansMono NF
+
+key_bindings:
+  - { key: N, mods: Super,            action: SpawnNewInstance }

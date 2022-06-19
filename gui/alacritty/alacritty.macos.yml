@@ -1,6 +1,12 @@
+env:
+  TERM: alacritty-direct
+
 window:
   decorations: buttonless
 
 font:
   normal:
     family: DejaVuSansMono Nerd Font Mono
+
+key_bindings:
+  - { key: N, mods: Super, action: CreateNewWindow }

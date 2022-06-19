@@ -14,14 +14,15 @@ import:
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty itself.
-env:
+### DEFERRED ### env:
+#env:
   # TERM variable
   #
   # This value is used to set the `$TERM` environment variable for
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
-  TERM: alacritty-direct
+  #TERM: alacritty-direct
 
 window:
   # Window dimensions (changes require restart)
@@ -30,8 +31,8 @@ window:
   # must be at least `2`, while using a value of `0` for columns and lines will
   # fall back to the window manager's recommended size.
   dimensions:
-    columns: 250
-    lines: 80
+    columns: 200
+    lines: 60
 
   # Window position (changes require restart)
   #
@@ -747,10 +748,9 @@ colors:
 # in the order they were defined in.
 key_bindings:
   - { key: Return, mods: Super,   action: ToggleFullscreen }
-  - { key: N,      mods: Super,   action: CreateNewWindow }
-  - { key: Q,      mods: Control, chars: "\x11" }
-  - { key: Left,   mods: Alt,   chars: "\x1bb" }
-  - { key: Right,  mods: Alt,   chars: "\x1bf" }
+  - { key: Q,      mods: Control, chars: "\x11"            }
+  - { key: Left,   mods: Alt,     chars: "\x1bb"           }
+  - { key: Right,  mods: Alt,     chars: "\x1bf"           }
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
