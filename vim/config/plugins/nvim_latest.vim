@@ -21,10 +21,10 @@ Plug 'MunifTanjim/nui.nvim'            " Dependency for:
                                        "  - neo-tree
 
 " Verbs
-Plug 'tpope/vim-surround'              " s
+Plug 'tpope/vim-surround'              " ys/cs/ds
 Plug 'numToStr/Comment.nvim'           " gc
 Plug 'vim-scripts/ReplaceWithRegister' " gr
-Plug 'phaazon/hop.nvim'                " <leader>f/t/g
+Plug 'ggandor/lightspeed.nvim'         " s/S/z/Z/x/X/f/F/t/T
 
 " Text objects
 Plug 'nvim-treesitter/nvim-treesitter-textobjects' " TODO: Completely not configured
@@ -83,7 +83,6 @@ require('config.comment')
 require('config.dap')
 require('config.fugitive')
 require('config.gitsigns')
-require('config.hop')
 require('config.lsp-installer')
 require('config.lspconfig')
 require('config.lualine')

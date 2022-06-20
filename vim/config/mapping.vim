@@ -79,14 +79,14 @@ noremap <Leader>l :set rnu!<CR>
 " Make asterisk case-sensitive and not move
 nnoremap <silent> * <cmd>let @/='\C\<' . expand('<cword>') . '\>'<CR>nN
 
-" Global modify [Shift-S]
-nnoremap S :%s//gc<LEFT><LEFT><LEFT>
+" Global modify
+nnoremap <leader>c :%s//gc<LEFT><LEFT><LEFT>
 
-" Current selection modify [Shift-S]
-vnoremap S :s//g<LEFT><LEFT>
+" Current selection modify
+vnoremap <leader>c :s//g<LEFT><LEFT>
 
-" Current line modify [Control-S]
-nnoremap <C-S> :s//g<LEFT><LEFT>
+" Current line modify
+nnoremap <leader>C :s//g<LEFT><LEFT>
 
 " TODO: Revise this.. It looks weird
 if &diff
