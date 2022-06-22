@@ -704,7 +704,8 @@ fi
 
 if [ $(command -v tmux) ]
 then
-  installFile s scripts tmx bin
+  installFile s tmux tmx bin
+  installFile s tmux clean-tmux-scratches bin
   installFile s tmux .tmux.conf
 else
   echo "[33mSkipping Tmux links[m"

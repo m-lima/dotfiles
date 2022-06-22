@@ -1,0 +1,5 @@
+all_windows=`tmux list-windows -a -F "#{session_id}#{window_id}:#{session_name}" | grep -v ':scratch-'`
+for scratch in `tmux list-windows -a -F "#{session_name}" | grep 'scratch-'`
+do
+  grep "${scratch#scratch-}" <<<${all_windows} > /dev/null || tmux kill-session -t "${scratch}"
+done
