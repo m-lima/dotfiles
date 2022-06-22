@@ -52,6 +52,19 @@ function grbf {
   git fetch --all --prune --jobs=10 && git rebase "${branch}"
 }
 
+function gmf {
+  local branch
+
+  if [ $1 ]
+  then
+    branch=$1
+  else
+    branch="origin/$(git_main_branch)"
+  fi
+
+  git fetch --all --prune --jobs=10 && git merge "${branch}"
+}
+
 if command -v lazygit &> /dev/null
 then
   alias lg=lazygit
