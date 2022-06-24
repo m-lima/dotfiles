@@ -108,7 +108,7 @@ set hidden
 
 " Flash yanked text
 if has('nvim')
-  augroup yankHighlight
+  augroup optionsYankHighlight
     autocmd!
     autocmd TextYankPost * silent! lua vim.highlight.on_yank()
   augroup end
@@ -118,3 +118,9 @@ if has('nvim')
   let g:do_filetype_lua = 1
   let g:did_load_filetypes = 0
 end
+
+" Send quickfix to the bottom with full width
+augroup optionsQuifixBottom
+  autocmd!
+  autocmd FileType qf if (getwininfo(win_getid())[0].loclist != 1) | wincmd J | endif
+augroup END
