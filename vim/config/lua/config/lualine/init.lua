@@ -1,7 +1,6 @@
 local components = require('config.lualine.components')
 local extensions = require('config.lualine.extensions')
 local themes = require('config.lualine.themes')
-local defer_lsp = require('plugin.defer_lsp')
 
 require('lualine').setup({
   extensions = { 'quickfix', extensions.toggleterm, extensions.neotree },
@@ -38,7 +37,7 @@ require('lualine').setup({
       },
     },
     lualine_x = {
-      function() return table.concat(defer_lsp.running_tasks(), ' ') end,
+      components.running_lsp_requests,
       'filetype',
       components.active_lsp,
     },

@@ -1,5 +1,7 @@
+local lualine = require('lualine')
 local highlight = require('lualine.highlight')
 local extract_color = require('script.helper').extract_color
+local defer_lsp = require('plugin.defer_lsp')
 
 local function paste()
   if vim.o.paste then
@@ -160,11 +162,45 @@ function active_lsp:update_status()
   return output
 end
 
+local running_lsp_requests = require('lualine.component'):extend()
+
+function running_lsp_requests:init(options)
+  self.super.init(self, options)
+  self.spinner = { '⡆', '⠇', '⠋', '⠙', '⠸', '⢰', '⣠', '⣄' }
+  self.spinner_index = 1
+  self.spinner_color = highlight.create_component_highlight_group({ fg = '#ff7f50' }, 'running_lsp_requests', self.options)
+end
+
+function running_lsp_requests:update_status()
+  local running = table.concat(defer_lsp.running_tasks(), ' ')
+  if #running > 0 then
+    if not self.timer then
+      self.timer = vim.loop.new_timer()
+      self.timer:start(0, 200, function()
+        if self.spinner_index == #self.spinner then
+          self.spinner_index = 1
+        else
+          self.spinner_index = self.spinner_index + 1
+        end
+        vim.schedule(lualine.statusline)
+      end)
+    end
+
+    return highlight.component_format_highlight(self.spinner_color) .. self.spinner[self.spinner_index] .. self.super.get_default_hl(self) .. ' ' .. running
+  else
+    if self.timer then
+      self.timer:stop()
+      self.timer = nil
+    end
+  end
+end
+
 return {
   paste = paste,
   changed_buffers = changed_buffers,
   filename = filename,
   active_lsp = active_lsp,
+  running_lsp_requests = running_lsp_requests,
   location = '%l/%L:%-1v',
   toggleterm = 'b:toggle_number',
 }
