@@ -12,6 +12,9 @@ cmp.setup({
     format = function(entry, vim_item)
       if entry.source.name == 'nvim_lsp_signature_help' then
         vim_item.kind = 'Param'
+      elseif entry.source.name == 'tmux' then
+        vim_item.kind = 'Tmux'
+        vim_item.menu = nil
       end
       return vim_item
     end
@@ -56,6 +59,7 @@ cmp.setup({
     { name = 'nvim_lsp_signature_help' },
     { name = 'nvim_lsp' },
     { name = 'buffer' },
+    { name = 'tmux' },
     { name = 'path' },
   },
 })
@@ -64,6 +68,7 @@ cmp.setup.cmdline('/', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
     { name = 'buffer' },
+    { name = 'tmux' },
   },
 })
 
@@ -72,5 +77,6 @@ cmp.setup.cmdline(':', {
   sources = {
     { name = 'path' },
     { name = 'cmdline' },
+    { name = 'tmux' },
   },
 })
