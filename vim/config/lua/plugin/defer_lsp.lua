@@ -1,6 +1,6 @@
 local trackers = {}
 
-local make_deferred = function(opts, one_shot)
+local defer = function(opts, one_shot)
   if not opts.handlers then
     opts.handlers = {}
   end
@@ -54,6 +54,57 @@ local make_deferred = function(opts, one_shot)
   return opts
 end
 
+local running_tasks_map = {}
+local uninitialized = true
+
+local setup = function()
+  if uninitialized then
+    local req = vim.lsp.buf_request
+    local req_all = vim.lsp.buf_request_all
+    local req_sync = vim.lsp.buf_request_sync
+
+    vim.lsp.buf_request = function(bufnr, method, params, orig_handler)
+      local id = math.random()
+      running_tasks_map[id] = method:match('/(.*)')
+      local handler = function(err, result, ctx, config)
+        running_tasks_map[id] = nil
+        if orig_handler then
+          orig_handler(err, result, ctx, config)
+        end
+      end
+      return req(bufnr, method, params, handler)
+    end
+
+    vim.lsp.buf_request_all = function(bufnr, method, params, orig_callback)
+      local id = math.random()
+      running_tasks_map[id] = method:match('/(.*)')
+      local callback = function(err, result, ctx, config)
+        running_tasks_map[id] = nil
+        if orig_callback then
+          orig_callback(err, result, ctx, config)
+        end
+      end
+      return req_all(bufnr, method, params, callback)
+    end
+
+    vim.lsp.buf_request_sync = function(bufnr, method, params, timeout_ms)
+      local id = math.random()
+      running_tasks_map[id] = method:match('/(.*)')
+      local result, err = { req_sync(bufnr, method, params, timeout_ms) }
+      running_tasks_map[id] = nil
+      return result, err
+    end
+
+    uninitialized = false
+  end
+end
+
+local running_tasks = function()
+  return vim.tbl_values(running_tasks_map)
+end
+
 return {
-  make_deferred = make_deferred,
+  defer = defer,
+  setup = setup,
+  running_tasks = running_tasks,
 }

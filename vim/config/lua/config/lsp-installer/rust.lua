@@ -125,7 +125,7 @@ local prepare = function(opts)
     )
   end
 
-  return require('plugin.defer_lsp').make_deferred(opts)
+  return require('plugin.defer_lsp').defer(opts)
 end
 
 return {
