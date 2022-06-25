@@ -58,12 +58,12 @@ Plug 'rcarriga/nvim-dap-ui'
 " Completion
 Plug 'hrsh7th/nvim-cmp' " TODO: Configure
 Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
-Plug 'ray-x/lsp_signature.nvim'
 
 " Misc
 Plug 'aserebryakov/vim-todo-lists'   " TODO md file helper
@@ -90,7 +90,6 @@ require('config.neo-tree')
 require('config.nvim-treesitter')
 require('config.project')
 require('config.quick-scope')
-require('config.signature')
 require('config.telescope')
 require('config.toggleterm')
 require('config.undotree')
@@ -110,6 +109,9 @@ EOF
 """ To check
 " Great reference: https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
 " Plugin building example: https://www.2n.pl/blog/how-to-write-neovim-plugins-in-lua
+"
+"" Find emoji/nerdfont
+" https://github.com/ziontee113/icon-picker.nvim
 "
 "" Completion
 " "" Raw
