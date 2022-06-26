@@ -80,7 +80,6 @@ lua <<EOF
 require('config.cmp')
 require('config.comment')
 require('config.dap')
-require('config.defer-lsp')
 require('config.fugitive')
 require('config.gitsigns')
 require('config.lsp-installer')
