@@ -37,7 +37,7 @@ require('lualine').setup({
       },
     },
     lualine_x = {
-      components.running_lsp_requests,
+      require('config.lualine.components.lsp-status'),
       'filetype',
       components.active_lsp,
     },

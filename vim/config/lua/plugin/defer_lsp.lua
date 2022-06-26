@@ -49,12 +49,13 @@ local defer = function(opts, one_shot)
     end
   end
 
-  opts.capabilities = vim.tbl_deep_extend('force', { experimental = { serverStatusNotification = true }}, opts.capabilities or {})
+  opts.capabilities = vim.tbl_deep_extend('force', { experimental = { serverStatusNotification = true } },
+    opts.capabilities or {})
 
   return opts
 end
 
-local running_tasks_map = {}
+local running_requests_map = {}
 local uninitialized = true
 
 local setup = function()
@@ -65,9 +66,9 @@ local setup = function()
 
     vim.lsp.buf_request = function(bufnr, method, params, orig_handler)
       local id = math.random()
-      running_tasks_map[id] = method:match('/(.*)')
+      running_requests_map[id] = method:match('/(.*)')
       local handler = function(err, result, ctx, config)
-        running_tasks_map[id] = nil
+        running_requests_map[id] = nil
         if orig_handler then
           orig_handler(err, result, ctx, config)
         end
@@ -77,9 +78,9 @@ local setup = function()
 
     vim.lsp.buf_request_all = function(bufnr, method, params, orig_callback)
       local id = math.random()
-      running_tasks_map[id] = method:match('/(.*)')
+      running_requests_map[id] = method:match('/(.*)')
       local callback = function(err, result, ctx, config)
-        running_tasks_map[id] = nil
+        running_requests_map[id] = nil
         if orig_callback then
           orig_callback(err, result, ctx, config)
         end
@@ -89,9 +90,9 @@ local setup = function()
 
     vim.lsp.buf_request_sync = function(bufnr, method, params, timeout_ms)
       local id = math.random()
-      running_tasks_map[id] = method:match('/(.*)')
-      local result, err = { req_sync(bufnr, method, params, timeout_ms) }
-      running_tasks_map[id] = nil
+      running_requests_map[id] = method:match('/(.*)')
+      local result, err = req_sync(bufnr, method, params, timeout_ms)
+      running_requests_map[id] = nil
       return result, err
     end
 
@@ -99,12 +100,12 @@ local setup = function()
   end
 end
 
-local running_tasks = function()
-  return vim.tbl_values(running_tasks_map)
+local running_requests = function()
+  return vim.tbl_values(running_requests_map)
 end
 
 return {
   defer = defer,
   setup = setup,
-  running_tasks = running_tasks,
+  running_requests = running_requests,
 }
