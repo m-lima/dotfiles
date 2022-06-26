@@ -188,33 +188,39 @@ highlight! link QuickScopePrimary   Visual
 highlight! link QuickScopeSecondary Search
 
 " CMP
-highlight CmpItemKindVariable    guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
-highlight CmpItemKindInterface   guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
-highlight CmpItemKindText        guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
-highlight CmpItemKindFunction    guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
-highlight CmpItemKindMethod      guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
-highlight CmpItemKindKeyword     guifg=#909090 ctermfg=245 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
-highlight CmpItemKindProperty    guifg=#909090 ctermfg=245 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
-highlight CmpItemKindUnit        guifg=#909090 ctermfg=245 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
-highlight CmpItemKindConstructor guifg=#f28b25 ctermfg=208 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
-highlight CmpItemAbbrDeprecated  guifg=#51504f ctermfg=239 guibg=NONE ctermbg=NONE gui=STRIKETHROUGH cterm=STRIKETHROUGH 
+highlight CmpItemAbbrDeprecated  guifg=#51504f ctermfg=239 guibg=NONE ctermbg=NONE gui=STRIKETHROUGH cterm=STRIKETHROUGH
 highlight CmpItemAbbrMatch       guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=BOLD          cterm=BOLD
-highlight! link CmpItemKindClass         CmpItemKindConstructor
-highlight! link CmpItemKindModule        CmpItemKindKeyword
-highlight! link CmpItemKindOperator      TSOperator
-highlight! link CmpItemKindReference     TSParameterReference
-highlight! link CmpItemKindValue         TSField
-highlight! link CmpItemKindField         TSField
-highlight! link CmpItemKindEnum          TSField
-highlight! link CmpItemKindSnippet       TSText
-highlight! link CmpItemKindColor         TSConstant
-highlight! link CmpItemKindFile          TSURI
-highlight! link CmpItemKindFolder        TSURI
-highlight! link CmpItemKindEvent         TSConstant
-highlight! link CmpItemKindEnumMember    TSField
+highlight CmpItemKindEvent       guifg=#87afaf ctermfg=103 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
+highlight CmpItemKindText        guifg=#9c50a0 ctermfg=133 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
+highlight CmpItemKindType        guifg=#009980 ctermfg=72  guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE " Matching TSType without BOLD
+highlight CmpItemKindUnit        guifg=#909090 ctermfg=245 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
+highlight CmpItemKindSnippet     guifg=#afd7af ctermfg=245 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
+
+highlight! link CmpItemKindClass         CmpItemKindType
+highlight! link CmpItemKindEnum          CmpItemKindType
+highlight! link CmpItemKindInterface     CmpItemKindType
+highlight! link CmpItemKindStruct        CmpItemKindType
+
 highlight! link CmpItemKindConstant      TSConstant
-highlight! link CmpItemKindStruct        TSStructure
-highlight! link CmpItemKindTypeParameter TSParamete
+highlight! link CmpItemKindConstructor   TSConstructor
+highlight! link CmpItemKindField         TSField
+highlight! link CmpItemKindFunction      TSFunction
+highlight! link CmpItemKindKeyword       TSKeyword
+highlight! link CmpItemKindMethod        TSMethod
+highlight! link CmpItemKindOperator      TSOperator
+highlight! link CmpItemKindParam         TSParameter
+highlight! link CmpItemKindProperty      TSProperty
+highlight! link CmpItemKindTypeParameter TSParameter
+highlight! link CmpItemKindVariable      TSVariable
+
+highlight! link CmpItemKindColor         TSConstant
+highlight! link CmpItemKindEnumMember    TSVariable
+highlight! link CmpItemKindFile          TSKeyword
+highlight! link CmpItemKindFolder        TSKeyword
+highlight! link CmpItemKindModule        TSInclude
+highlight! link CmpItemKindReference     TSParameterReference
+highlight! link CmpItemKindTabNine       CmpItemKindEvent
+highlight! link CmpItemKindValue         TSLabel
 
 " Telescope
 highlight! link TelescopeSelection PmenuSel

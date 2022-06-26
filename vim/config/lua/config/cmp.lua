@@ -10,12 +10,21 @@ cmp.setup({
   },
   formatting = {
     format = function(entry, vim_item)
-      if entry.source.name == 'nvim_lsp_signature_help' then
+      if entry.source.name == 'nvim_lsp' then
+        vim_item.menu = ''
+      elseif entry.source.name == 'cmp_tabnine' then
+        vim_item.kind = 'TabNine'
+      elseif entry.source.name == 'nvim_lsp_signature_help' then
         vim_item.kind = 'Param'
+      elseif entry.source.name == 'buffer' then
+        vim_item.kind = 'Buffer'
+      elseif entry.source.name == 'cmdline' then
+        vim_item.kind = 'Vim'
       elseif entry.source.name == 'tmux' then
         vim_item.kind = 'Tmux'
         vim_item.menu = nil
       end
+
       return vim_item
     end
   },
@@ -28,10 +37,6 @@ cmp.setup({
     ['<C-e>'] = cmp.mapping.abort(),
     ['<C-y>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
-      select = false,
-    }),
-    ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Insert,
       select = false,
     }),
     ['<Tab>'] = cmp.mapping(
@@ -56,19 +61,20 @@ cmp.setup({
     ),
   },
   sources = {
-    { name = 'nvim_lsp_signature_help' },
+    { name = 'nvim_lsp_signature_help', keyword_lenght = 0 },
+    { name = 'cmp_tabnine' },
     { name = 'nvim_lsp' },
-    { name = 'buffer' },
-    { name = 'tmux' },
+    { name = 'buffer', max_item_count = 5 },
     { name = 'path' },
-  },
+    { name = 'tmux', max_item_count = 5 },
+  }
 })
 
 cmp.setup.cmdline('/', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
     { name = 'buffer' },
-    { name = 'tmux' },
+    { name = 'tmux', max_item_count = 5 },
   },
 })
 
@@ -77,6 +83,6 @@ cmp.setup.cmdline(':', {
   sources = {
     { name = 'path' },
     { name = 'cmdline' },
-    { name = 'tmux' },
+    { name = 'tmux', max_item_count = 5 },
   },
 })
