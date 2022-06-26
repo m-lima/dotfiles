@@ -102,8 +102,11 @@ function lsp_status:register_request()
     local handler = function(err, result, ctx, config)
       self.clients[ctx.client_id].requests[id] = nil
       self:clean_client(ctx.client_id)
+
       if orig_handler then
         orig_handler(err, result, ctx, config)
+      else
+        vim.lsp.handlers[method](err, result, ctx, config)
       end
     end
     return req(bufnr, method, params, handler)
@@ -131,9 +134,7 @@ function lsp_status:register_request()
         self:clean_client(client_id)
       end
 
-      if orig_callback then
-        orig_callback(err, result, ctx, config)
-      end
+      orig_callback(err, result, ctx, config)
     end
     return req_all(bufnr, method, params, callback)
   end
