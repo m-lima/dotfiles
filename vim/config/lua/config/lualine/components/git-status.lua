@@ -27,56 +27,7 @@ local parse = function(git_output)
   end
 end
 
-local git_status = require('lualine.component'):extend()
-
-function git_status:init(options)
-  git_status.super.init(self, options)
-
-  local augroup = vim.api.nvim_create_augroup('pluginLualineGitstatus', { clear = true })
-  vim.api.nvim_create_autocmd(
-    'BufEnter',
-    {
-      group = augroup,
-      pattern = '*',
-      callback = function()
-        require('config.lualine.components.git-status').deep_refresh()
-      end,
-      desc = 'Perform a deep refresh of the git status',
-    }
-  )
-  vim.api.nvim_create_autocmd(
-    'BufWritePre',
-    {
-      group = augroup,
-      pattern = '*',
-      callback = function()
-        require('config.lualine.components.git-status').refresh()
-      end,
-      desc = 'Perform a shallow refresh of the git status',
-    }
-  )
-  git_status.deep_refresh()
-end
-
-function git_status:update_status()
-  if vim.g.actual_curbuf ~= nil and active_buffer ~= vim.g.actual_curbuf then
-    git_status.deep_refresh()
-  end
-  return output
-end
-
-function git_status:deep_refresh()
-  active_buffer = tostring(vim.api.nvim_get_current_buf())
-  if vim.bo.readonly or #vim.fn.expand('%') == 0 then
-    git_args = nil
-    output = ''
-  else
-    git_args = { '-C', vim.fn.expand('%:h'), 'status', '--porcelain', '--ignored', '--', vim.fn.expand('%:t') }
-    git_status.refresh()
-  end
-end
-
-function git_status:refresh()
+local refresh = function()
   if git_args then
     Job:new({
       command = 'git',
@@ -90,6 +41,51 @@ function git_status:refresh()
       end,
     }):start()
   end
+end
+
+local deep_refresh = function()
+  active_buffer = tostring(vim.api.nvim_get_current_buf())
+  if vim.bo.readonly or #vim.fn.expand('%') == 0 then
+    git_args = nil
+    output = ''
+  else
+    git_args = { '-C', vim.fn.expand('%:h'), 'status', '--porcelain', '--ignored', '--', vim.fn.expand('%:t') }
+    refresh()
+  end
+end
+
+local git_status = require('lualine.component'):extend()
+
+function git_status:init(options)
+  git_status.super.init(self, options)
+
+  local augroup = vim.api.nvim_create_augroup('pluginLualineGitstatus', { clear = true })
+  vim.api.nvim_create_autocmd(
+    'BufEnter',
+    {
+      group = augroup,
+      pattern = '*',
+      callback = deep_refresh,
+      desc = 'Perform a deep refresh of the git status',
+    }
+  )
+  vim.api.nvim_create_autocmd(
+    'BufWritePre',
+    {
+      group = augroup,
+      pattern = '*',
+      callback = refresh,
+      desc = 'Perform a shallow refresh of the git status',
+    }
+  )
+  deep_refresh()
+end
+
+function git_status:update_status()
+  if vim.g.actual_curbuf ~= nil and active_buffer ~= vim.g.actual_curbuf then
+    deep_refresh()
+  end
+  return output
 end
 
 return git_status
