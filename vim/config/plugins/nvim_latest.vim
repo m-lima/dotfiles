@@ -15,8 +15,6 @@ Plug 'kyazdani42/nvim-web-devicons'    " Dependency for:
                                        "  - telescope
                                        "  - neo-tree
                                        "  - lualine
-Plug 'arkav/lualine-lsp-progress'      " Depency for:
-                                       "  - lualine.nvim
 Plug 'MunifTanjim/nui.nvim'            " Dependency for:
                                        "  - neo-tree
 
@@ -141,20 +139,18 @@ EOF
 " Github integration to jump to PRs?
 
 """ TO FIX
-" LSP: Really need to know when the async process is running (some kind of status or spineer)
 " LSP: It is not idempotent. Keeps servers running and augroups configured
 " TELESCOPE: change layout size based on results
-" LUALINE: status spinner not working
 " TELESOPE: CocOutline
 " Auto-close of braces does not follow the format
 " Telescope opening a file while focused on nvimtree, does not open on main pane
+" TELESCOPE: Poisons the "dot repeat" every time it is opened
 "
 "" Missing from before
 " TELESCOPE: recent files when opening project (maybe 'nvim-telescope/telescope-frecency.nvim')
 " TELESCOPE: launch TODO
 " LSP: when typing in parameters, the documentation or param list should appear
 " LSP: Code outline. There are symbols, but the outline shows hierarchy better (maybe custom plugin?)
-" LSP: Show that the request is running in the background (get references e.g.)
 "
 "" Wishes
 " Write a plugin for session management
@@ -172,6 +168,9 @@ EOF
 " NEOTREE: Incredibly slow
 
 """ Done
+" LSP: Show that the request is running in the background (get references e.g.)
+" LUALINE: status spinner not working
+" LSP: Really need to know when the async process is running (some kind of status or spineer)
 " NVIMTREE: keeps multiple lines selected when open and update_cwd
 " TELESCOPE: When on buffers and start typing, cursor should jump to the bottom (or the bottom should have the previous buffer already)
 " Write a plugin to simulate `CMD + UP`

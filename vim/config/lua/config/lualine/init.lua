@@ -31,10 +31,6 @@ require('lualine').setup({
           readonly = ' ',
         },
       },
-      {
-        'lsp_progress',
-        display_components = { { 'title', 'percentage', 'message' } },
-      },
     },
     lualine_x = {
       require('config.lualine.components.lsp-status'),

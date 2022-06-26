@@ -18,7 +18,6 @@ local change_base = function(base, head)
         require('gitsigns').change_base(job:result()[1])
       else
         vim.notify('Error while executing `git merge-base`:', vim.log.levels.ERROR)
-        print('outter')
         for _, e in ipairs(job:stderr_result()) do
           vim.notify(e, vim.log.levels.ERROR)
         end
