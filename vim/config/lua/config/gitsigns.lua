@@ -16,6 +16,7 @@ local change_base = function(base, head)
     on_exit = vim.schedule_wrap(function(job, status)
       if status == 0 then
         require('gitsigns').change_base(job:result()[1])
+        print('Gitsigns comparing to ' .. base)
       else
         vim.notify('Error while executing `git merge-base`:', vim.log.levels.ERROR)
         for _, e in ipairs(job:stderr_result()) do
@@ -24,6 +25,11 @@ local change_base = function(base, head)
       end
     end),
   }):start()
+end
+
+local reset_base = function()
+  require('gitsigns').reset_base()
+  print('Gitsigns base reset')
 end
 
 require('gitsigns').setup({
@@ -52,7 +58,7 @@ require('gitsigns').setup({
     map('n', '<leader>gd',         gitsigns.diffthis)
     map('n', '<leader>gD',         function() gitsigns.diffthis("~") end)
     map('n', '<leader>gm',         change_base)
-    map('n', '<leader>gM',         gitsigns.reset_base)
+    map('n', '<leader>gM',         reset_base)
     map('n', '<leader><leader>gd', gitsigns.toggle_deleted)
 
     -- Text objects
