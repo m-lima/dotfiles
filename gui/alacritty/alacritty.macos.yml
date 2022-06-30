@@ -10,3 +10,6 @@ font:
 
 key_bindings:
   - { key: N, mods: Super, action: CreateNewWindow }
+
+shell:
+  program: /usr/local/bin/tmux

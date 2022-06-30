@@ -14,7 +14,7 @@ import:
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty itself.
-### DEFERRED ### env:
+### DEFERRED ###
 #env:
   # TERM variable
   #
@@ -62,7 +62,8 @@ window:
   # Values for `decorations` (macOS only):
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background and no title bar buttons
-  ### DEFERRED ### decorations: buttonless
+  ### DEFERRED ###
+  #decorations: buttonless
 
   # Background opacity
   #
@@ -109,7 +110,8 @@ window:
   #multiplier: 3
 
 # Font configuration
-### DEFERRED ### font:
+### DEFERRED ###
+#font:
   # Normal (roman) font face
   #normal:
     # Font family
@@ -434,6 +436,7 @@ colors:
 #   - (macOS) /bin/bash --login
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
+### DEFERRED ###
 #shell:
 #  program: /bin/bash
 #  args:
