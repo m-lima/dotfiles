@@ -168,7 +168,12 @@ function new () {
 }
 
 function edit () {
-  local word=`tmux display -p "#{copy_cursor_word}"`
+  if [ ${1} ]
+  then
+    local word="${1}"
+  else
+    local word=`tmux display -p "#{copy_cursor_word}"`
+  fi
   word=(${(s|:|)word})
 
   local file="${word[1]}"
@@ -181,7 +186,7 @@ function edit () {
     fi
   fi
 
-  if [[ "`dirname "${file}"`" == "." ]]
+  if [[ "${file}[1]" != "/" ]]
   then
     file="`tmux display -p "#{pane_current_path}"`/${file}"
   fi
@@ -290,9 +295,11 @@ case "${1}" in
   new)
     new ;;
   edit)
-    edit ;;
+    shift
+    edit $@ ;;
   clear_scratches)
-    clear_scratches ;;
+    shift
+    clear_scratches $@ ;;
   *)
     echo "[31mUnrecognized command:[m ${1}" >&2
     return -1
