@@ -1,166 +1,299 @@
-#! /usr/bin/env bash
+#!/usr/bin/env zsh
 
-function create () {
-  if [ ! "${name}" ]
-  then
-    echo -e "[31mInvalid name[m"
-  fi
+function new () {
+  function create () {
+    if [ ! "${name}" ]
+    then
+      echo -e "[31mInvalid name[m"
+    fi
 
-  if tmux new-session -s "${name}"
+    if tmux new-session -s "${name}"
+    then
+      tput -Txterm reset
+      exit
+    else
+      echo -e "[31mUnable to create[m"
+    fi
+  }
+
+  function attach () {
+    if [ ! "${name}" ]
+    then
+      echo -e "[31mInvalid name[m"
+    fi
+
+    if tmux attach -t "${name}"
+    then
+      tput -Txterm reset
+      exit
+    else
+      echo -e "[31mUnable to attach[m"
+    fi
+  }
+
+  function getSession () {
+    echo -e "Current sessions:[32m"
+    for session in "${sessions[@]}"
+    do
+      echo ${session}
+    done
+    echo -e -n "[m"
+    echo "Name of the session: "
+    read name
+  }
+
+  function menu () {
+    echo -e "[[33m${1:0:1}[m]${1:1}"
+  }
+
+  if cat /etc/shells | grep zsh &> /dev/null
   then
-    tput -Txterm reset
-    exit
+    shell=zsh
   else
-    echo -e "[31mUnable to create[m"
+    shell=bash
   fi
-}
 
-function attach () {
-  if [ ! "${name}" ]
+  if ! command -v tmux &> /dev/null
   then
-    echo -e "[31mInvalid name[m"
+    echo -e "[31mCould not find tmux on the path[m"
+    return -1
   fi
 
-  if tmux attach -t "${name}"
-  then
-    tput -Txterm reset
-    exit
-  else
-    echo -e "[31mUnable to attach[m"
-  fi
-}
+  sessions=()
+  name="${1}"
 
-function getSession () {
-  echo -e "Current sessions:[32m"
-  for session in "${sessions[@]}"
+  while read line
   do
-    echo ${session}
+    sessions+=( "${line}" )
+  done < <(tmux list-sessions 2> /dev/null)
+
+  if [ "${name}" ]
+  then
+    grep "${name}: " > /dev/null <<< ${sessions[@]} && attach || create
+  fi
+
+  if grep 'main:' > /dev/null <<< ${sessions[@]}
+  then
+    if (( ${#y[@]} == 1 ))
+    then
+      while true
+      do
+        tput -Txterm reset
+        echo -e "[31mOnly main session exists[m"
+        echo "What do you whish to do?"
+        menu "Attach to main"
+        menu "Name new session"
+        menu "Exit"
+        echo "Choice: "
+        read input
+        case ${input} in
+          [Aa]* ) name="main" && attach ;;
+          [Nn]* ) getSession && create ;;
+          [Ee]* ) tput -Txterm reset && exit ;;
+        esac
+      done
+    else
+      while true
+      do
+        tput -Txterm reset
+        echo -e "[31mSeveral sessions found[m"
+        echo "What do you whish to do?"
+        menu "Connect to main"
+        menu "Name new session"
+        menu "Attach to last"
+        menu "Pick session"
+        menu "Log normally"
+        menu "Exit"
+        echo "Choice: "
+        read input
+
+        case ${input} in
+          [Cc]* ) name="main" && attach ;;
+          [Nn]* ) getSession && create ;;
+          [Aa]* ) name="${sessions[0]%%:*}" && attach ;;
+          [Pp]* ) getSession && attach ;;
+          [Ll]* ) /usr/bin/env ${shell} && exit ;;
+          [Ee]* ) tput -Txterm reset && exit ;;
+        esac
+      done
+    fi
+  else
+    if [ "${sessions}" ]
+    then
+      while true
+      do
+        tput -Txterm reset
+        echo -e "[31mMain session not found[m"
+        echo "What do you whish to do?"
+        menu "Create main"
+        menu "Name new session"
+        menu "Attach to last"
+        menu "Pick session"
+        menu "Log normally"
+        menu "Exit"
+        echo "Choice: "
+        read input
+
+        case ${input} in
+          [Cc]* ) name="main" && create ;;
+          [Nn]* ) getSession && create ;;
+          [Aa]* ) name="${sessions[0]}%%:*" && attach ;;
+          [Pp]* ) getSession && attach ;;
+          [Ll]* ) /usr/bin/env ${shell} && exit ;;
+          [Ee]* ) tput -Txterm reset && exit ;;
+        esac
+      done
+    else
+      while true
+      do
+        tput -Txterm reset
+        echo -e "[31mNo sessions found[m"
+        echo "What do you whish to do?"
+        menu "Create main"
+        menu "Name new session"
+        menu "Log normally"
+        menu "Exit"
+        echo "Choice: "
+        read input
+
+        case ${input} in
+          [Cc]* ) name="main" && create ;;
+          [Nn]* ) echo "Name of the session: " && read name && create ;;
+          [Ll]* ) /usr/bin/env ${shell} && exit ;;
+          [Ee]* ) tput -Txterm reset && exit ;;
+        esac
+      done
+    fi
+  fi
+}
+
+function edit () {
+  local word=`tmux display -p "#{copy_cursor_word}"`
+  word=(${(s|:|)word})
+
+  local file="${word[1]}"
+  if [[ "${word[2]}" =~ '^[0-9]+$' ]]
+  then
+    local line="+${word[2]}"
+    if [[ "${word[3]}" =~ '^[0-9]+$' ]]
+    then
+      local col="${word[3]}|"
+    fi
+  fi
+
+  if [[ "`dirname "${file}"`" == "." ]]
+  then
+    file="`tmux display -p "#{pane_current_path}"`/${file}"
+  fi
+
+  [ -f "${file}" ] || return 0
+
+  local target=''
+  local session=`tmux display -p "#{session_name}"`
+  if [[ "${session}" == scratch-* ]]
+  then
+    target=(-t @${session#*@})
+  fi
+
+  local pane_id=''
+  local pane_score=''
+  for pane in `tmux list-panes ${target} -F "#{pane_id}"`
+  do
+    local pane_command=`tmux display -t "${pane}" -p "#{pane_current_command}"`
+    if [[ "${pane_command}" == "nvim" ]]
+    then
+      if [ `tmux display -t "${pane}" -p "#{pane_active}"` -eq 1 ]
+      then
+        pane_id="${pane}"
+        break
+      elif [ `tmux display -t "${pane}" -p "#{pane_last}"` -eq 1 ]
+      then
+        pane_id="${pane}"
+        pane_score=5
+      elif (( pane_score < 4 ))
+      then
+        pane_id="${pane}"
+        pane_score=4
+      fi
+    elif (( pane_score < 4 )) && [[ "${pane_command}" == "vim" ]]
+    then
+      if [ `tmux display -t "${pane}" -p "#{pane_active}"` -eq 1 ] && (( pane_score < 3 ))
+      then
+        pane_id="${pane}"
+        pane_score=3
+      elif [ `tmux display -t "${pane}" -p "#{pane_last}"` -eq 1 ] && (( pane_score < 2 ))
+      then
+        pane_id="${pane}"
+        pane_score=2
+      elif (( ! pane_score ))
+      then
+        pane_id="${pane}"
+        pane_score=1
+      fi
+    fi
   done
-  echo -e -n "[m"
-  echo "Name of the session: "
-  read name
+
+  # Escape scratch session
+  [ "${target}" ] && tmux detach && tmux select-window "${target[2]}"
+
+  if [ "${pane_id}" ]
+  then
+    # Escape tmux mode
+    [ `tmux display -t "${pane_id}" -p "#{pane_in_mode}"` -eq 1 ] && tmux send-keys -t "${pane_id}" 'C-c'
+
+    # Escape from the terminal
+    tmux send-keys -t "${pane_id}" -H 1c
+
+    # Open file
+    tmux send-keys -t "${pane_id}" Escape '\;e '"${line}"' '"${file}" Enter
+
+    # Shift cursor
+    [ ${col} ] && tmux send-keys -t "${pane_id}" "${col}"
+
+    # Switch focus
+    tmux select-pane -t "${pane_id}"
+  else
+    editor=`command -v nvim 2> /dev/null`
+    if [ $? -eq 0 ]
+    then
+      tmux split-window -h ${target} "${editor} ${line} ${file}"
+    else
+      tmux split-window -h ${target} "vi ${line} ${file}"
+    fi
+    [ ${col} ] && tmux send-keys ${target} "${col}" || true
+  fi
 }
 
-function menu () {
-  echo -e "[[33m${1:0:1}[m]${1:1}"
+function clear_scratches () {
+  if [[ "${1}" == all ]]
+  then
+    for scratch in `tmux list-sessions -F "#{session_name}" | grep '^scratch-'`
+    do
+      tmux kill-session -t "${scratch}"
+    done
+  else
+    all_windows=`tmux list-windows -a -F "#{session_id}#{window_id}:#{session_name}" | grep -v ':scratch-'`
+    for scratch in `tmux list-sessions -F "#{session_name}" | grep '^scratch-'`
+    do
+      grep "${scratch#scratch-}" <<<${all_windows} > /dev/null || tmux kill-session -t "${scratch}"
+    done
+  fi
 }
 
-if cat /etc/shells | grep zsh &> /dev/null
+if [ ! "${1}" ]
 then
-  shell=zsh
-else
-  shell=bash
-fi
-
-if ! command -v tmux &> /dev/null
-then
-  echo -e "[31mCould not find tmux on the path[m"
+  echo "[31mMissing subcommand[m" >&2
   return -1
 fi
 
-sessions=()
-name="${1}"
-
-while read line
-do
-  sessions+=( "${line}" )
-done < <(tmux list-sessions 2> /dev/null)
-
-if [ "${name}" ]
-then
-  grep "${name}: " > /dev/null <<< ${sessions[@]} && attach || create
-fi
-
-if grep 'main:' > /dev/null <<< ${sessions[@]}
-then
-  if (( ${#y[@]} == 1 ))
-  then
-    while true
-    do
-      tput -Txterm reset
-      echo -e "[31mOnly main session exists[m"
-      echo "What do you whish to do?"
-      menu "Attach to main"
-      menu "Name new session"
-      menu "Exit"
-      echo "Choice: "
-      read input
-      case ${input} in
-        [Aa]* ) name="main" && attach ;;
-        [Nn]* ) getSession && create ;;
-        [Ee]* ) tput -Txterm reset && exit ;;
-      esac
-    done
-  else
-    while true
-    do
-      tput -Txterm reset
-      echo -e "[31mSeveral sessions found[m"
-      echo "What do you whish to do?"
-      menu "Connect to main"
-      menu "Name new session"
-      menu "Attach to last"
-      menu "Pick session"
-      menu "Log normally"
-      menu "Exit"
-      echo "Choice: "
-      read input
-
-      case ${input} in
-        [Cc]* ) name="main" && attach ;;
-        [Nn]* ) getSession && create ;;
-        [Aa]* ) name="${sessions[0]%%:*}" && attach ;;
-        [Pp]* ) getSession && attach ;;
-        [Ll]* ) /usr/bin/env ${shell} && exit ;;
-        [Ee]* ) tput -Txterm reset && exit ;;
-      esac
-    done
-  fi
-else
-  if [ "${sessions}" ]
-  then
-    while true
-    do
-      tput -Txterm reset
-      echo -e "[31mMain session not found[m"
-      echo "What do you whish to do?"
-      menu "Create main"
-      menu "Name new session"
-      menu "Attach to last"
-      menu "Pick session"
-      menu "Log normally"
-      menu "Exit"
-      echo "Choice: "
-      read input
-
-      case ${input} in
-        [Cc]* ) name="main" && create ;;
-        [Nn]* ) getSession && create ;;
-        [Aa]* ) name="${sessions[0]}%%:*" && attach ;;
-        [Pp]* ) getSession && attach ;;
-        [Ll]* ) /usr/bin/env ${shell} && exit ;;
-        [Ee]* ) tput -Txterm reset && exit ;;
-      esac
-    done
-  else
-    while true
-    do
-      tput -Txterm reset
-      echo -e "[31mNo sessions found[m"
-      echo "What do you whish to do?"
-      menu "Create main"
-      menu "Name new session"
-      menu "Log normally"
-      menu "Exit"
-      echo "Choice: "
-      read input
-
-      case ${input} in
-        [Cc]* ) name="main" && create ;;
-        [Nn]* ) echo "Name of the session: " && read name && create ;;
-        [Ll]* ) /usr/bin/env ${shell} && exit ;;
-        [Ee]* ) tput -Txterm reset && exit ;;
-      esac
-    done
-  fi
-fi
+case "${1}" in
+  new)
+    new ;;
+  edit)
+    edit ;;
+  clear_scratches)
+    clear_scratches ;;
+  *)
+    echo "[31mUnrecognized command:[m ${1}" >&2
+    return -1
+esac
