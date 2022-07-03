@@ -12,4 +12,8 @@ key_bindings:
   - { key: N, mods: Super, action: CreateNewWindow }
 
 shell:
-  program: /usr/local/bin/tmux
+  program: zsh
+  args:
+    - -l
+    - -c
+    - tmux
