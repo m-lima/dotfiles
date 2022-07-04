@@ -260,3 +260,21 @@ ffmpeg -an -f concat -i list.txt -c copy <OUTPUT>[.mp4]
 
 # Get a printout of GPU info
 [sudo] gpu-manager
+
+##################################################
+# Tmux
+##################################################
+
+# Move panes around windoes
+  # To send to a window
+  join-pane -t <TARGET_WINDOW>
+
+  # To grab from a window
+  # This will bring the currently focused pane
+  join-pane -s <SOURCE_WINDOW>
+
+# To move a pane to a new window
+break-pane
+
+# To look into a window from another session
+link-window -s <WINDOW>
