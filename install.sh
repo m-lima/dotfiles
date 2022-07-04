@@ -622,6 +622,10 @@ then
 fi
 
 ########################################
+# Install alacritty
+checkInstallDefault alacritty
+
+########################################
 # Install bat
 checkInstall "Bat" "${PACKAGE_INSTALL} bat" '[ $(command -v "bat") ] || [ $(command -v "batcat") ]'
 
@@ -711,6 +715,18 @@ else
   echo "[33mSkipping Tmux links[m"
 fi
 
+if [ $(command -v alacritty) ]
+then
+  install s gui/alacritty alacritty.yml .config/alacritty
+  case "${SYS_TYPE}" in
+
+  esac
+  Darwin)
+    install s gui/alacritty alacritty.macos.yml .config/m-lima/alacritty alacritty.yml ;;
+  *)
+    install s gui/alacritty alacritty.linux.yml .config/m-lima/alacritty alacritty.yml ;;
+fi
+
 installFile s scripts scaffpp bin
 installFile s scripts scaffjs bin
 
@@ -725,6 +741,11 @@ then
 elif [ $(command -v batcat) ]
 then
   installFile s config/bat config `batcat --config-dir`
+fi
+
+if [ $(command -v delta) ]
+then
+  installFile s config delta .config/m-lima
 fi
 
 ########################################
