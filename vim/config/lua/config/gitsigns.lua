@@ -45,16 +45,16 @@ require('gitsigns').setup({
     map('n', '[g',                 gitsigns.prev_hunk)
 
     -- Actions
-    map('n', '<leader>gs',         gitsigns.stage_hunk)
-    map('v', '<leader>gs',         gitsigns.stage_hunk)
-    map('n', '<leader>gr',         gitsigns.reset_hunk)
-    map('v', '<leader>gr',         gitsigns.reset_hunk)
-    map('n', '<leader>gS',         gitsigns.stage_buffer)
-    map('n', '<leader>gu',         gitsigns.undo_stage_hunk)
-    map('n', '<leader>gR',         gitsigns.reset_buffer)
-    map('n', '<leader>gp',         gitsigns.preview_hunk)
-    map('n', '<leader>gb',         gitsigns.toggle_current_line_blame)
-    map('n', '<leader>gB',         function() gitsigns.blame_line({ full = true }) end)
+    map({'n', 'v'}, '<leader>gs',  gitsigns.stage_hunk)
+    map({'n', 'v'}, '<leader>gr',  gitsigns.reset_hunk)
+    map('n',        '<leader>gS',  gitsigns.stage_buffer)
+    map('n',        '<leader>gu',  gitsigns.undo_stage_hunk)
+    map('n',        '<leader>gR',  gitsigns.reset_buffer)
+    map('n',        '<leader>gp',  gitsigns.preview_hunk)
+
+    -- Views
+    map('n', '<leader><leader>gb', function() gitsigns.blame_line({ full = true }) end)
+    map('n', '<leader>gB',         gitsigns.toggle_current_line_blame)
     map('n', '<leader>gd',         gitsigns.diffthis)
     map('n', '<leader>gD',         function() gitsigns.diffthis("~") end)
     map('n', '<leader>gm',         change_base)
