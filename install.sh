@@ -1,20 +1,5 @@
 #!/bin/bash
 
-# TODO
-# [O] git submodule
-# [O] Generate tmux-powerlinerc
-# [O] Edit tmux-powerlinerc with sed (spotify and theme)
-# [O] Symlink tmux simpaltmux.sh theme
-# [O] Make simpaltmux.sh pretty
-# [O] Split .tmux.conf into shared and local
-# [ ] Ask if force regenerate tmux-powerlinerc
-# [O] Ask if force regenerate tmux.conf.local
-# [ ] Add roll to TMUX powerline
-# [ ] Show no definition found on powershell
-# [ ] Allow for neovim instead of vim
-# [ ] Adapt vimrc to new rc format
-# [ ] Configure clang-complete based on local environment
-
 ################################################################################
 # Functions                                                                    #
 ################################################################################
@@ -555,42 +540,7 @@ fi
 
 ########################################
 # Install tmux
-if checkInstallDefault tmux
-then
-  echo -n "[34mChecking TMUX Powerline.. [[m"
-  if [ -f "${HOME}"/.tmux-powerlinerc ]
-  then
-    echo "[32mOK[34m][m"
-    force=false
-
-    if [ -z ${NO_OVERWRITE} ]
-    then
-      echo -n "Force generation? [y/N] "
-      read input
-      case ${input} in
-        [Yy] )
-          force=true
-          ;;
-      esac
-    fi
-  else
-    echo "[31mFAIL[34m][m"
-    force=true
-  fi
-
-  if [[ "${force}" == "true" ]]
-  then
-    echo "[34mGenerating tmux-powerlinerc..[m"
-
-    cd ${BASE_DIR}/tmux
-    git submodule update --init --recursive
-    tmux-powerline/generate_rc.sh > /dev/null
-    cd ${HOME}
-    mv .tmux-powerlinerc.default .tmux-powerlinerc
-    sed -i'' -e "s~export TMUX_POWERLINE_THEME=\"default\"~export TMUX_POWERLINE_THEME=\"simpaltmux\"~; s~export TMUX_POWERLINE_DIR_USER_THEMES=\"\"~TMUX_POWERLINE_DIR_USER_THEMES=\"${BASE_DIR}/tmux/\"~; s~export TMUX_POWERLINE_SEG_NOW_PLAYING_MUSIC_PLAYER=\"\"~export TMUX_POWERLINE_SEG_NOW_PLAYING_MUSIC_PLAYER=\"spotify\"~" .tmux-powerlinerc
-    echo "[32mDone![m"
-  fi
-fi
+checkInstallDefault
 
 ########################################
 # Install ZSH
@@ -708,23 +658,20 @@ fi
 
 if [ $(command -v tmux) ]
 then
-  installFile s tmux tmx bin
-  installFile s tmux clean-tmux-scratches bin
-  installFile s tmux .tmux.conf
+  installFile s tmux script .config/m-lima/tmux
 else
   echo "[33mSkipping Tmux links[m"
 fi
 
 if [ $(command -v alacritty) ]
 then
-  install s gui/alacritty alacritty.yml .config/alacritty
+  installFile s gui/alacritty alacritty.yml .config/alacritty
   case "${SYS_TYPE}" in
-
+    Darwin)
+      installFile s gui/alacritty alacritty.macos.yml .config/m-lima/alacritty alacritty.yml ;;
+    *)
+      installFile s gui/alacritty alacritty.linux.yml .config/m-lima/alacritty alacritty.yml ;;
   esac
-  Darwin)
-    install s gui/alacritty alacritty.macos.yml .config/m-lima/alacritty alacritty.yml ;;
-  *)
-    install s gui/alacritty alacritty.linux.yml .config/m-lima/alacritty alacritty.yml ;;
 fi
 
 installFile s scripts scaffpp bin
@@ -754,11 +701,9 @@ echo "[33mCopying files..[m"
 
 if [ $(command -v tmux) ]
 then
-  if installFile c tmux .tmux.conf.local
+  if installFile c tmux local.conf .config/m-lima/tmux
   then
-    echo "set-option -g default-shell $(which zsh)" >> "${HOME}"/.tmux.conf.local
-    echo "set-option -g status-left \"#(${BASE_DIR}/tmux/tmux-powerline/powerline.sh left)\"" >> "${HOME}"/.tmux.conf.local
-    echo "set-option -g status-right \"#(${BASE_DIR}/tmux/tmux-powerline/powerline.sh right)\"" >> "${HOME}"/.tmux.conf.local
+    echo "set-option -g default-shell $(which zsh)" >> "${HOME}"/.config/m-lima/tmux/local.conf
   fi
 else
   echo "[33mSkipping Tmux files[m"
