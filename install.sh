@@ -103,32 +103,38 @@ function checkInstallDefault {
 # be overwritten
 #
 # arg1: Either "s" or "c" for symlink or copy, respectively
-# arg2: The target folder location
-# arg3: The source file
-# [arg4]: Installation path.
-# [arg5]: Installation file name.
+# arg2: The source path
+# [arg3]: Installation path. Defaults to $HOME.
+# [arg4]: Installation file name override.
 # return: Failure if cancelled, or status code of install operation
 
 function installFile {
   local installPath installName overwrite input
+  local source="${BASE_DIR}/${2}"
 
-  if [ "${4}" ]
+  if [ ! -f "${source}" ] && [ ! -d "${source}" ]
   then
-    if [ "${4:0:1}" = "/" ]
+    echo "[31mSource path does not exist:[m ${source}"
+    return 1
+  fi
+
+  if [ "${3}" ]
+  then
+    if [ "${3:0:1}" = "/" ]
     then
-      installPath="${4}/"
+      installPath="${3}/"
     else
-      installPath="${HOME}/${4}/"
+      installPath="${HOME}/${3}/"
     fi
   else
     installPath="${HOME}/"
   fi
 
-  if [ "${5}" ]
+  if [ "${4}" ]
   then
-    installName="${5}"
+    installName="${4}"
   else
-    installName="${3}"
+    installName=`basename "${2}"`
   fi
 
   echo "[34mInstalling ${installPath}${installName}..[m"
@@ -148,7 +154,7 @@ function installFile {
     esac
   fi
 
-  if [ -f "${installPath}${installName}" ] || [ -d "${installPath}${installName}" ]
+  if [ -f "${installPath}${installName}" ] || [ -d "${installPath}${installName}" ] || [ -L "${installPath}${installName}" ]
   then
     if [ ${NO_OVERWRITE} ]
     then
@@ -172,10 +178,10 @@ function installFile {
   then
     if [[ "${1}" == "s" ]]
     then
-      ln -sf ${BASE_DIR}/${2}/${3} ${installPath}${installName}
+      ln -sf "${source}" "${installPath}${installName}"
     elif [[ "${1}" == "c" ]]
     then
-      cp ${BASE_DIR}/${2}/${3} ${installPath}${installName}
+      cp "${source}" "${installPath}${installName}"
     else
       return 1
     fi
@@ -610,89 +616,89 @@ fi
 echo "[33mMaking symlinks..[m"
 if [ $(command -v zsh) ]
 then
-  installFile s zsh .zshrc
-  installFile s zsh config .config/m-lima zsh
+  installFile s zsh/.zshrc
+  installFile s zsh/config .config/m-lima zsh
 else
   echo "[33mSkipping ZSH links[m"
 fi
 
 if [ $(command -v nvim) ] || [ $(command -v vim) ]
 then
-  installFile s vim config .config/m-lima vim
+  installFile s vim/config .config/m-lima vim
 else
   echo "[33mSkipping generic Vim links[m"
 fi
 
 if [ $(command -v nvim) ]
 then
-  installFile s vim init.vim .config/nvim
-  installFile s vim grayalt.vim .config/nvim/colors
-  installFile s vim simpalt.vim .config/nvim/colors
-  installFile s vim/config lua .config/nvim
+  installFile s vim/init.vim .config/nvim
+  installFile s vim/grayalt.vim .config/nvim/colors
+  installFile s vim/simpalt.vim .config/nvim/colors
+  installFile s vim/config/lua .config/nvim
 else
   echo "[33mSkipping NeoVim links[m"
 fi
 
 if [ $(command -v vim) ]
 then
-  installFile s vim init.vim . .vimrc
-  installFile s vim grayalt.vim .vim/colors
-  installFile s vim simpalt.vim .vim/colors
+  installFile s vim/init.vim . .vimrc
+  installFile s vim/grayalt.vim .vim/colors
+  installFile s vim/simpalt.vim .vim/colors
 else
   echo "[33mSkipping Vim links[m"
 fi
 
 if [ $(command -v nvim) ] || [ $(command -v vim) ]
 then
-  installFile s vim .ideavimrc .
+  installFile s vim/.ideavimrc .
 else
   echo "[33mSkipping IdeaVim links[m"
 fi
 
 if [ $(command -v nvim) ] || [ $(command -v vim) ]
 then
-  installFile s vim/coc coc-settings.json .config/nvim
+  installFile s vim/coc/coc-settings.json .config/nvim
 else
   echo "[33mSkipping Coc config[m"
 fi
 
 if [ $(command -v tmux) ]
 then
-  installFile s tmux script .config/m-lima/tmux
+  installFile s tmux/script .config/m-lima/tmux
 else
   echo "[33mSkipping Tmux links[m"
 fi
 
 if [ $(command -v alacritty) ]
 then
-  installFile s gui/alacritty alacritty.yml .config/alacritty
+  installFile s gui/alacritty/alacritty.yml .config/alacritty
   case "${SYS_TYPE}" in
     Darwin)
-      installFile s gui/alacritty alacritty.macos.yml .config/m-lima/alacritty alacritty.yml ;;
+      installFile s gui/alacritty/alacritty.macos.yml .config/m-lima/alacritty alacritty.yml ;;
     *)
-      installFile s gui/alacritty alacritty.linux.yml .config/m-lima/alacritty alacritty.yml ;;
+      installFile s gui/alacritty/alacritty.linux.yml .config/m-lima/alacritty alacritty.yml ;;
   esac
 fi
 
-installFile s scripts scaffpp bin
-installFile s scripts scaffjs bin
+installFile s scripts/scaffpp bin
+installFile s scripts/scaffjs bin
 
 if [[ "${SYS_TYPE}" == "Android" ]]
 then
-  installFile s termux colors.properties .termux
+  installFile s termux/colors.properties .termux
 fi
 
 if [ $(command -v bat) ]
 then
-  installFile s config/bat config `bat --config-dir`
+  installFile s config/bat/config `bat --config-dir`
 elif [ $(command -v batcat) ]
 then
-  installFile s config/bat config `batcat --config-dir`
+  installFile s config/bat/config `batcat --config-dir`
 fi
 
 if [ $(command -v delta) ]
 then
-  installFile s config delta .config/m-lima
+  installFile s config/delta .config/m-lima
 fi
 
 ########################################
@@ -701,7 +707,7 @@ echo "[33mCopying files..[m"
 
 if [ $(command -v tmux) ]
 then
-  if installFile c tmux local.conf .config/m-lima/tmux
+  if installFile c tmux/local.conf .config/m-lima/tmux
   then
     vi "${HOME}/.config/m-lima/tmux/local.conf"
   fi
@@ -711,7 +717,7 @@ fi
 
 if [ $(command -v zsh) ]
 then
-  if installFile c zsh local.zsh .config/m-lima/zsh
+  if installFile c zsh/local.zsh .config/m-lima/zsh
   then
     if [[ "${PACKAGE_INSTALL}" == "pacaur --noedit --noconfirm -S" ]]
     then
@@ -723,12 +729,12 @@ then
     vi "${HOME}/.config/m-lima/zsh/local.zsh"
   fi
 
-  if installFile c zsh final.zsh .config/m-lima/zsh
+  if installFile c zsh/final.zsh .config/m-lima/zsh
   then
     vi "${HOME}/.config/m-lima/zsh/final.zsh"
   fi
 
-  if installFile c config/fd config .config/m-lima/fd
+  if installFile c config/fd/config .config/m-lima/fd
   then
     vi "${HOME}/.config/m-lima/fd/config"
   fi
