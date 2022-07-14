@@ -703,7 +703,7 @@ if [ $(command -v tmux) ]
 then
   if installFile c tmux local.conf .config/m-lima/tmux
   then
-    echo "set-option -g default-shell $(which zsh)" >> "${HOME}"/.config/m-lima/tmux/local.conf
+    vi "${HOME}/.config/m-lima/tmux/local.conf"
   fi
 else
   echo "[33mSkipping Tmux files[m"
