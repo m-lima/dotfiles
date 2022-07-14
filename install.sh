@@ -625,7 +625,6 @@ fi
 if [ $(command -v nvim) ] || [ $(command -v vim) ]
 then
   installFile s vim/config .config/m-lima vim
-  installFile c vim/local .config/m-lima/vim
 else
   echo "[33mSkipping generic Vim links[m"
 fi
