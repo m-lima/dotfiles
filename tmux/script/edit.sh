@@ -18,7 +18,7 @@ then
   fi
 fi
 
-if [[ "${file}[1]" != "/" ]]
+if [[ "${file[1]}" != "/" ]]
 then
   file="`tmux display -p "#{pane_current_path}"`/${file}"
 fi
