@@ -181,7 +181,7 @@ function installFile {
       ln -sf "${source}" "${installPath}${installName}"
     elif [[ "${1}" == "c" ]]
     then
-      cp "${source}" "${installPath}${installName}"
+      cp -r "${source}" "${installPath}${installName}"
     else
       return 1
     fi
@@ -625,6 +625,7 @@ fi
 if [ $(command -v nvim) ] || [ $(command -v vim) ]
 then
   installFile s vim/config .config/m-lima vim
+  installFile c vim/local .config/m-lima/vim
 else
   echo "[33mSkipping generic Vim links[m"
 fi
