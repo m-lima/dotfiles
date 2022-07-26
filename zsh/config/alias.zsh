@@ -125,7 +125,7 @@ function penv {
 
     if [ ! -d "${newEnv}" ]
     then
-      python3 -m venv "${newEnv}"
+      python3 -m virtualenv "${newEnv}"
       source "${newEnv}/bin/activate"
       python -m ensurepip
       python3 -m pip install --upgrade pip wheel setuptools
