@@ -64,8 +64,8 @@ cmp.setup({
     { name = 'nvim_lsp_signature_help', keyword_lenght = 0 },
     { name = 'nvim_lsp' },
     { name = 'cmp_tabnine' },
-    { name = 'buffer', max_item_count = 5 },
     { name = 'path' },
+    { name = 'buffer', max_item_count = 5 },
     { name = 'tmux', max_item_count = 5 },
   }
 })
