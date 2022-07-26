@@ -26,6 +26,8 @@ echo "[34mBuilding examples[m" && \
 cargo ${nightly} build --workspace --examples ${@} && \
 echo "[34mLinting main[m" && \
 cargo ${nightly} clippy --workspace ${@} && \
+echo "[34mLinting tests[m" && \
+cargo ${nightly} clippy --workspace --tests ${@} && \
 echo "[34mLinting examples[m" && \
 cargo ${nightly} clippy --workspace --examples ${@} && \
 echo "[34mTesting main[m" && \
