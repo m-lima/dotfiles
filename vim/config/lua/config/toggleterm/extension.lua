@@ -1,6 +1,17 @@
 local M = {}
 
+M.ids = {}
+
 M.run = function(cmd, id, no_toggle)
+  if not id then
+    if M.ids[cmd] then
+      id = M.ids[cmd]
+    else
+      id = math.random(200, 999)
+      M.ids[cmd] = id
+    end
+  end
+
   local opts = {
     id = id,
     cmd = cmd,

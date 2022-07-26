@@ -66,10 +66,11 @@ Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
 
 " Misc
-Plug 'aserebryakov/vim-todo-lists'   " TODO md file helper
-Plug 'skanehira/vsession'            " Save/load sessions TODO: Configure. I think now it keeps saving the session
-Plug 'akinsho/toggleterm.nvim'       " More usable terminal
-Plug 'mbbill/undotree'               " A local changes tracker TODO: configure (colors)
+Plug 'aserebryakov/vim-todo-lists' " TODO md file helper
+Plug 'skanehira/vsession'          " Save/load sessions TODO: Configure. I think now it keeps saving the session
+Plug 'akinsho/toggleterm.nvim'     " More usable terminal
+Plug 'mbbill/undotree'             " A local changes tracker TODO: configure (colors)
+Plug 'jupyter-vim/jupyter-vim'     " Integration with jupyter
 
 call plug#end()
 
@@ -95,9 +96,10 @@ require('config.undotree')
 require('config.vsession')
 
 -- Personal
+require('plugin.breadcrumbs')
 require('plugin.buffer_stack')
 require('plugin.dupe_comment')
-require('plugin.breadcrumbs')
+require('plugin.jupyter')
 require('script.output')
 EOF
 
