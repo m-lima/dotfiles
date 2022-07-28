@@ -3,60 +3,6 @@ local highlight = require('lualine.highlight')
 
 local lsp_status = require('lualine.component'):extend()
 
-local method_to_capability = {
-  ['textDocument/declaration'] = 'declarationProvider',
-  ['textDocument/definition'] = 'definitionProvider',
-  ['textDocument/typeDefinition'] = 'typeDefinitionProvider',
-  ['textDocument/implementation'] = 'implementationProvider',
-  ['textDocument/references'] = 'referencesProvider',
-  ['textDocument/prepareCallHierarchy'] = 'callHierarchyProvider',
-  ['callHierarchy/incomingCalls'] = 'callHierarchyProvider',
-  ['callHierarchy/outgoingCalls'] = 'callHierarchyProvider',
-  ['textDocument/prepareTypeHierarchy'] = 'typeHierarchyProvider',
-  ['typeHierarchy/supertypes'] = 'typeHierarchyProvider',
-  ['typeHierarchy/subtypes'] = 'typeHierarchyProvider',
-  ['textDocument/documentHighlight'] = 'documentHighlightProvider',
-  ['textDocument/documentLink'] = 'documentLinkProvider',
-  ['documentLink/resolve'] = 'documentLinkProvider',
-  ['textDocument/hover'] = 'hoverProvider',
-  ['textDocument/codeLens'] = 'codeLensProvider',
-  ['codeLens/resolve'] = 'codeLensProvider',
-  ['textDocument/foldingRange'] = 'foldingRangeProvider',
-  ['textDocument/selectionRange'] = 'selectionRangeProvider',
-  ['textDocument/documentSymbol'] = 'documentSymbolProvider',
-  ['textDocument/semanticTokens/full'] = 'semanticTokensProvider',
-  ['textDocument/semanticTokens/full/delta'] = 'semanticTokensProvider',
-  ['textDocument/semanticTokens/range'] = 'semanticTokensProvider',
-  ['textDocument/inlayHint'] = 'inlayHintProvider',
-  ['inlayHint/resolve'] = 'inlayHintProvider',
-  ['textDocument/inlineValue'] = 'inlineValueProvider',
-  ['textDocument/moniker'] = 'monikerProvider',
-  ['textDocument/completion'] = 'completionProvider',
-  ['completionItem/resolve'] = 'completionProvider',
-  ['textDocument/diagnostic'] = 'diagnosticProvider',
-  ['workspace/diagnostic'] = 'diagnosticProvider',
-  ['textDocument/signatureHelp'] = 'signatureHelpProvider',
-  ['textDocument/codeAction'] = 'codeActionProvider',
-  ['codeAction/resolve'] = 'codeActionProvider',
-  ['textDocument/documentColor'] = 'colorProvider',
-  ['textDocument/colorPresentation'] = 'colorProvider',
-  ['textDocument/formatting'] = 'documentFormattingProvider',
-  ['textDocument/rangeFormatting,'] = 'documentRangeFormattingProvider',
-  ['textDocument/onTypeFormatting'] = 'documentOnTypeFormattingProvider',
-  ['textDocument/rename'] = 'renameProvider',
-  ['textDocument/prepareRename'] = 'renameProvider',
-  ['textDocument/linkedEditingRange'] = 'linkedEditingRangeProvider',
-  ['workspace/symbol'] = 'workspaceSymbolProvider',
-  ['workspaceSymbol/resolve'] = 'workspaceSymbolProvider',
-}
-
-local workspace_method_to_capability = {
-  ['workspace/willCreateFiles'] = function(cap) return cap.fileOperations and cap.fileOperations.willCreate end,
-  ['workspace/willRenameFiles'] = function(cap) return cap.fileOperations and cap.fileOperations.willRename end,
-  ['workspace/willDeleteFiles'] = function(cap) return cap.fileOperations and cap.fileOperations.willDelete end,
-  ['workspace/executeCommand'] = function(cap) return cap.executeCommand end,
-}
-
 function lsp_status:init(options)
   self.super.init(self, options)
 
@@ -147,21 +93,11 @@ function lsp_status:register_request()
     end
 
     local id = math.random()
-    local class, name = unpack(vim.split(method, '/'))
+    local name = method:match('/(.*)')
 
     for client_id, client in pairs(clients) do
-      if method_to_capability[method] then
-        if client.server_capabilities[ method_to_capability[method] ] then
-          self:get_client(client_id).requests[id] = name
-        end
-      elseif class == 'experimental' then
-        if client.server_capabilities.experimental and client.server_capabilities.experimental[name] then
-          self:get_client(client_id).requests[id] = name
-        end
-      elseif class == 'workspace' and workspace_method_to_capability[method] and client.server_capabilities.workspace then
-        if workspace_method_to_capability[method](client.server_capabilities.workspace) then
-          self:get_client(client_id).requests[id] = name
-        end
+      if client.supports_method(method) then
+        self:get_client(client_id).requests[id] = name
       end
     end
 
