@@ -1,5 +1,5 @@
 local Job = require('plenary.job')
-local map = require('script.helper').map
+local map = require('util').map
 
 local change_base = function(base, head)
   if not base or type(base) ~= 'string' or #base == 0 then

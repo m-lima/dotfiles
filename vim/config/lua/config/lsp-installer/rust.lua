@@ -39,7 +39,8 @@ vim.lsp.commands['rust-analyzer.debugSingle'] = function(cmd)
     on_exit = function(job, code)
       if code and code > 0 then
         vim.schedule(function()
-          vim.notify('An error occured while compiling. Please fix all compilation issues and try again.', vim.log.levels.ERROR)
+          vim.notify('An error occured while compiling. Please fix all compilation issues and try again.',
+            vim.log.levels.ERROR)
         end)
       end
 
@@ -116,7 +117,7 @@ local prepare = function(opts)
             if err then
               vim.notify(err, vim.log.level.ERROR)
             else
-              require('script.output').float_raw(res.expansion, 'rust')
+              require('util').float.show_raw(res.expansion, 'rust')
             end
           end
         )

@@ -1,6 +1,6 @@
 local toggleterm = require('toggleterm')
 local extension = require('config.toggleterm.extension')
-local map = require('script.helper').map
+local map = require('util').map
 
 toggleterm.setup({
   size = function(term)
@@ -13,8 +13,8 @@ toggleterm.setup({
   shade_terminals = false,
 })
 
-map('n', '<C-q>',      function() toggleterm.toggle(1, nil, nil, 'float') end)
-map('t', '<C-q>',      function() toggleterm.toggle(0) end)
+map('n', '<C-q>', function() toggleterm.toggle(1, nil, nil, 'float') end)
+map('t', '<C-q>', function() toggleterm.toggle(0) end)
 map('n', '<leader>qq', toggleterm.toggle_all)
 map('n', '<leader>qg', function() extension.lazygit():toggle() end)
 map('n', '<leader>qe', function() toggleterm.toggle(109) end)

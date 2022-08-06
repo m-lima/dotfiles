@@ -99,7 +99,7 @@ require('neo-tree').setup({
   },
 })
 
-local map = require('script.helper').map
+local map = require('util').map
 local command = require('neo-tree.command')
 
 map('n', '<leader>n',         function() command.execute({ position = 'float', toggle = true, reveal = true }) end)

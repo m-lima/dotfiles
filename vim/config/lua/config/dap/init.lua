@@ -1,7 +1,7 @@
 local dap = require('dap')
 require('config.dap.adapters').codelldb()
 
-local map = require('script.helper').map
+local map = require('util').map
 map('n', '<F2>',  dap.toggle_breakpoint)
 map('n', '<F3>',  function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end)
 map('n', '<F4>',  function() dap.set_breakpoint(nil, nil, vim.fn.input("Log point message: ")) end)

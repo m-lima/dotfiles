@@ -89,6 +89,7 @@ require('config.gitsigns')
 require('config.lightspeed')
 require('config.lsp-installer')
 require('config.lspconfig')
+require('config.lua-out')
 require('config.lualine')
 require('config.neo-tree')
 require('config.project')
@@ -103,7 +104,6 @@ require('plugin.breadcrumbs')
 require('plugin.buffer_stack')
 require('plugin.dupe_comment')
 require('plugin.jupyter')
-require('script.output')
 EOF
 
 """"""""""""""""""""

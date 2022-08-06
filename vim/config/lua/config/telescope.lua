@@ -77,7 +77,7 @@ vim.api.nvim_create_user_command(
   }
 )
 
-local map = require('script.helper').map
+local map = require('util').map
 
 -- General
 map('n', '<leader><leader><leader>', builtin.resume)

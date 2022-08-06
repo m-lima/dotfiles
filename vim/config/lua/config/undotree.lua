@@ -1,4 +1,4 @@
-local map = require('script.helper').map
+local map = require('util').map
 
 map('n', '<leader>u', '<cmd>UndotreeToggle<CR>')
 

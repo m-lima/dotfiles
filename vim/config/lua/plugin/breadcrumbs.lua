@@ -1,4 +1,4 @@
-local map = require('script.helper').map
+local map = require('util').map
 
 local M = {}
 
@@ -18,18 +18,18 @@ local prepare_hl = function()
   normal = string.format('#%06x', normal.background)
   visual = string.format('#%06x', visual.background)
 
-  vim.highlight.create('mlima_breadcrumbs_normal', { guifg = visual, guibg = normal })
+  vim.highlight.create('mlima_breadcrumbs_normal',   { guifg = visual, guibg = normal })
   vim.highlight.create('mlima_breadcrumbs_selected', { guifg = normal, guibg = visual })
-  vim.highlight.create('mlima_breadcrumbs_cursor', { guifg = 1, ctermfg = 1, guibg = 1, ctermbg = 1, blend = 100 })
+  vim.highlight.create('mlima_breadcrumbs_cursor',   { guifg = 1, ctermfg = 1, guibg = 1, ctermbg = 1, blend = 100 })
 end
 
 local map_action = function(bufnr, config, action)
   if vim.tbl_islist(config[action]) then
     for _, key in ipairs(config[action]) do
-      map('', key,  M[action], { buffer = bufnr })
+      map('', key, M[action], { buffer = bufnr })
     end
   else
-    map('', config[action],  M[action], { buffer = bufnr })
+    map('', config[action], M[action], { buffer = bufnr })
   end
 end
 

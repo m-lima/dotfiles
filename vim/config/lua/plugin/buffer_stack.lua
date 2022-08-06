@@ -80,7 +80,7 @@ local delete = function()
   vim.api.nvim_buf_delete(bufnr, { force = true })
 end
 
-local map = require('script.helper').map
+local map = require('util').map
 
 map('', '[b',  backward)
 map('', ']b',  forward)

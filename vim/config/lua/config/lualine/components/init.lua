@@ -1,5 +1,5 @@
 local highlight = require('lualine.highlight')
-local extract_color = require('script.helper').extract_color
+local extract_color = require('util').extract_color
 
 local function paste()
   if vim.o.paste then
@@ -145,7 +145,8 @@ function active_lsp:update_status()
       end
 
       if c.current then
-        output = output .. highlight.component_format_highlight(self.color) .. c.id .. active_lsp.super.get_default_hl(self)
+        output = output ..
+            highlight.component_format_highlight(self.color) .. c.id .. active_lsp.super.get_default_hl(self)
         current = true
       else
         output = output .. c.id
