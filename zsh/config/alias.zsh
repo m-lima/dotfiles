@@ -125,14 +125,18 @@ function penv {
 
     if [ ! -d "${newEnv}" ]
     then
-      python3 -m virtualenv "${newEnv}" &&\
-      source "${newEnv}/bin/activate" &&\
-      python -m ensurepip &&\
-      python3 -m pip install --upgrade pip wheel setuptools &&\
-      echo "Virtual environment \x1b[1mcreated\x1b[m at $\x1b[34m${newEnv}\x1b[m" ||\
-      echo -e "\e[31mFailed to initialize virtual environemt\e[m"
-      echo -e "Is virtualenv installed? \e[33mpython3 -m pip install virtualenv\e[m"
-      return -1
+      if `(python3 -m pip list | virtualenv) &> /dev/null`
+      then
+        python3 -m virtualenv "${newEnv}" && \
+        source "${newEnv}/bin/activate" && \
+        python -m ensurepip && \
+        python3 -m pip install --upgrade pip wheel setuptools && \
+        echo "Virtual environment \x1b[1mcreated\x1b[m at $\x1b[34m${newEnv}\x1b[m"
+      else
+        echo -e "\e[31mFailed to initialize virtual environemt\e[m"
+        echo -e "\e[33mIs virtualenv installed?\e[m python3 -m pip install virtualenv"
+        return -1
+      fi
     else
       source "${newEnv}/bin/activate"
       echo "Virtual environment \x1b[1mset\x1b[m at \x1b[34m${newEnv}\x1b[m"
