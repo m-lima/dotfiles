@@ -227,6 +227,6 @@ highlight! link TelescopeSelection PmenuSel
 highlight! link TelescopeMatching  CmpItemAbbrMatch
 
 " Git-conflict
-highlight GitConflictAncestorBase guifg=NONE ctermfg=NONE guibg=#303030 ctermbg=17 gui=NONE cterm=NONE
-highlight GitConflictCurrentBase  guifg=NONE ctermfg=NONE guibg=#202030 ctermbg=52 gui=NONE cterm=NONE
-highlight GitConflictIncomingBase guifg=NONE ctermfg=NONE guibg=#203020 ctermbg=22 gui=NONE cterm=NONE
+highlight GitConflictAncestorBase guifg=NONE ctermfg=NONE guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
+highlight GitConflictCurrentBase  guifg=NONE ctermfg=NONE guibg=#202030 ctermbg=17  gui=NONE cterm=NONE
+highlight GitConflictIncomingBase guifg=NONE ctermfg=NONE guibg=#203020 ctermbg=22  gui=NONE cterm=NONE
