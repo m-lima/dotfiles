@@ -38,7 +38,7 @@ set splitbelow
 
 " Leader mapping
 let g:mapleader = ' '
-let g:maplocalleader = ' '
+let g:maplocalleader = ','
 
 " Mouse support
 set mouse=a
