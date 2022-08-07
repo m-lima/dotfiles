@@ -70,8 +70,8 @@ Plug 'aserebryakov/vim-todo-lists' " TODO md file helper
 Plug 'skanehira/vsession'          " Save/load sessions TODO: Configure. I think now it keeps saving the session
 Plug 'akinsho/toggleterm.nvim'     " More usable terminal
 Plug 'mbbill/undotree'             " A local changes tracker TODO: configure (colors)
+Plug 'akinsho/git-conflict.nvim'   " Better visualization of conflicting diffs
 Plug 'jupyter-vim/jupyter-vim'     " Integration with jupyter
-Plug 'akinsho/git-conflict.nvim'   " Better conflict handling
 
 call plug#end()
 
@@ -84,7 +84,7 @@ require('config.cmp')
 require('config.comment')
 require('config.dap')
 require('config.fugitive')
-require('config.git-config')
+require('config.git-conflict')
 require('config.gitsigns')
 require('config.lightspeed')
 require('config.lsp-installer')
