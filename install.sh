@@ -664,7 +664,11 @@ fi
 
 if [ $(command -v tmux) ]
 then
-  installFile s tmux/script .config/m-lima/tmux
+  if installFile s tmux .config/m-lima tmux
+  then
+    ln -sf "${HOME}/.config/m-lima/tmux/tmux.conf" "${HOME}/.tmux.conf"
+    vi "${HOME}/.config/m-lima/tmux/local.conf"
+  fi
 else
   echo "[33mSkipping Tmux links[m"
 fi
@@ -704,16 +708,6 @@ fi
 ########################################
 # Copy files
 echo "[33mCopying files..[m"
-
-if [ $(command -v tmux) ]
-then
-  if installFile c tmux/local.conf .config/m-lima/tmux
-  then
-    vi "${HOME}/.config/m-lima/tmux/local.conf"
-  fi
-else
-  echo "[33mSkipping Tmux files[m"
-fi
 
 if [ $(command -v zsh) ]
 then
