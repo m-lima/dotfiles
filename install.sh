@@ -247,6 +247,33 @@ function installPacaur {
   fi
 }
 
+function delete {
+  local input searchFlag deleteFlag
+
+  if [[ "${1}" == "file" ]]
+  then
+    searchFlag='-f'
+  elif [[ "${1}" == "dir" ]]
+  then
+    searchFlag='-d'
+    deleteFlag='-rf'
+  else
+  fi
+
+  shift
+
+  if [ ${searchFlag} "${1}" ]
+  then
+    echo -n "Delete ${1}? [y/N] "
+    read input
+    case ${input} in
+      [Yy] )
+        rm ${deleteFlag} "${1}"
+        ;;
+    esac
+  fi
+}
+
 ################################################################################
 # Script start                                                                 #
 ################################################################################
@@ -578,10 +605,6 @@ then
 fi
 
 ########################################
-# Install alacritty
-checkInstallDefault alacritty
-
-########################################
 # Install bat
 checkInstall "Bat" "${PACKAGE_INSTALL} bat" '[ $(command -v "bat") ] || [ $(command -v "batcat") ]'
 
@@ -653,13 +676,6 @@ then
   installFile s vim/.ideavimrc .
 else
   echo "[33mSkipping IdeaVim links[m"
-fi
-
-if [ $(command -v nvim) ] || [ $(command -v vim) ]
-then
-  installFile s vim/coc/coc-settings.json .config/nvim
-else
-  echo "[33mSkipping Coc config[m"
 fi
 
 if [ $(command -v tmux) ]
@@ -755,6 +771,14 @@ then
     esac
   fi
 fi
+
+########################################
+# Clean deprecated files
+
+delete file "${HOME}/.tmux.conf.local"
+delete file "${HOME}/.tmux-powerlinerc"
+delete dir "${HOME}/.config/coc"
+delete file "${HOME}/.config/nvim/coc-settings.json"
 
 ########################################
 # Download fonts
