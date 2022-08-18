@@ -667,6 +667,7 @@ then
   if installFile s tmux .config/m-lima tmux
   then
     ln -sf "${HOME}/.config/m-lima/tmux/tmux.conf" "${HOME}/.tmux.conf"
+    touch "${HOME}/.config/m-lima/tmux/local.conf"
     vi "${HOME}/.config/m-lima/tmux/local.conf"
   fi
 else
