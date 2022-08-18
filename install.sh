@@ -258,6 +258,8 @@ function delete {
     searchFlag='-d'
     deleteFlag='-rf'
   else
+    echo "[31mInvalid parameters for delete()[m"
+    return -1
   fi
 
   shift
