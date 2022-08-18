@@ -12,7 +12,7 @@ fi
 # Go
 if [ -d "${HOME}/code" ] && command -v go &> /dev/null
 then
-  export GOPATH="${HOME}/code/go"
+  export GOPATH="${HOME}/code/go/root"
   export PATH="${GOPATH}/bin${PATH+:$PATH}"
 fi
 
