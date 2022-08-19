@@ -34,10 +34,10 @@ nnoremap U O<Esc>
 nnoremap K o<Esc>
 
 " Move text
-nnoremap <silent> <C-h> <cmd>m .-2<CR>
-nnoremap <silent> <C-l> <cmd>m .+1<CR>
-vnoremap <silent> <C-h> :m '<-2<CR>gv
-vnoremap <silent> <C-l> :m '>+1<CR>gv
+nnoremap <silent> <C-h> <cmd>m .+1<CR>
+nnoremap <silent> <C-l> <cmd>m .-2<CR>
+vnoremap <silent> <C-h> :m '>+1<CR>gv
+vnoremap <silent> <C-l> :m '<-2<CR>gv
 
 " Remove the search highlights
 nnoremap <silent> <Leader>h :noh<CR>
