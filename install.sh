@@ -697,9 +697,9 @@ then
   installFile s gui/alacritty/alacritty.yml .config/alacritty
   case "${SYS_TYPE}" in
     Darwin)
-      installFile s gui/alacritty/alacritty.macos.yml .config/m-lima/alacritty alacritty.yml ;;
+      installFile s gui/alacritty/macos.yml .config/m-lima/alacritty alacritty.yml ;;
     *)
-      installFile s gui/alacritty/alacritty.linux.yml .config/m-lima/alacritty alacritty.yml ;;
+      installFile s gui/alacritty/linux.yml .config/m-lima/alacritty alacritty.yml ;;
   esac
 fi
 
