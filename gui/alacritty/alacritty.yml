@@ -10,6 +10,7 @@
 # to the user's home directory starting with `~/`.
 import:
   - ~/.config/m-lima/alacritty/alacritty.yml
+  - ~/.config/m-lima/alacritty/transient.yml
 
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
@@ -750,10 +751,14 @@ colors:
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
 key_bindings:
-  - { key: Return, mods: Super,   action: ToggleFullscreen }
-  - { key: Q,      mods: Control, chars: "\x11"            }
-  - { key: Left,   mods: Alt,     chars: "\x1bb"           }
-  - { key: Right,  mods: Alt,     chars: "\x1bf"           }
+  - { key: Return, mods: Super,   action:  ToggleFullscreen }
+  - { key: Q,      mods: Control, chars:   "\x11"           }
+  - { key: Left,   mods: Alt,     chars:   "\x1bb"          }
+  - { key: Right,  mods: Alt,     chars:   "\x1bf"          }
+  - { key: Z,      mods: Super,   command: {
+      program: "zsh",
+      args: ["-c", "~/.config/m-lima/alacritty/toggle_font.sh" ]
+    } }
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
