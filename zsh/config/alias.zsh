@@ -125,7 +125,7 @@ function penv {
 
     if [ ! -d "${newEnv}" ]
     then
-      if `(python3 -m pip list | virtualenv) &> /dev/null`
+      if (python3 -m pip list | grep virtualenv) &> /dev/null
       then
         python3 -m virtualenv "${newEnv}" && \
         source "${newEnv}/bin/activate" && \
