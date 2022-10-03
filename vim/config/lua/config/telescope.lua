@@ -103,9 +103,13 @@ map('n', '<leader><leader>p', telescope.extensions.projects.projects)
 
 ---- LSP
 map('n', 'gd',        builtin.lsp_definitions)
+map('n', 'gvd',       function() builtin.lsp_definitions({ jump_type = 'vsplit' }) end)
 map('n', 'ge',        builtin.lsp_references)
+map('n', 'gve',       function() builtin.lsp_references({ jump_type = 'vsplit' }) end)
 map('n', 'gi',        builtin.lsp_implementations)
+map('n', 'gvi',       function() builtin.lsp_implementations({ jump_type = 'vsplit' }) end)
 map('n', 'gI',        builtin.lsp_type_definitions)
+map('n', 'gvI',       function() builtin.lsp_type_definitions({ jump_type = 'vsplit' }) end)
 map('n', '<leader>s', builtin.lsp_document_symbols)
 map('n', '<leader>S', builtin.lsp_dynamic_workspace_symbols)
 map('n', '<leader>e', builtin.diagnostics)
