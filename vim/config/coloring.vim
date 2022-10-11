@@ -19,3 +19,8 @@ endif
 
 " colorscheme grayalt
 colorscheme simpalt
+
+" Create CursorHidden
+if has('nvim')
+  highlight CursorHidden guifg=white ctermfg=white guibg=white ctermbg=white blend=100
+endif

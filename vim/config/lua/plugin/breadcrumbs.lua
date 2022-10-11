@@ -12,15 +12,11 @@ local default_config = {
 }
 
 local prepare_hl = function()
-  local normal = vim.api.nvim_get_hl_by_name('Pmenu', true)
-  local visual = vim.api.nvim_get_hl_by_name('Visual', true)
+  local normal = vim.api.nvim_get_hl_by_name('Pmenu', true).background
+  local visual = vim.api.nvim_get_hl_by_name('Visual', true).background
 
-  normal = string.format('#%06x', normal.background)
-  visual = string.format('#%06x', visual.background)
-
-  vim.highlight.create('mlima_breadcrumbs_normal',   { guifg = visual, guibg = normal })
-  vim.highlight.create('mlima_breadcrumbs_selected', { guifg = normal, guibg = visual })
-  vim.highlight.create('mlima_breadcrumbs_cursor',   { guifg = 1, ctermfg = 1, guibg = 1, ctermbg = 1, blend = 100 })
+  vim.api.nvim_set_hl(namespace, 'mlima_breadcrumbs_normal',   { fg = visual, bg = normal })
+  vim.api.nvim_set_hl(namespace, 'mlima_breadcrumbs_selected', { fg = normal, bg = visual })
 end
 
 local map_action = function(bufnr, config, action)
@@ -124,7 +120,6 @@ local create_popup = function(config, names, locations)
   end
   local bufnr = prepare_popup(config, width)
   local selected = #names
-  vim.opt.guicursor:append('a:mlima_breadcrumbs_cursor')
 
   return {
     bufnr = bufnr,
@@ -216,6 +211,10 @@ M.show = function(config)
 
       if #names == 0 then return end
       M.breadcrumbs = create_popup(config, names, locations)
+
+      vim.api.nvim_win_set_hl_ns(0, namespace)
+      vim.opt.guicursor:append('a:CursorHidden')
+
       render(M.breadcrumbs)
     end
   )
@@ -223,7 +222,8 @@ end
 
 M.close = function()
   if M.breadcrumbs then
-    vim.opt.guicursor:remove('a:mlima_breadcrumbs_cursor')
+    vim.opt.guicursor:remove('a:CursorHidden')
+    vim.api.nvim_win_set_hl_ns(0, 0)
 
     local breadcrumbs = M.breadcrumbs
     M.breadcrumbs = nil

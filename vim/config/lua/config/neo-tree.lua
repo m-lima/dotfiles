@@ -1,5 +1,3 @@
-vim.highlight.create('mlima_neotree_cursor', { guifg = 1, ctermfg = 1, guibg = 1, ctermbg = 1, blend = 100 })
-
 local function getTelescopeOpts(state, path)
   return {
     cwd = path,
@@ -87,13 +85,13 @@ require('neo-tree').setup({
     {
       event = 'neo_tree_buffer_enter',
       handler = function()
-        vim.opt.guicursor:append('a:mlima_neotree_cursor')
+        vim.opt.guicursor:append('a:CursorHidden')
       end
     },
     {
       event = 'neo_tree_buffer_leave',
       handler = function()
-        vim.opt.guicursor:remove('a:mlima_neotree_cursor')
+        vim.opt.guicursor:remove('a:CursorHidden')
       end
     },
   },

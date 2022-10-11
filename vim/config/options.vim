@@ -115,11 +115,6 @@ if has('nvim')
   augroup end
 end
 
-if has('nvim')
-  let g:do_filetype_lua = 1
-  let g:did_load_filetypes = 0
-end
-
 " Send quickfix to the bottom with full width
 augroup optionsQuifixBottom
   autocmd!

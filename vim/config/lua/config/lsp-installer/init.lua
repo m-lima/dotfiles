@@ -34,7 +34,7 @@ local make_on_attach = function(opts)
       return augroupnr
     end
 
-    if opts.codelens and client.resolved_capabilities.code_lens then
+    if opts.codelens and client.server_capabilities.codeLensProvider then
       vim.api.nvim_create_autocmd(
         {
           'BufEnter',
@@ -72,7 +72,7 @@ local make_on_attach = function(opts)
             callback = opts.format,
           }
         )
-      elseif client.resolved_capabilities.document_formatting then
+      elseif client.server_capabilities.documentFormattingProvider then
         vim.api.nvim_create_autocmd(
           'BufWritePre',
           {
@@ -85,7 +85,7 @@ local make_on_attach = function(opts)
       end
     end
 
-    if opts.highlight and client.resolved_capabilities.document_highlight then
+    if opts.highlight and client.server_capabilities.documentHighlightProvider then
       vim.api.nvim_create_autocmd(
         'CursorHold',
         {
