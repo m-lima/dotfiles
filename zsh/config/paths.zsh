@@ -27,4 +27,13 @@ fi
 if [ -s "${HOME}/.ghcup/env" ]
 then
   source "${HOME}/.ghcup/env"
+else
+  if [ -d "${HOME}/.ghcup/bin" ]
+  then
+    export PATH="${HOME}/.ghcup/bin${PATH+:$PATH}"
+  fi
+  if [ -d "${HOME}/.cabal/bin" ]
+  then
+    export PATH="${HOME}/.cabal/bin${PATH+:$PATH}"
+  fi
 fi
