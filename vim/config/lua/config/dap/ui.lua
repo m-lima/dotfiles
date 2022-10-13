@@ -29,3 +29,5 @@ vim.api.nvim_create_user_command(
     nargs = 0,
   }
 )
+
+require('util').map('n', '<F12>', function() dapui().toggle() end)

@@ -1,3 +1,27 @@
+local extract_build_args = function(args)
+  if args[1] == 'run' then
+    local build_args = { 'build', '--message-format=json' }
+    vim.list_extend(build_args, args, 2)
+    return false, build_args
+  elseif args[1] == 'test' then
+    local build_args = { 'build', '--message-format=json', '--tests' }
+    local skip = true
+    for _, v in ipairs(args) do
+      if skip then
+        skip = false
+      else
+        if v == '--bin' then
+          skip = true
+        else
+          table.insert(build_args, v)
+        end
+      end
+    end
+    return true, build_args
+  end
+  vim.notify('Unrecognized cargo command arguments: ' .. vim.inspect(args))
+end
+
 vim.lsp.commands['rust-analyzer.runSingle'] = function(cmd)
   if cmd then
     local arguments = cmd.arguments[1]
@@ -29,32 +53,48 @@ vim.lsp.commands['rust-analyzer.debugSingle'] = function(cmd)
   local arguments = cmd.arguments[1]
 
   local cargo_args = arguments.args.cargoArgs
-  table.insert(cargo_args, '--message-format=json')
   cargo_args = vim.list_extend(cargo_args, arguments.args.cargoExtraArgs)
+  local is_test, build_args = extract_build_args(cargo_args)
+
+  if not build_args then
+    return
+  end
 
   require('plenary.job'):new({
     command = 'cargo',
-    args = cargo_args,
-    cwd = arguments.workspaceRoot,
+    args = build_args,
+    cwd = arguments.args.workspaceRoot,
     on_exit = function(job, code)
       if code and code > 0 then
         vim.schedule(function()
           vim.notify('An error occured while compiling. Please fix all compilation issues and try again.',
             vim.log.levels.ERROR)
         end)
+        return
       end
 
       vim.schedule(function()
         for _, value in pairs(job:result()) do
           local json = vim.fn.json_decode(value)
           if type(json) == 'table' and json.executable ~= vim.NIL and json.executable ~= nil then
+
+            local run_args
+            if is_test then
+              run_args = arguments.args.executableArgs
+            else
+              local input_args = vim.fn.input('Args: ')
+              if input_args and #input_args > 0 then
+                run_args = { input_args }
+              end
+            end
+
             require('dap').run({
               name = 'Rust debug',
               type = 'codelldb',
               request = 'launch',
               program = json.executable,
-              args = arguments.executableArgs or {},
-              cwd = arguments.workspaceRoot,
+              args = run_args or {},
+              cwd = arguments.args.workspaceRoot,
               stopOnEntry = false,
               runInTerminal = false,
             })
