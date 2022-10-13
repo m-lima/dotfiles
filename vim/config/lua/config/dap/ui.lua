@@ -18,3 +18,14 @@ end
 dap.listeners.before.event_exited['dapui_config'] = function()
   dapui().close()
 end
+
+vim.api.nvim_create_user_command(
+  'DapToggle',
+  function()
+    dapui().toggle()
+  end,
+  {
+    desc = 'Toggle DAP GUI',
+    nargs = 0,
+  }
+)
