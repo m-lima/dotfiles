@@ -83,6 +83,7 @@ lua <<EOF
 require('config.cmp')
 require('config.comment')
 require('config.dap')
+require('config.dap.ui')
 require('config.fugitive')
 -- require('config.git-conflict')
 require('config.gitsigns')

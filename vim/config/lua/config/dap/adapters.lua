@@ -7,7 +7,7 @@ M.codelldb = function()
     local stdout = vim.loop.new_pipe(false)
     local stderr = vim.loop.new_pipe(false)
 
-    -- CHANGE THIS!
+    -- TODO: CHANGE THIS!
     local cmd = '/Users/celo/code/utils/codelldb/extension/adapter/codelldb'
 
     local handle, pid_or_err
