@@ -82,11 +82,7 @@ vim.lsp.commands['rust-analyzer.debugSingle'] = function(cmd)
             if is_test then
               run_args = arguments.args.executableArgs
             else
-              local input_args = vim.fn.input('Args: ')
-              if input_args and #input_args > 0 then
-                -- TODO: This is broken. Need to implement a parameter parser
-                run_args = { input_args }
-              end
+              run_args = require('util').parse_args(vim.fn.input('Args: '))
             end
 
             require('dap').run({

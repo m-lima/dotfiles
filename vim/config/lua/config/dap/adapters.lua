@@ -95,12 +95,7 @@ M.codelldb = function()
     cwd = '${workspaceFolder}',
     stopOnEntry = false,
     args = function()
-      local str = vim.fn.input('Args: ')
-      local args = {}
-      for a in string.gmatch(str, '([^ ]+)') do
-        table.insert(args, a)
-      end
-      return args
+      return require('util').parse_args(vim.fn.input('Args: '))
     end,
     runInTerminal = false,
   } }

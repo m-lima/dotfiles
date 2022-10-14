@@ -102,10 +102,96 @@ float.show = function(cmd)
   float.show_raw(str, 'lua')
 end
 
+local function parse_args(str)
+  if not str then return {} end
+
+  local output = {}
+  local accumulator = ''
+  local single = false
+  local double = false
+  local escaped = false
+  for c in string.gmatch(str, '.') do
+    if single then
+      if c == "'" then
+        single = false
+      else
+        accumulator = accumulator .. c
+      end
+      goto continue
+    end
+
+    if double then
+      if escaped then
+        if c == '"' then
+          accumulator = accumulator .. c
+        else
+          accumulator = accumulator .. '\\' .. c
+        end
+        escaped = false
+        goto continue
+      end
+
+      if c == '\\' then
+        escaped = true
+        goto continue
+      end
+
+      if c == '"' then
+        double = false
+      else
+        accumulator = accumulator .. c
+      end
+
+      goto continue
+    end
+
+    if escaped then
+      if c ~= ' ' and c ~= '"' and c ~= "'" then
+        accumulator = accumulator .. '\\'
+      end
+      accumulator = accumulator .. c
+      escaped = false
+      goto continue
+    end
+
+    if c == '\\' then
+      escaped = true
+      goto continue
+    end
+
+    if c == "'" then
+      single = true
+      goto continue
+    end
+
+    if c == '"' then
+      double = true
+      goto continue
+    end
+
+    if (c == ' ' or c == '\n') then
+      if #accumulator > 0 then
+        table.insert(output, accumulator)
+        accumulator = ''
+      end
+      goto continue
+    end
+
+    accumulator = accumulator .. c
+    ::continue::
+  end
+
+  if #accumulator > 0 then
+    table.insert(output, accumulator)
+  end
+  return output
+end
+
 return {
   extract_color = extract_color,
   float = float,
   map = map,
   map_check = map_check,
   mod = mod,
+  parse_args = parse_args,
 }
