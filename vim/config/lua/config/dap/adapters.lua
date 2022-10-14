@@ -7,8 +7,7 @@ M.codelldb = function()
     local stdout = vim.loop.new_pipe(false)
     local stderr = vim.loop.new_pipe(false)
 
-    -- TODO: CHANGE THIS!
-    local cmd = '/Users/celo/code/utils/codelldb/extension/adapter/codelldb'
+    local cmd = os.getenv('HOME') .. '/code/utils/codelldb/extension/adapter/codelldb'
 
     local handle, pid_or_err
     local opts = {
@@ -59,10 +58,39 @@ M.codelldb = function()
     name = 'Launch',
     type = 'codelldb',
     request = 'launch',
-    -- TODO: Grab from rust
-    -- TODO: List on telescope
     program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+      local executables = {}
+
+      if vim.fn.filereadable('Cargo.toml') == 1 then
+        print('Building workspace..')
+        local build_output = vim.fn.system('cargo build --workspace --message-format=json')
+        for line in build_output:gmatch('[^\r\n]+') do
+          local ok, json = pcall(vim.fn.json_decode, line)
+          if ok then
+            if type(json) == 'table' and json.executable ~= vim.NIL and json.executable ~= nil then
+              table.insert(executables, json.executable)
+            end
+          end
+        end
+      end
+
+      if #executables > 0 then
+        local options = { '0. Manual' }
+        for i, v in ipairs(executables) do
+          table.insert(options, i .. '. ' .. v)
+        end
+        local option = vim.fn.inputlist(options)
+        if option > 0 then
+          return executables[option]
+        end
+      end
+
+      local cargo_target = os.getenv('CARGO_TARGET_DIR')
+      if cargo_target then
+        return vim.fn.input('Path to executable: ', cargo_target .. '/debug/', 'file')
+      else
+        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
+      end
     end,
     cwd = '${workspaceFolder}',
     stopOnEntry = false,
