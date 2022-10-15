@@ -125,13 +125,26 @@ function penv {
 
     if [ ! -d "${newEnv}" ]
     then
-      if (python3 -m pip list | grep virtualenv) &> /dev/null
+      python3 -m virtualenv &> /dev/null
+      if (( $? == 2 ))
       then
-        python3 -m virtualenv "${newEnv}" && \
+        module="virtualenv"
+      else
+        python3 -m venv &> /dev/null
+        if (( $? == 2 ))
+        then
+          module="venv"
+        fi
+      fi
+
+      if [ "${module}" ]
+      then
+        echo "Using \e[1m${module}\e[m"
+        python3 -m "${module}" "${newEnv}" && \
         source "${newEnv}/bin/activate" && \
         python -m ensurepip && \
         python3 -m pip install --upgrade pip wheel setuptools && \
-        echo "Virtual environment \x1b[1mcreated\x1b[m at $\x1b[34m${newEnv}\x1b[m"
+        echo "Virtual environment \e[1mcreated\e[m at \e[34m${newEnv}\e[m"
       else
         echo -e "\e[31mFailed to initialize virtual environemt\e[m"
         echo -e "\e[33mIs virtualenv installed?\e[m python3 -m pip install virtualenv"
@@ -139,7 +152,7 @@ function penv {
       fi
     else
       source "${newEnv}/bin/activate"
-      echo "Virtual environment \x1b[1mset\x1b[m at \x1b[34m${newEnv}\x1b[m"
+      echo "Virtual environment \e[1mset\e[m at \e[34m${newEnv}\e[m"
     fi
 
     if [[ ! `which python` =~ "${newEnv}/bin/*" ]]

@@ -766,10 +766,26 @@ then
     read input
     case ${input} in
       [Yy] )
-        python3 -m venv "${HOME}/code/python/env/vim"
-        source "${HOME}/code/python/env/vim/bin/activate"
-        pip3 install pynvim
-        deactivate
+        python3 -m virtualenv &> /dev/null
+        if (( $? == 2 ))
+        then
+          python3 -m virtualenv "${HOME}/code/python/env/vim"
+        else
+          python3 -m venv &> /dev/null
+          if (( $? == 2 ))
+          then
+            python3 -m venv "${HOME}/code/python/env/vim"
+          fi
+        fi
+
+        if [ -f  "${HOME}/code/python/env/vim/bin/activate" ]
+        then
+          source "${HOME}/code/python/env/vim/bin/activate"
+          pip3 install pynvim
+          deactivate
+        else
+          echo "[31mCould not set virtual environment[m"
+        fi
     esac
   fi
 fi
