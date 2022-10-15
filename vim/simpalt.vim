@@ -10,7 +10,7 @@ endif
 
 set background=dark
 
-if has("termguicolors")
+if has('termguicolors')
   set termguicolors
 endif
 
@@ -188,13 +188,17 @@ highlight! link QuickScopePrimary   Visual
 highlight! link QuickScopeSecondary Search
 
 " CMP
-highlight CmpItemAbbrDeprecated  guifg=#51504f ctermfg=239 guibg=NONE ctermbg=NONE gui=STRIKETHROUGH cterm=STRIKETHROUGH
-highlight CmpItemAbbrMatch       guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=BOLD          cterm=BOLD
-highlight CmpItemKindEvent       guifg=#87afaf ctermfg=103 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
-highlight CmpItemKindText        guifg=#9c50a0 ctermfg=133 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
-highlight CmpItemKindType        guifg=#009980 ctermfg=72  guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE " Matching TSType without BOLD
-highlight CmpItemKindUnit        guifg=#909090 ctermfg=245 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
-highlight CmpItemKindSnippet     guifg=#afd7af ctermfg=245 guibg=NONE ctermbg=NONE gui=NONE          cterm=NONE
+if has('nvim-0.4')
+  highlight CmpItemAbbrDeprecated  guifg=#51504f ctermfg=239 guibg=NONE ctermbg=NONE gui=STRIKETHROUGH cterm=STRIKETHROUGH
+else
+  highlight CmpItemAbbrDeprecated  guifg=#51504f ctermfg=239 guibg=NONE ctermbg=NONE gui=UNDERLINE cterm=UNDERLINE
+endif
+highlight CmpItemAbbrMatch       guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=BOLD cterm=BOLD
+highlight CmpItemKindEvent       guifg=#87afaf ctermfg=103 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight CmpItemKindText        guifg=#9c50a0 ctermfg=133 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight CmpItemKindType        guifg=#009980 ctermfg=72  guibg=NONE ctermbg=NONE gui=NONE cterm=NONE " Matching TSType without BOLD
+highlight CmpItemKindUnit        guifg=#909090 ctermfg=245 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight CmpItemKindSnippet     guifg=#afd7af ctermfg=245 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
 highlight! link CmpItemKindClass         CmpItemKindType
 highlight! link CmpItemKindEnum          CmpItemKindType
