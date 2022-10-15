@@ -1,0 +1,2 @@
+sudo showconsolefont
+sudo setfont ${PATH_TO_FONT}

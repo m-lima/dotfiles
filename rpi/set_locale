@@ -1,0 +1,6 @@
+localectl list-locales
+sudo localectl set-locale en_US.utf8
+localectl status
+
+# Maybe needed?
+sudo localectl set-keymap us
