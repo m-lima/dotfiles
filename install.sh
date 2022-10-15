@@ -310,6 +310,8 @@ case `uname -v` in
     esac
 esac
 
+unset change
+
 if [ -z "${SYS_TYPE}" ]
 then
   echo "[31mFAIL[34m][m"
@@ -443,6 +445,7 @@ echo -n "[34mChecking Plugin Manager.. [[m"
 if [ -f "${HOME}/.config/m-lima/zsh/local.zsh" ]
 then
   PLUGIN_MANAGER=`awk '{ if ($1 ~ /^pluginManager=.+/) { print $1 }}' "${HOME}/.config/m-lima/zsh/local.zsh" | cut -d '=' -f2 | tail -1`
+  unset change
 
   if [ -z "${PLUGIN_MANAGER}" ]
   then
@@ -492,6 +495,7 @@ echo -n "[34mChecking ZSH framework.. [[m"
 if [ -f "${HOME}/.config/m-lima/zsh/local.zsh" ]
 then
   ZSH_FRAMEWORK=`awk '{ if ($1 ~ /^zshFramework=.+/) { print $1 }}' "${HOME}/.config/m-lima/zsh/local.zsh" | cut -d '=' -f2 | tail -1`
+  unset change
 
   if [ -z "${ZSH_FRAMEWORK}" ]
   then
