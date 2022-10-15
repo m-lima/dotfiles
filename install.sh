@@ -829,7 +829,7 @@ case ${input} in
       esac
     fi
 
-    if [ ! -f "${HOME}/ter-powerline-v28b.psf.gz" ] || [ -z ${NO_OVERWRITE} ]
+    if [ ! -f "${HOME}/ter-powerline-v14b.psf.gz" ] || [ -z ${NO_OVERWRITE} ]
     then
       echo "[34mDownloading font..[m"
       echo -n "Download Terminus Powerline PSF? [y/N] "
@@ -837,7 +837,7 @@ case ${input} in
       case ${input} in
         [Yy] )
           cd "${HOME}"
-          curl -s -L 'https://github.com/powerline/fonts/raw/master/Terminus/PSF/ter-powerline-v28b.psf.gz' -o "${HOME}/ter-powerline-v28b.psf.gz" && echo "[32mFont saved as ${HOME}/ter-powerline-v28b.psf.gz[m"
+          curl -s -L 'https://github.com/ryanoasis/nerd-fonts/raw/master/src/unpatched-fonts/Terminus/PSF/ter-powerline-v14b.psf.gz' -o "${HOME}/ter-powerline-v14b.psf.gz" && echo "[32mFont saved as ${HOME}/ter-powerline-v14b.psf.gz[m"
           ;;
       esac
     fi
