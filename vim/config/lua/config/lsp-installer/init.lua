@@ -181,8 +181,8 @@ require('nvim-lsp-installer').on_server_ready(
           },
           workspace = {
             library = {
-              [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-              [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+              [vim.env.VIMRUNTIME .. '/lua'] = true,
+              [vim.env.VIMRUNTIME .. '/lua/vim/lsp'] = true,
             },
           },
           telemetry = {

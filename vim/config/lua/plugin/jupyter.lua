@@ -1,4 +1,4 @@
-local path = vim.fn.expand('$HOME/code/python/env/jupyter/bin/')
+local path = vim.env.HOME .. '/code/python/env/jupyter/bin/'
 
 if vim.fn.executable(path .. 'jupyter') == 0 then
   return;
