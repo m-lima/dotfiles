@@ -9,7 +9,12 @@ font:
     family: DejaVuSansMono Nerd Font Mono
 
 key_bindings:
-  - { key: N, mods: Super, action: CreateNewWindow }
+  - { key: N, mods: Super,       action: CreateNewWindow }
+  - { key: N, mods: Super|Shift, command: {
+        program: "/opt/homebrew/bin/alacritty",
+        args: ["-e", "zsh" ]
+      }
+    }
 
 shell:
   program: zsh

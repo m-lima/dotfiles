@@ -756,9 +756,10 @@ key_bindings:
   - { key: Left,   mods: Alt,     chars:   "\x1bb"          }
   - { key: Right,  mods: Alt,     chars:   "\x1bf"          }
   - { key: Z,      mods: Super,   command: {
-      program: "zsh",
-      args: ["-c", "~/.config/m-lima/alacritty/toggle_font.sh" ]
-    } }
+        program: "zsh",
+        args: ["-c", "~/.config/m-lima/alacritty/toggle_font.sh" ]
+      }
+    }
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
