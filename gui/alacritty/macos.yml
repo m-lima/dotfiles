@@ -19,5 +19,6 @@ key_bindings:
 shell:
   program: zsh
   args:
+    - -l
     - -c
     - tmux
