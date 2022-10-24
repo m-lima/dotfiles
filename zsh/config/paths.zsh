@@ -9,6 +9,12 @@ then
   export CPATH="${HOMEBREW_PREFIX}/include${CPATH+:$CPATH}"
 fi
 
+# Rust
+if [ -s "${HOME}/.cargo/env" ]
+then
+  source "$HOME/.cargo/env"
+fi
+
 # Go
 if [ -d "${HOME}/code" ] && command -v go &> /dev/null
 then

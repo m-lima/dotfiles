@@ -11,7 +11,7 @@ font:
 key_bindings:
   - { key: N, mods: Super,       action: CreateNewWindow }
   - { key: N, mods: Super|Shift, command: {
-        program: "/opt/homebrew/bin/alacritty",
+        program: "/Applications/Alacritty.app/Contents/MacOS/alacritty",
         args: ["-e", "zsh" ]
       }
     }
@@ -19,6 +19,5 @@ key_bindings:
 shell:
   program: zsh
   args:
-    - -l
     - -c
     - tmux

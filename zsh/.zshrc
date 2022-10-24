@@ -1,6 +1,3 @@
-# Load paths
-source "${HOME}/.config/m-lima/zsh/paths.zsh"
-
 # Load local config
 source "${HOME}/.config/m-lima/zsh/local.zsh"
 

@@ -646,6 +646,7 @@ echo "[33mMaking symlinks..[m"
 if [ $(command -v zsh) ]
 then
   installFile s zsh/.zshrc
+  installFile s zsh/.zshenv
   installFile s zsh/config .config/m-lima zsh
 else
   echo "[33mSkipping ZSH links[m"
