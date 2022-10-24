@@ -121,7 +121,7 @@ elseif has('unix')
 endif
 
 " Copy file name to clipboard
-nnoremap gyf <cmd>let @+=@%<CR>
+nnoremap gyf <cmd>let @+=expand('%:p:~')<CR>
 
 """ Completion navigation overload
 " TODO: Make this more sensible to my expectations
