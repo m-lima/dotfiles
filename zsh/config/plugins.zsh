@@ -1,4 +1,4 @@
-case "${pluginManager}" in
+case "${local_pluginManager}" in
   zgen)
     if ! source "${HOME}/.zgen/zgen.zsh"
     then
@@ -8,7 +8,7 @@ case "${pluginManager}" in
 
     if ! zgen saved
     then
-      case "${zshFramework}" in
+      case "${local_zshFramework}" in
         omz)
           zgen oh-my-zsh
           zgen oh-my-zsh plugins/git
@@ -35,7 +35,7 @@ case "${pluginManager}" in
       zgen load m-lima/nali
       zgen load m-lima/nali-autosuggestions
 
-      for plugin in ${localPlugins}
+      for plugin in ${local_plugins}
       do
         zgen ${(z)plugin}
       done
@@ -61,7 +61,7 @@ case "${pluginManager}" in
     zplug "m-lima/simpalt", as:theme
     zplug "zsh-users/zsh-syntax-highlighting"
 
-    for plugin in ${localPlugins}
+    for plugin in ${local_plugins}
     do
       zplug ${(z)plugin}
     done
