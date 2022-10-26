@@ -59,11 +59,50 @@ local builtin = require('telescope.builtin')
 vim.api.nvim_create_user_command(
   'Rg',
   function(args)
-    builtin.grep_string({ disable_coordinates = true, search = args.args })
+    if #args.fargs < 2 then
+      builtin.grep_string({ disable_coordinates = true, search = args.args })
+    else
+      local split_index = 0
+      local regex_index = 0
+
+      for i, v in ipairs(args.fargs) do
+        if v == '-e' then
+          regex_index = i
+        elseif v == '--' then
+          split_index = i
+          break
+        end
+      end
+
+      local search = ''
+      local grep_args = {}
+
+      if split_index == 0 then
+        search = args.args
+      else
+        for i, v in ipairs(args.fargs) do
+          if i < split_index then
+            if i ~= regex_index then
+              table.insert(grep_args, v)
+            end
+          elseif i > split_index then
+            if i == split_index + 1 then
+              search = v
+            else
+              search = search .. ' ' .. v
+            end
+          end
+        end
+      end
+
+      builtin.grep_string({ disable_coordinates = true, use_regex = regex_index > 0,
+        additional_args = function() return grep_args end,
+        search = search })
+    end
   end,
   {
     desc = 'Search globally for strings',
-    nargs = 1,
+    nargs = '+',
   }
 )
 vim.api.nvim_create_user_command(
