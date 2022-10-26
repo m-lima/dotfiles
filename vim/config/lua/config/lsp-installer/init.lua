@@ -136,13 +136,17 @@ if vim.fn.has('win32') == 1 or vim.fn.has('win32unix') == 1 then
 end
 local lspconfig_file = path_separator .. '.vim' .. path_separator .. 'lspconfig.lua'
 
-local search_for_config = function(path)
+local search_for_config = function(path, server)
   while path ~= path_separator and #path > 0 do
     path = string.gsub(path, '^(.*)' .. path_separator .. '.+$', '%1')
     local maybe_config = path .. lspconfig_file
     local ok, cfg = pcall(dofile, maybe_config)
     if ok then
-      return cfg, maybe_config
+      if type(cfg) == 'function' then
+        return cfg(server), maybe_config
+      else
+        return cfg, maybe_config
+      end
     end
   end
 end
@@ -167,7 +171,7 @@ require('nvim-lsp-installer').on_server_ready(
       capabilities = cmp_capabilities,
       on_init = function(client)
         local path = vim.fn.expand('%:p')
-        local cfg, path = search_for_config(path)
+        local cfg, path = search_for_config(path, server)
         if cfg then
           vim.notify('Loaded override from ' .. path)
           client.config.settings = vim.tbl_deep_extend('force', client.config.settings, cfg)
