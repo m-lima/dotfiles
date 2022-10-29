@@ -737,6 +737,7 @@ fi
 if [ $(command -v delta) ]
 then
   installFile s config/delta .config/m-lima
+  git config --global include.path ~/.config/m-lima/delta/gitconfig
 fi
 
 ########################################
