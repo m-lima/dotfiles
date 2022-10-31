@@ -444,8 +444,13 @@ checkInstall "NeoVim" "${PACKAGE_INSTALL} neovim" '[ $(command -v 'nvim') ]'
 echo -n "[34mChecking Plugin Manager.. [[m"
 if [ -f "${HOME}/.config/m-lima/zsh/local.zsh" ]
 then
-  PLUGIN_MANAGER=`awk '{ if ($1 ~ /^pluginManager=.+/) { print $1 }}' "${HOME}/.config/m-lima/zsh/local.zsh" | cut -d '=' -f2 | tail -1`
+  PLUGIN_MANAGER=`awk '{ if ($1 ~ /^local_pluginManager=.+/) { print $1 }}' "${HOME}/.config/m-lima/zsh/local.zsh" | cut -d '=' -f2 | tail -1`
   unset change
+
+  if [ -z "${PLUGIN_MANAGER}" ]
+  then
+    PLUGIN_MANAGER=`awk '{ if ($1 ~ /^local_pluginManager=.+/) { print $1 }}' "${HOME}/.zshrc" | cut -d '=' -f2 | tail -1`
+  fi
 
   if [ -z "${PLUGIN_MANAGER}" ]
   then
@@ -494,8 +499,13 @@ fi
 echo -n "[34mChecking ZSH framework.. [[m"
 if [ -f "${HOME}/.config/m-lima/zsh/local.zsh" ]
 then
-  ZSH_FRAMEWORK=`awk '{ if ($1 ~ /^zshFramework=.+/) { print $1 }}' "${HOME}/.config/m-lima/zsh/local.zsh" | cut -d '=' -f2 | tail -1`
+  ZSH_FRAMEWORK=`awk '{ if ($1 ~ /^local_zshFramework=.+/) { print $1 }}' "${HOME}/.config/m-lima/zsh/local.zsh" | cut -d '=' -f2 | tail -1`
   unset change
+
+  if [ -z "${ZSH_FRAMEWORK}" ]
+  then
+    ZSH_FRAMEWORK=`awk '{ if ($1 ~ /^local_zshFramework=.+/) { print $1 }}' "${HOME}/.zshrc" | cut -d '=' -f2 | tail -1`
+  fi
 
   if [ -z "${ZSH_FRAMEWORK}" ]
   then
