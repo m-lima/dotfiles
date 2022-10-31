@@ -7,7 +7,7 @@ M.codelldb = function()
     local stdout = vim.loop.new_pipe(false)
     local stderr = vim.loop.new_pipe(false)
 
-    local cmd = os.getenv('HOME') .. '/code/utils/codelldb/extension/adapter/codelldb'
+    local cmd = vim.env.HOME .. '/code/utils/codelldb/extension/adapter/codelldb'
 
     local handle, pid_or_err
     local opts = {
