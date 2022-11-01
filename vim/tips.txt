@@ -1,0 +1,10 @@
+## Open empty buffer
+# Vertical split
+:vnew
+# Horizontal split
+:new
+# Current pane
+:enew
+
+# Write message output to buffer
+:redir @">|silent hi|redir END|vnew|put

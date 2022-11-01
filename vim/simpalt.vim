@@ -77,37 +77,38 @@ highlight! link ErrorMsg   DiagnosticError
 highlight! link WarningMsg DiagnosticWarn
 
 """ Text
-highlight Comment      guifg=#ff5faf ctermfg=205  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-highlight! link SpecialComment Comment
-highlight Statement    guifg=#c586c0 ctermfg=175  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-highlight! link Define      Statement
-highlight! link Exception   Statement
-highlight! link Label       Statement
-highlight! link PreProc     Statement
-highlight! link Repeat      Statement
-highlight Keyword      guifg=#26a087 ctermfg=36   guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-highlight! link Conditional Keyword
-highlight! link Include     Keyword
-highlight Macro        guifg=#ce9178 ctermfg=174  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-highlight String       guifg=#6a9955 ctermfg=65   guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-highlight! link Character String
-highlight Constant     guifg=#26a087 ctermfg=36   guibg=NONE    ctermbg=NONE gui=BOLD cterm=BOLD
-highlight! link Boolean      Constant
-highlight! link SpecialKey   Constant
-highlight Type         guifg=#569cd6 ctermfg=74   guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-highlight! link StorageClass Type
-highlight! link Structure    Type
-highlight! link Typedef      Type
-highlight! link SpecialKey   Type
-highlight Operator     guifg=#909090 ctermfg=245  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-highlight! link SpecialChar Operator
-highlight! link Tag         Operator
-highlight Delimiter    guifg=#707070 ctermfg=241  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-highlight Number       guifg=#b5cea8 ctermfg=151  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-highlight! link Float Number
-highlight Identifier   guifg=#9cdcfe ctermfg=117  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-highlight Special      guifg=#d7ba7d ctermfg=180  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-highlight Function     guifg=#dcdcaa ctermfg=187  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
+highlight Type           guifg=#009980 ctermfg=36  guibg=NONE ctermbg=NONE gui=BOLD      cterm=BOLD
+highlight Typedef        guifg=#009980 ctermfg=36  guibg=NONE ctermbg=NONE gui=BOLD      cterm=BOLD
+highlight StorageClass   guifg=#009999 ctermfg=37  guibg=NONE ctermbg=NONE gui=BOLD      cterm=BOLD
+highlight Character      guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight String         guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Boolean        guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Keyword        guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Tag            guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Define         guifg=#4ec9b0 ctermfg=77  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Identifier     guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Label          guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Structure      guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Float          guifg=#b5cea8 ctermfg=151 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Number         guifg=#b5cea8 ctermfg=151 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight SpecialChar    guifg=#b5cea8 ctermfg=151 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Conditional    guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Exception      guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Include        guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight PreProc        guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Repeat         guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Statement      guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Underlined     guifg=#d7ba7d ctermfg=180 guibg=NONE ctermbg=NONE gui=UNDERLINE cterm=UNDERLINE
+highlight Constant       guifg=#dcdcaa ctermfg=187 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Function       guifg=#dcdcaa ctermfg=187 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Macro          guifg=#dcdcaa ctermfg=187 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight SpecialKey     guifg=#dcdcaa ctermfg=187 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Comment        guifg=#ff5faf ctermfg=205 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight SpecialComment guifg=#ff8787 ctermfg=210 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Delimiter      guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Operator       guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Special        guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Debug          guifg=#dadada ctermfg=253 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
 
 """ Plugins
 " NeoTree
@@ -128,60 +129,63 @@ highlight LspCodeLens       guifg=#005f5f ctermfg=23  guibg=NONE ctermbg=NONE gu
 highlight! link LspSignatureActiveParameter Search
 
 " TreeSitter
-highlight TSOperator           guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSPunctBracket       guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSPunctDelimiter     guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSPunctSpecial       guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSURI                guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSLiteral            guifg=#b2b2b2 ctermfg=249 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE " Links to String
-highlight TSEmphasis           guifg=#b2b2b2 ctermfg=249 guibg=NONE ctermbg=NONE gui=ITALIC cterm=ITALIC
-highlight TSConstant           guifg=#dcdcaa ctermfg=187 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE " Mismatch
-highlight TSAnnotation         guifg=#dcdcaa ctermfg=187 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSFuncBuiltin        guifg=#dcdcaa ctermfg=187 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSFunction           guifg=#dcdcaa ctermfg=187 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSFuncMacro          guifg=#dcdcaa ctermfg=187 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSMethod             guifg=#dcdcaa ctermfg=187 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSConstBuiltin       guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSBoolean            guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSKeyword            guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSKeywordFunction    guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSKeywordOperator    guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSTypeBuiltin        guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSTag                guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSTitle              guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=BOLD   cterm=BOLD
-highlight TSStrong             guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=BOLD   cterm=BOLD
-highlight TSConstMacro         guifg=#4ec9b0 ctermfg=77  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSAttribute          guifg=#4ec9b0 ctermfg=77  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSNamespace          guifg=#4ec9b0 ctermfg=77  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSConstructor        guifg=#4ec9b0 ctermfg=77  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSType               guifg=#009980 ctermfg=72  guibg=NONE ctermbg=NONE gui=BOLD   cterm=BOLD " Mismatch
-highlight TSStringRegex        guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSString             guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSCharacter          guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSTextReference      guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSStringEscape       guifg=#b5cea8 ctermfg=151 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSNumber             guifg=#b5cea8 ctermfg=151 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSFloat              guifg=#b5cea8 ctermfg=151 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSParameter          guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSParameterReference guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSField              guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSProperty           guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSLabel              guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSStructure          guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSVariable           guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSVariableBuiltin    guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSInclude            guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSConditional        guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSRepeat             guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSException          guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSText               guifg=#d7ba7d ctermfg=180 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSUnderline          guifg=#d7ba7d ctermfg=180 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-highlight TSTagDelimiter       guifg=#909090 ctermfg=245 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @operator                          guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @punctuation.bracket               guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @punctuation.delimiter             guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @punctuation.special               guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @text.uri                          guifg=#a8a8a8 ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @text.literal                      guifg=#b2b2b2 ctermfg=249 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @text.emphasis                     guifg=#b2b2b2 ctermfg=249 guibg=NONE ctermbg=NONE gui=ITALIC cterm=ITALIC
+highlight @constant                          guifg=#dcdcaa ctermfg=187 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @annotation                        guifg=#dcdcaa ctermfg=187 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @function.builtin                  guifg=#dcdcaa ctermfg=187 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @function                          guifg=#dcdcaa ctermfg=187 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @function.macro                    guifg=#dcdcaa ctermfg=187 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @method                            guifg=#dcdcaa ctermfg=187 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @constant.builtin                  guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @boolean                           guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @keyword                           guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @keyword.function                  guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @keyword.operator                  guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @type.builtin                      guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @tag                               guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @text.title                        guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=BOLD   cterm=BOLD
+highlight @text.strong                       guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=BOLD   cterm=BOLD
+highlight @constant.macro                    guifg=#4ec9b0 ctermfg=77  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @attribute                         guifg=#4ec9b0 ctermfg=77  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @namespace                         guifg=#4ec9b0 ctermfg=77  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @constructor                       guifg=#4ec9b0 ctermfg=77  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @type                              guifg=#009980 ctermfg=72  guibg=NONE ctermbg=NONE gui=BOLD   cterm=BOLD
+highlight @string.regex                      guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @string                            guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @character                         guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @text.reference                    guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @string.escape                     guifg=#b5cea8 ctermfg=151 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight markdown@punctuation.special       guifg=#b5cea8 ctermfg=151 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @number                            guifg=#b5cea8 ctermfg=151 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @float                             guifg=#b5cea8 ctermfg=151 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @parameter                         guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @parameter.reference               guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @field                             guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @property                          guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @label                             guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @structure                         guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @variable                          guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @variable.builtin                  guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @include                           guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @conditional                       guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @repeat                            guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @exception                         guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @text                              guifg=#d7ba7d ctermfg=180 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @text.underline                    guifg=#d7ba7d ctermfg=180 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+highlight @tag.delimiter                     guifg=#909090 ctermfg=245 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
 
-highlight! link TSError   DiagnosticError
-highlight! link TSDanger  DiagnosticError
-highlight! link TSWarning DiagnosticWarn
-highlight! link TSNote    DiagnosticInfo
+highlight! link @error        DiagnosticError
+highlight! link @text.error   DiagnosticError
+highlight! link @text.danger  DiagnosticError
+highlight! link @text.warning DiagnosticWarn
+highlight! link @text.note    DiagnosticInfo
+highlight! link @text.todo    Todo
 
 " QuickScope
 highlight! link QuickScopePrimary   Visual
@@ -196,7 +200,7 @@ endif
 highlight CmpItemAbbrMatch       guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=BOLD cterm=BOLD
 highlight CmpItemKindEvent       guifg=#87afaf ctermfg=103 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight CmpItemKindText        guifg=#9c50a0 ctermfg=133 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-highlight CmpItemKindType        guifg=#009980 ctermfg=72  guibg=NONE ctermbg=NONE gui=NONE cterm=NONE " Matching TSType without BOLD
+highlight CmpItemKindType        guifg=#009980 ctermfg=72  guibg=NONE ctermbg=NONE gui=NONE cterm=NONE " Matching @type without BOLD
 highlight CmpItemKindUnit        guifg=#909090 ctermfg=245 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight CmpItemKindSnippet     guifg=#afd7af ctermfg=245 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
@@ -205,26 +209,26 @@ highlight! link CmpItemKindEnum          CmpItemKindType
 highlight! link CmpItemKindInterface     CmpItemKindType
 highlight! link CmpItemKindStruct        CmpItemKindType
 
-highlight! link CmpItemKindConstant      TSConstant
-highlight! link CmpItemKindConstructor   TSConstructor
-highlight! link CmpItemKindField         TSField
-highlight! link CmpItemKindFunction      TSFunction
-highlight! link CmpItemKindKeyword       TSKeyword
-highlight! link CmpItemKindMethod        TSMethod
-highlight! link CmpItemKindOperator      TSOperator
-highlight! link CmpItemKindParam         TSParameter
-highlight! link CmpItemKindProperty      TSProperty
-highlight! link CmpItemKindTypeParameter TSParameter
-highlight! link CmpItemKindVariable      TSVariable
+highlight! link CmpItemKindConstant      @constant
+highlight! link CmpItemKindConstructor   @constructor
+highlight! link CmpItemKindField         @field
+highlight! link CmpItemKindFunction      @function
+highlight! link CmpItemKindKeyword       @keyword
+highlight! link CmpItemKindMethod        @method
+highlight! link CmpItemKindOperator      @operator
+highlight! link CmpItemKindParam         @parameter
+highlight! link CmpItemKindProperty      @property
+highlight! link CmpItemKindTypeParameter @parameter
+highlight! link CmpItemKindVariable      @variable
 
-highlight! link CmpItemKindColor         TSConstant
-highlight! link CmpItemKindEnumMember    TSVariable
-highlight! link CmpItemKindFile          TSKeyword
-highlight! link CmpItemKindFolder        TSKeyword
-highlight! link CmpItemKindModule        TSInclude
-highlight! link CmpItemKindReference     TSParameterReference
+highlight! link CmpItemKindColor         @constant
+highlight! link CmpItemKindEnumMember    @variable
+highlight! link CmpItemKindFile          @keyword
+highlight! link CmpItemKindFolder        @keyword
+highlight! link CmpItemKindModule        @include
+highlight! link CmpItemKindReference     @parameter.reference
 highlight! link CmpItemKindTabNine       CmpItemKindEvent
-highlight! link CmpItemKindValue         TSLabel
+highlight! link CmpItemKindValue         @label
 
 " Telescope
 highlight! link TelescopeSelection PmenuSel
