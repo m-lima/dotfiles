@@ -1,6 +1,3 @@
-# Adding local bin to path
-export PATH="${HOME}/bin${PATH+:$PATH}"
-
 # Brew on M1
 if [ -s "/opt/homebrew/bin/brew" ]
 then
@@ -43,3 +40,7 @@ else
     export PATH="${HOME}/.cabal/bin${PATH+:$PATH}"
   fi
 fi
+
+# Adding local bin to the top of the PATH
+# This is not just for precedence, but it is also used as a marker later on
+export PATH="${HOME}/bin${PATH+:$PATH}"
