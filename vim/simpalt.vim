@@ -72,7 +72,7 @@ highlight DiagnosticInfo    guifg=#51a0cf ctermfg=74  guibg=NONE ctermbg=NONE gu
 highlight DiagnosticHint    guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
 
 """ Command
-highligh MsgArea guifg=#eeeeee ctermfg=255 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight MsgArea guifg=#eeeeee ctermfg=255 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight! link ErrorMsg   DiagnosticError
 highlight! link WarningMsg DiagnosticWarn
 
@@ -178,10 +178,10 @@ highlight TSText               guifg=#d7ba7d ctermfg=180 guibg=NONE ctermbg=NONE
 highlight TSUnderline          guifg=#d7ba7d ctermfg=180 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
 highlight TSTagDelimiter       guifg=#909090 ctermfg=245 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
 
-highligh! link TSError   DiagnosticError
-highligh! link TSDanger  DiagnosticError
-highligh! link TSWarning DiagnosticWarn
-highligh! link TSNote    DiagnosticInfo
+highlight! link TSError   DiagnosticError
+highlight! link TSDanger  DiagnosticError
+highlight! link TSWarning DiagnosticWarn
+highlight! link TSNote    DiagnosticInfo
 
 " QuickScope
 highlight! link QuickScopePrimary   Visual
