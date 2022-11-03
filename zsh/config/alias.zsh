@@ -29,16 +29,25 @@ pw() {
 }
 
 ### Git stuff
-alias gsu='git submodule update --init --recursive'
-alias gsur='git submodule update --init --recursive --remote'
+# Git push with upstream
 alias gpp='git push --set-upstream origin ${$(git symbolic-ref HEAD)/refs\/heads\//}'
-alias gppf='git push --set-upstream origin +${$(git symbolic-ref HEAD)/refs\/heads\//}'
-alias ghelp='cat ~/.oh-my-zsh/plugins/git/git.plugin.zsh'
+
+# Submodules
+alias gsu='git submodule update --init --recursive'
+
+# List git aliases
+alias ghelp='bat ~/.zgen/robbyrussell/oh-my-zsh-master/plugins/git/git.plugin.zsh'
+
+# Search through all branches
 alias ggal="git branch -a | tr -d \* | sed '/->/d' | xargs git grep -HI"
-alias gdc='git diff --cached'
-alias gdb='git diff --stat'
+
+# Statsh unstaged changes
 alias gsti='git stash push --keep-index'
 
+# Update HEAD to track divergence point from master
+alias gbpr='git update-ref HEAD `git merge-base master HEAD`'
+
+# Rebase with upstream branch (default master)
 function grbf {
   local branch
 
@@ -52,6 +61,7 @@ function grbf {
   git fetch --all --prune --jobs=10 && git rebase "${branch}"
 }
 
+# Merge with upstream branch (default master)
 function gmf {
   local branch
 
@@ -63,6 +73,73 @@ function gmf {
   fi
 
   git fetch --all --prune --jobs=10 && git merge "${branch}"
+}
+
+# Show remote status of branches
+function gbgs {
+  local tracked gone local terminator
+  local show_tracked=1 show_gone=1 show_local=1
+  case "${1}" in
+    ''|-f|--full-color)
+      tracked='[32m'
+      gone='[31m'
+      local='[34m'
+      terminator='[m'
+      ;;
+    -s|--simple-color)
+      tracked='[32mT[m '
+      gone='[31mG[m '
+      local='[34mL[m '
+      terminator='[m'
+      ;;
+    -n|--no-color)
+      tracked='T '
+      gone='G '
+      local='L '
+      terminator=''
+      ;;
+    -t|--tracked)
+      tracked=''
+      gone=''
+      local=''
+      terminator=''
+      unset show_gone
+      unset show_local
+      ;;
+    -g|--gone)
+      tracked=''
+      gone=''
+      local=''
+      terminator=''
+      unset show_tracked
+      unset show_local
+      ;;
+    -l|--local)
+      git branch --format "%(refname:short) %(upstream)" | awk '{if (!$2) print $1;}'
+      return
+      ;;
+    *)
+      echo 'Unknown parameter: '${@} >&2
+      return 1
+      ;;
+  esac
+
+  for branch in `git branch --format "%(refname:short):%(upstream)"`
+  do
+    lo=`cut -d':' -f1 <<<"${branch}"`;
+    re=`cut -d':' -f2 <<<"${branch}"`;
+    if [ "${re}" ]
+    then
+      if git rev-parse "${re}" &>/dev/null
+      then
+        [ $show_tracked ] && echo "${tracked}${lo}${terminator}" || true
+      else
+        [ $show_gone ] && echo "${gone}${lo}${terminator}" || true
+      fi
+    else
+      [ $show_local ] && echo "${local}${lo}${terminator}" || true
+    fi
+  done
 }
 
 if command -v lazygit &> /dev/null
