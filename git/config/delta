@@ -6,8 +6,10 @@
 
 [delta]
 	light = false
-	syntax-theme = Dracula
+	syntax-theme = Visual Studio Dark+
 	navigate = true
+	file-style = white bold
+	file-decoration-style = magenta bold ul
 
 [merge]
 	conflictstyle = diff3

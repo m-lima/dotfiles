@@ -662,11 +662,25 @@ else
   echo "[33mSkipping ZSH links[m"
 fi
 
+if [ $(command -v git) ]
+then
+  if installFile s git/.gitconfig
+  then
+    if installFile s git/config .config/m-lima git
+    then
+      touch "${HOME}/.config/m-lima/git/local"
+      vi "${HOME}/.config/m-lima/git/local"
+    fi
+  fi
+else
+  echo "[33mSkipping Git links[m"
+fi
+
 if [ $(command -v nvim) ] || [ $(command -v vim) ]
 then
   installFile s vim/config .config/m-lima vim
 else
-  echo "[33mSkipping generic Vim links[m"
+  echo "[33mSkipping generic (Neo)Vim links[m"
 fi
 
 if [ $(command -v nvim) ]
@@ -732,12 +746,6 @@ then
 elif [ $(command -v batcat) ]
 then
   installFile s config/bat/config `batcat --config-dir`
-fi
-
-if [ $(command -v delta) ]
-then
-  installFile s config/delta .config/m-lima
-  git config --global include.path ~/.config/m-lima/delta/gitconfig
 fi
 
 ########################################
