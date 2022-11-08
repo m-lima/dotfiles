@@ -10,6 +10,9 @@
 	navigate = true
 	file-style = white bold
 	file-decoration-style = magenta bold ul
+	minus-style = syntax "#3f0001"
+	minus-non-emph-style = syntax "#3f0001"
+	minus-emph-style = syntax "#901011"
 
 [merge]
 	conflictstyle = diff3
