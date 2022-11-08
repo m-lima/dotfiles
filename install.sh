@@ -734,12 +734,12 @@ fi
 
 if [ $(command -v alacritty) ]
 then
-  installFile s gui/alacritty/alacritty.yml .config/alacritty
+  installFile s alacritty/alacritty.yml .config/alacritty
   case "${SYS_TYPE}" in
     Darwin)
-      installFile s gui/alacritty/macos.yml .config/m-lima/alacritty alacritty.yml ;;
+      installFile s alacritty/macos.yml .config/m-lima/alacritty alacritty.yml ;;
     *)
-      installFile s gui/alacritty/linux.yml .config/m-lima/alacritty alacritty.yml ;;
+      installFile s alacritty/linux.yml .config/m-lima/alacritty alacritty.yml ;;
   esac
 fi
 
