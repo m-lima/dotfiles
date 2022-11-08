@@ -2,6 +2,9 @@
 	path = ~/.config/m-lima/git/delta
 	path = ~/.config/m-lima/git/local
 
+[core]
+	excludesfile = ~/.config/m-lima/git/ignore
+
 [user]
 	email = m-lima@users.noreply.github.com
 	name = Marcelo Lima
