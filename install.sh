@@ -154,7 +154,18 @@ function installFile {
     esac
   fi
 
-  if [ -f "${installPath}${installName}" ] || [ -d "${installPath}${installName}" ] || [ -L "${installPath}${installName}" ]
+  if [ "${1}" = "s" ] && ([ ! -L "${installPath}${installName}" ] || [ "`readlink -- "${installPath}${installName}"`" != "${source}" ])
+  then
+    echo -n "${installPath}${installName} seems to not be correctly linked. Overwrite? [Y/n] "
+    read input
+    case ${input} in
+      [Nn] ) ;;
+      * )
+        rm "${installPath}${installName}"
+        overwrite=true
+        ;;
+    esac
+  elif [ -f "${installPath}${installName}" ] || [ -d "${installPath}${installName}" ] || [ -L "${installPath}${installName}" ]
   then
     if [ ${NO_OVERWRITE} ]
     then
@@ -813,12 +824,6 @@ then
     esac
   fi
 fi
-
-########################################
-# Clean deprecated files
-
-delete file "${HOME}/.tmux.conf.local"
-delete file "${HOME}/.tmux-powerlinerc"
 
 ########################################
 # Download fonts
