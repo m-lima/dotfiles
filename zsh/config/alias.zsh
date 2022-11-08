@@ -45,7 +45,7 @@ alias ggal="git branch -a | tr -d \* | sed '/->/d' | xargs git grep -HI"
 alias gsti='git stash push --keep-index'
 
 # Update HEAD to track divergence point from master
-alias gbpr='git update-ref HEAD `git merge-base master HEAD`'
+alias gbpr='git reset `git merge-base master HEAD`'
 
 # Rebase with upstream branch (default master)
 function grbf {
