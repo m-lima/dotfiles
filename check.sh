@@ -33,4 +33,3 @@ function checkVar {
 checkVar localPlugins local_plugins
 checkVar pluginManager local_pluginManager
 checkVar zshFramework local_zshFramework
-checkVar localPlugins local_plugins
