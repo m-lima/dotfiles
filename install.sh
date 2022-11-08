@@ -154,32 +154,34 @@ function installFile {
     esac
   fi
 
-  if [ "${1}" = "s" ] && ([ ! -L "${installPath}${installName}" ] || [ "`readlink -- "${installPath}${installName}"`" != "${source}" ])
+  if [ -f "${installPath}${installName}" ] || [ -d "${installPath}${installName}" ] || [ -L "${installPath}${installName}" ]
   then
-    echo -n "${installPath}${installName} seems to not be correctly linked. Overwrite? [Y/n] "
-    read input
-    case ${input} in
-      [Nn] ) ;;
-      * )
-        rm "${installPath}${installName}"
-        overwrite=true
-        ;;
-    esac
-  elif [ -f "${installPath}${installName}" ] || [ -d "${installPath}${installName}" ] || [ -L "${installPath}${installName}" ]
-  then
-    if [ ${NO_OVERWRITE} ]
+    if [ "${1}" = "s" ] && ([ ! -L "${installPath}${installName}" ] || [ "`readlink -- "${installPath}${installName}"`" != "${source}" ])
     then
-      echo "Already exists. Skipping.."
-      return 1
-    else
-      echo -n "${installPath}${installName} already exists. Overwrite? [y/N] "
+      echo -n "${installPath}${installName} seems to not be correctly linked. Overwrite? [Y/n] "
       read input
       case ${input} in
-        [Yy] )
+        [Nn] ) ;;
+        * )
           rm "${installPath}${installName}"
           overwrite=true
           ;;
       esac
+    else
+      if [ ${NO_OVERWRITE} ]
+      then
+        echo "Already exists. Skipping.."
+        return 1
+      else
+        echo -n "${installPath}${installName} already exists. Overwrite? [y/N] "
+        read input
+        case ${input} in
+          [Yy] )
+            rm "${installPath}${installName}"
+            overwrite=true
+            ;;
+        esac
+      fi
     fi
   else
     overwrite=true
@@ -675,13 +677,11 @@ fi
 
 if [ $(command -v git) ]
 then
-  if installFile s git/.gitconfig
+  installFile s git/.gitconfig
+  if installFile s git/config .config/m-lima git
   then
-    if installFile s git/config .config/m-lima git
-    then
-      touch "${HOME}/.config/m-lima/git/local"
-      vi "${HOME}/.config/m-lima/git/local"
-    fi
+    touch "${HOME}/.config/m-lima/git/local"
+    vi "${HOME}/.config/m-lima/git/local"
   fi
 else
   echo "[33mSkipping Git links[m"
