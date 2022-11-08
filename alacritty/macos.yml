@@ -35,8 +35,8 @@ shell:
 # reference a bin that is always available.
 # - Then, inside zsh, the command will run in script mode, if used with `-c`. Therefore, ~/.zshrc
 #   is not called. However, ~/.zshenv is. This means that any tmux scripts will run within that
-#   context. It may be adviseabler to have the full login shell configured before exec'ing tmux.
-#   This might be necessary if homebrew is relying on /usr/local/bin being injected (intel)
+#   context. It may be adviseable to have the full login shell configured before exec'ing tmux.
+#   This might be necessary if any command is relying on /usr/local/bin being injected (intel)
 # - Then, inside tmux, zsh will be run in full interactive login mode.
 # This is not performance critical as it is just whenever a new alacritty window is open, which
 # tends to be rare since mostly new panes and windows are created within tmux itself
