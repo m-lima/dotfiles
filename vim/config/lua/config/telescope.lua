@@ -96,7 +96,7 @@ vim.api.nvim_create_user_command(
       end
 
       builtin.grep_string({ disable_coordinates = true, use_regex = regex_index > 0,
-        additional_args = function() return grep_args end,
+        additional_args = grep_args,
         search = search })
     end
   end,
@@ -123,7 +123,7 @@ map('n', '<leader><leader><leader>', builtin.resume)
 
 -- Search
 map('n', '<leader>8', '"<cmd>Telescope current_buffer_fuzzy_find<CR>" . expand("<cword>") . "<Esc>"', { expr = true })
-map('n', '<leader>*', function() builtin.grep_string({ disable_coordinates = true }) end)
+map('n', '<leader>*', function() builtin.grep_string({ additional_args = {'-w'}, disable_coordinates = true }) end)
 map('n', '<leader>/', builtin.current_buffer_fuzzy_find)
 map('n', '<leader>?', function() builtin.live_grep({ disable_coordinates = true }) end)
 map('n', '?',         ':<C-u>Rg ', { silent = false })
