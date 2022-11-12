@@ -1,8 +1,6 @@
 local dap = require('dap')
 
-local M = {}
-
-M.codelldb = function()
+local codelldb = function()
   dap.adapters.codelldb = {
     type = 'server',
     port = '58525',
@@ -57,6 +55,11 @@ M.codelldb = function()
     end,
     runInTerminal = false,
   } }
+
   dap.configurations.c = dap.configurations.rust
   dap.configurations.cpp = dap.configurations.rust
 end
+
+return {
+  codelldb = codelldb,
+}

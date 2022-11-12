@@ -1,4 +1,3 @@
-" TODO: Match TreeSitter with regular hl
 " TODO: Shuffle the plugins (bring LSP and TS to the top and link below?)
 
 """ Prepare
