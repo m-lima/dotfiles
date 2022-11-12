@@ -735,6 +735,7 @@ fi
 if [ $(command -v alacritty) ]
 then
   installFile s alacritty/alacritty.yml .config/alacritty
+  installFile s alacritty/toggle_font.sh .config/alacritty
   case "${SYS_TYPE}" in
     Darwin)
       installFile s alacritty/macos.yml .config/m-lima/alacritty alacritty.yml ;;
