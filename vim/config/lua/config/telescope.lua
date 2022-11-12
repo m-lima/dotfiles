@@ -128,7 +128,7 @@ map('n', '<leader>/', builtin.current_buffer_fuzzy_find)
 map('n', '<leader>?', function() builtin.live_grep({ disable_coordinates = true }) end)
 map('n', '?',         ':<C-u>Rg ', { silent = false })
 
--- Navigatio
+-- Navigation
 map('n', '<leader>p',     builtin.find_files)
 map('n', '<leader>P',     function() builtin.find_files({ no_ignore = true }) end)
 map('n', '<leader>o',     builtin.oldfiles)

@@ -47,7 +47,8 @@ Plug 'nvim-telescope/telescope-dap.nvim'
 " LSP
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'neovim/nvim-lspconfig'
-Plug 'williamboman/nvim-lsp-installer'
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
 
 " Debugging
 Plug 'mfussenegger/nvim-dap' " TODO: Lots!
@@ -70,7 +71,6 @@ Plug 'aserebryakov/vim-todo-lists' " TODO md file helper
 Plug 'skanehira/vsession'          " Save/load sessions TODO: Configure. I think now it keeps saving the session
 Plug 'akinsho/toggleterm.nvim'     " More usable terminal
 Plug 'mbbill/undotree'             " A local changes tracker TODO: configure (colors)
-" Plug 'akinsho/git-conflict.nvim'   " Better visualization of conflicting diffs
 Plug 'jupyter-vim/jupyter-vim'     " Integration with jupyter
 
 call plug#end()
@@ -85,13 +85,12 @@ require('config.comment')
 require('config.dap')
 require('config.dap.ui')
 require('config.fugitive')
--- require('config.git-conflict')
 require('config.gitsigns')
 require('config.lightspeed')
-require('config.lsp-installer')
 require('config.lspconfig')
 require('config.lua-out')
 require('config.lualine')
+require('config.mason')
 require('config.neo-tree')
 require('config.project')
 require('config.telescope')
