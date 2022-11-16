@@ -1,7 +1,7 @@
 local Job = require('plenary.job')
 local map = require('util').map
 
-local change_base = function(base, head)
+local change_base = function(global, base, head)
   if not base or type(base) ~= 'string' or #base == 0 then
     base = 'master'
   end
@@ -15,8 +15,13 @@ local change_base = function(base, head)
     args = { 'merge-base', base, head },
     on_exit = vim.schedule_wrap(function(job, status)
       if status == 0 then
-        require('gitsigns').change_base(job:result()[1])
-        print('Gitsigns comparing ' .. head .. ' to ' .. base)
+        require('gitsigns').change_base(job:result()[1], global)
+        if global then
+          global = 'globally '
+        else
+          global = ''
+        end
+        print('Gitsigns ' .. global .. 'comparing ' .. head .. ' to ' .. base)
       else
         vim.notify('Error while executing `git merge-base`:', vim.log.levels.ERROR)
         for _, e in ipairs(job:stderr_result()) do
@@ -69,11 +74,12 @@ require('gitsigns').setup({
 
 vim.api.nvim_create_user_command(
   'GitBase',
-  function (args)
-    change_base(unpack(args.fargs))
+  function(args)
+    change_base(args.bang, unpack(args.fargs))
   end,
   {
-    desc = 'Gitsigns base setting',
+    desc = 'Gitsigns base setting. Takes BASE and HEAD as parameters, defaulting to "master" and "head", respectively if missing. Use "!" to set it globally',
+    bang = true,
     nargs = '*',
   }
 )
