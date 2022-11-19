@@ -68,7 +68,7 @@ local make_on_attach = function(overrides)
             desc = 'Format code',
             group = augroup(),
             buffer = bufnr,
-            callback = vim.lsp.buf.formatting_sync,
+            callback = function() vim.lsp.buf.format() end,
           }
         )
       end
