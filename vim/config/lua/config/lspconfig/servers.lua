@@ -13,6 +13,9 @@ local setup = function()
         telemetry = {
           enable = false,
         },
+        workspace = {
+          checkThirdParty = false,
+        },
       },
     },
   })
