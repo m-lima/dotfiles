@@ -1,6 +1,3 @@
-env:
-  TERM: alacritty-direct
-
 font:
   normal:
     family: DejaVuSansMono Nerd Font Mono

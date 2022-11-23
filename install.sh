@@ -733,7 +733,7 @@ fi
 
 if [ $(command -v alacritty) ]
 then
-  if installFile s alacritty .config alacritty
+  if installFile s alacritty/config .config alacritty
   then
     case "${SYS_TYPE}" in
       Darwin)
