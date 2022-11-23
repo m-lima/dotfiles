@@ -1,11 +1,11 @@
-if grep '^  size: 11.0 #FONT_SIZE_MARKER$' "${HOME}/.config/m-lima/alacritty/transient.yml" &> /dev/null
+if grep '^  size: 11.0 #FONT_SIZE_MARKER$' "${HOME}/.config/alacritty/transient.yml" &> /dev/null
 then
-  cat > "${HOME}/.config/m-lima/alacritty/transient.yml" <<EOF
+  cat > "${HOME}/.config/alacritty/transient.yml" <<EOF
 font:
   size: 14.5 #FONT_SIZE_MARKER
 EOF
 else
-  cat > "${HOME}/.config/m-lima/alacritty/transient.yml" <<EOF
+  cat > "${HOME}/.config/alacritty/transient.yml" <<EOF
 font:
   size: 11.0 #FONT_SIZE_MARKER
 EOF

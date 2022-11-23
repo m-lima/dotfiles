@@ -9,8 +9,8 @@
 # All imports must either be absolute paths starting with `/`, or paths relative
 # to the user's home directory starting with `~/`.
 import:
-  - ~/.config/m-lima/alacritty/alacritty.yml
-  - ~/.config/m-lima/alacritty/transient.yml
+  - ~/.config/alacritty/system.yml
+  - ~/.config/alacritty/transient.yml
 
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
@@ -757,7 +757,7 @@ key_bindings:
   - { key: Right,  mods: Alt,     chars:   "\x1bf"          }
   - { key: Z,      mods: Super,   command: {
         program: "zsh",
-        args: ["-c", "~/.config/m-lima/alacritty/toggle_font.sh" ]
+        args: ["-c", "~/.config/alacritty/toggle_font.sh" ]
       }
     }
   #- { key: Paste,                                       action: Paste          }

@@ -20,6 +20,7 @@ checkPath "${HOME}/.tmux.conf"
 checkPath "${HOME}/.tmux.conf.local"
 checkPath "${HOME}/.tmux-powerlinerc"
 checkPath "${HOME}/.config/m-lima/delta"
+checkPath "${HOME}/.config/m-lima/alacritty"
 
 ########################################
 # Clean deprecated zsh vars

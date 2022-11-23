@@ -733,14 +733,15 @@ fi
 
 if [ $(command -v alacritty) ]
 then
-  installFile s alacritty/alacritty.yml .config/alacritty
-  installFile s alacritty/toggle_font.sh .config/alacritty
-  case "${SYS_TYPE}" in
-    Darwin)
-      installFile s alacritty/macos.yml .config/m-lima/alacritty alacritty.yml ;;
-    *)
-      installFile s alacritty/linux.yml .config/m-lima/alacritty alacritty.yml ;;
-  esac
+  if installFile s alacritty .config alacritty
+  then
+    case "${SYS_TYPE}" in
+      Darwin)
+        ln -sf macos.yml "${HOME}/.config/alacritty/system.yml" ;;
+      *)
+        ln -sf linux.yml "${HOME}/.config/alacritty/system.yml" ;;
+    esac
+  fi
 fi
 
 installFile s scripts/scaffpp bin

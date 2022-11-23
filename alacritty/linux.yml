@@ -1,0 +1,16 @@
+env:
+  TERM: alacritty-direct
+
+font:
+  normal:
+    family: DejaVuSansMono Nerd Font Mono
+
+key_bindings:
+  - { key: N, mods: Super,       action: CreateNewWindow }
+
+shell:
+  program: zsh
+  args:
+    - -l
+    - -c
+    - tmux
