@@ -602,7 +602,7 @@ fi
 
 ########################################
 # Install tmux
-checkInstallDefault
+checkInstallDefault tmux
 
 ########################################
 # Install ZSH
@@ -722,11 +722,10 @@ fi
 
 if [ $(command -v tmux) ]
 then
-  if installFile s tmux .config/m-lima tmux
+  if installFile s tmux .config tmux
   then
-    ln -sf "${HOME}/.config/m-lima/tmux/tmux.conf" "${HOME}/.tmux.conf"
-    touch "${HOME}/.config/m-lima/tmux/local.conf"
-    vi "${HOME}/.config/m-lima/tmux/local.conf"
+    touch "${HOME}/.config/tmux/local.conf"
+    vi "${HOME}/.config/tmux/local.conf"
   fi
 else
   echo "[33mSkipping Tmux links[m"
