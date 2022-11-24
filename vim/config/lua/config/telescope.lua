@@ -2,12 +2,8 @@ local telescope = require('telescope')
 
 telescope.setup({
   defaults = {
-    layout_strategy = 'flex',
+    layout_strategy = 'vertical',
     layout_config = {
-      horizontal = {
-        width = 0.9,
-        height = 0.95,
-      },
       vertical = {
         width = 0.9,
         height = 0.95,
@@ -27,8 +23,54 @@ telescope.setup({
         },
       },
     },
+    lsp_references = {
+      fname_width = .6,
+    },
+    lsp_type_definitions = {
+      fname_width = .6,
+    },
+    lsp_definitions = {
+      fname_width = .6,
+    },
+    lsp_implementations = {
+      fname_width = .6,
+    },
+    diagnostics = {
+      sorting_strategy = 'ascending',
+      layout_strategy = 'horizontal',
+      layout_config = {
+        horizontal = {
+          preview_width = .4,
+        },
+      },
+    },
     lsp_document_symbols = {
       sorting_strategy = 'ascending',
+      layout_strategy = 'horizontal',
+      layout_config = {
+        horizontal = {
+          preview_width = .6,
+        },
+      },
+      mappings = {
+        i = {
+          ['<C-f>'] = require('telescope.actions').complete_tag,
+        },
+      },
+    },
+    lsp_dynamic_workspace_symbols = {
+      sorting_strategy = 'ascending',
+      layout_strategy = 'horizontal',
+      layout_config = {
+        horizontal = {
+          preview_width = .4,
+        },
+      },
+      mappings = {
+        i = {
+          ['<C-f>'] = require('telescope.actions').complete_tag,
+        },
+      },
     },
     lsp_code_actions = {
       theme = 'dropdown',
