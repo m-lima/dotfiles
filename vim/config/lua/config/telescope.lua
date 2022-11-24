@@ -122,7 +122,7 @@ local map = require('util').map
 map('n', '<leader><leader><leader>', builtin.resume)
 
 -- Search
-map('n', '<leader>8', '"<cmd>Telescope current_buffer_fuzzy_find<CR>" . expand("<cword>") . "<Esc>"', { expr = true })
+map('n', '<leader>8', function() builtin.current_buffer_fuzzy_find({ default_text = vim.fn.expand('<cword>') }) end)
 map('n', '<leader>*', function() builtin.grep_string({ additional_args = {'-w'}, disable_coordinates = true }) end)
 map('n', '<leader>/', builtin.current_buffer_fuzzy_find)
 map('n', '<leader>?', function() builtin.live_grep({ disable_coordinates = true }) end)
