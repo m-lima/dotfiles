@@ -163,7 +163,7 @@ function installFile {
       case ${input} in
         [Nn] ) ;;
         * )
-          rm "${installPath}${installName}"
+          rm -rf "${installPath}${installName}"
           overwrite=true
           ;;
       esac
