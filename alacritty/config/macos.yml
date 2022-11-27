@@ -9,7 +9,7 @@ key_bindings:
   - { key: N, mods: Super,       action: CreateNewWindow }
   - { key: N, mods: Super|Shift, command: {
         program: "/Applications/Alacritty.app/Contents/MacOS/alacritty",
-        args: ["-e", "zsh" ]
+        args: ["-e", "zsh", "-l" ]
       }
     }
 
