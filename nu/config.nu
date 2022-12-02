@@ -216,6 +216,7 @@ let-env config = {
   show_banner: false # true or false to enable or disable the banner
   show_clickable_links_in_ls: true # true or false to enable or disable clickable links in the ls listing. your terminal has to support links.
   render_right_prompt_on_last_line: false # true or false to enable or disable right prompt to be rendered on last line of the prompt.
+
   menus: [
       # Configuration for default nushell menus
       # Note the lack of souce parameter
@@ -470,6 +471,16 @@ let-env config = {
       mode: [ emacs, vi_normal, vi_insert ]
       event: { send: OpenEditor }
     }
+    {
+      name: submit
+      modifier: Control
+      keycode: Char_Y
+      mode: [ emacs, vi_normal, vi_insert ]
+      event: [
+        { send: HistoryHintComplete }
+        { send: Submit }
+      ]
+    }
 
     # Move words around with SwapWord? Useful for docker!
     # {
@@ -614,11 +625,21 @@ let-env config = {
     {
       name: commands_menu
       modifier: Control
-      keycode: Char_T
+      keycode: Char_S
       mode: [ emacs vi_normal vi_insert ]
       event: {
         send: Menu
         name: commands_menu
+      }
+    }
+    {
+      name: toggle_simpalt
+      modifier: Control
+      keycode: Char_T
+      mode: [ emacs vi_normal vi_insert ]
+      event: {
+        send: ExecuteHostCommand
+        cmd: 'let-env SIMPALT_LONG = (not $env.SIMPALT_LONG); print -n ((ansi -e 'F') + (ansi -e 'J'))'
       }
     }
     {

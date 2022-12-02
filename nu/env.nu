@@ -2,9 +2,25 @@
 
 # Use nushell functions to define your right and left prompt
 let-env PROMPT_COMMAND = {
-  ~/code/rust/simpalt-rs/target/release/simpalt-rs l ((ansi yellow) + '⏾') (if $env.LAST_EXIT_CODE != 0 { '-e' } else { '' })
+  let args = [((ansi yellow) + '⏾')]
+
+  let args = if $env.LAST_EXIT_CODE == 0 {
+    $args
+  } else {
+    $args | append '-e'
+  }
+
+  let args = if $env.SIMPALT_LONG {
+    $args | append '-l'
+  } else {
+    $args
+  }
+
+  simpalt l $args
 }
-let-env PROMPT_COMMAND_RIGHT = { ~/code/rust/simpalt-rs/target/debug/simpalt-rs r }
+let-env PROMPT_COMMAND_RIGHT = { simpalt r }
+
+let-env SIMPALT_LONG = false
 
 # The prompt indicators are environmental variables that represent
 # the state of the prompt
@@ -45,3 +61,19 @@ let-env NU_PLUGIN_DIRS = [
 # To add entries to PATH (on Windows you might use Path), you can use the following pattern:
 # let-env PATH = ($env.PATH | split row (char esep) | prepend '/some/path')
 
+let-env PATH = (~/code/dotfiles/nu/paths.sh | split row (char esep))
+
+alias vi = nvim
+
+alias gc = git commit
+alias gc = git commit -m
+alias gcam = git commit -a -m
+alias gd = git diff
+alias gds = git diff --staged
+alias gl = git pull
+alias gp = git push
+alias gs = git status -sb
+
+alias l = ls -a
+alias md = mkdir
+alias rd = rmdir
