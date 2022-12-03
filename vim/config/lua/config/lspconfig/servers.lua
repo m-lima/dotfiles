@@ -28,6 +28,9 @@ local setup = function()
     features = { format = false }
   })
 
+  register('pyright')
+  register('hls')
+
   register('rust_analyzer', {
     one_shot = function()
       local extract_build_args = function(args)
