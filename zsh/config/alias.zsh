@@ -32,54 +32,55 @@ pw() {
 }
 
 ### Git stuff
-# Git push with upstream
-alias gpp='git push --set-upstream origin ${$(git symbolic-ref HEAD)/refs\/heads\//}'
+## Matching nushell
+# Branch
+alias gb='git branch'
+
+# Commit
+alias gc='git commit -m'
+alias gca='git commit -a -m'
+
+# Diff
+alias gd='git diff'
+alias gds='git diff --staged'
+
+# Fetch
+alias gfa='git fetch --all --prune --jobs=10'
+
+# Push/Pull
+alias gl='git pull'
+alias gp='git push'
+alias gpf='git push --force-with-lease'
+alias gpp='git push --set-upstream origin ${$(git symbolic-ref HEAD)/refs\/heads\//}' # Git push with upstream
+
+# Stash
+alias gs='git stash'
+
+# Status
+alias gsb='git status -sb'
 
 # Submodules
 alias gsu='git submodule update --init --recursive'
 
+# Checkout
+alias gt='git checkout'
+alias gtb='git checkout -b'
+
+## Exclusive for zsh
 # List git aliases
 alias ghelp='bat ~/.zgen/robbyrussell/oh-my-zsh-master/plugins/git/git.plugin.zsh'
 
 # Search through all branches
 alias ggal="git branch -a | tr -d \* | sed '/->/d' | xargs git grep -HI"
 
-# Statsh unstaged changes
+# Stash unstaged changes
 alias gsti='git stash push --keep-index'
 
 # Update HEAD to track divergence point from master
 alias gbpr='git reset `git merge-base master HEAD`'
 
-# Rebase with upstream branch (default master)
-function grbf {
-  local branch
-
-  if [ $1 ]
-  then
-    branch=$1
-  else
-    branch="origin/$(git_main_branch)"
-  fi
-
-  git fetch --all --prune --jobs=10 && git rebase "${branch}"
-}
-
-# Merge with upstream branch (default master)
-function gmf {
-  local branch
-
-  if [ $1 ]
-  then
-    branch=$1
-  else
-    branch="origin/$(git_main_branch)"
-  fi
-
-  git fetch --all --prune --jobs=10 && git merge "${branch}"
-}
-
 # Show remote status of branches
-function gbgs {
+function gbs {
   local tracked gone local terminator
   local show_tracked=1 show_gone=1 show_local=1
   case "${1}" in
@@ -143,6 +144,34 @@ function gbgs {
       [ $show_local ] && echo "${local}${lo}${terminator}" || true
     fi
   done
+}
+
+# Rebase with upstream branch (default master)
+function gfr {
+  local branch
+
+  if [ $1 ]
+  then
+    branch="origin/${1}"
+  else
+    branch="origin/$(git_main_branch)"
+  fi
+
+  git fetch --all --prune --jobs=10 && git rebase "${branch}"
+}
+
+# Merge with upstream branch (default master)
+function gfm {
+  local branch
+
+  if [ $1 ]
+  then
+    branch="origin/${1}"
+  else
+    branch="origin/$(git_main_branch)"
+  fi
+
+  git fetch --all --prune --jobs=10 && git merge "${branch}"
 }
 
 if command -v lazygit &> /dev/null
