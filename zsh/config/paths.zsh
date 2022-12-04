@@ -1,5 +1,10 @@
 if [[ $PATH != *"${HOME}/bin"* ]]
 then
+  if [[ $PATH != *"/usr/local/bin"* ]]
+  then
+    export PATH="/usr/local/bin${PATH+:$PATH}"
+  fi
+
   # Brew on M1
   if [ -s "/opt/homebrew/bin/brew" ]
   then
