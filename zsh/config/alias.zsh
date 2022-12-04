@@ -20,7 +20,10 @@ fi
 if command -v batcat &> /dev/null
 then
   alias bat=batcat
-  alias bbat='batcat --paging=auto --style=auto'
+fi
+if command -v bat &> /dev/null
+then
+  alias bbat='bat --paging=auto --style=auto'
 fi
 
 ### Prompt expansion
