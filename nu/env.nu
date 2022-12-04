@@ -38,5 +38,8 @@ let-env PATH = if $nu.os-info.family == 'unix' {
   ($env.PATH | split row (char esep))
 }
 
+# TODO: Write a little "plugin-manager"?
 source ~/code/rust/simpalt-rs/simpalt.nu
+
 source ~/.config/m-lima/nu/alias.nu
+source ~/.config/m-lima/nu/local.nu
