@@ -72,6 +72,7 @@ Plug 'skanehira/vsession'          " Save/load sessions TODO: Configure. I think
 Plug 'akinsho/toggleterm.nvim'     " More usable terminal
 Plug 'mbbill/undotree'             " A local changes tracker TODO: configure (colors)
 Plug 'jupyter-vim/jupyter-vim'     " Integration with jupyter
+Plug 'LhKipp/nvim-nu', {'do': ':TSInstall nu'}
 
 call plug#end()
 
