@@ -14,7 +14,7 @@ case "${local_pluginManager}" in
           zgen oh-my-zsh plugins/git
 
           zgen load zsh-users/zsh-syntax-highlighting
-          zgen load m-lima/simpalt simpalt.zsh-theme
+          zgen load m-lima/simpalt-rs simpalt.zsh
           ;;
 
         prezto)
@@ -73,7 +73,10 @@ case "${local_pluginManager}" in
     ;;
 esac
 
-# Auto Suggestion Config
+# FZF
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Auto Suggestion config
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=4"
 ZSH_AUTOSUGGEST_USE_ASYNC="ON"
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="200"
@@ -83,5 +86,5 @@ bindkey '^J' autosuggest-previous
 bindkey '^L' forward-word
 bindkey '^H' backward-delete-word
 
-# FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Simpalt toggle
+bindkey '^T' simpalt_toggle_mode
