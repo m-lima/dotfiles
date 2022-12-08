@@ -80,6 +80,7 @@ alias gsti='git stash push --keep-index'
 alias gbpr='git reset `git merge-base master HEAD`'
 
 # Show remote status of branches
+unalias gbs
 function gbs {
   local tracked gone local terminator
   local show_tracked=1 show_gone=1 show_local=1
