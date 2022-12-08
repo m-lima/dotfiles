@@ -166,3 +166,32 @@ def penv [
     }
   }
 }
+
+# FD
+def _fd [] {
+  open ~/.config/m-lima/fd/config
+  | lines
+  | split column ":" value description
+}
+def-env fd [path: string@_fd] {
+  let span = (metadata $path).span
+  let entry = (open ~/.config/m-lima/fd/config
+    | lines
+    | split column ':' cmd path
+    | where cmd == $path
+    | first
+  )
+  if $entry == null {
+    error make {
+      msg: 'Location not found'
+      label: {
+        text: 'Location name'
+        start: $span.start
+        end: $span.end
+      }
+    }
+  } else {
+    print -n ((ansi -e 'F') + (ansi -e 'J'))
+    commandline $'cd ($entry.path)/'
+  }
+}
