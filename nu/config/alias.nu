@@ -75,6 +75,79 @@ def gfm [branch?: string] {
   git merge $branch
 }
 
+def bdg [steps?: int@_bdg] {
+  let span = (metadata $steps).span
+
+  let steps = if $steps == null {
+    1
+  } else {
+    $steps
+  }
+
+  if $steps < 1 {
+    error make {
+      msg: 'Invalid parameter'
+      label: {
+        text: 'Expected a positive natural number'
+        start: $span.start
+        end: $span.end
+      }
+    }
+  }
+
+  let repo = do -i {git rev-parse --absolute-git-dir | str trim}
+  if ($repo | is-empty) {
+    error make -u {
+      msg: 'Not a git repository'
+    }
+  }
+
+  let history = (
+    [$repo, 'logs', 'HEAD']
+    | path join
+    | open
+    | lines
+    | parse -r '.*checkout: moving from.*[[:space:]](?<branch>.+)$'
+    | reverse
+    | skip 1
+    | uniq
+  )
+
+  if ($history | length) < $steps {
+    if $steps == 1 {
+      error make -u {
+        msg: 'No branch history'
+      }
+    } else {
+      error make {
+        msg: 'History is long enough'
+        label: {
+          text: 'Requested backtrack steps'
+          start: $span.start
+          end: $span.end
+        }
+      }
+    }
+  }
+
+  let steps = $steps - 1
+  git checkout ($history | get $steps | get branch)
+}
+def _bdg [] {
+  let repo = do -i {git rev-parse --absolute-git-dir | str trim}
+  if not ($repo | is-empty) {
+    [$repo, 'logs', 'HEAD']
+    | path join
+    | open
+    | lines
+    | parse -r '.*checkout: moving from.*[[:space:]](?<branch>.+)$'
+    | reverse
+    | skip 1
+    | uniq
+    | each -n {|it| { value: ($it.index + 1), description: $it.item.branch }}
+  }
+}
+
 # Python
 
 # Loads virtualenv and overrides `exit` to mean `deactivate`
@@ -85,20 +158,15 @@ def penv [
   let span = (metadata $name).span
   if $name == null {
     if $local == false {
-      error make {
+      error make -u {
         msg: 'Missing virtual environment name and not called as local'
-        label: {
-          text: 'penv was called without any parameters'
-          start: $span.start
-          end: $span.end
-        }
       }
     }
   } else if $local == true {
     error make {
-      msg: 'Cannot name the environment when passing the `local` flag'
+      msg: 'Invalid parameter combination'
       label: {
-        text: 'Environment name passed here'
+        text: 'Cannot name the environment when passing the `local` flag'
         start: $span.start
         end: $span.end
       }
@@ -120,9 +188,9 @@ def penv [
       commandline $'overlay use ($path | into string)'
     } else {
       error make {
-        msg: $'Path (ansi blue)($path)(ansi reset) exists but has no activation script'
+        msg: $'Path (ansi blue)($path)(ansi reset) invalid'
         label: {
-          text: 'At this invocation'
+          text: 'Path exists but has no activation script'
           start: $span.start
           end: $span.end
         }
@@ -131,13 +199,8 @@ def penv [
   } else {
     let venv_check = (do -i { python3 -m virtualenv | complete | get exit_code })
     if ($venv_check !=  2) {
-      error make {
+      error make -u {
         msg: $'Module (ansi yellow)virtualenv(ansi reset) was not found'
-        label: {
-          text: 'At this invocation'
-          start: $span.start
-          end: $span.end
-        }
       }
     } else {
       python3 -m virtualenv $path
@@ -184,9 +247,9 @@ def-env fd [path: string@_fd] {
   )
   if $entry == null {
     error make {
-      msg: 'Location not found'
+      msg: 'Invalid parameter'
       label: {
-        text: 'Location name'
+        text: 'Location not found'
         start: $span.start
         end: $span.end
       }
