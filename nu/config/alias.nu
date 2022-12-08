@@ -79,8 +79,8 @@ def gfm [branch?: string] {
 
 # Loads virtualenv and overrides `exit` to mean `deactivate`
 def penv [
-  --local (-l): bool, # Use a local virtual environment
-  name?: string       # Name of the virtual environment
+  --local (-l): bool,  # Use a local virtual environment
+  name?: string@_penv  # Name of the virtual environment
 ] {
   let span = (metadata $name).span
   if $name == null {
@@ -116,6 +116,7 @@ def penv [
   if ($path | path exists) {
     let path = ([$path, 'bin', 'activate.nu'] | path join)
     if ($path | path exists) {
+      print -n ((ansi -e 'F') + (ansi -e 'J'))
       commandline $'overlay use ($path | into string)'
     } else {
       error make {
@@ -166,13 +167,13 @@ def penv [
     }
   }
 }
+def _penv [] {
+  ls ~/code/python/env
+  | get name
+  | each {|it| $it | path basename }
+}
 
 # FD
-def _fd [] {
-  open ~/.config/m-lima/fd/config
-  | lines
-  | split column ":" value description
-}
 def-env fd [path: string@_fd] {
   let span = (metadata $path).span
   let entry = (open ~/.config/m-lima/fd/config
@@ -194,4 +195,9 @@ def-env fd [path: string@_fd] {
     print -n ((ansi -e 'F') + (ansi -e 'J'))
     commandline $'cd ($entry.path)/'
   }
+}
+def _fd [] {
+  open ~/.config/m-lima/fd/config
+  | lines
+  | split column ":" value description
 }
