@@ -30,6 +30,8 @@ local setup = function()
 
   register('pyright')
   register('hls')
+  register('gopls')
+  register('tsserver')
 
   register('rust_analyzer', {
     one_shot = function()
