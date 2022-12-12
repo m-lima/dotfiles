@@ -19,7 +19,7 @@ alias gfr = (git fetch --all --prune --jobs=10; git rebase origin/maaster)
 alias gl = git pull
 alias gp = git push
 alias gpf = git push --force-with-lease
-alias gpp = git push --set-upstream origin (git symbolic-ref HEAD | split words | last)
+alias gpp = git push --set-upstream origin (git symbolic-ref HEAD | split column '/' | transpose | last | get column1 | str trim)
 alias gs = git stash
 alias gsb = git status -sb
 alias gsu = git submodule update --init --recursive
