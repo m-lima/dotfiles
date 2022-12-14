@@ -11,6 +11,7 @@ alias vi = nvim
 alias gb = git branch
 alias gc = git commit -m
 alias gca = git commit -a -m
+alias gcl = git clone --recurse-submodules
 alias gd = git diff
 alias gds = git diff --staged
 alias gf = git fetch --all --prune --jobs=10

@@ -40,6 +40,9 @@ alias gb='git branch'
 alias gc='git commit -m'
 alias gca='git commit -a -m'
 
+# Clone
+alias gcl='git clone --recurse-submodules'
+
 # Diff
 alias gd='git diff'
 alias gds='git diff --staged'
