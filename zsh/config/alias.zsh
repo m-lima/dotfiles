@@ -39,6 +39,7 @@ alias gb='git branch'
 # Commit
 alias gc='git commit -m'
 alias gca='git commit -a -m'
+alias gcm='git commit --ammend --no-edit'
 
 # Clone
 alias gcl='git clone --recurse-submodules'

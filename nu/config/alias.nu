@@ -11,6 +11,7 @@ alias vi = nvim
 alias gb = git branch
 alias gc = git commit -m
 alias gca = git commit -a -m
+alias gcm = git commit --ammend --no-edit
 alias gcl = git clone --recurse-submodules
 alias gd = git diff
 alias gds = git diff --staged
