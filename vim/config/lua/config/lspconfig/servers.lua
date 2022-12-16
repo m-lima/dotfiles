@@ -79,6 +79,8 @@ local setup = function()
             if args and #args > 0 then
               cmd = cmd .. ' ' .. args
             end
+          else
+            cmd = cmd .. ' --color=always'
           end
 
           local cwd = arguments.workspaceRoot
