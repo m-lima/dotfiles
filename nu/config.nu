@@ -626,13 +626,16 @@ let-env config = {
         name: history_menu
       }
     }
-    # {
-    #   name: history_continuation_menu
-    #   modifier: control|shift
-    #   keycode: char_r
-    #   mode: emacs
-    #   event: { send: menu name: history_continuation_menu }
-    # }
+    {
+      name: history_continuation_menu
+      modifier: Control
+      keycode: Char_F
+      mode: [ emacs vi_normal vi_insert ]
+      event: {
+        send: Menu
+        name: history_continuation_menu
+      }
+    }
     {
       name: vars_menu
       modifier: Control
