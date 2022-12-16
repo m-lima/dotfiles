@@ -280,8 +280,13 @@ def _fd_arg [base: string, path?: string] {
   try {
     cd $entry.path
     ls $'($path)*'
-    | where type == 'dir'
-    | get name
-    | each {$in + (char psep)}
+    | where type == 'dir' or type == 'symlink'
+    | each {if $in.type == 'dir' {
+        { value: ($in.name + (char psep)), description: null }
+      } else {
+        { value: ($in.name + (char psep)), description: ($in.name | path expand) }
+      }
+    }
+    | where {$in.description == null or ($in.description | path type) == 'dir'}
   } catch {}
 }

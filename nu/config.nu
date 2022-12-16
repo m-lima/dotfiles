@@ -139,8 +139,12 @@ let-env config = {
     quick: true  # set this to false to prevent auto-selecting completions when only one remains
     external: {
       completer: {|span|
-        if $span.0 == 'fd' and $span.1 != null {
-          _fd_arg $span.1 $span.2
+        if $span.0 == 'fd' {
+          if ($span | length) == 3 {
+            _fd_arg $span.1 $span.2
+          } else {
+            []
+          }
         }
       }
       enable: true # set to false to prevent nushell looking into $env.PATH to find more suggestions, `false` recommended for WSL users as this look up my be very slow
