@@ -97,6 +97,7 @@ local setup = function()
           return
         end
 
+        print('Building workspace..')
         require('plenary.job'):new({
           command = 'cargo',
           args = build_args,
