@@ -138,7 +138,11 @@ let-env config = {
     partial: true  # set this to false to prevent partial filling of the prompt
     quick: true  # set this to false to prevent auto-selecting completions when only one remains
     external: {
-      completer: null # check 'carapace_completer' above to as example
+      completer: {|span|
+        if $span.0 == 'fd' and $span.1 != null {
+          _fd_arg $span.1 $span.2
+        }
+      }
       enable: true # set to false to prevent nushell looking into $env.PATH to find more suggestions, `false` recommended for WSL users as this look up my be very slow
       max_results: 100 # setting it lower can improve completion performance at the cost of omitting some options
     }

@@ -238,12 +238,12 @@ def _penv [] {
 }
 
 # FD
-def-env fd [path: string@_fd] {
-  let span = (metadata $path).span
+def-env fd [base: string@_fd, path?: string] {
+  let span = (metadata $base).span
   let entry = (open ~/.config/m-lima/fd/config
     | lines
-    | split column ':' cmd path
-    | where cmd == $path
+    | split column ':' cmd base
+    | where cmd == $base
     | first
   )
   if $entry == null {
@@ -255,13 +255,33 @@ def-env fd [path: string@_fd] {
         end: $span.end
       }
     }
-  } else {
-    print -n ((ansi -e 'F') + (ansi -e 'J'))
-    commandline $'cd ($entry.path)/'
   }
+
+  cd ([$entry.base $path] | path join)
 }
 def _fd [] {
   open ~/.config/m-lima/fd/config
   | lines
   | split column ":" value description
+}
+def _fd_arg [base: string, path?: string] {
+  let entry = try {
+    open ~/.config/m-lima/fd/config
+    | lines
+    | split column ':' cmd path
+    | where cmd == $base
+    | first
+  } catch {
+    return
+  }
+
+  let path = if $path == null { '' } else { $path };
+
+  try {
+    cd $entry.path
+    ls $'($path)*'
+    | where type == 'dir'
+    | get name
+    | each {$in + (char psep)}
+  } catch {}
 }
