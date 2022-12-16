@@ -240,12 +240,14 @@ def _penv [] {
 # FD
 def-env fd [base: string@_fd, path?: string] {
   let span = (metadata $base).span
+
   let entry = (open ~/.config/m-lima/fd/config
     | lines
     | split column ':' cmd base
     | where cmd == $base
     | first
   )
+
   if $entry == null {
     error make {
       msg: 'Invalid parameter'
@@ -257,13 +259,21 @@ def-env fd [base: string@_fd, path?: string] {
     }
   }
 
-  cd ([$entry.base $path] | path join)
+  let target = if $path == null {
+    $entry.base
+  } else {
+    [$entry.base $path] | path join
+  }
+
+  cd $target
 }
+
 def _fd [] {
   open ~/.config/m-lima/fd/config
   | lines
   | split column ":" value description
 }
+
 def _fd_arg [base: string, path?: string] {
   let entry = try {
     open ~/.config/m-lima/fd/config
