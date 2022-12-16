@@ -43,3 +43,16 @@ source ~/code/rust/simpalt-rs/simpalt.nu
 
 source ~/.config/m-lima/nu/alias.nu
 source ~/.config/m-lima/nu/local.nu
+
+load-env (
+  let maybe_nvim = (which nvim | first);
+  let editor = (if $maybe_nvim != null {
+    $maybe_nvim.path
+  } else {
+    (which vim | first).path
+  });
+  {
+    EDITOR: $editor,
+    VISUAL: $editor,
+  }
+)
