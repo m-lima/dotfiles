@@ -40,12 +40,11 @@ def gbs [] {
           upstream: 'Local'
         }
       } else {
-        do -i { git rev-parse $it.upstream }
-        | complete
+        do -i { git rev-parse $it.upstream | complete }
         | if $in.exit_code == 0 {
             {
               branch: ((ansi green) + $it.branch)
-              upstream: 'Remote'
+              upstream: 'Tracked'
             }
           } else {
             {
