@@ -291,12 +291,50 @@ def _fd_arg [base: string, path?: string] {
     cd $entry.path
     ls $'($path)*'
     | where type == 'dir' or type == 'symlink'
-    | each {if $in.type == 'dir' {
-        { value: ($in.name + (char psep)), description: null }
+    | each { |it|
+      if $it.type == 'dir' {
+        { value: ($it.name + (char psep)), description: null }
       } else {
-        { value: ($in.name + (char psep)), description: ($in.name | path expand) }
+        { value: ($it.name + (char psep)), description: ($it.name | path expand) }
       }
     }
     | where {$in.description == null or ($in.description | path type) == 'dir'}
   } catch {}
+}
+
+# VD
+def-env vd [
+  steps?: int@_vd # How many step to move up by
+] {
+  let span = (metadata $steps).span
+  let steps = if $steps == null {
+    1
+  } else if $steps <= 0 {
+    error make {
+      msg: 'Invalid argument'
+      label: {
+        text: 'Steps must be a positive natural number'
+        start: $span.start
+        end: $span.end
+      }
+    }
+  } else {
+    $steps
+  }
+
+  cd ((1..$steps) | each {'..' + (char psep)} | str join)
+}
+
+def _vd [] {
+  pwd
+  | str trim
+  | path split
+  | reverse
+  | each -n { |it|
+    {
+      value: ($it.index)
+      description: $it.item
+    }
+  }
+  | skip 1
 }
