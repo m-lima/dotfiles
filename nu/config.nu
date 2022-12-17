@@ -138,14 +138,9 @@ let-env config = {
     partial: true  # set this to false to prevent partial filling of the prompt
     quick: true  # set this to false to prevent auto-selecting completions when only one remains
     external: {
-      completer: {|span|
-        if $span.0 == 'fd' {
-          if ($span | length) == 3 {
-            _fd_arg $span.1 $span.2
-          } else {
-            []
-          }
-        }
+      completer: { |span|
+        use completer
+        completer dispatch $span
       }
       enable: true # set to false to prevent nushell looking into $env.PATH to find more suggestions, `false` recommended for WSL users as this look up my be very slow
       max_results: 100 # setting it lower can improve completion performance at the cost of omitting some options
@@ -175,6 +170,9 @@ let-env config = {
       wrapping_try_keep_words: true # A strategy used by the 'wrapping' methodology
       # truncating_suffix: "..." # A suffix used by the 'truncating' methodology
     }
+  }
+  hooks: {
+    env_change: (use hook; hook env_change)
   }
   color_config: {
       # color for nushell primitives
