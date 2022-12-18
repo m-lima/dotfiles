@@ -1,53 +1,61 @@
-(
-  # Directories
-  let directories = [
-    'export alias l = ls -a'
-    'export alias ll = ls -la'
-    'export alias md = mkdir'
-    'export alias rd = rmdir'
-  ];
+use ~/.config/m-lima/nu/alias.gen.nu *
 
-  # Vim
-  let vi = if not (which nvim | is-empty) {
-    'export alias vi = nvim'
-  } else if not (which vim | is-empty) {
-    'export alias vi = vim'
-  };
+module aliases {
+  def regen [] {
+    # Directories
+    let directories = [
+      'export alias l = ls -a'
+      'export alias ll = ls -la'
+      'export alias md = mkdir'
+      'export alias rd = rmdir'
+    ];
 
-  # clipwd
-  let clipwd = if not (which clip | is-empty) {
-    if not (which paste | is-empty) {
+    # Vim
+    let vi = if not (which nvim | is-empty) {
+      'export alias vi = nvim'
+    } else if not (which vim | is-empty) {
+      'export alias vi = vim'
+    };
+
+    # clipwd
+    let clipwd = if not (which clip | is-empty) {
+      if not (which paste | is-empty) {
+        [
+          'export alias cpwd = ($env.PWD | clip | null)'
+          'export alias ppwd = cd (paste)'
+        ]
+      } else {
+        [
+          'export alias cpwd = ($env.PWD | clip | null)'
+          'export alias ppwd = cd (clip)'
+        ]
+      }
+    } else if $nu.os-info.name == 'macos' {
       [
-        'export alias cpwd = ($env.PWD | clip | null)'
-        'export alias ppwd = cd (paste)'
+        'export alias cpwd = ($env.PWD | pbcopy | null)'
+        'export alias ppwd = cd (pbpaste)'
+      ]
+    } else if not (which xclip | is-empty) {
+      [
+        'export alias cpwd = ($env.PWD | xclip -se c | null)'
+        'export alias ppwd = cd (xclip -o -se c)'
       ]
     } else {
       [
-        'export alias cpwd = ($env.PWD | clip | null)'
-        'export alias ppwd = cd (clip)'
+        ('export alias cpwd = ($env.PWD | save ' + ([$nu.temp-path $env.USER] | path join))
+        ('export alias ppwd = cd (' + ([$nu.temp-path $env.USER] | path join)) +')')
       ]
-    }
-  } else if $nu.os-info.name == 'macos' {
-    [
-      'export alias cpwd = ($env.PWD | pbcopy | null)'
-      'export alias ppwd = cd (pbpaste)'
-    ]
-  } else if not (which xclip | is-empty) {
-    [
-      'export alias cpwd = ($env.PWD | xclip -se c | null)'
-      'export alias ppwd = cd (xclip -o -se c)'
-    ]
-  } else {
-    [
-      ('export alias cpwd = ($env.PWD | save ' + ([$nu.temp-path $env.USER] | path join))
-      ('export alias ppwd = cd (' + ([$nu.temp-path $env.USER] | path join)) +')')
-    ]
-  };
+    };
 
-  let lazygit = if not (which lazygit | is-empty) {
-    'export alias lg = lazygit'
-  };
+    let lazygit = if not (which lazygit | is-empty) {
+      'export alias lg = lazygit'
+    };
 
-  [$directories $vi $clipwd $lazygit] | flatten
-) | str join (char newline) | save ~/.config/m-lima/nu/alias.gen.nu
-use ~/.config/m-lima/nu/alias.gen.nu *
+    [$directories $vi $clipwd $lazygit]
+    | flatten
+    | str join (char newline)
+    | save ~/.config/m-lima/nu/alias.gen.nu
+  }
+}
+
+use aliases

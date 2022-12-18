@@ -139,8 +139,11 @@ let-env config = {
     quick: true  # set this to false to prevent auto-selecting completions when only one remains
     external: {
       completer: { |span|
-        use completer
-        completer dispatch $span
+        $env.COMPLETERS
+        | where name == $span.0
+        | get code
+        | first
+        | do $in ($span | skip 1)
       }
       enable: true # set to false to prevent nushell looking into $env.PATH to find more suggestions, `false` recommended for WSL users as this look up my be very slow
       max_results: 100 # setting it lower can improve completion performance at the cost of omitting some options
@@ -171,9 +174,7 @@ let-env config = {
       # truncating_suffix: "..." # A suffix used by the 'truncating' methodology
     }
   }
-  hooks: {
-    env_change: (use hook; hook env_change)
-  }
+  hooks: $env.HOOKS
   color_config: {
       # color for nushell primitives
       separator: white
@@ -894,3 +895,5 @@ let-env config = {
   ]
 }
 
+hide-env COMPLETERS
+hide-env HOOKS
