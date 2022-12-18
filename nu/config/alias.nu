@@ -12,8 +12,6 @@
     'export alias vi = nvim'
   } else if not (which vim | is-empty) {
     'export alias vi = vim'
-  } else {
-    []
   };
 
   # clipwd
@@ -46,6 +44,10 @@
     ]
   };
 
-  [$directories $vi $clipwd]
-) | str join (char newline) | save -a alias.gen.nu
-use alias.gen.nu *
+  let lazygit = if not (which lazygit | is-empty) {
+    'export alias lg = lazygit'
+  };
+
+  [$directories $vi $clipwd $lazygit] | flatten
+) | str join (char newline) | save ~/.config/m-lima/nu/alias.gen.nu
+use ~/.config/m-lima/nu/alias.gen.nu *
