@@ -1,5 +1,33 @@
 export-env {
-  let-env BD_HISTORY = []
+  load-env {
+    BD_HISTORY: []
+    COMPLETERS: (
+      $env.COMPLETERS | append {
+        name: fd
+        code: { |args| fd_completer $args }
+      }
+    )
+    HOOKS: (
+      $env.HOOKS | upsert env_change { |hooks|
+        let entry = {
+          condition: {|before, after| $before != null}
+          code: {|before, after| let-env BD_HISTORY = ($env.BD_HISTORY | append $before)}
+        }
+
+        let ref = ($hooks | get -i env_change.PWD)
+
+        if $ref == null {
+          {
+            PWD: [
+              $entry
+            ]
+          }
+        } else {
+          $ref | append $entry
+        }
+      }
+    )
+  }
 }
 
 # Navigates to a preconfigured location
@@ -41,6 +69,45 @@ def fd_cmp [] {
   open ~/.config/m-lima/fd/config
   | lines
   | split column ":" value description
+}
+
+def fd_completer [args] {
+    if ($args | length) > 2 {
+      return
+    }
+
+    let base = ($args | get -i 0)
+    let path = ($args | get -i 1)
+
+    if $base == null {
+      return
+    }
+
+    let entry = try {
+      open ~/.config/m-lima/fd/config
+      | lines
+      | split column ':' cmd path
+      | where cmd == $base
+      | first
+    } catch {
+      return
+    }
+
+    let path = if $path == null { '' } else { $path };
+
+    try {
+      cd $entry.path
+      ls $'($path)*'
+      | where type == 'dir' or type == 'symlink'
+      | each { |it|
+        if $it.type == 'dir' {
+          { value: ($it.name + (char psep)), description: null }
+        } else {
+          { value: ($it.name + (char psep)), description: ($it.name | path expand) }
+        }
+      }
+      | where {$in.description == null or ($in.description | path type) == 'dir'}
+    } catch {}
 }
 
 # Navigates up in the directory hierarchy
