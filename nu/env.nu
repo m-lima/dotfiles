@@ -5,8 +5,7 @@ source ~/.config/m-lima/nu/path.nu
 source ~/.config/m-lima/nu/options.nu
 
 # Plugins
-# TODO: Write a little "plugin-manager"?
-source ~/code/rust/simpalt-rs/simpalt.nu
+source ~/.config/m-lima/nu/plugins.nu
 
 # Aliases
 source ~/.config/m-lima/nu/alias.nu

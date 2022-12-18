@@ -11,5 +11,3 @@ load-env (
     VISUAL: $editor,
   }
 )
-
-let _custom_completers = []
