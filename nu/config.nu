@@ -1,5 +1,12 @@
 # Nushell Config File
 
+# Check for successful env.nu execution
+if 'ALIASES_LOADED' in (env).name {
+  hide-env ALIASES_LOADED
+} else {
+  '' | save ~/.config/m-lima/nu/alias.gen.nu
+}
+
 module completions {
   # Custom completions for external commands (those outside of Nushell)
   # Each completions has two parts: the form of the external command, including its flags and parameters

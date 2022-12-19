@@ -1,7 +1,7 @@
 use ~/.config/m-lima/nu/alias.gen.nu *
 
 module aliases {
-  def regen [] {
+  export def regen [] {
     # Directories
     let directories = [
       'export alias l = ls -a'
@@ -59,3 +59,4 @@ module aliases {
 }
 
 use aliases
+let-env ALIASES_LOADED = true
