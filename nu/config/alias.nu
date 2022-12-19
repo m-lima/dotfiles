@@ -51,7 +51,16 @@ module aliases {
       'export alias lg = lazygit'
     };
 
-    [$directories $vi $clipwd $lazygit]
+    let bat = if not (which batcat | is-empty) {
+      [
+        'export alias bat = batcat'
+        'export alias bbat = bat --paging=auto --style=auto'
+      ]
+    } else if not (which bat | is-empty) {
+      'export alias bbat = bat --paging=auto --style=auto'
+    };
+
+    [$directories $vi $clipwd $lazygit $bat]
     | flatten
     | str join (char newline)
     | save ~/.config/m-lima/nu/alias.gen.nu
