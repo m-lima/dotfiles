@@ -93,17 +93,28 @@ def fd_completer [args] {
       return
     }
 
-    let path = if $path == null { '' } else { $path };
+    let path = if $path == null {
+      ''
+    } else if ($path | str starts-with '`') {
+      $path | str replace -a '`' ''
+    } else {
+      $path
+    }
 
     try {
       cd $entry.path
       ls $'($path)*'
       | where type == 'dir' or type == 'symlink'
       | each { |it|
-        if $it.type == 'dir' {
-          { value: ($it.name + (char psep)), description: null }
+        let value = if ($it.name | find -r '[[[:space:]]$()]' | is-empty) {
+          $it.name + (char psep)
         } else {
-          { value: ($it.name + (char psep)), description: ($it.name | path expand) }
+          $'`($it.name)(char psep)`'
+        }
+        if $it.type == 'dir' {
+          { value: $value, description: null }
+        } else {
+          { value: $value, description: ($it.name | path expand) }
         }
       }
       | where {$in.description == null or ($in.description | path type) == 'dir'}
