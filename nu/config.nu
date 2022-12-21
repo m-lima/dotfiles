@@ -4,7 +4,7 @@
 if 'ALIASES_LOADED' in (env).name {
   hide-env ALIASES_LOADED
 } else {
-  '' | save ~/.config/m-lima/nu/alias.gen.nu
+  '' | save --force ~/.config/m-lima/nu/alias.gen.nu
 }
 
 module completions {

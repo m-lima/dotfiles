@@ -42,7 +42,7 @@ module aliases {
       ]
     } else {
       [
-        ('export alias cpwd = ($env.PWD | save ' + ([$nu.temp-path $env.USER] | path join))
+        ('export alias cpwd = ($env.PWD | save --force ' + ([$nu.temp-path $env.USER] | path join))
         ('export alias ppwd = cd (' + ([$nu.temp-path $env.USER] | path join)) +')')
       ]
     };
@@ -63,7 +63,7 @@ module aliases {
     [$directories $vi $clipwd $lazygit $bat]
     | flatten
     | str join (char newline)
-    | save ~/.config/m-lima/nu/alias.gen.nu
+    | save --force ~/.config/m-lima/nu/alias.gen.nu
   }
 }
 
