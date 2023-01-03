@@ -34,33 +34,49 @@ local refresh = function()
     'textDocument/inlayHint',
     get_params(),
     function(err, res, ctx)
-    if err or not res then return end
+      if err or not res then return end
 
-    if not vim.tbl_islist(res) then
-      vim.notify('Unrecognized response: ' .. res, vim.log.levels.ERR)
-    end
+      if not vim.tbl_islist(res) then
+        vim.notify('Unrecognized response: ' .. res, vim.log.levels.ERR)
+      end
 
-    vim.api.nvim_buf_clear_namespace(ctx.bufnr, namespace, 0, -1)
-    local root = should_display_var_name and get_root(ctx.bufnr)
+      vim.api.nvim_buf_clear_namespace(ctx.bufnr, namespace, 0, -1)
+      local root = should_display_var_name and get_root(ctx.bufnr)
 
-    for _, v in ipairs(res) do
-      if v.kind == 1 then
-        local str = nil
-        if v.label:find(': ', 1, true) == 1 then
-          if root then
-            local _, start, _, finish = root:named_descendant_for_range(v.position.line, v.position.character - 1, v.position.line, v.position.character - 1):range()
-            local var = string.sub(vim.api.nvim_buf_get_lines(ctx.bufnr, v.position.line, v.position.line + 1, false)[1], start + 1, finish)
-            str = var .. v.label
+      for _, v in ipairs(res) do
+        if v.kind == 1 then
+          local str = nil
+          if v.tooltip:find(': ', 1, true) == 1 then
+            if root then
+              local _, start, _, finish = root:named_descendant_for_range(v.position.line, v.position.character - 1,
+                v.position.line, v.position.character - 1):range()
+              local var = string.sub(
+                vim.api.nvim_buf_get_lines(ctx.bufnr, v.position.line, v.position.line + 1, false)[1],
+                start + 1,
+                finish
+              )
+              str = var .. v.tooltip
+            else
+              str = v.tooltip:sub(3)
+            end
           else
-            str = v.label:sub(3)
+            str = '‣' .. v.tooltip
           end
-        else
-          str = '‣' .. v.label
+          vim.api.nvim_buf_set_extmark(
+            ctx.bufnr,
+            namespace,
+            v.position.line,
+            0,
+            {
+              virt_text = {
+                { str, hl }
+              },
+              hl_mode = 'combine'
+            }
+          )
         end
-        vim.api.nvim_buf_set_extmark(ctx.bufnr, namespace, v.position.line, 0, { virt_text = { { str, hl } }, hl_mode = 'combine' })
       end
     end
-  end
   )
 end
 
