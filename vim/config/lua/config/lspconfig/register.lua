@@ -1,6 +1,67 @@
 local lspconfig = require('lspconfig')
 local cmp_capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+local defer_tracking = {}
+
+local defer = function(server, opts)
+  if not opts.handlers then
+    opts.handlers = {}
+  end
+
+  local on_attach = opts.on_attach
+  local deferred_attach = function(client, bufnr)
+    vim.api.nvim_buf_call(bufnr, function() on_attach(client, bufnr) end)
+  end
+
+  opts.handlers = {
+    ['experimental/serverStatus'] = function(err, res, ctx)
+      if not err and res.quiescent then
+        local tracked_instance = defer_tracking[ctx.client_id]
+        if opts.one_shot then
+          if type(opts.one_shot) == 'function' then
+            opts.one_shot()
+          else
+            vim.notify('Field `one_shot` is not a function for ' .. server, vim.log.levels.WARN)
+          end
+        end
+        if tracked_instance then
+          tracked_instance.done = true
+          if tracked_instance.queue then
+            local tracked_client = vim.lsp.get_client_by_id(ctx.client_id)
+            for _, bufnr in ipairs(tracked_instance.queue) do
+              deferred_attach(tracked_client, bufnr)
+            end
+          end
+        else
+          defer_tracking[ctx.client_id] = {
+            done = true
+          }
+        end
+      end
+    end
+  }
+
+  opts.on_attach = function(client, bufnr)
+    local tracked_instance = defer_tracking[client.id]
+    if tracked_instance then
+      if tracked_instance.done then
+        deferred_attach(client, bufnr)
+      else
+        table.insert(tracked_instance.queue, bufnr)
+      end
+    else
+      defer_tracking[client.id] = {
+        queue = { bufnr }
+      }
+    end
+  end
+
+  opts.capabilities = vim.tbl_deep_extend('force', { experimental = { serverStatusNotification = true } },
+    opts.capabilities or {})
+
+  return opts
+end
+
 local make_on_attach = function(overrides)
   return function(client, bufnr)
     local opts = vim.tbl_deep_extend(
@@ -168,14 +229,10 @@ local base_opts = function(server, opts)
   }
 end
 
-return function(server, opts)
-  lspconfig[server].setup(base_opts(server, opts))
-
-  if opts and opts.one_shot then
-    if type(opts.one_shot) == 'function' then
-      opts.one_shot()
-    else
-      vim.notify('Field `one_shot` is not a function for ' .. server, vim.log.levels.WARN)
-    end
+return function(server, opts, defer_init)
+  opts = base_opts(server, opts)
+  if defer_init then
+    opts = defer(server, opts)
   end
+  lspconfig[server].setup(opts)
 end

@@ -201,7 +201,8 @@ local setup = function()
         },
       },
     },
-  })
+  },
+    true)
 end
 
 return {

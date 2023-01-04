@@ -1,6 +1,6 @@
 local trackers = {}
 
-local defer = function(opts, one_shot)
+local defer = function(server, opts, one_shot)
   if not opts.handlers then
     opts.handlers = {}
   end
@@ -15,7 +15,11 @@ local defer = function(opts, one_shot)
       if not err and res.quiescent then
         local tracked_instance = trackers[ctx.client_id]
         if one_shot then
-          one_shot()
+          if type(one_shot) == 'function' then
+            one_shot()
+          else
+            vim.notify('Field `one_shot` is not a function for ' .. server, vim.log.levels.WARN)
+          end
         end
         if tracked_instance then
           tracked_instance.done = true
@@ -55,6 +59,4 @@ local defer = function(opts, one_shot)
   return opts
 end
 
-return {
-  defer = defer,
-}
+return defer
