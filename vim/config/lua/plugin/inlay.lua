@@ -1,5 +1,6 @@
 local namespace = vim.api.nvim_create_namespace('mlima.inlay')
-local hl = vim.api.nvim_get_hl_id_by_name('LspCodeLens')
+local hl_mark = vim.api.nvim_get_hl_id_by_name('LspCodeLensMark')
+local hl_type = vim.api.nvim_get_hl_id_by_name('LspCodeLensType')
 local should_display_var_name = true
 
 local get_root = function(bufnr)
@@ -28,6 +29,65 @@ local get_params = function()
   return params
 end
 
+local extract_virtual_text = function(value, root, ctx)
+  if value.kind ~= 1 then
+    return nil
+  end
+
+  local kind = nil
+  if type(value.label) == 'table' and value.label[1] then
+    if value.label[1].value == ': ' then
+      kind = 1
+    elseif value.label[1].value == ' -> ' then
+      kind = 2
+    end
+  else
+    if value.tooltip:find(': ', 1, true) == 1 then
+      kind = 1
+    elseif value.tooltip:find(' -> ', 1, true) == 1 then
+      kind = 2
+    end
+  end
+
+  if kind == 1 then
+    local mark = nil
+    if root then
+      -- Extract variable name from treesitter
+      local _, start, _, finish = root
+          :named_descendant_for_range(
+            value.position.line,
+            value.position.character - 1,
+            value.position.line,
+            value.position.character - 1
+          )
+          :range()
+      mark = {
+        string.sub(
+          vim.api.nvim_buf_get_lines(ctx.bufnr, value.position.line, value.position.line + 1, false)[1],
+          start + 1,
+          finish
+        ) .. ': ',
+        hl_mark
+      }
+    end
+
+    return {
+      mark,
+      { value.tooltip:sub(3), hl_type },
+    }
+  elseif kind == 2 then
+    return {
+      { ' ', hl_mark },
+      { value.tooltip:sub(5), hl_type },
+    }
+  else
+    return {
+      { '﬋ ', hl_mark },
+      { value.tooltip, hl_type },
+    }
+  end
+end
+
 local refresh = function()
   vim.lsp.buf_request(
     0,
@@ -44,33 +104,16 @@ local refresh = function()
       local root = should_display_var_name and get_root(ctx.bufnr)
 
       for _, v in ipairs(res) do
-        if v.kind == 1 then
-          local str = nil
-          if v.tooltip:find(': ', 1, true) == 1 then
-            if root then
-              local _, start, _, finish = root:named_descendant_for_range(v.position.line, v.position.character - 1,
-                v.position.line, v.position.character - 1):range()
-              local var = string.sub(
-                vim.api.nvim_buf_get_lines(ctx.bufnr, v.position.line, v.position.line + 1, false)[1],
-                start + 1,
-                finish
-              )
-              str = var .. v.tooltip
-            else
-              str = v.tooltip:sub(3)
-            end
-          else
-            str = '‣' .. v.tooltip
-          end
+        local virtual_text = extract_virtual_text(v, root, ctx)
+
+        if virtual_text then
           vim.api.nvim_buf_set_extmark(
             ctx.bufnr,
             namespace,
             v.position.line,
-            0,
+            v.position.character,
             {
-              virt_text = {
-                { str, hl }
-              },
+              virt_text = virtual_text,
               hl_mode = 'combine'
             }
           )
@@ -80,9 +123,13 @@ local refresh = function()
   )
 end
 
-local set_hl_group = function(name)
+local set_hl_group = function(name, for_mark)
   if vim.fn.hlexists(name) ~= 0 then
-    hl = vim.api.nvim_get_hl_id_by_name(name)
+    if for_mark then
+      hl_mark = vim.api.nvim_get_hl_id_by_name(name)
+    else
+      hl_type = vim.api.nvim_get_hl_id_by_name(name)
+    end
     refresh()
   end
 end

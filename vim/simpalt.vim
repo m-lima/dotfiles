@@ -123,7 +123,8 @@ endif
 highlight LspReferenceText  guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=UNDERLINE cterm=UNDERLINE
 highlight LspReferenceWrite guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=UNDERLINE cterm=UNDERLINE
 highlight LspReferenceRead  guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=UNDERLINE cterm=UNDERLINE
-highlight LspCodeLens       guifg=#005f5f ctermfg=23  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight LspCodeLensMark   guifg=#008787 ctermfg=30  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight LspCodeLensType   guifg=#005f5f ctermfg=23  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
 
 highlight! link LspSignatureActiveParameter Search
 
