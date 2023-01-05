@@ -290,6 +290,19 @@ let-env config = {
             selected_text: white
             description_text: yellow
         }
+        source: { |buffer, position|
+            let start = ( $buffer | str substring $',($position)' )
+            history
+            | get command
+            | where {|it| $it | str starts-with $start}
+            | reverse
+            | uniq
+            | each { |it|
+                {
+                  value: $it
+                }
+              }
+        }
       }
       {
         name: help_menu
