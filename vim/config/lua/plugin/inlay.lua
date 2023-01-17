@@ -30,7 +30,7 @@ local get_params = function()
 end
 
 local extract_virtual_text = function(value, root, ctx)
-  if value.kind ~= 1 then
+  if not value or not value.tooltip or value.kind ~= 1 then
     return nil
   end
 
