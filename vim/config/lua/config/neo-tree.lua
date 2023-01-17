@@ -12,7 +12,7 @@ local function getTelescopeOpts(state, path)
         if (filename == nil) then
           filename = selection[1]
         end
-        require("neo-tree.sources.filesystem").navigate(state, state.path, filename)
+        require('neo-tree.sources.filesystem').navigate(state, state.path, filename)
       end)
       return true
     end
