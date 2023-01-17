@@ -30,11 +30,24 @@ local get_params = function()
 end
 
 local extract_virtual_text = function(value, root, ctx)
-  if not value or not value.tooltip or value.kind ~= 1 then
+  if value.kind ~= 1 then
     return nil
   end
 
-  if value.tooltip:find(': ', 1, true) == 1 then
+  local label = value.tooltip
+
+  if not label then
+    if type(value.label) == 'table' then
+      label = ''
+      for _, l in ipairs(value.label) do
+        label = label .. l.value
+      end
+    else
+      return nil
+    end
+  end
+
+  if label:find(': ', 1, true) == 1 then
     local mark = nil
     if root then
       -- Extract variable name from treesitter
@@ -58,17 +71,17 @@ local extract_virtual_text = function(value, root, ctx)
 
     return {
       mark,
-      { value.tooltip:sub(3), hl_type },
+      { label:sub(3), hl_type },
     }
-  elseif value.tooltip:find(' -> ', 1, true) == 1 then
+  elseif label:find(' -> ', 1, true) == 1 then
     return {
       { ' ', hl_mark },
-      { value.tooltip:sub(5), hl_type },
+      { label:sub(5), hl_type },
     }
   else
     return {
       { '﬋ ', hl_mark },
-      { value.tooltip, hl_type },
+      { label, hl_type },
     }
   end
 end
