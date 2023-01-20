@@ -12,10 +12,9 @@ map('n',        '<leader>a',         vim.lsp.buf.code_action)
 map('n',        '<leader>a',         vim.lsp.buf.code_action)
 
 vim.diagnostic.config({
-  severity_sort = false,
+  severity_sort = true,
   signs = false,
-  underline = false,
-  virtual_text = false,
+  underline = true,
 })
 
 vim.cmd([[

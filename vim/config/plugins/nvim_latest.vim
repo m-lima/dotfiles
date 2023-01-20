@@ -49,7 +49,6 @@ Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
-Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 
 " Debugging
 Plug 'mfussenegger/nvim-dap' " TODO: Lots!
@@ -89,7 +88,6 @@ require('config.dap.ui')
 require('config.fugitive')
 require('config.gitsigns')
 require('config.lightspeed')
-require('config.lsp_lines')
 require('config.lspconfig')
 require('config.lua-out')
 require('config.lualine')
