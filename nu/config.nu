@@ -259,7 +259,7 @@ let-env config = {
         }
         style: {
             text: cyan
-            selected_text: white
+            selected_text: wb
             description_text: yellow
         }
       }
@@ -273,7 +273,7 @@ let-env config = {
         }
         style: {
             text: cyan
-            selected_text: white
+            selected_text: wb
             description_text: yellow
         }
       }
@@ -287,7 +287,7 @@ let-env config = {
         }
         style: {
             text: cyan
-            selected_text: white
+            selected_text: wb
             description_text: yellow
         }
         source: { |buffer, position|
@@ -318,7 +318,7 @@ let-env config = {
         }
         style: {
             text: cyan
-            selected_text: white
+            selected_text: wb
             description_text: yellow
         }
       }
@@ -333,7 +333,7 @@ let-env config = {
         }
         style: {
             text: cyan
-            selected_text: white
+            selected_text: wb
             description_text: yellow
         }
         source: { |buffer, position|
@@ -363,7 +363,7 @@ let-env config = {
         }
         style: {
             text: cyan
-            selected_text: white
+            selected_text: wb
             description_text: yellow
         }
         source: { |buffer, position|
@@ -384,7 +384,7 @@ let-env config = {
         }
         style: {
             text: cyan
-            selected_text: white
+            selected_text: wb
             description_text: yellow
         }
         source: { |buffer, position|
