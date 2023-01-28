@@ -18,21 +18,25 @@ export-env {
 
     {
       PROMPT_COMMAND: {
-        let args = [$env.SIMPALT_HOST]
+        let args = [$env.SIMPALT_HOST];
 
         let args = if $env.LAST_EXIT_CODE == 0 {
           $args
         } else {
           $args | append '-e'
-        }
+        };
 
         let args = if $env.SIMPALT_LONG {
           $args | append '-l'
         } else {
           $args
-        }
+        };
 
-        simpalt l $args
+        if $nu.os-info.family == 'unix' {
+          simpalt l $args
+        } else {
+          simpalt l $args | simpalt c win '8;5;236'
+        }
       }
       PROMPT_COMMAND_RIGHT: { simpalt r }
       SIMPALT_LONG: false
