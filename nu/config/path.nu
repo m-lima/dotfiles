@@ -22,5 +22,5 @@ let-env NU_PLUGIN_DIRS = [
 let-env PATH = if $nu.os-info.family == 'unix' {
   (~/.config/m-lima/nu/paths.sh | split row (char esep))
 } else {
-  ($env.PATH | split row (char esep))
+  ($env.Path | split row (char esep))
 }

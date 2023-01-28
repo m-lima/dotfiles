@@ -39,7 +39,7 @@ export def-env fd [base?: string@fd_cmp, path?: string] {
   } else {
     let entry = (open ~/.config/m-lima/fd/config
       | lines
-      | split column ':' cmd base
+      | parse '{cmd}:{base}'
       | where cmd == $base
       | first
     )
@@ -68,7 +68,7 @@ export def-env fd [base?: string@fd_cmp, path?: string] {
 def fd_cmp [] {
   open ~/.config/m-lima/fd/config
   | lines
-  | split column ":" value description
+  | parse '{value}:{description}'
 }
 
 def fd_completer [args] {
@@ -86,7 +86,7 @@ def fd_completer [args] {
     let entry = try {
       open ~/.config/m-lima/fd/config
       | lines
-      | split column ':' cmd path
+      | parse '{cmd}:{path}'
       | where cmd == $base
       | first
     } catch {

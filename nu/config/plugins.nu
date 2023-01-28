@@ -7,4 +7,4 @@ let-env HOOKS = {}
 use plugins/git.nu *
 use plugins/nali.nu *
 use plugins/penv.nu *
-use ~/code/rust/simpalt-rs/simpalt.nu *
+use plugins/simpalt.nu *
