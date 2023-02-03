@@ -1,6 +1,16 @@
 local lspconfig = require('lspconfig')
 local cmp_capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+local run_one_shot = function(server, one_shot)
+  if one_shot then
+    if type(one_shot) == 'function' then
+      one_shot()
+    else
+      vim.notify('Field `one_shot` is not a function for ' .. server, vim.log.levels.WARN)
+    end
+  end
+end
+
 local defer_tracking = {}
 
 local defer = function(server, opts)
@@ -17,13 +27,7 @@ local defer = function(server, opts)
     ['experimental/serverStatus'] = function(err, res, ctx)
       if not err and res.quiescent then
         local tracked_instance = defer_tracking[ctx.client_id]
-        if opts.one_shot then
-          if type(opts.one_shot) == 'function' then
-            opts.one_shot()
-          else
-            vim.notify('Field `one_shot` is not a function for ' .. server, vim.log.levels.WARN)
-          end
-        end
+        run_one_shot(server, opts.one_shot)
         if tracked_instance then
           tracked_instance.done = true
           if tracked_instance.queue then
@@ -226,6 +230,7 @@ local base_opts = function(server, opts)
     on_attach = make_on_attach(opts and opts.features),
     on_init = make_on_init(server),
     settings = opts and opts.settings,
+    one_shot = opts and opts.one_shot,
   }
 end
 
@@ -233,6 +238,8 @@ return function(server, opts, defer_init)
   opts = base_opts(server, opts)
   if defer_init then
     opts = defer(server, opts)
+  else
+    run_one_shot(server, opts.one_shot)
   end
   lspconfig[server].setup(opts)
 end
