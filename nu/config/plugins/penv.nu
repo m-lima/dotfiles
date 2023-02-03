@@ -1,5 +1,5 @@
 # Loads virtualenv and overrides `exit` to mean `deactivate`
-export def penv [
+export def main [
   --local (-l): bool,  # Use a local virtual environment
   name?: string@cmp    # Name of the virtual environment
 ] {
