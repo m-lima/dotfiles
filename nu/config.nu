@@ -393,8 +393,8 @@ let-env config = {
             history
             | last
             | get command
-            | parse -r "('[^']*'|\"(\\\\\"|[^\"])*\"|`[^`]*`|[^[[:space:]]]*)*"
-            | get Capture1
+            | parse -r "(?<cmd>'[^']*'|\"(\\\\\"|[^\"])*\"|`[^`]*`|[^[[:space:]]]*)*"
+            | get cmd
             | uniq
             | where { |it| ($it | str length) > 3 and ($it =~ $last) }
             | each { |it|
