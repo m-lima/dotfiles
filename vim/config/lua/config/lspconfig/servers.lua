@@ -100,11 +100,43 @@ local setup = function()
             return
           end
 
+          -- Extract executable hint, if this is a test
+          local name = nil
+          if is_test then
+            local next = false
+            for _, value in ipairs(build_args) do
+              if next then
+                name = 'deps/' .. value
+                break
+              end
+              if value == '--test' or value == '--bin' then
+                next = true
+              end
+            end
+          end
+
           print('Building workspace..')
           require('plenary.job'):new({
             command = 'cargo',
             args = build_args,
             cwd = arguments.args.workspaceRoot,
+            on_stdout = function(error)
+              vim.schedule(function()
+                if error then
+                  vim.notify(error, vim.log.levels.ERROR)
+                end
+              end)
+            end,
+            on_stderr = function(error, data)
+              vim.schedule(function()
+                if error then
+                  vim.notify(error, vim.log.levels.ERROR)
+                end
+                if data then
+                  vim.notify(data)
+                end
+              end)
+            end,
             on_exit = function(job, code)
               if code and code > 0 then
                 vim.schedule(function()
@@ -119,7 +151,11 @@ local setup = function()
               vim.schedule(function()
                 for _, value in pairs(job:result()) do
                   local json = vim.fn.json_decode(value)
-                  if type(json) == 'table' and json.executable ~= vim.NIL and json.executable ~= nil then
+                  if type(json) == 'table'
+                      and json.executable ~= vim.NIL
+                      and json.executable ~= nil
+                      and (not name or string.find(json.executable, name))
+                  then
 
                     local run_args
                     if is_test then
@@ -127,6 +163,8 @@ local setup = function()
                     else
                       run_args = require('util').parse_args(vim.fn.input('Args: '))
                     end
+
+                    vim.notify('Running: ' .. json.executable .. ' :: ' .. vim.inspect(run_args))
 
                     require('dap').run({
                       name = 'Rust debug',
