@@ -4,7 +4,9 @@ local dapui_instance = nil
 local dapui = function()
   if not dapui_instance then
     dapui_instance = require("dapui")
-    dapui_instance.setup()
+    dapui_instance.setup({
+      icons = { expanded = "", collapsed = "▶", current_frame = "▶" },
+    })
   end
   return dapui_instance
 end
