@@ -14,9 +14,9 @@ map('n', '<F10>', dap.terminate)
 map('n', '<F11>', dap.repl.open)
 
 vim.cmd([[
-  sign define DapBreakpoint          text=●  texthl=DiagnosticError linehl= numhl=
-  sign define DapBreakpointCondition text=◆  texthl=DiagnosticError linehl= numhl=
-  sign define DapBreakpointRejected  text=◌  texthl=DiagnosticError linehl= numhl=
-  sign define DapLogPoint            text=▶  texthl=DiagnosticInfo  linehl= numhl=
-  sign define DapStopped             text=→  texthl=DiagnosticInfo  linehl= numhl=
+  sign define DapBreakpoint          text=● texthl=DiagnosticError linehl= numhl=DiagnosticError
+  sign define DapBreakpointCondition text=◆ texthl=DiagnosticError linehl= numhl=DiagnosticError
+  sign define DapBreakpointRejected  text=◌ texthl=DiagnosticError linehl= numhl=DiagnosticError
+  sign define DapLogPoint            text=▶ texthl=DiagnosticInfo  linehl= numhl=DiagnosticInfo
+  sign define DapStopped             text=→ texthl=DiagnosticInfo  linehl= numhl=
 ]])
