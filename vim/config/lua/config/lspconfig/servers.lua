@@ -1,7 +1,7 @@
 local register = require('config.lspconfig.register')
 
 local setup = function()
-  register('sumneko_lua', {
+  register('lua_ls', {
     features = {
       name = 'lua',
     },
