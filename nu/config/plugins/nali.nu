@@ -150,7 +150,8 @@ def vd_cmp [] {
   | str trim
   | path split
   | reverse
-  | each -n { |it|
+  | enumerate
+  | each { |it|
     {
       value: ($it.index)
       description: $it.item
@@ -197,7 +198,8 @@ export def-env bd [
 def bd_cmp [] {
   $env.BD_HISTORY
   | reverse
-  | each -n { |it|
+  | enumerate
+  | each { |it|
     {
       value: ($it.index + 1)
       description: $it.item

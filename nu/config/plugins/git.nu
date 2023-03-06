@@ -154,7 +154,8 @@ def branch_history [] {
     | reverse
     | skip 1
     | uniq
-    | each -n {|it| { value: ($it.index + 1), description: $it.item.branch }}
+    | enumerate
+    | each {|it| { value: ($it.index + 1), description: $it.item.branch }}
   }
 }
 
