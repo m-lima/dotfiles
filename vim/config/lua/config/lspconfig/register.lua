@@ -164,17 +164,11 @@ local make_on_attach = function(overrides)
     end
 
     if opts.inlay and client.server_capabilities.inlayHintProvider then
-      vim.api.nvim_create_autocmd(
+      vim.api.nvim_buf_attach(
+        bufnr,
+        false,
         {
-          'BufEnter',
-          'TextChanged',
-          'InsertLeave',
-        },
-        {
-          desc = 'Display inlay hints',
-          group = augroup(),
-          buffer = bufnr,
-          callback = function()
+          on_lines = function()
             require('plugin.inlay').refresh()
           end,
         }
