@@ -20,24 +20,38 @@ if [ ${clean} ]; then
 fi && \
 echo "[34mFormatting[m" && \
 cargo ${nightly} fmt --all && \
-echo "[34mChecking main[m" && \
-cargo ${nightly} check --workspace ${@} && \
-echo "[34mChecking examples[m" && \
-cargo ${nightly} check --workspace --examples ${@} && \
 if which cargo-hack > /dev/null; then
-  echo "[34mChecking features[m" && \
-  cargo ${nightly} hack --feature-powerset --workspace check ${@}
+  echo "[34mChecking main[m" && \
+  cargo ${nightly} hack --feature-powerset check --workspace ${@} && \
+  echo "[34mChecking examples[m" && \
+  cargo ${nightly} hack --feature-powerset check --workspace --examples ${@} && \
+  echo "[34mChecking tests[m" && \
+  cargo ${nightly} hack --feature-powerset check --workspace --tests ${@} && \
+  echo "[34mLinting main[m" && \
+  cargo ${nightly} hack --feature-powerset clippy --workspace ${@} && \
+  echo "[34mLinting tests[m" && \
+  cargo ${nightly} hack --feature-powerset clippy --workspace --tests ${@} && \
+  echo "[34mLinting examples[m" && \
+  cargo ${nightly} hack --feature-powerset clippy --workspace --examples ${@} && \
+  echo "[34mTesting main[m" && \
+  cargo ${nightly} hack --feature-powerset test --workspace ${@}
 else
-  echo "[33mSkipping features[m"
+  echo "[33mNot running feature powerset[m" && \
+  echo "[34mChecking main[m" && \
+  cargo ${nightly} check --workspace ${@} && \
+  echo "[34mChecking examples[m" && \
+  cargo ${nightly} check --workspace --examples ${@} && \
+  echo "[34mChecking examples[m" && \
+  cargo ${nightly} check --workspace --tests ${@} && \
+  echo "[34mLinting main[m" && \
+  cargo ${nightly} clippy --workspace ${@} && \
+  echo "[34mLinting tests[m" && \
+  cargo ${nightly} clippy --workspace --tests ${@} && \
+  echo "[34mLinting examples[m" && \
+  cargo ${nightly} clippy --workspace --examples ${@} && \
+  echo "[34mTesting main[m" && \
+  cargo ${nightly} test --workspace ${@}
 fi && \
-echo "[34mLinting main[m" && \
-cargo ${nightly} clippy --workspace ${@} && \
-echo "[34mLinting tests[m" && \
-cargo ${nightly} clippy --workspace --tests ${@} && \
-echo "[34mLinting examples[m" && \
-cargo ${nightly} clippy --workspace --examples ${@} && \
-echo "[34mTesting main[m" && \
-cargo ${nightly} test --workspace ${@} && \
 if [ "${run}" ]; then
   echo "[34mRunning[m" && \
   cargo ${nightly} run ${@}
