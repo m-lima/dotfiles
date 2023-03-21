@@ -51,7 +51,7 @@ highlight clear SignColumn
 highlight DiffAdd      guifg=#87ff5f ctermfg=119  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
 highlight DiffChange   guifg=#51a0cf ctermfg=74   guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
 highlight DiffDelete   guifg=#df5f5f ctermfg=167  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-highlight link DiffText DiffDelete
+highlight DiffText     guifg=NONE    ctermfg=NONE guibg=#800080 ctermbg=90   gui=NONE cterm=NONE
 
 """ Highlights
 highlight ColorColumn  guifg=NONE    ctermfg=NONE guibg=#3a3a3a ctermbg=237  gui=NONE cterm=NONE " Too long of a line
