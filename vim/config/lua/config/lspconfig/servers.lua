@@ -31,7 +31,32 @@ local setup = function()
   register('pyright')
   register('hls')
   register('gopls')
-  register('tsserver')
+  register('tsserver', {
+    settings = {
+      typescript = {
+        inlayHints = {
+          includeInlayParameterNameHints = 'all',
+          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = true,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        }
+      },
+      javascript = {
+        inlayHints = {
+          includeInlayParameterNameHints = 'all',
+          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = true,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        }
+      }
+    }
+  })
 
   register('rust_analyzer',
     {
@@ -156,7 +181,6 @@ local setup = function()
                       and json.executable ~= nil
                       and (not name or string.find(json.executable, name))
                   then
-
                     local run_args
                     if is_test then
                       run_args = arguments.args.executableArgs
