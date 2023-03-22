@@ -42,6 +42,8 @@ local extract_virtual_text = function(value, root, ctx)
       for _, l in ipairs(value.label) do
         label = label .. l.value
       end
+    elseif type(value.label) == 'string' then
+      label = value.label
     else
       return nil
     end
