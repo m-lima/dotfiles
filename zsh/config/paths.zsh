@@ -26,13 +26,6 @@ then
     export PATH="${GOPATH}/bin${PATH+:$PATH}"
   fi
 
-  # Sdkman
-  if [ -s "${HOME}/.sdkman/bin/sdkman-init.sh" ]
-  then
-    export SDKMAN_DIR="${HOME}/.sdkman"
-    source "${SDKMAN_DIR}/bin/sdkman-init.sh"
-  fi
-
   # Haskel
   if [ -s "${HOME}/.ghcup/env" ]
   then
@@ -52,3 +45,11 @@ then
   # This is not just for precedence, but it is also used as a marker later on
   export PATH="${HOME}/bin${PATH+:$PATH}"
 fi
+
+# Sdkman (safe to call multiple times)
+if [ -s "${HOME}/.sdkman/bin/sdkman-init.sh" ]
+then
+  export SDKMAN_DIR="${HOME}/.sdkman"
+  source "${SDKMAN_DIR}/bin/sdkman-init.sh"
+fi
+
