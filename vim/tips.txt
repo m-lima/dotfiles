@@ -8,3 +8,6 @@
 
 # Write message output to buffer
 :redir @">|silent hi|redir END|vnew|put
+
+# Navigate help docs
+<C-]>
