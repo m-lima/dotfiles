@@ -141,8 +141,43 @@ local display_var_name = function(enabled)
   end
 end
 
+local debug = function()
+  local buf = vim.api.nvim_get_current_buf();
+
+  local params = {
+    range = {
+      start = {
+        character = 0,
+        line = 0,
+      },
+    },
+    textDocument = {
+      uri = vim.uri_from_bufnr(buf),
+    },
+  }
+
+  params.range['end'] = {
+    character = 0,
+    line = vim.api.nvim_buf_line_count(buf),
+  }
+
+  vim.lsp.buf_request(
+    buf,
+    'textDocument/inlayHint',
+    params,
+    function(err, res, ctx)
+      if res then
+        require('util').float.show({ params = params, res = res })
+      else
+        require('util').float.show({ params = params, err = err })
+      end
+    end
+  )
+end
+
 return {
   refresh = refresh,
   set_hl_group = set_hl_group,
   display_var_name = display_var_name,
+  debug = debug,
 }
