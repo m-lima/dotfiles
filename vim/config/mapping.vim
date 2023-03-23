@@ -123,9 +123,3 @@ endif
 " Copy file name to clipboard
 nnoremap gyf <cmd>let @+=expand('%:p:~')<CR>
 nnoremap gyF <cmd>let @+=expand('%:p:.')<CR>
-
-""" Completion navigation overload
-" TODO: Make this more sensible to my expectations
-inoremap <expr> <TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-" inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"
