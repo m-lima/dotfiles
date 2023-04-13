@@ -1,0 +1,26 @@
+#!/bin/bash
+
+case "${1}" in
+  r|rust)
+    evcxr
+    ;;
+  l|lua)
+    luajit
+    ;;
+  n|node)
+    node
+    ;;
+  p|python)
+    python3
+    ;;
+  *)
+    echo "No REPL started" >&2
+    echo "Usage:" >&2
+    echo "	`basename ${0}` <REPL>" >&2
+    echo "	REPL:" >&2
+    echo "		r, rust		evcxr" >&2
+    echo "		l, lua		luajit" >&2
+    echo "		n, node		node" >&2
+    echo "		p, python	python3" >&2
+    ;;
+esac
