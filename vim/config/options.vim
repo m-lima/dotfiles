@@ -80,13 +80,6 @@ set updatetime=400
 " Show suggestions on top
 set wildmenu
 
-" File types
-augroup optionsFileTypes
-  autocmd!
-  autocmd BufRead,BufNewFile *.cl set filetype=c
-  autocmd BufRead,BufNewFile *.zig set filetype=zig
-augroup END
-
 " UTF
 set encoding=utf-8
 
