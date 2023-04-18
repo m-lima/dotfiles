@@ -183,7 +183,7 @@ function! s:toggle_nerdtree()
   endif
 endfunction
 
-nnoremap <silent> <Leader>n :call <SID>toggle_nerdtree()<CR>
+nnoremap <silent> <leader>n :call <SID>toggle_nerdtree()<CR>
 let NERDTreeMinimalUI=1
 
 augroup pluginsNERDTree
@@ -211,16 +211,16 @@ augroup pluginsNERDTree
 augroup END
 
 """ Fugitive
-nnoremap <silent> <Leader>gb :Git blame<CR>
+nnoremap <silent> <leader>gb :Git blame<CR>
 
 """ GitGutter
 let g:gitgutter_map_keys = 0 " Disable default mappings
-nnoremap <silent> <Leader>gg :GitGutterToggle<CR>
-nnoremap <silent> <Leader>gs :GitGutterStageHunk<CR>
-nnoremap <silent> <Leader>gu :GitGutterUndoHunk<CR>
-nnoremap <silent> <Leader>gp :GitGutterPreviewHunk<CR>
-nnoremap <silent> <Leader>gl :GitGutterQuickFix<CR>:copen<CR>
-nnoremap <silent> <Leader>gf :GitGutterFold<CR>
+nnoremap <silent> <leader>gg :GitGutterToggle<CR>
+nnoremap <silent> <leader>gs :GitGutterStageHunk<CR>
+nnoremap <silent> <leader>gu :GitGutterUndoHunk<CR>
+nnoremap <silent> <leader>gp :GitGutterPreviewHunk<CR>
+nnoremap <silent> <leader>gl :GitGutterQuickFix<CR>:copen<CR>
+nnoremap <silent> <leader>gf :GitGutterFold<CR>
 nnoremap <silent> ]g         :GitGutterNextHunk<CR>
 nnoremap <silent> [g         :GitGutterPrevHunk<CR>
 

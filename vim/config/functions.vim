@@ -37,9 +37,9 @@ endfunction
 highlight OverLength ctermbg=darkred guibg=#A00000
 
 " Map to a short hand
-nnoremap <silent> <Leader>ww :call <SID>highlightColumn()<CR>
-nnoremap <silent> <Leader>wq :call <SID>highlightColumn(-10)<CR>
-nnoremap <silent> <Leader>we :call <SID>highlightColumn(+10)<CR>
+nnoremap <silent> <leader>ww :call <SID>highlightColumn()<CR>
+nnoremap <silent> <leader>wq :call <SID>highlightColumn(-10)<CR>
+nnoremap <silent> <leader>we :call <SID>highlightColumn(+10)<CR>
 let s:highlightingColumn = 0
 
 " Show current highlight rules for cursor
@@ -76,7 +76,7 @@ nnoremap <leader>hi :call SynStack()<CR>
 " endif
 "
 " " Map to <leader>t
-" nnoremap <silent> <Leader>t :call <SID>toggle_todo()<CR>
+" nnoremap <silent> <leader>t :call <SID>toggle_todo()<CR>
 
 " TODO: Save all buffers into context
 

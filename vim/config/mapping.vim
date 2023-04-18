@@ -40,10 +40,10 @@ vnoremap <silent> <C-h> :m '>+1<CR>gv
 vnoremap <silent> <C-l> :m '<-2<CR>gv
 
 " Remove the search highlights
-nnoremap <silent> <Leader>h :noh<CR>
+nnoremap <silent> <leader>h :noh<CR>
 
 " Lock the cursor to the middle of the screen
-nnoremap <silent> <Leader>z :let &scrolloff=999-&scrolloff<CR>
+nnoremap <silent> <leader>z :let &scrolloff=999-&scrolloff<CR>
 
 " More sensible scrolling
 noremap <C-E> 5<C-E>
@@ -74,10 +74,7 @@ nnoremap L $
 vnoremap L $
 
 " Toggle relative numbering
-noremap <Leader>l :set rnu!<CR>
-
-" Make asterisk case-sensitive and not move
-nnoremap <silent> * <cmd>let @/='\C\<' . expand('<cword>') . '\>'<CR>nN
+noremap <leader>l :set rnu!<CR>
 
 " Global modify
 nnoremap <leader>c :%s//gc<LEFT><LEFT><LEFT>
