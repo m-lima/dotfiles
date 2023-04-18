@@ -97,17 +97,13 @@ nnoremap <silent> g, :resize -5<CR>
 nnoremap <silent> g. :resize +5<CR>
 nnoremap <silent> g/ :vertical resize +5<CR>
 
-if has('macunix')
-  " Get a proper delete on Mac
-  imap <C-d> <Del>
-elseif has('unix')
-  " Mapping crude mouse wheel escape codes
-  inoremap <Esc>[62~ <C-X><C-E>
-  inoremap <Esc>[63~ <C-X><C-Y>
-  nnoremap <Esc>[62~ <C-E>
-  nnoremap <Esc>[63~ <C-Y>
-endif
+" Incompatible with idea
+if !has('ide')
 
-" Copy file name to clipboard
-nnoremap gyf <cmd>let @+=expand('%:p:~')<CR>
-nnoremap gyF <cmd>let @+=expand('%:p:.')<CR>
+  " Make asterisk case-sensitive and not move
+  nnoremap <silent> * <cmd>let @/='\C\<' . expand('<cword>') . '\>'<CR>nN
+
+  " Copy file name to clipboard
+  nnoremap gyf <cmd>let @+=expand('%:p:~')<CR>
+  nnoremap gyF <cmd>let @+=expand('%:p:.')<CR>
+endif
