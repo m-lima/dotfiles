@@ -37,8 +37,8 @@ set splitright
 set splitbelow
 
 " Leader mapping
-let g:mapleader = ' '
-let g:maplocalleader = ','
+let mapleader = ' '
+let maplocalleader = ','
 
 " Mouse support
 set mouse=a
@@ -91,17 +91,11 @@ augroup END
 set encoding=utf-8
 
 " Netrw (folder view)
-let g:netrw_banner = 0
-
-" Personal help files
-augroup optionsHelpFile
-  autocmd!
-  autocmd BufRead *.help set tw=78 ts=8 ft=help norl
-augroup END
+let netrw_banner = 0
 
 " Pyenv root
 if filereadable(expand('$HOME/code/python/env/vim/bin/python'))
-  let g:python3_host_prog = expand('$HOME/code/python/env/vim/bin/python')
+  let python3_host_prog = expand('$HOME/code/python/env/vim/bin/python')
 endif
 
 " Allow stepping away from buffer without saving
