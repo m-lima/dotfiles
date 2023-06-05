@@ -72,7 +72,7 @@ local extract_virtual_text = function(value, root, ctx)
     end
 
     return {
-      mark,
+      mark or { ': ', hl_mark },
       { label:sub(3), hl_type },
     }
   elseif label:find(' -> ', 1, true) == 1 then
