@@ -62,6 +62,7 @@ noremap <silent> [t gT
 " Navigate through buffers
 noremap <expr><silent> ]B '<cmd>' . v:count . 'bn<CR>'
 noremap <expr><silent> [B '<cmd>' . v:count . 'bp<CR>'
+noremap <silent> [vb <cmd>vs #<CR>
 
 " Close buffer
 " TODO: This is broken (when using NERDTree at least)
