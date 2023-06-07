@@ -64,10 +64,10 @@ set smarttab
 set scrolloff=4
 
 " Timeout length for command sequences
-set timeoutlen=400
+set timeoutlen=600
 
 " Timeout for update (e.g. CursorHold)
-set updatetime=400
+set updatetime=500
 
 " Show suggestions on top
 set wildmenu
