@@ -19,6 +19,12 @@ require('lualine').setup({
       {
         'diagnostics',
         sources = { 'nvim_lsp' },
+        symbols = {
+          error = ' ',
+          warn = ' ',
+          info = ' ',
+          hint = ' ',
+        },
       },
       require('config.lualine.components.git-status'),
     },
