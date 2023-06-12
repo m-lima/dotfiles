@@ -189,6 +189,30 @@ if has('nvim-0.8')
   highlight! link @text.todo    Todo
 endif
 
+" LSP Semantic Tokens
+if has('nvim-0.9')
+  highlight! link @lsp.type.class         @structure
+  highlight! link @lsp.type.decorator     @function
+  highlight! link @lsp.type.enum          @structure
+  highlight! link @lsp.type.enumMember    @constant
+  highlight! link @lsp.type.function      @function
+  highlight! link @lsp.type.interface     @type
+  highlight! link @lsp.type.macro         @constant.macro
+  highlight! link @lsp.type.method        @method
+  highlight! link @lsp.type.namespace     @namespace
+  highlight! link @lsp.type.parameter     @parameter
+  highlight! link @lsp.type.property      @property
+  highlight! link @lsp.type.struct        @structure
+  highlight! link @lsp.type.type          @type
+  highlight! link @lsp.type.typeParameter @parameter
+  highlight! link @lsp.type.variable      @variable
+
+  highlight! link @lsp.mod.constant       @constant
+  highlight @lsp.mod.declaration.rust     gui=bold cterm=bold
+
+  highlight DiagnosticUnnecessary guifg=#606060 ctermfg=240
+endif
+
 " QuickScope
 highlight! link QuickScopePrimary   Visual
 highlight! link QuickScopeSecondary Search
