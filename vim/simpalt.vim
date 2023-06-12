@@ -157,6 +157,8 @@ if has('nvim-0.8')
   highlight @namespace                         guifg=#4ec9b0 ctermfg=77  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
   highlight @constructor                       guifg=#4ec9b0 ctermfg=77  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
   highlight @type                              guifg=#009980 ctermfg=72  guibg=NONE ctermbg=NONE gui=BOLD   cterm=BOLD
+  highlight @structure                         guifg=#8ccbfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+  highlight @label                             guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
   highlight @string.regex                      guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
   highlight @string                            guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
   highlight @character                         guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
@@ -169,8 +171,6 @@ if has('nvim-0.8')
   highlight @parameter.reference               guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
   highlight @field                             guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
   highlight @property                          guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-  highlight @label                             guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-  highlight @structure                         guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
   highlight @variable                          guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
   highlight @variable.builtin                  guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
   highlight @include                           guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
@@ -208,9 +208,10 @@ if has('nvim-0.9')
   highlight! link @lsp.type.variable      @variable
 
   highlight! link @lsp.mod.constant       @constant
-  highlight @lsp.mod.declaration.rust     gui=bold cterm=bold
 
-  highlight DiagnosticUnnecessary guifg=#606060 ctermfg=240
+  highlight @lsp.mod.declaration          gui=BOLD cterm=BOLD
+
+  highlight DiagnosticUnnecessary         guifg=#606060 ctermfg=240
 endif
 
 " QuickScope
