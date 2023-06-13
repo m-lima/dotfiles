@@ -26,7 +26,7 @@ shell:
   args:
     - -l
     - -c
-    - tmux
+    - TERM=alacritty-direct tmux
 
 ### On paths ###
 ## For alacritty:
