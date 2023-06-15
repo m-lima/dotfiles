@@ -84,7 +84,7 @@ highlight String         guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=N
 highlight Boolean        guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
 highlight Keyword        guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
 highlight Tag            guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
-highlight Define         guifg=#4ec9b0 ctermfg=77  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight Define         guifg=#4ec9b0 ctermfg=79  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
 highlight Identifier     guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
 highlight Label          guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
 highlight Structure      guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
@@ -152,11 +152,11 @@ if has('nvim-0.8')
   highlight @tag                               guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
   highlight @text.title                        guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=BOLD   cterm=BOLD
   highlight @text.strong                       guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=BOLD   cterm=BOLD
-  highlight @constant.macro                    guifg=#4ec9b0 ctermfg=77  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-  highlight @attribute                         guifg=#4ec9b0 ctermfg=77  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-  highlight @namespace                         guifg=#4ec9b0 ctermfg=77  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-  highlight @constructor                       guifg=#4ec9b0 ctermfg=77  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
-  highlight @type                              guifg=#009980 ctermfg=72  guibg=NONE ctermbg=NONE gui=BOLD   cterm=BOLD
+  highlight @constant.macro                    guifg=#4ec9b0 ctermfg=79  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+  highlight @attribute                         guifg=#4ec9b0 ctermfg=79  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+  highlight @namespace                         guifg=#4ec9b0 ctermfg=79  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+  highlight @constructor                       guifg=#4ec9b0 ctermfg=79  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+  highlight @type                              guifg=#009980 ctermfg=36  guibg=NONE ctermbg=NONE gui=BOLD   cterm=BOLD
   highlight @structure                         guifg=#8ccbfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
   highlight @label                             guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
   highlight @string.regex                      guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
@@ -227,9 +227,9 @@ endif
 highlight CmpItemAbbrMatch       guifg=#569cd6 ctermfg=74  guibg=NONE ctermbg=NONE gui=BOLD cterm=BOLD
 highlight CmpItemKindEvent       guifg=#87afaf ctermfg=103 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 highlight CmpItemKindText        guifg=#9c50a0 ctermfg=133 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-highlight CmpItemKindType        guifg=#009980 ctermfg=72  guibg=NONE ctermbg=NONE gui=NONE cterm=NONE " Matching @type without BOLD
+highlight CmpItemKindType        guifg=#009980 ctermfg=36  guibg=NONE ctermbg=NONE gui=NONE cterm=NONE " Matching @type without BOLD
 highlight CmpItemKindUnit        guifg=#909090 ctermfg=245 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-highlight CmpItemKindSnippet     guifg=#afd7af ctermfg=245 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight CmpItemKindSnippet     guifg=#afd7af ctermfg=151 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
 highlight! link CmpItemKindClass         CmpItemKindType
 highlight! link CmpItemKindEnum          CmpItemKindType
