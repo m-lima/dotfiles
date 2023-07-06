@@ -278,3 +278,31 @@ break-pane
 
 # To look into a window from another session
 link-window -s <WINDOW>
+
+##################################################
+# Kubectl
+##################################################
+
+# Edit and apply changes to a deployment
+kubectl edit deployment \
+  --namespace ${NAMESPACE} \
+  ${DEPLOYMENT}
+
+# Refresh an existing deployed pod
+kubectl delete pod \
+  --namespace ${NAMESPACE} \
+  ${POD}
+
+# Filer kubectl output on a label and sort
+kubectl get pods \
+  --namespace ${NAMESPACE} \
+  --selector ${LABEL_NAME}=${LABEL_VALUE} \
+  --sort-by '.metadata.creationTimestamp'
+
+# Using jq to massage the values
+kubectl get pods \
+  --namespace ${NAMESPACE} \
+  --selector ${LABEL_NAME}=${LABEL_VALUE} \
+  --sort-by '.metadata.creationTimestamp' \
+  --output json \
+  | jq -r '[.items[] | { name: .metadata.name, created: .metadata.creationTimestamp }] | sort_by(.created) | last | .name'
