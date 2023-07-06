@@ -31,6 +31,12 @@ pw() {
   [ $SIMPALT_SMALL ] && unset SIMPALT_SMALL || SIMPALT_SMALL='ON'
 }
 
+### kubectl
+if command -v kubectl &> /dev/null
+then
+  alias k=kubectl
+fi
+
 ### Git stuff
 ## Matching nushell
 # Branch
