@@ -157,7 +157,7 @@ if has('nvim-0.8')
   highlight @namespace                         guifg=#4ec9b0 ctermfg=79  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
   highlight @constructor                       guifg=#4ec9b0 ctermfg=79  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
   highlight @type                              guifg=#009980 ctermfg=36  guibg=NONE ctermbg=NONE gui=BOLD   cterm=BOLD
-  highlight @structure                         guifg=#8ccbfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
+  highlight @structure                         guifg=#009980 ctermfg=36  guibg=NONE ctermbg=NONE gui=BOLD   cterm=BOLD
   highlight @label                             guifg=#9cdcfe ctermfg=117 guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
   highlight @string.regex                      guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
   highlight @string                            guifg=#6a9955 ctermfg=65  guibg=NONE ctermbg=NONE gui=NONE   cterm=NONE
@@ -208,8 +208,6 @@ if has('nvim-0.9')
   highlight! link @lsp.type.variable      @variable
 
   highlight! link @lsp.mod.constant       @constant
-
-  highlight @lsp.mod.declaration          gui=BOLD cterm=BOLD
 
   highlight DiagnosticUnnecessary         guifg=#606060 ctermfg=240
 endif
