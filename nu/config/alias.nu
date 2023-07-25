@@ -21,28 +21,28 @@ module aliases {
     let clipwd = if not (which clip | is-empty) {
       if not (which paste | is-empty) {
         [
-          'export alias cpwd = ($env.PWD | clip | null)'
+          'export def cpwd [] { $env.PWD | clip | null }'
           'export alias ppwd = cd (paste)'
         ]
       } else {
         [
-          'export alias cpwd = ($env.PWD | clip | null)'
+          'export def cpwd [] { $env.PWD | clip | null }'
           'export alias ppwd = cd (clip)'
         ]
       }
     } else if $nu.os-info.name == 'macos' {
       [
-        'export alias cpwd = ($env.PWD | pbcopy | null)'
+        'export def cpwd [] { $env.PWD | pbcopy | null }'
         'export alias ppwd = cd (pbpaste)'
       ]
     } else if not (which xclip | is-empty) {
       [
-        'export alias cpwd = ($env.PWD | xclip -se c | null)'
+        'export def cpwd [] { $env.PWD | xclip -se c | null }'
         'export alias ppwd = cd (xclip -o -se c)'
       ]
     } else {
       [
-        ('export alias cpwd = ($env.PWD | save --force ' + ([$nu.temp-path $env.USER] | path join))
+        ('export def cpwd [] { $env.PWD | save --force ' + ([$nu.temp-path $env.USER] | path join) + '}')
         ('export alias ppwd = cd (' + ([$nu.temp-path $env.USER] | path join)) +')')
       ]
     };
