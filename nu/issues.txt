@@ -1,0 +1,10 @@
+- tmux does not capture the name of the running process (due to my fault, though)
+- CTRL-SHIFT-R not working (nu is able to receive it, but not trigger the associated mapping)
+- Lack of incremental history search
+- Weird sizing when tmux changes the size of the pane
+- CTRL-J nor working on windows over ssh
+- Aliases are a bit of a hack to accommodate the fact you can't have an alias definition inside an `if`
+- TAB does not complete until the largest common match (very used to it from zsh. Also useful when there is only one match left)
+- VIM (not neovim) does not change the cursor (insert vs normal)
+- Plugin manager (can really help to avoid having a duplicate zsh and nu scripts to load nali, simaplt, etc)
+- When nesting ZSH inside NVIM inside NUSHELL, the TERM does not work properly (newlines and such)
