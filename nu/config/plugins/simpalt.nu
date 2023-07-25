@@ -10,7 +10,7 @@ export-env {
       print $'Check (ansi blue)https://github.com/m-lima/simpalt-rs/releases(ansi reset) for the latest version'
     }
 
-    let simpalt_host = if 'SIMPALT_HOST' in (env).name {
+    let simpalt_host = if 'SIMPALT_HOST' in $env {
       $env.SIMPALT_HOST
     } else {
       ''

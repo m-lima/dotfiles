@@ -1,7 +1,7 @@
 # Nushell Config File
 
 # Check for successful env.nu execution
-if 'ALIASES_LOADED' in (env).name {
+if 'ALIASES_LOADED' in $env {
   hide-env ALIASES_LOADED
 } else {
   '' | save --force ~/.config/m-lima/nu/alias.gen.nu

@@ -83,7 +83,7 @@ def fd_completer [args] {
       return
     }
 
-    let entry = try {
+    let entry = (try {
       open ~/.config/m-lima/fd/config
       | lines
       | parse '{cmd}:{path}'
@@ -91,7 +91,7 @@ def fd_completer [args] {
       | first
     } catch {
       return
-    }
+    })
 
     let path = if $path == null {
       ''

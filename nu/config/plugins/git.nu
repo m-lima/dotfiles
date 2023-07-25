@@ -72,7 +72,7 @@ export def gfm [
 }
 
 def remotes [] {
-  let repo = do -i {git rev-parse --absolute-git-dir | str trim}
+  let repo = (do -i {git rev-parse --absolute-git-dir | str trim})
   if not ($repo | is-empty) {
     cd ([$repo, 'refs', 'remotes'] | path join)
     ls
@@ -104,7 +104,7 @@ export def bdg [steps?: int@branch_history] {
     }
   }
 
-  let repo = do -i {git rev-parse --absolute-git-dir | str trim}
+  let repo = (do -i {git rev-parse --absolute-git-dir | str trim})
   if ($repo | is-empty) {
     error make -u {
       msg: 'Not a git repository'
@@ -144,7 +144,7 @@ export def bdg [steps?: int@branch_history] {
 }
 
 def branch_history [] {
-  let repo = do -i {git rev-parse --absolute-git-dir | str trim}
+  let repo = (do -i {git rev-parse --absolute-git-dir | str trim})
   if not ($repo | is-empty) {
     [$repo, 'logs', 'HEAD']
     | path join
