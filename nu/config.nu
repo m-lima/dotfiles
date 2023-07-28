@@ -291,7 +291,7 @@ let-env config = {
             description_text: yellow
         }
         source: { |buffer, position|
-            let start = ( $buffer | str substring $',($position)' )
+            let start = ( $buffer | str substring ..$position )
             history
             | get command
             | where {|it| $it | str starts-with $start}
@@ -337,8 +337,8 @@ let-env config = {
             description_text: yellow
         }
         source: { |buffer, position|
-            let index = ( $buffer | str substring $',($position)' | str index-of -e ' ' ) + 1
-            let last = ( $buffer | str substring $'($index),($position)' )
+            let index = ( $buffer | str substring ..$position | str index-of -e ' ' ) + 1
+            let last = ( $buffer | str substring $index..$position )
             $nu.scope.commands
             | where name =~ $last
             | each { |it|
@@ -388,8 +388,8 @@ let-env config = {
             description_text: yellow
         }
         source: { |buffer, position|
-            let index = ( $buffer | str substring $',($position)' | str index-of -e ' ' ) + 1
-            let last = ( $buffer | str substring $'($index),($position)' )
+            let index = ( $buffer | str substring ..$position | str index-of -e ' ' ) + 1
+            let last = ( $buffer | str substring $index..$position )
             history
             | last
             | get command
