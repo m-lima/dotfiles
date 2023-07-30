@@ -1,6 +1,6 @@
 font:
   normal:
-    family: DejaVuSansMono Nerd Font Mono
+    family: DejaVuSansM Nerd Font Mono
 
 key_bindings:
   - { key: N, mods: Super,       action: CreateNewWindow }
