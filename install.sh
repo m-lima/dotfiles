@@ -760,6 +760,16 @@ then
   installFile s config/bat/config `batcat --config-dir`
 fi
 
+if [ $(command -v cargo) ]
+then
+  if [ -n "${CARGO_HOME}" ]
+  then
+    installFile s cargo/config.toml "${CARGO_HOME}"
+  else
+    installFile s cargo/config.toml "${HOME}/.cargo"
+  fi
+fi
+
 ########################################
 # Copy files
 echo "[33mCopying files..[m"
