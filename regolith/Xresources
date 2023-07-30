@@ -1,7 +1,7 @@
 ###############################
 ## i3 bar
 ###############################
-i3-wm.font: pango:JetBrains Mono Medium 9
+i3-wm.font: pango:DejaVuSansM Nerd Font Mono 9
 i3-wm.bar.position: top
 
 # Workspaces
