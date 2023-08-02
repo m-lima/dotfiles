@@ -187,6 +187,25 @@ local function parse_args(str)
   return output
 end
 
+local function close_all(pattern)
+  if not pattern or type(pattern) ~= 'string' then
+    vim.notify('Expected a pattern to match buffer names', vim.log.levels.ERROR)
+    return
+  end
+
+  local buf_nrs = vim.api.nvim_list_bufs()
+  local buffer_stack = require('plugin.buffer_stack')
+  for _, b in ipairs(buf_nrs) do
+    if vim.api.nvim_buf_is_loaded(b) then
+      local name = string.gsub(vim.fn.expand('#' .. b), vim.env.HOME, '~', 1)
+      if string.find(name, pattern) then
+        vim.notify('Deleting ' .. name)
+        buffer_stack.delete(b)
+      end
+    end
+  end
+end
+
 return {
   extract_color = extract_color,
   float = float,
@@ -194,4 +213,5 @@ return {
   map_check = map_check,
   mod = mod,
   parse_args = parse_args,
+  close_all = close_all,
 }

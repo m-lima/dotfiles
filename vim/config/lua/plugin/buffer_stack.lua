@@ -50,7 +50,7 @@ local forward = function()
   return false
 end
 
-local delete = function()
+local delete = function(bufnr)
   local bufs = vim.fn.getbufinfo({ buflisted = 1 })
 
   if #bufs < 2 then
@@ -58,7 +58,7 @@ local delete = function()
     return
   end
 
-  local bufnr = vim.api.nvim_get_current_buf()
+  bufnr = bufnr or vim.api.nvim_get_current_buf()
   local modified = vim.bo.modified
 
   if not backward() then
