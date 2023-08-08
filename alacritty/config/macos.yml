@@ -14,6 +14,9 @@ font:
 
 
 key_bindings:
+  - { key: Q, mods: Super,       action: None            }
+  - { key: W, mods: Super,       action: None            }
+  - { key: W, mods: Super|Shift, action: Quit            }
   - { key: N, mods: Super,       action: CreateNewWindow }
   - { key: N, mods: Super|Shift, command: {
         program: "/Applications/Alacritty.app/Contents/MacOS/alacritty",
