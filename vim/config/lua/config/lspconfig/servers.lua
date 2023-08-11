@@ -221,7 +221,7 @@ local setup = function()
                 nil,
                 function(err, _, _)
                   if err then
-                    vim.notify(err, vim.log.level.ERROR)
+                    vim.notify(err, vim.log.levels.ERROR)
                   end
                 end
               )
@@ -238,9 +238,11 @@ local setup = function()
                 vim.lsp.util.make_position_params(),
                 function(err, res, _)
                   if err then
-                    vim.notify(err, vim.log.level.ERROR)
-                  else
+                    vim.notify(err, vim.log.levels.ERROR)
+                  elseif res then
                     require('util').float.show_raw(res.expansion, 'rust')
+                  else
+                    vim.notify('Nil response from rust-analyzer', vim.log.levels.ERROR)
                   end
                 end
               )
