@@ -17,3 +17,8 @@ endif
 
 " Functions
 source ~/.config/m-lima/vim/functions.vim
+
+" Filetypes
+if has('nvim-0.7')
+  luafile ~/.config/m-lima/vim/filetypes.lua
+endif

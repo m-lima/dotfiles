@@ -92,7 +92,7 @@ if has('nvim')
     autocmd!
     autocmd TextYankPost * silent! lua vim.highlight.on_yank()
   augroup end
-end
+endif
 
 if has('autocmd')
   " Do not add comment when using 'o'
