@@ -28,6 +28,10 @@ local setup = function()
     features = { format = false }
   })
 
+  register('qmlls', {
+    filetypes = { 'qml', 'qmljs' },
+  })
+
   register('pyright')
   register('hls')
   register('gopls')
