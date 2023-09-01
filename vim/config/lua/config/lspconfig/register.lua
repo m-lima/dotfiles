@@ -219,13 +219,11 @@ local make_on_init = function(server)
 end
 
 local base_opts = function(server, opts)
-  return {
+  return vim.tbl_deep_extend('force', {
     capabilities = cmp_capabilities,
     on_attach = make_on_attach(opts and opts.features),
     on_init = make_on_init(server),
-    settings = opts and opts.settings,
-    one_shot = opts and opts.one_shot,
-  }
+  }, opts or {})
 end
 
 return function(server, opts, defer_init)
