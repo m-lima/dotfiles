@@ -32,6 +32,8 @@ local setup = function()
     filetypes = { 'qml', 'qmljs' },
   })
 
+  register('slint_lsp')
+
   register('pyright')
   register('hls')
   register('gopls')
