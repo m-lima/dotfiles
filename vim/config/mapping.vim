@@ -15,7 +15,7 @@ vnoremap \ <Esc>
 vnoremap <C-\> \
 
 " Configure term "quit insert mode"
-if has("nvim")
+if has('nvim')
   tnoremap <C-\> <C-\><C-n>
 endif
 
@@ -34,8 +34,8 @@ nnoremap U O<Esc>
 nnoremap K o<Esc>
 
 " Move text
-nnoremap <silent> <C-h> <cmd>m .+1<CR>
-nnoremap <silent> <C-l> <cmd>m .-2<CR>
+nnoremap <silent> <C-h> :m .+1<CR>
+nnoremap <silent> <C-l> :m .-2<CR>
 vnoremap <silent> <C-h> :m '>+1<CR>gv
 vnoremap <silent> <C-l> :m '<-2<CR>gv
 
@@ -60,13 +60,13 @@ noremap <silent> ]t gt
 noremap <silent> [t gT
 
 " Navigate through buffers
-noremap <expr><silent> ]B '<cmd>' . v:count . 'bn<CR>'
-noremap <expr><silent> [B '<cmd>' . v:count . 'bp<CR>'
-noremap <silent> [vb <cmd>vs #<CR>
+noremap <expr><silent> ]B ':' . v:count . 'bn<CR>'
+noremap <expr><silent> [B ':' . v:count . 'bp<CR>'
+noremap <silent> [vb :vs #<CR>
 
 " Close buffer
 " TODO: This is broken (when using NERDTree at least)
-noremap <expr><silent> ][B expand('#') ? '<cmd>b #<CR><cmd>bwipe #<CR>' : '<cmd>bp<CR><cmd>bwipe #<CR>'
+noremap <expr><silent> ][B expand('#') ? ':b #<CR>:bwipe #<CR>' : ':bp<CR>:bwipe #<CR>'
 
 " I hate using ^ and $
 nnoremap H ^
@@ -102,9 +102,9 @@ nnoremap <silent> g/ :vertical resize +5<CR>
 if !has('ide')
 
   " Make asterisk case-sensitive and not move
-  nnoremap <silent> * <cmd>let @/='\C\<' . expand('<cword>') . '\>'<CR>nN
+  nnoremap <silent> * :let @/='\C\<' . expand('<cword>') . '\>'<CR>nN
 
   " Copy file name to clipboard
-  nnoremap gyf <cmd>let @+=expand('%:p:~')<CR>
-  nnoremap gyF <cmd>let @+=expand('%:p:.')<CR>
+  nnoremap gyf :let @+=expand('%:p:~')<CR>
+  nnoremap gyF :let @+=expand('%:p:.')<CR>
 endif
