@@ -746,6 +746,9 @@ fi
 
 installFile s scripts/scaffpp bin
 installFile s scripts/scaffjs bin
+installFile s scripts/cargo-all bin
+installFile s scripts/rg-comment bin
+installFile s scripts/rpl bin
 
 if [[ "${SYS_TYPE}" == "Android" ]]
 then
