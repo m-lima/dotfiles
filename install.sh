@@ -651,6 +651,10 @@ fi
 checkInstall "fzf" 'git clone --depth 1 https://github.com/junegunn/fzf.git ${HOME}/code/others/fzf && "${HOME}/code/others/fzf/install" --no-fish' '[ $(command -v "fzf") ]'
 
 ########################################
+# Install rg
+checkInstall "rg" "${PACKAGE_INSTALL} ripgrep" '[ $(command -v "rg") ]'
+
+########################################
 # Create ~/bin
 echo -n "[34mChecking bin folder.. [[m"
 if [ -d "${HOME}"/bin ]
