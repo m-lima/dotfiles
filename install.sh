@@ -639,7 +639,12 @@ checkInstall "Bat" "${PACKAGE_INSTALL} bat" '[ $(command -v "bat") ] || [ $(comm
 
 ########################################
 # Install delta
-[ "${SYS_TYPE}" = "Ubuntu" ] || checkInstall "Delta" "${PACKAGE_INSTALL} git-delta" '[ $(command -v "delta") ]'
+if [ "${SYS_TYPE}" = "Ubuntu" ]
+then
+  echo '[33mIncompatible OS for delta[m check https://dandavison.github.io/delta/installation.html for manual installation'
+else
+  checkInstall "Delta" "${PACKAGE_INSTALL} git-delta" '[ $(command -v "delta") ]'
+fi
 
 ########################################
 # Install fzf
