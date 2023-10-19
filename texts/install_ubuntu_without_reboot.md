@@ -82,10 +82,15 @@ $ mkdir /mnt/root
 $ mount /dev/sdX /mnt/root
 $ rsync -a /mnt/root old-root
 $ umount /mnt/root
+```
+
+## Create new partition
+```
+# Using BTRFS as an example
 $ mkfs.btrfs -f -L root /dev/sdX
 ```
 
-## Create subvolumes
+### BTRFS: Create subvolumes
 ```
 $ mount -o ssd,noatime,space_cache,compress=zstd -t btrfs /dev/sda3 /mnt/root
 $ btrfs subvolume create /mnt/root/@
@@ -99,9 +104,13 @@ $ btrfs subvolume create /mnt/root/@var
 
 ## Replace the root mount with the targeted mount
 ```
+# Using BTRFS as an example
 $ umount /mnt/root
 $ mount -o ssd,noatime,space_cache,compress=zstd,subvol=@ -t btrfs /dev/sda3 /mnt/root
-$
+```
+
+### BTRFS: Create and mount subvolumes
+```
 $ mkdir /mnt/root/root
 $ mount -o ssd,noatime,space_cache,compress=zstd,subvol=@root -t btrfs /dev/sda3 /mnt/root/root
 $ chmod 700 /mnt/root/root
@@ -162,3 +171,143 @@ $ vi /mnt/boot/grub/grub.cfg
 ```
 $ update-grub
 ```
+
+### BTRFS: Make metadata DUP
+```
+$ btrfs balance start -mconvert=DUP /
+```
+
+# Using full-disk encryption
+
+> Reference: https://www.cyberciti.biz/security/how-to-unlock-luks-using-dropbear-ssh-keys-remotely-in-linux/
+
+This is independent from the above, and essentially a "wrapper" around it
+
+## Make sure dm_crypt is available
+```
+$ mod_info dm_crypt
+```
+
+## Install cryptsteup
+```
+$ apt install cryptsetup
+```
+
+## Install dropbear initramfs
+```
+$ apt install dropbear-initramfs
+```
+
+## Get the IP information (optional)
+```
+$ ip addr
+$ ip route
+```
+
+## Edit static IP config for dropbear (optional)
+```
+$ echo -n 'IP=<IP_ADDR>::<GATEWAY>:<SUBNET_MASK>:<HOST>' > /etc/initramfs-tools/initramfs.conf
+```
+
+> The full syntax is as follows for IPv4 and IPv6 staitc IP settings:
+> ip=<client-ip>:<server-ip>:<gw-ip>:<netmask>:<hostname>:<device>:<autoconf>:<dns-server-0-ip>:<dns-server-1-ip>:<ntp0-ip>
+
+## Edit dropbear paramenters
+In `/etc/dropbear/initramfs/dropbear.conf`
+```
+DROPBEAR_OPTIONS="-I 120 -j -k -p <PORT>"
+```
+
+* `-I`: Disconnect session if no traffic is transmitted or received in this amount of seconds
+* `-j`: Disable ssh local port forwarding
+* `-k`: Disable ssh remote port forwarding
+* `-p`: Port to listen to
+* `-s`: Disable password logins (optional)
+* `-c`: Disregard command and always run this command (will come later)
+
+## Add authorized keys
+```
+$ cat /home/<USER>/.ssh/authorized_keys >> /etc/dropbear/initramfs/authorized_keys
+```
+
+## Encrypt the drive
+
+### Boot in recovery mode
+
+### Back up the filesystem
+```
+$ mkdir /root/snaps
+$ mount /dev/sda3 /mnt
+$ btrfs send /dev/sda3/@snapshots/_/<NAME> -f /root/snaps/_
+# Repeat for all the other subvolumes
+```
+
+### Run cryptsetup
+```
+$ cryptsetup luksFormat --type luks2 /dev/sda3
+$ cryptsetup luksOpen /dev/sda3 btrfs_crypt   # Remember this last name, it'll come later
+```
+
+### Prepare BTRFS
+```
+$ mkfs.btrfs -f -L root /dev/mapper/btrfs_crypt
+$ mount -o ssd,noatime,space_cache,compress=zstd -t btrfs /dev/sda3 /mnt
+$ btrfs subvolume create /mnt/root/@snapshots
+```
+
+### Restore the filesystem
+```
+$ btrfs receive -f /root/snaps/_ /mnt/@snapshots/@ -m /mnt
+# Repeat for all the other subvolumes
+$ btrfs subvolume snapshot @snapshots/_/<NAME> /mnt/@
+# Repeat for all the other subvolumes
+```
+
+## Chroot into the new filesystem
+```
+$ umount /mnt
+$ mount -o ssd,noatime,space_cache,compress=zstd,subvol=@ -t btrfs /dev/mapper/btrfs_crypt /mnt
+$ mount -o ssd,noatime,space_cache,compress=zstd,subvol=@root -t btrfs /dev/mapper/btrfs_crypt /mnt/root
+$ mount -o ssd,noatime,space_cache,compress=zstd,subvol=@home -t btrfs /dev/mapper/btrfs_crypt /mnt/home
+$ mount -o ssd,noatime,space_cache,compress=zstd,subvol=@<user> -t btrfs /dev/mapper/btrfs_crypt /mnt/home/<user>/
+$ mount -o ssd,noatime,space_cache,compress=zstd,subvol=@var -t btrfs /dev/mapper/btrfs_crypt /mnt/var
+$ mount -o ssd,noatime,space_cache,compress=zstd,subvol=@opt -t btrfs /dev/mapper/btrfs_crypt /mnt/opt
+$ mount /dev/sda2 /mnt/boot
+$ mount --bind /dev /mnt/dev/
+$ mount --bind /sys /mnt/sys/
+$ mount --bind /proc /mnt/proc/
+$ mount --bind /dev/pts /mnt/dev/pts/
+$ chroot /mnt
+```
+
+## Add crypttab
+```
+$ blkid
+$ echo '<crypt_name> UUID=<uuid for the root encrypted partition> none luks,discard' >> /etc/crypttab
+# Here, <crypt_name> is the same name used in `cryptsetup luksOpen`
+```
+
+## Update fstab
+```
+$ blkid
+# Replace the UUID with the new BTRFS UUID
+```
+
+## Update the boot
+```
+$ udate-grub
+$ update-initramfs -u
+```
+
+## Update initramfs
+```
+$ update-initramfs -u
+```
+
+## Reboot
+```
+$ ssh -o 'UserKnownHostsFile=/dev/null' root@<host> -p <port>
+```
+
+## Lock dropbear into cryptsetup
+Add `-c cryptroot-unlock` to `DROPBEAR_OPTIONS` in `/etc/dropbear/initramfs/dropbear.conf` and update initramfs
