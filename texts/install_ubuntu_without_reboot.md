@@ -240,6 +240,8 @@ $ mkdir /root/snaps
 $ mount /dev/sda3 /mnt
 $ btrfs send /dev/sda3/@snapshots/_/<NAME> -f /root/snaps/_
 # Repeat for all the other subvolumes
+# or
+$ for f in /mnt/*; do base=`basename $f`; src="$f/<NAME>"; dst="/root/snaps/${base}"; [ ! `ls $dst 2> /dev/null` ] && echo "$src -> $dst" && btrfs send $src -f $dst ; done
 ```
 
 ### Run cryptsetup
