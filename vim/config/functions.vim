@@ -87,26 +87,26 @@ nnoremap <leader>hi :call SynStack()<CR>
 
 " TODO: Save all buffers into context
 
-""" QML support
-" TODO: This references a plugin!! Make into a plugin?
-if executable('qmlformat')
-  function! s:formatQml()
-    let prev_view=winsaveview()
-    call system('qmlformat -i -w ' . &tabstop . ' ' . expand('%'))
-    e %
-
-    " This autocmd comes after GitGutter's autocmd
-    " This is on purpose, so that functions.vim can refer to plugins
-    " Therefore, here GitGutter gets reloaded with the formatted buffer
-    GitGutter
-    call winrestview(prev_view)
-  endfunction
-
-  augroup functionsQmlFormat
-    autocmd!
-    autocmd BufWritePost *.qml call <SID>formatQml()
-  augroup END
-endif
+" """ QML support
+" " TODO: This references a plugin!! Make into a plugin?
+" if executable('qmlformat')
+"   function! s:formatQml()
+"     let prev_view=winsaveview()
+"     call system('qmlformat -i -w ' . &tabstop . ' ' . expand('%'))
+"     e %
+"
+"     " This autocmd comes after GitGutter's autocmd
+"     " This is on purpose, so that functions.vim can refer to plugins
+"     " Therefore, here GitGutter gets reloaded with the formatted buffer
+"     GitGutter
+"     call winrestview(prev_view)
+"   endfunction
+"
+"   augroup functionsQmlFormat
+"     autocmd!
+"     autocmd BufWritePost *.qml call <SID>formatQml()
+"   augroup END
+" endif
 
 " Disabled because it breaks quickfix
 " TODO: Move it to a plugin that loads on modifiable

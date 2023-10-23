@@ -105,6 +105,7 @@ if !has('ide')
   nnoremap <silent> * :let @/='\C\<' . expand('<cword>') . '\>'<CR>nN
 
   " Copy file name to clipboard
-  nnoremap gyf :let @+=expand('%:p:~')<CR>
-  nnoremap gyF :let @+=expand('%:p:.')<CR>
+  nnoremap gyf :let @+=expand('%:p:~')<CR>:echo @+<CR>
+  nnoremap gyF :let @+=expand('%:p:.')<CR>:echo @+<CR>
+  nnoremap gyg :let @+=trim(system('git remote get-url origin')) . '/blob/master/' . expand('%:p:.')<CR>:echo @+<CR>
 endif
