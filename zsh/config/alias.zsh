@@ -92,9 +92,10 @@ alias gbpr='git reset `git merge-base master HEAD`'
 # Show remote status of branches
 unalias gbs
 function gbs {
-  local tracked gone local remote terminator
+  local tracked gone local remote terminator remotes
   local show_tracked=1 show_gone=1 show_local=1
   local show_remote='--all'
+  local trackeds=()
   case "${1}" in
     ''|-f|--full-color)
       tracked='[32m'
@@ -156,29 +157,35 @@ function gbs {
       ;;
   esac
 
-  local remotes=($(git remote show))
+  [ "${show_remote}" ] && remotes=($(git remote show)) || true
 
-  for branch in $(git branch ${show_remote} --format "%(refname:short):%(upstream)")
-  do
+  for branch in $(git branch ${show_remote} --format "%(refname:short):%(upstream)"); do
     lo=$(cut -d':' -f1 <<<"${branch}")
     re=$(cut -d':' -f2 <<<"${branch}")
-    if [ "${re}" ]
-    then
-      if git rev-parse "${re}" &>/dev/null
-      then
-        [ $show_tracked ] && echo "${tracked}${lo}${terminator}" || true
+    if [ "${re}" ]; then
+      if git rev-parse "${re}" &>/dev/null; then
+        if [ $show_tracked ]; then
+          echo "${tracked}${lo}${terminator}"
+          trackeds+="${re#refs/remotes/}"
+        fi
       else
         [ $show_gone ] && echo "${gone}${lo}${terminator}" || true
       fi
     else
       is_local=1
-      if [ $show_remote ]
-      then
-        for r in ${remotes}
-        do
-          if [[ "${lo}" == "${r}/"* ]]
-          then
-            [[ "${lo}" != "${r}/HEAD" ]] && echo "${remote}${lo}${terminator}"
+      if [ "${show_remote}" ]; then
+        for r in ${remotes}; do
+          if [[ "${lo}" == "${r}/"* ]]; then
+            if [[ "${lo}" != "${r}/HEAD" ]]; then
+              not_tracked=1
+              for t in ${trackeds}; do
+                if [[ "${lo}" == "${t}" ]]; then
+                  unset not_tracked
+                  break
+                fi
+              done
+              [ $not_tracked ] && echo "${remote}${lo}${terminator}" || true
+            fi
             unset is_local
             break
           fi
