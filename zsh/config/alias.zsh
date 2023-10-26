@@ -92,9 +92,8 @@ alias gbpr='git reset `git merge-base master HEAD`'
 # Show remote status of branches
 unalias gbs
 function gbs {
-  local tracked gone local remote terminator remotes
-  local show_tracked=1 show_gone=1 show_local=1
-  local show_remote='--all'
+  local tracked gone local remote terminator
+  local show_tracked=1 show_gone=1 show_local=1 show_remote=1
   local trackeds=()
   case "${1}" in
     ''|-f|--full-color)
@@ -157,9 +156,7 @@ function gbs {
       ;;
   esac
 
-  [ "${show_remote}" ] && remotes=($(git remote show)) || true
-
-  for branch in $(git branch ${show_remote} --format "%(refname:short):%(upstream)"); do
+  for branch in $(git branch --format "%(refname:short):%(upstream)"); do
     lo=$(cut -d':' -f1 <<<"${branch}")
     re=$(cut -d':' -f2 <<<"${branch}")
     if [ "${re}" ]; then
@@ -172,28 +169,26 @@ function gbs {
         [ $show_gone ] && echo "${gone}${lo}${terminator}" || true
       fi
     else
-      is_local=1
-      if [ "${show_remote}" ]; then
-        for r in ${remotes}; do
-          if [[ "${lo}" == "${r}/"* ]]; then
-            if [[ "${lo}" != "${r}/HEAD" ]]; then
-              not_tracked=1
-              for t in ${trackeds}; do
-                if [[ "${lo}" == "${t}" ]]; then
-                  unset not_tracked
-                  break
-                fi
-              done
-              [ $not_tracked ] && echo "${remote}${lo}${terminator}" || true
-            fi
-            unset is_local
+      [ $show_local ] && echo "${local}${lo}${terminator}" || true
+    fi
+  done
+
+  if [ "${show_remote}" ]; then
+    local remotes=($(git remote show))
+
+    for branch in $(git branch -r --format "%(refname:short)"); do
+      if [[ "${branch}" != *"/HEAD" ]]; then
+        not_tracked=1
+        for tracked in ${trackeds}; do
+          if [[ "${branch}" == "${tracked}" ]]; then
+            unset not_tracked
             break
           fi
         done
+        [ $not_tracked ] && echo "${remote}${branch}${terminator}" || true
       fi
-      [ $is_local ] && [ $show_local ] && echo "${local}${lo}${terminator}" || true
-    fi
-  done
+    done
+  fi
 }
 
 # Rebase with upstream branch (default master)
