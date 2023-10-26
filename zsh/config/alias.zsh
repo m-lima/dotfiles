@@ -92,42 +92,59 @@ alias gbpr='git reset `git merge-base master HEAD`'
 # Show remote status of branches
 unalias gbs
 function gbs {
-  local tracked gone local terminator
+  local tracked gone local remote terminator
   local show_tracked=1 show_gone=1 show_local=1
+  local show_remote='--all'
   case "${1}" in
     ''|-f|--full-color)
       tracked='[32m'
       gone='[31m'
       local='[34m'
+      remote='[35m'
       terminator='[m'
+      ;;
+    -fl|--full-color-local)
+      tracked='[32m'
+      gone='[31m'
+      local='[34m'
+      terminator='[m'
+      unset remote show_remote
       ;;
     -s|--simple-color)
       tracked='[32mT[m '
       gone='[31mG[m '
       local='[34mL[m '
+      remote='[35mR[m '
       terminator='[m'
+      ;;
+    -sl|--simple-color-local)
+      tracked='[32mT[m '
+      gone='[31mG[m '
+      local='[34mL[m '
+      terminator='[m'
+      unset remote show_remote
       ;;
     -n|--no-color)
       tracked='T '
       gone='G '
       local='L '
-      terminator=''
+      remote='R '
+      unset terminator
+      ;;
+    -nl|--no-color-local)
+      tracked='T '
+      gone='G '
+      local='L '
+      unset terminator remote show_remote
       ;;
     -t|--tracked)
-      tracked=''
-      gone=''
-      local=''
-      terminator=''
-      unset show_gone
-      unset show_local
+      unset tracked gone local remote terminator              show_gone show_local show_remote
       ;;
     -g|--gone)
-      tracked=''
-      gone=''
-      local=''
-      terminator=''
-      unset show_tracked
-      unset show_local
+      unset tracked gone local remote terminator show_tracked           show_local show_remote
+      ;;
+    -r|--remote)
+      unset tracked gone local remote terminator show_tracked show_gone show_local
       ;;
     -l|--local)
       git branch --format "%(refname:short) %(upstream)" | awk '{if (!$2) print $1;}'
@@ -139,10 +156,12 @@ function gbs {
       ;;
   esac
 
-  for branch in `git branch --format "%(refname:short):%(upstream)"`
+  local remotes=($(git remote show))
+
+  for branch in $(git branch ${show_remote} --format "%(refname:short):%(upstream)")
   do
-    lo=`cut -d':' -f1 <<<"${branch}"`;
-    re=`cut -d':' -f2 <<<"${branch}"`;
+    lo=$(cut -d':' -f1 <<<"${branch}")
+    re=$(cut -d':' -f2 <<<"${branch}")
     if [ "${re}" ]
     then
       if git rev-parse "${re}" &>/dev/null
@@ -152,7 +171,20 @@ function gbs {
         [ $show_gone ] && echo "${gone}${lo}${terminator}" || true
       fi
     else
-      [ $show_local ] && echo "${local}${lo}${terminator}" || true
+      is_local=1
+      if [ $show_remote ]
+      then
+        for r in ${remotes}
+        do
+          if [[ "${lo}" == "${r}/"* ]]
+          then
+            [[ "${lo}" != "${r}/HEAD" ]] && echo "${remote}${lo}${terminator}"
+            unset is_local
+            break
+          fi
+        done
+      fi
+      [ $is_local ] && [ $show_local ] && echo "${local}${lo}${terminator}" || true
     fi
   done
 }
