@@ -61,10 +61,8 @@ M.runner = function(cmd, cwd)
 
   t:send(cmd, false)
 
-  if new then
-    vim.api.nvim_feedkeys('A', 'n', true)
-  else
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('A<CR>', true, false, true), 'n', true)
+  if not new then
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR>', true, false, true), 'n', true)
   end
 end
 
