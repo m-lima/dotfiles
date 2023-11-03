@@ -1,0 +1,2 @@
+## Change the ID of a window
+move-window -t <ID>
