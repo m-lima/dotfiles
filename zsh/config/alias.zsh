@@ -383,6 +383,7 @@ fi
 if command -v rg &> /dev/null
 then
   alias rg='rg --smart-case'
+  alias rgc='rg -U "^\\s*//[^/][^\\n]*\\n\\s*//[^/\\n]*\\n"'
 fi
 
 ### Faster find
