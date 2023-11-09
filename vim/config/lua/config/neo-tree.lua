@@ -24,13 +24,15 @@ vim.g.neo_tree_remove_legacy_commands = 1
 require('neo-tree').setup({
   close_if_last_window = true,
   window = {
-    position = 'left',
+    position = 'right',
     width = 50,
     popup = {
-      position = {
-        row = 0,
-        col = 0,
-      },
+      position = function()
+        return {
+          row = 0,
+          col = vim.o.columns - 50,
+        }
+      end,
       border = {
         style = 'none',
       },
@@ -101,5 +103,5 @@ local map = require('util').map
 local command = require('neo-tree.command')
 
 map('n', '<leader>n',         function() command.execute({ position = 'float', toggle = true, reveal = true }) end)
-map('n', '<leader>N',         function() command.execute({ position = 'left', reveal = true }) end)
-map('n', '<leader><leader>N', function() command.execute({ action = 'show', position = 'left', toggle = true, reveal = true }) end)
+map('n', '<leader><leader>n', function() command.execute({ action = 'show', position = 'right', toggle = true, reveal = true }) end)
+map('n', '<leader>N',         function() command.execute({ position = 'right', reveal = true }) end)
