@@ -4,7 +4,7 @@ alias png='ping -c 4'
 
 ### Directory stuff
 alias lt='ls -lathr'
-alias l='ls -lah'
+alias l='ls -lAhv'
 alias ll='ls -lh'
 
 ### Vim
