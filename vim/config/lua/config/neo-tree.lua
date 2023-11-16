@@ -103,5 +103,5 @@ local map = require('util').map
 local command = require('neo-tree.command')
 
 map('n', '<leader>n',         function() command.execute({ position = 'float', toggle = true, reveal = true }) end)
-map('n', '<leader><leader>n', function() command.execute({ action = 'show', position = 'right', toggle = true, reveal = true }) end)
-map('n', '<leader>N',         function() command.execute({ position = 'right', reveal = true }) end)
+map('n', '<leader>N',         function() command.execute({ action = 'show', position = 'right', toggle = true, reveal = true }) end)
+map('n', '<leader><leader>n', function() command.execute({ position = 'right', reveal = true }) end)
