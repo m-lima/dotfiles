@@ -1,12 +1,13 @@
-local function getTelescopeOpts(state, path)
+local function build_telescope_opts(state, path)
+  path = vim.fn.fnamemodify(path, ':p:h')
   return {
     cwd = path,
     search_dirs = { path },
     attach_mappings = function(prompt_bufnr)
-      local actions = require "telescope.actions"
+      local actions = require('telescope.actions')
       actions.select_default:replace(function()
         actions.close(prompt_bufnr)
-        local action_state = require "telescope.actions.state"
+        local action_state = require('telescope.actions.state')
         local selection = action_state.get_selected_entry()
         local filename = selection.filename
         if (filename == nil) then
@@ -74,12 +75,12 @@ require('neo-tree').setup({
       telescope_find = function(state)
         local node = state.tree:get_node()
         local path = node:get_id()
-        require('telescope.builtin').find_files(getTelescopeOpts(state, path))
+        require('telescope.builtin').find_files(build_telescope_opts(state, path))
       end,
       telescope_rg = function(state)
         local node = state.tree:get_node()
         local path = node:get_id()
-        require('telescope.builtin').live_grep(getTelescopeOpts(state, path))
+        require('telescope.builtin').live_grep(build_telescope_opts(state, path))
       end,
     },
   },
