@@ -111,7 +111,7 @@ local refresh = function()
             ctx.bufnr,
             namespace,
             v.position.line,
-            v.position.character,
+            -1,
             {
               virt_text = virtual_text,
               hl_mode = 'combine'
