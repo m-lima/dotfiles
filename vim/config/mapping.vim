@@ -106,6 +106,7 @@ if !has('ide')
 
   " Copy file name to clipboard
   nnoremap gyf :let @+=expand('%:p:~')<CR>:echo @+<CR>
+  nnoremap gylf :let @+=expand('%:p:~') . ' +' . line('.')<CR>:echo @+<CR>
   nnoremap gyF :let @+=expand('%:p:.')<CR>:echo @+<CR>
   nnoremap gyg :let @+=trim(system('git remote get-url origin')) . '/blob/master/' . expand('%:p:.')<CR>:echo @+<CR>
 endif
