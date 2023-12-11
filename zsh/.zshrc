@@ -12,11 +12,11 @@ local_zshFramework=omz
 # Load local config
 source "${HOME}/.config/m-lima/zsh/local.zsh"
 
-# Load options
-source "${HOME}/.config/m-lima/zsh/options.zsh"
-
 # If using zgen, load plugins
 source "${HOME}/.config/m-lima/zsh/plugins.zsh"
+
+# Load options
+source "${HOME}/.config/m-lima/zsh/options.zsh"
 
 # Load the aliases
 source "${HOME}/.config/m-lima/zsh/alias.zsh"
