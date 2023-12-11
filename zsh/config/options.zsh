@@ -23,3 +23,6 @@ bindkey '^e' edit-command-line
 
 export HISTSIZE=100000
 export SAVEHIST=${HISTSIZE}
+
+# Disable the auto cd'ing
+unsetopt autocd
