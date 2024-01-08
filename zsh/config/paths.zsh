@@ -41,6 +41,12 @@ then
     fi
   fi
 
+  # Scala
+  if [ -d "${HOME}/Library/Application Support/Coursier/bin" ]
+  then
+    export PATH="${HOME}/Library/Application Support/Coursier/bin${PATH+:$PATH}"
+  fi
+
   # Adding local bin to the top of the PATH
   # This is not just for precedence, but it is also used as a marker later on
   export PATH="${HOME}/bin${PATH+:$PATH}"
