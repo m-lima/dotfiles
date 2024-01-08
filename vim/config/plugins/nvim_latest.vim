@@ -74,6 +74,9 @@ Plug 'mbbill/undotree'             " A local changes tracker TODO: configure (co
 Plug 'jupyter-vim/jupyter-vim'     " Integration with jupyter
 Plug 'LhKipp/nvim-nu', {'do': ':TSInstall nu'}
 
+" Testing
+source nvim_testing.vim
+
 call plug#end()
 
 """"""""""""""""""""
@@ -106,6 +109,8 @@ require('plugin.buffer_stack')
 require('plugin.dupe_comment')
 require('plugin.jupyter')
 EOF
+
+luafile ~/.config/m-lima/vim/plugins/nvim_testing.lua
 
 """"""""""""""""""""
 " Notes
