@@ -60,6 +60,28 @@ local codelldb = function()
   dap.configurations.cpp = dap.configurations.rust
 end
 
+local python = function()
+  local python_path = vim.fn.exepath('python3')
+  if python_path then
+    dap.adapters.python = {
+      type = 'executable',
+      command = python_path,
+      args = { '-m', 'debugpy.adapter' },
+      options = {
+        source_filetype = 'python',
+      },
+    }
+
+    dap.configurations.python = { {
+      name = 'Python',
+      type = 'python',
+      request = 'launch',
+      program = vim.fn.bufname,
+    } }
+  end
+end
+
 return {
   codelldb = codelldb,
+  python = python,
 }

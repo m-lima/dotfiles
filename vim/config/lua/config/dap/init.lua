@@ -1,5 +1,6 @@
 local dap = require('dap')
 require('config.dap.adapters').codelldb()
+require('config.dap.adapters').python()
 
 local map = require('util').map
 map('n', '<F2>',  dap.toggle_breakpoint)
