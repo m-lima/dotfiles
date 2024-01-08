@@ -135,10 +135,7 @@ module completions {
 use completions *
 
 # The default config record. This is where much of your global configuration is setup.
-let-env config = {
-  cd: {
-    abbreviations: false # set to true to allow you to do things like cd s/o/f and nushell expand it to cd some/other/folder
-  }
+$env.config = {
   completions: {
     algorithm: "prefix"  # prefix, fuzzy
     case_sensitive: false # set to true to enable case-sensitive completions
@@ -682,7 +679,7 @@ let-env config = {
       mode: [ emacs vi_normal vi_insert ]
       event: {
         send: ExecuteHostCommand
-        cmd: 'let-env SIMPALT_LONG = (not $env.SIMPALT_LONG); print -n ((ansi -e 'F') + (ansi -e 'J'))'
+        cmd: '$env.SIMPALT_LONG = (not $env.SIMPALT_LONG); print -n ((ansi -e 'F') + (ansi -e 'J'))'
       }
     }
     {

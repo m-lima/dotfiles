@@ -1,0 +1,26 @@
+[
+  { path: ~/.config/m-lima/nu/plugins/git.nu }
+  { path: ~/.config/m-lima/nu/plugins/nali.nu }
+  { path: ~/.config/m-lima/nu/plugins/penv.nu }
+  {
+    repo: m-lima/simpalt-rs
+    loader: simpalt.nu
+    run: {
+      let bin = (
+        cargo build --release --target-dir './target' --message-format json
+        | '[' + $in + ']'
+        | from json
+        | filter {|t| 'executable' in $t and $t.executable != null}
+        | get executable
+      )
+
+      if ($bin | length) != 1 {
+        error make {
+          msg: 'Expected one executable'
+        }
+      }
+
+      cp ($bin | first) ~/bin/.
+    }
+  }
+]

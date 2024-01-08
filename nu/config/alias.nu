@@ -68,4 +68,4 @@ module aliases {
 }
 
 use aliases
-let-env ALIASES_LOADED = true
+$env.ALIASES_LOADED = true

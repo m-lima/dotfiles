@@ -11,7 +11,7 @@ export-env {
       $env.HOOKS | upsert env_change { |hooks|
         let entry = {
           condition: {|before, after| $before != null}
-          code: {|before, after| let-env BD_HISTORY = ($env.BD_HISTORY | append $before)}
+          code: {|before, after| $env.BD_HISTORY = ($env.BD_HISTORY | append $before)}
         }
 
         let ref = ($hooks | get -i env_change.PWD)
@@ -31,7 +31,7 @@ export-env {
 }
 
 # Navigates to a preconfigured location
-export def-env fd [base?: string@fd_cmp, path?: string] {
+export def --env fd [base?: string@fd_cmp, path?: string] {
   let span = (metadata $base).span
 
   let target = if $base == null {
@@ -122,7 +122,7 @@ def fd_completer [args] {
 }
 
 # Navigates up in the directory hierarchy
-export def-env vd [
+export def --env vd [
   steps?: int@vd_cmp # How many step to move up by
 ] {
   let span = (metadata $steps).span
@@ -161,7 +161,7 @@ def vd_cmp [] {
 }
 
 # Navigates back in the directory history
-export def-env bd [
+export def --env bd [
   steps?: int@bd_cmp # How many steps to move by
 ] {
   let span = (metadata $steps).span
@@ -191,7 +191,7 @@ export def-env bd [
   }
 
   let target = ($env.BD_HISTORY | get $steps)
-  let-env BD_HISTORY = ($env.BD_HISTORY | take $steps)
+  $env.BD_HISTORY = ($env.BD_HISTORY | take $steps)
   cd $target
 }
 

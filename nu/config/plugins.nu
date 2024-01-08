@@ -1,7 +1,7 @@
 # TODO: Write a little "plugin-manager"?
 
-let-env COMPLETERS = []
-let-env HOOKS = {}
+$env.COMPLETERS = []
+$env.HOOKS = {}
 
 # Modules
 use plugins/git.nu *

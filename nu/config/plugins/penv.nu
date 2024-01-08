@@ -64,8 +64,8 @@ export def main [
       }
 
       let bin_path = ([$path, 'bin'] | path join)
-      let-env VIRTUAL_ENV = $path
-      let-env $path_var = ($env | get $path_var | prepend $bin_path)
+      $env.VIRTUAL_ENV = $path
+      $env.$path_var = ($env | get $path_var | prepend $bin_path)
       let activator = ([$bin_path, 'activate.nu'] | path join)
 
       python3 -m ensurepip
