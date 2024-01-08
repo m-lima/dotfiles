@@ -1,2 +1,2 @@
-config/transient.yml
-config/system.yml
+config/transient.toml
+config/system.toml

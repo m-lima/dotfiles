@@ -1,0 +1,6 @@
+[font]
+normal = { family = "DejaVuSansM Nerd Font Mono" }
+
+[shell]
+program = "zsh"
+args = ["-l", "-c", "TERM=alacritty-direct tmux"]

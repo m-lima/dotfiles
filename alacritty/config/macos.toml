@@ -1,35 +1,24 @@
-window:
-  decorations: buttonless
+[font]
+normal = { family = "DejaVuSansMono Nerd Font Mono", style = "Book" }
+bold = { style = "Bold" }
+bold_italic = { style = "Bold Oblique" }
+italic = { style = "Oblique" }
 
-font:
-  normal:
-    family: DejaVuSansMono Nerd Font Mono
-    style: Book
-  bold:
-    style: Bold
-  italic:
-    style: Oblique
-  bold_italic:
-    style: Bold Oblique
+[keyboard]
+bindings = [
+  { key = "Q", mods = "Super",       action = "None" },
+  { key = "W", mods = "Super",       action = "None" },
+  { key = "W", mods = "Super|Shift", action = "Quit" },
+  { key = "N", mods = "Super|Shift", command = { program = "/Applications/Alacritty.app/Contents/MacOS/alacritty", args = ["-e", "zsh", "-l"] } },
+  { key = "U", mods = "Super",       command = { program = "/Applications/Alacritty.app/Contents/MacOS/alacritty", args = ["-e", "zsh", "-l", "-c", "exec nu"] } },
+]
 
+[window]
+decorations = "buttonless"
 
-key_bindings:
-  - { key: Q, mods: Super,       action: None            }
-  - { key: W, mods: Super,       action: None            }
-  - { key: W, mods: Super|Shift, action: Quit            }
-  - { key: N, mods: Super,       action: CreateNewWindow }
-  - { key: N, mods: Super|Shift, command: {
-        program: "/Applications/Alacritty.app/Contents/MacOS/alacritty",
-        args: ["-e", "zsh", "-l" ]
-      }
-    }
-
-shell:
-  program: zsh
-  args:
-    - -l
-    - -c
-    - TERM=alacritty-direct tmux
+[shell]
+program = "zsh"
+args = ["-l", "-c", "TERM=alacritty-direct tmux"]
 
 ### On paths ###
 ## For alacritty:

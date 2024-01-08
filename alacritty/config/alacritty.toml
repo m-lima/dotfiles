@@ -1,0 +1,41 @@
+import = ["/Users/celo/.config/alacritty/system.toml", "/Users/celo/.config/alacritty/transient.toml"]
+
+[colors.primary]
+background = "#262626"
+foreground = "#839496"
+
+[colors.normal]
+black = "#333333"
+blue = "#268bd2"
+cyan = "#009aa1"
+green = "#44a400"
+magenta = "#d33682"
+red = "#dc322f"
+white = "#eee8d5"
+yellow = "#edb300"
+
+[colors.bright]
+black = "#3c3c3c"
+blue = "#5bbbff"
+cyan = "#00cac9"
+green = "#60e800"
+magenta = "#c66cc1"
+red = "#ff3a36"
+white = "#fdf6e3"
+yellow = "#fff204"
+
+[keyboard]
+bindings = [
+  { key = "Return", mods = "Super",   action = "ToggleFullscreen" },
+  { key = "N",      mods = "Super",   action = "CreateNewWindow"  },
+  { key = "Q",      mods = "Control", chars = "\u0011" },
+  { key = "Left",   mods = "Alt",     chars = "\u001Bb" },
+  { key = "Right",  mods = "Alt",     chars = "\u001Bf" },
+  { key = "Z",      mods = "Super",   command = { program = "zsh", args = ["-c", "~/.config/alacritty/toggle_font.sh"] } },
+]
+
+[window]
+dynamic_padding = true
+option_as_alt = "Both"
+dimensions = { columns = 200, lines = 60 }
+padding = { x = 3, y = 3 }
