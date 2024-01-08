@@ -2,6 +2,7 @@ local config = require('metals').bare_config()
 
 config.settings = {
   showImplicitArguments = true,
+  enableSemanticHighlighting = true,
 }
 config.init_options.statusBarProvider = 'on'
 config.capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -72,6 +73,7 @@ require('dap').configurations.scala = {
       args = function()
         return require('util').parse_args(vim.fn.input('Args: '))
       end,
+      envFile = '.env',
     },
   },
   {
@@ -80,6 +82,16 @@ require('dap').configurations.scala = {
     name = 'Test Target',
     metals = {
       runType = 'testTarget',
+      envFile = '.env',
+    },
+  },
+  {
+    type = 'scala',
+    host = '127.0.0.1',
+    port = 7857,
+    metals = {
+      runType = 'server',
+      envFile = '.env',
     },
   }
 }

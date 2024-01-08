@@ -40,6 +40,9 @@ require('lualine').setup({
     },
     lualine_x = {
       require('config.lualine.components.lsp-status'),
+      function()
+        return vim.bo.filetype == 'scala' and vim.g.metals_status or ''
+      end,
       'filetype',
       components.active_lsp,
     },
