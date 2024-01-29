@@ -197,10 +197,12 @@ function gfr {
 
   if [ $1 ]
   then
-    branch="origin/${1}"
-  elif [[ "${1}" == "-s" ]]
-  then
-    branch="origin/$(git symbolic-ref --short HEAD)"
+    if [[ "${1}" == "-s" ]]
+    then
+      branch="origin/$(git symbolic-ref --short HEAD)"
+    else
+      branch="origin/${1}"
+    fi
   else
     branch="origin/$(git_main_branch)"
   fi
