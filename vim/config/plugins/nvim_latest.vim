@@ -64,7 +64,7 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'andersevenrud/cmp-tmux'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
-Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+" Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
 
 " Misc
 Plug 'aserebryakov/vim-todo-lists' " TODO md file helper

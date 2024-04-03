@@ -16,6 +16,8 @@ export alias gsb = git status -sb
 export alias gsu = git submodule update --init --recursive
 export alias gt = git checkout
 export alias gtb = git checkout -b
+export alias gw = git switch
+export alias gwb = git switch --create
 
 # Show the tracking state of the current repository
 export def gbs [] {
