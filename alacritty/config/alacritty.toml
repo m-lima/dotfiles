@@ -1,4 +1,4 @@
-import = ["/Users/celo/.config/alacritty/system.toml", "/Users/celo/.config/alacritty/transient.toml"]
+import = ["~/.config/alacritty/system.toml", "~/.config/alacritty/transient.toml"]
 
 [colors.primary]
 background = "#262626"

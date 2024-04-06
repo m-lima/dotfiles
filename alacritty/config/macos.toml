@@ -23,13 +23,13 @@ args = ["-l", "-c", "TERM=alacritty-direct tmux"]
 ### On paths ###
 ## For alacritty:
 # If installed by homebrew, there will be a symlink made by brew which is not guaranteed to be in
-# the $PATH for all OSX installations. However, the full path is stable and independant of how
+# the $PATH for all OSX installations. However, the full path is stable and independent of how
 # alacritty was installed
 #
 ## For the shell:
 # There are three layers happening here:
 # - The outer context has no zshenv or zprofile or any shell initialization script, so it must
-# reference a bin that is always available.
+#   reference a bin that is always available.
 # - Then, inside zsh, the command will run in script mode, if used with `-c`. Therefore, ~/.zshrc
 #   is not called. However, ~/.zshenv is. This means that any tmux scripts will run within that
 #   context. It may be adviseable to have the full login shell configured before exec'ing tmux.
