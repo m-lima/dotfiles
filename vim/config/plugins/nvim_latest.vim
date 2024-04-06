@@ -64,17 +64,14 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'andersevenrud/cmp-tmux'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
-" Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
 
 " Misc
 Plug 'aserebryakov/vim-todo-lists' " TODO md file helper
 Plug 'skanehira/vsession'          " Save/load sessions TODO: Configure. I think now it keeps saving the session
 Plug 'akinsho/toggleterm.nvim'     " More usable terminal
 Plug 'mbbill/undotree'             " A local changes tracker TODO: configure (colors)
-Plug 'jupyter-vim/jupyter-vim'     " Integration with jupyter
-Plug 'LhKipp/nvim-nu', { 'do': ':TSInstall nu' }
 
-" Testing
 source ~/.config/m-lima/vim/plugins/nvim_testing.vim
 
 call plug#end()
@@ -107,7 +104,6 @@ require('config.vsession')
 require('plugin.breadcrumbs')
 require('plugin.buffer_stack')
 require('plugin.dupe_comment')
-require('plugin.jupyter')
 EOF
 
 " Testing
