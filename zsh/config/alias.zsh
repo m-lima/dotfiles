@@ -76,6 +76,10 @@ alias gsu='git submodule update --init --recursive'
 alias gt='git checkout'
 alias gtb='git checkout -b'
 
+# Switch
+alias gw='git switch'
+alias gwb='git switch --create'
+
 ## Exclusive for zsh
 # List git aliases
 alias ghelp='bat ~/.zgen/robbyrussell/oh-my-zsh-master/plugins/git/git.plugin.zsh'
