@@ -77,12 +77,12 @@ local extract_virtual_text = function(value, root, ctx)
     }
   elseif label:find(' -> ', 1, true) == 1 then
     return {
-      { ' ', hl_mark },
+      { ' ', hl_mark },
       { label:sub(5), hl_type },
     }
   else
     return {
-      { '﬋ ', hl_mark },
+      { ' ', hl_mark },
       { label, hl_type },
     }
   end

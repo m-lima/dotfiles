@@ -20,10 +20,10 @@ require('lualine').setup({
         'diagnostics',
         sources = { 'nvim_lsp' },
         symbols = {
-          error = ' ',
-          warn = ' ',
-          info = ' ',
-          hint = ' ',
+          error = ' ',
+          warn = ' ',
+          info = ' ',
+          hint = ' ',
         },
       },
       require('config.lualine.components.git-status'),
@@ -34,7 +34,7 @@ require('lualine').setup({
         path = 1,
         symbols = {
           modified = ' ',
-          readonly = ' ',
+          readonly = ' ',
         },
       },
     },
@@ -56,7 +56,7 @@ require('lualine').setup({
         path = 1,
         symbols = {
           modified = ' ',
-          readonly = ' ',
+          readonly = ' ',
         },
       },
     },

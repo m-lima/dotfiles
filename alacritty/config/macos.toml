@@ -1,8 +1,8 @@
 [font]
-normal = { family = "DejaVuSansMono Nerd Font Mono", style = "Book" }
+normal = { family = "Hack Nerd Font Mono", style = "Regular" }
 bold = { style = "Bold" }
-bold_italic = { style = "Bold Oblique" }
-italic = { style = "Oblique" }
+bold_italic = { style = "Bold Italic" }
+italic = { style = "Italic" }
 
 [keyboard]
 bindings = [
