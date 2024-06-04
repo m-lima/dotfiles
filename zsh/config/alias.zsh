@@ -91,7 +91,7 @@ alias ggal="git branch -a | tr -d \* | sed '/->/d' | xargs git grep -HI"
 alias gsti='git stash push --keep-index'
 
 # Update HEAD to track divergence point from master
-alias gbpr='git reset `git merge-base master HEAD`'
+alias gbpr='git reset $(git merge-base master HEAD)'
 
 # Show remote status of branches
 unalias gbs
@@ -199,7 +199,7 @@ function gbs {
 function gfr {
   local branch
 
-  if [ $1 ]
+  if [ "${1}" ]
   then
     if [[ "${1}" == "-s" ]]
     then
@@ -218,7 +218,7 @@ function gfr {
 function gfm {
   local branch
 
-  if [ $1 ]
+  if [ "${1}" ]
   then
     branch="origin/${1}"
   else
@@ -256,13 +256,19 @@ fi
 function penv {
   base="${HOME}/code/python/env"
 
-  if [ "$1" ]
+  if [ "${1}" ]
   then
-    if [ "$1" = "-l" ]
+    if [[ "${1}" == -* ]]
     then
-      newEnv="${PWD}/.venv"
+      if [ "${1}" = "-l" ]
+      then
+        newEnv="${PWD}/.venv"
+      else
+        echo -e "\e[31mUnknown flag\e[m ${1}"
+        return -1
+      fi
     else
-      newEnv="$1"
+      newEnv="${1}"
     fi
   else
     if [ -d "${PWD}/.venv" ]
@@ -318,7 +324,7 @@ function penv {
       echo "Virtual environment \e[1mset\e[m at \e[34m${newEnv}\e[m"
     fi
 
-    if [[ ! `which python` =~ "${newEnv}/bin/*" ]]
+    if [[ ! $(which python) =~ "${newEnv}/bin/*" ]]
     then
       echo -e "\e[31mFailed to switch virtual environment:\e[m python binary does not belong to ${newEnv})"
       deactivate
@@ -349,9 +355,9 @@ compdef _penv penv
 
 ### Dictionary
 function def {
-  if [ "$1" ]
+  if [ "${1}" ]
   then
-    local word="dict://dict.org/d:"$1
+    local word="dict://dict.org/d:${1}"
     local return=$(curl $word 2> /dev/null | grep -v '[0-9][0-9][0-9] ')
     if [ $return ]
     then
