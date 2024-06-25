@@ -86,7 +86,7 @@ def remotes [] {
 }
 
 # Navigate back in the branch history
-export def bdg [steps?: int@branch_history] {
+export def bgb [steps?: int@branch_history] {
   let span = (metadata $steps).span
 
   let steps = if $steps == null {
