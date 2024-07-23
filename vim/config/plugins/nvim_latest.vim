@@ -52,6 +52,7 @@ Plug 'williamboman/mason-lspconfig.nvim'
 
 " Debugging
 Plug 'mfussenegger/nvim-dap' " TODO: Lots!
+Plug 'nvim-neotest/nvim-nio'
 Plug 'rcarriga/nvim-dap-ui'
 
 " Completion
