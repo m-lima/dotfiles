@@ -199,9 +199,10 @@ local search_for_config = function(path, server)
     local ok, cfg = pcall(dofile, maybe_config)
     if ok then
       if type(cfg) == 'function' then
-        return cfg(server), maybe_config
-      else
-        return cfg, maybe_config
+        cfg = cfg(server)
+      end
+      if type(cfg) == 'table' and cfg[server] ~= nil then
+        return cfg[server], maybe_config
       end
     end
   end
@@ -211,7 +212,7 @@ local make_on_init = function(server)
   return function(client)
     local cfg, path = search_for_config(vim.fn.expand('%:p'), server)
     if cfg then
-      vim.notify('Loaded override from ' .. path)
+      vim.notify('Loaded override from ' .. path .. ' for ' .. server)
       client.config.settings = vim.tbl_deep_extend('force', client.config.settings, cfg)
       return true
     end
