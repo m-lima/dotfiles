@@ -232,6 +232,9 @@ local setup = function()
   }
 
   local tsserver = {
+    features = {
+      format = false,
+    },
     settings = {
       typescript = {
         inlayHints = {
@@ -242,7 +245,7 @@ local setup = function()
           includeInlayPropertyDeclarationTypeHints = true,
           includeInlayFunctionLikeReturnTypeHints = true,
           includeInlayEnumMemberValueHints = true,
-        }
+        },
       },
       javascript = {
         inlayHints = {
@@ -253,14 +256,15 @@ local setup = function()
           includeInlayPropertyDeclarationTypeHints = true,
           includeInlayFunctionLikeReturnTypeHints = true,
           includeInlayEnumMemberValueHints = true,
-        }
-      }
+        },
+      },
     }
   }
 
-  register('eslint', { features = { format = 'EslintFixAll' } })
+  register('eslint', { features = { format = false } })
   register('gopls')
   register('hls')
+  register('jdtls')
   register('kotlin_language_server')
   register('lua_ls', lua_ls)
   register('pyright')

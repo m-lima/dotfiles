@@ -77,7 +77,11 @@ local make_on_attach = function(overrides)
         inlay = true,
         extra = nil,
       },
-      overrides or {}
+      vim.tbl_deep_extend(
+        'force',
+        client.features_override or {},
+        overrides or {}
+      )
     )
 
     local augroupnr = nil
@@ -212,9 +216,18 @@ local make_on_init = function(server)
   return function(client)
     local cfg, path = search_for_config(vim.fn.expand('%:p'), server)
     if cfg then
-      vim.notify('Loaded override from ' .. path .. ' for ' .. server)
-      client.config.settings = vim.tbl_deep_extend('force', client.config.settings, cfg)
-      return true
+      local overriden = false
+      if cfg.settings ~= nil then
+        vim.notify('Loaded settings override from ' .. path .. ' for ' .. server)
+        client.config.settings = vim.tbl_deep_extend('force', client.config.settings, cfg.settings)
+        overriden = true
+      end
+      if cfg.features ~= nil then
+        vim.notify('Loaded features override from ' .. path .. ' for ' .. server)
+        client.features_override = cfg.features
+        overriden = true
+      end
+      return overriden
     end
   end
 end

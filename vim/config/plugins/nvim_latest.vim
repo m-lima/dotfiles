@@ -49,6 +49,7 @@ Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'nvimtools/none-ls.nvim'
 
 " Debugging
 Plug 'mfussenegger/nvim-dap' " TODO: Lots!
@@ -90,10 +91,11 @@ require('config.fugitive')
 require('config.gitsigns')
 require('config.lightspeed')
 require('config.lspconfig')
-require('config.lua-out')
+require('config.lua_out')
 require('config.lualine')
 require('config.mason')
-require('config.neo-tree')
+require('config.neo_tree')
+require('config.null_ls')
 require('config.project')
 require('config.telescope')
 require('config.toggleterm')
