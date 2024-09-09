@@ -196,14 +196,14 @@ if vim.fn.has('win32') == 1 or vim.fn.has('win32unix') == 1 then
 end
 local lspconfig_file = path_separator .. '.vim' .. path_separator .. 'lspconfig.lua'
 
-local search_for_config = function(path, server)
+local search_for_config = function(path, server, client)
   while path ~= path_separator and #path > 0 do
     path = string.gsub(path, '^(.*)' .. path_separator .. '.+$', '%1')
     local maybe_config = path .. lspconfig_file
     local ok, cfg = pcall(dofile, maybe_config)
     if ok then
       if type(cfg) == 'function' then
-        cfg = cfg(server)
+        cfg = cfg(client)
       end
       if type(cfg) == 'table' and cfg[server] ~= nil then
         return cfg[server], maybe_config
@@ -214,7 +214,7 @@ end
 
 local make_on_init = function(server)
   return function(client)
-    local cfg, path = search_for_config(vim.fn.expand('%:p'), server)
+    local cfg, path = search_for_config(vim.fn.expand('%:p'), server, client)
     if cfg then
       local overriden = false
       if cfg.settings ~= nil then
