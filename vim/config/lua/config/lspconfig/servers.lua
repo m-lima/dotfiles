@@ -231,7 +231,7 @@ local setup = function()
     },
   }
 
-  local tsserver = {
+  local tsls = {
     features = {
       format = false,
     },
@@ -271,7 +271,7 @@ local setup = function()
   register('qmlls', { filetypes = { 'qml', 'qmljs' }, })
   register('rust_analyzer', rust_analyzer, true)
   register('slint_lsp')
-  register('tsserver', tsserver)
+  register('ts_ls', tsls)
   register('volar', { features = { format = false } })
 end
 
