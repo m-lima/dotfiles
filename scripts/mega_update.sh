@@ -86,25 +86,48 @@ function update_nvim {
           )
           return
         end
-        print(" OK\n")
+        vim.schedule(
+          function()
+            print(" OK\n")
+          end
+        )
+
+        local count = 0
 
         for _, pkg in ipairs(registry.get_installed_packages()) do
+          count = count + 1
           pkg:check_new_version(
             function(new_available, version)
               if new_available then
-                print("Updating " .. pkg .. "..")
+                vim.schedule(
+                  function()
+                    print("Updating " .. pkg.name .. "\n")
+                  end
+                )
                 pkg:install():on(
                   "closed",
                   function()
-                    print(" OK\n")
+                    vim.schedule(
+                      function()
+                        print("Updated " .. pkg.name .. "\n")
+                      end
+                    )
+                    count = count - 1
                   end
                 )
+              else
+                count = count - 1
               end
             end
           )
         end
 
-        vim.schedule(function() vim.cmd("qa!") end)
+        vim.schedule(
+          function()
+            vim.wait(1000 * 60 * 15, function() return count == 0 end, 500)
+            vim.cmd("qa!")
+          end
+        )
       end
     )'
   fi
