@@ -77,11 +77,7 @@ local make_on_attach = function(overrides)
         inlay = true,
         extra = nil,
       },
-      vim.tbl_deep_extend(
-        'force',
-        client.features_override or {},
-        overrides or {}
-      )
+      overrides or {}
     )
 
     local augroupnr = nil
@@ -196,39 +192,29 @@ if vim.fn.has('win32') == 1 or vim.fn.has('win32unix') == 1 then
 end
 local lspconfig_file = path_separator .. '.vim' .. path_separator .. 'lspconfig.lua'
 
-local search_for_config = function(path, server, client)
+local search_for_config = function(path, server, config)
   while path ~= path_separator and #path > 0 do
     path = string.gsub(path, '^(.*)' .. path_separator .. '.+$', '%1')
     local maybe_config = path .. lspconfig_file
     local ok, cfg = pcall(dofile, maybe_config)
     if ok then
       if type(cfg) == 'function' then
-        cfg = cfg(client)
+        return cfg(server, config)
       end
       if type(cfg) == 'table' and cfg[server] ~= nil then
-        return cfg[server], maybe_config
+        return cfg[server]
       end
     end
   end
 end
 
-local make_on_init = function(server)
-  return function(client)
-    local cfg, path = search_for_config(vim.fn.expand('%:p'), server, client)
-    if cfg then
-      local overriden = false
-      if cfg.settings ~= nil then
-        vim.notify('Loaded settings override from ' .. path .. ' for ' .. server)
-        client.config.settings = vim.tbl_deep_extend('force', client.config.settings, cfg.settings)
-        overriden = true
-      end
-      if cfg.features ~= nil then
-        vim.notify('Loaded features override from ' .. path .. ' for ' .. server)
-        client.features_override = cfg.features
-        overriden = true
-      end
-      return overriden
+local load_override = function(server)
+  return function(config)
+    local cfg = search_for_config(vim.fn.expand('%:p'), server, config)
+    if cfg and cfg.settings ~= nil then
+      config.settings = vim.tbl_deep_extend('force', config.settings, cfg.settings)
     end
+    return config
   end
 end
 
@@ -236,7 +222,7 @@ local base_opts = function(server, opts)
   return vim.tbl_deep_extend('force', {
     capabilities = cmp_capabilities,
     on_attach = make_on_attach(opts and opts.features),
-    on_init = make_on_init(server),
+    on_new_config = load_override(server),
   }, opts or {})
 end
 
