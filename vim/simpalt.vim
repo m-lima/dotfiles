@@ -49,14 +49,18 @@ highlight clear SignColumn
 
 """ Diff
 highlight DiffAdd      guifg=#87ff5f ctermfg=119  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
+highlight! link Added DiffAdd
 highlight DiffChange   guifg=#51a0cf ctermfg=74   guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
+highlight! link Changed DiffChange
 highlight DiffDelete   guifg=#df5f5f ctermfg=167  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
+highlight! link Removed DiffDelete
 highlight DiffText     guifg=NONE    ctermfg=NONE guibg=#800080 ctermbg=90   gui=NONE cterm=NONE
 
 """ Highlights
 highlight ColorColumn  guifg=NONE    ctermfg=NONE guibg=#3a3a3a ctermbg=237  gui=NONE cterm=NONE " Too long of a line
-highlight Search       guifg=NONE    ctermbg=NONE guibg=#005510 ctermbg=22   gui=NONE cterm=NONE " Search
+highlight Search       guifg=NONE    ctermfg=NONE guibg=#005510 ctermbg=22   gui=NONE cterm=NONE " Search
 highlight! link IncSearch Search
+highlight CurSearch    guifg=#ffffff ctermfg=15   guibg=#005510 ctermbg=22   gui=NONE cterm=NONE " Search
 highlight Visual       guifg=NONE    ctermfg=NONE guibg=#264f78 ctermbg=24   gui=NONE cterm=NONE " Selection
 highlight! link VisualNOS Visual
 highlight MatchParen   guifg=#ff307f ctermfg=198  guibg=NONE    ctermbg=NONE gui=BOLD cterm=BOLD " Parens
