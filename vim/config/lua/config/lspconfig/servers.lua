@@ -223,7 +223,8 @@ local setup = function()
           maxLength = 100,
           renderColons = true,
         },
-        checkOnSave = {
+        checkOnSave = true,
+        check = {
           command = 'clippy',
           extraArgs = { '--', '-W', 'clippy::pedantic' },
         },
