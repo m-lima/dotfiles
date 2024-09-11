@@ -60,7 +60,7 @@ highlight DiffText     guifg=NONE    ctermfg=NONE guibg=#800080 ctermbg=90   gui
 highlight ColorColumn  guifg=NONE    ctermfg=NONE guibg=#3a3a3a ctermbg=237  gui=NONE cterm=NONE " Too long of a line
 highlight Search       guifg=NONE    ctermfg=NONE guibg=#005510 ctermbg=22   gui=NONE cterm=NONE " Search
 highlight! link IncSearch Search
-highlight CurSearch    guifg=#ffffff ctermfg=15   guibg=#005510 ctermbg=22   gui=NONE cterm=NONE " Search
+highlight CurSearch    guifg=#ffffff ctermfg=15   guibg=#20a050 ctermbg=35   gui=NONE cterm=NONE " Current Search
 highlight Visual       guifg=NONE    ctermfg=NONE guibg=#264f78 ctermbg=24   gui=NONE cterm=NONE " Selection
 highlight! link VisualNOS Visual
 highlight MatchParen   guifg=#ff307f ctermfg=198  guibg=NONE    ctermbg=NONE gui=BOLD cterm=BOLD " Parens
