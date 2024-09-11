@@ -12,11 +12,12 @@ local default_config = {
 }
 
 local prepare_hl = function()
-  local normal = vim.api.nvim_get_hl_by_name('Pmenu', true).background
   local visual = vim.api.nvim_get_hl_by_name('Visual', true).background
 
-  vim.api.nvim_set_hl(namespace, 'mlima_breadcrumbs_normal',   { fg = visual, bg = normal })
-  vim.api.nvim_set_hl(namespace, 'mlima_breadcrumbs_selected', { fg = normal, bg = visual })
+  vim.api.nvim_set_hl(namespace, 'mlima_breadcrumbs_normal',   { fg = 'white', bg = 'black' })
+  vim.api.nvim_set_hl(namespace, 'mlima_breadcrumbs_selected', { fg = 'white', bg = visual })
+  vim.api.nvim_set_hl(namespace, 'mlima_breadcrumbs_selected_start',   { fg = 'black', bg = visual })
+  vim.api.nvim_set_hl(namespace, 'mlima_breadcrumbs_selected_end', { fg = visual, bg = 'black' })
 end
 
 local map_action = function(bufnr, config, action)
@@ -85,31 +86,31 @@ local render = function(breadcrumbs)
   vim.api.nvim_buf_set_option(breadcrumbs.bufnr, 'readonly', true)
   vim.api.nvim_buf_set_option(breadcrumbs.bufnr, 'modifiable', false)
 
+  vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_normal', 0, 0, #stringified)
   for _, div in ipairs(divs) do
-    vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_normal', 0, div, div + 2)
+    vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_normal_reverse', 0, div, div + 2)
   end
 
   if breadcrumbs.selected == 1 then
     local length = #breadcrumbs.names[1] + 2
-    vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'Visual', 0, 0, length)
+    vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_selected', 0, 0, length)
     if #breadcrumbs.names > 1 then
-      vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_normal', 0, length, length + 2)
+      vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_selected_end', 0, length, length + 2)
     end
     return
   end
 
-  local start = breadcrumbs.selected * 5 - 5
+  local start = 0
   for i = 1, breadcrumbs.selected - 1 do
-    start = start + #breadcrumbs.names[i]
+    start = start + #breadcrumbs.names[i] + 5 -- 5 = start space + end space + two-byte delimiter
   end
 
-  local stop = start + #breadcrumbs.names[breadcrumbs.selected] + 2
-  stop = stop + 1
+  local stop = start + #breadcrumbs.names[breadcrumbs.selected] + 2 -- 2 = start space + end space
 
-  vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_selected', 0, start - 2, start)
-  vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'Visual', 0, start, stop)
+  vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_selected_start', 0, start - 3, start) -- 3 = two-byte delimiter + start space
+  vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_selected', 0, start, stop)
   if breadcrumbs.selected < #breadcrumbs.names then
-    vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_normal', 0, stop, stop + 2)
+    vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_selected_end', 0, stop, stop + 2) -- 2 = two-byte delimiter
   end
 end
 
