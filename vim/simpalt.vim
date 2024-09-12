@@ -124,11 +124,13 @@ if !(exists('g:simpalt_transparent_nvimtree') && g:simpalt_transparent_nvimtree)
 endif
 
 " LSP
-highlight LspReferenceText  guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=UNDERLINE cterm=UNDERLINE
-highlight LspReferenceWrite guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=UNDERLINE cterm=UNDERLINE
-highlight LspReferenceRead  guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=UNDERLINE cterm=UNDERLINE
-highlight LspCodeLensMark   guifg=#008787 ctermfg=30  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
-highlight LspCodeLensType   guifg=#005f5f ctermfg=23  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight LspReferenceText     guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=UNDERLINE cterm=UNDERLINE
+highlight LspReferenceWrite    guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=UNDERLINE cterm=UNDERLINE
+highlight LspReferenceRead     guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=UNDERLINE cterm=UNDERLINE
+highlight LspCodeLens          guifg=#005f5f ctermfg=23  guibg=NONE ctermbg=NONE gui=UNDERLINE cterm=UNDERLINE
+highlight LspCodeLensType      guifg=#005f5f ctermfg=23  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight LspCodeLensSeparator guifg=#008787 ctermfg=30  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight! link LspCodeLensMark LspCodeLensSeparator
 
 highlight! link LspSignatureActiveParameter Search
 
