@@ -68,6 +68,7 @@ alias gs='git stash'
 
 # Status
 alias gsb='git status -sb'
+alias glgg='git log --graph --all --oneline'
 
 # Submodules
 alias gsu='git submodule update --init --recursive'
