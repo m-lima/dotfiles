@@ -295,22 +295,27 @@ function penv {
 
     if [ ! -d "${newEnv}" ]
     then
-      python3 -m virtualenv &> /dev/null
-      if (( $? == 2 ))
+      if command -v virtualenv &> /dev/null
       then
         module="virtualenv"
       else
-        python3 -m venv &> /dev/null
+        python3 -m virtualenv &> /dev/null
         if (( $? == 2 ))
         then
-          module="venv"
+          module="python3 -m virtualenv"
+        else
+          python3 -m venv &> /dev/null
+          if (( $? == 2 ))
+          then
+            module="python3 -m venv"
+          fi
         fi
       fi
 
       if [ "${module}" ]
       then
         echo "Using \e[1m${module}\e[m"
-        python3 -m "${module}" "${newEnv}" && \
+        ${module} "${newEnv}" && \
         source "${newEnv}/bin/activate" && \
         python -m ensurepip && \
         python3 -m pip install --upgrade pip wheel setuptools && \
