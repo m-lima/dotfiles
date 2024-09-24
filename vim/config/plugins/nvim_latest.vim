@@ -74,7 +74,9 @@ Plug 'skanehira/vsession'          " Save/load sessions TODO: Configure. I think
 Plug 'akinsho/toggleterm.nvim'     " More usable terminal
 Plug 'mbbill/undotree'             " A local changes tracker TODO: configure (colors)
 
-source ~/.config/m-lima/vim/plugins/nvim_testing.vim
+if filereadable(expand("~/.config/m-lima/vim/plugins/nvim_testing.vim"))
+  source ~/.config/m-lima/vim/plugins/nvim_testing.vim
+endif
 
 call plug#end()
 
@@ -110,7 +112,9 @@ require('plugin.dupe_comment')
 EOF
 
 " Testing
-luafile ~/.config/m-lima/vim/plugins/nvim_testing.lua
+if filereadable(expand("~/.config/m-lima/vim/plugins/nvim_testing.lua"))
+  luafile ~/.config/m-lima/vim/plugins/nvim_testing.lua
+endif
 
 """"""""""""""""""""
 " Notes
