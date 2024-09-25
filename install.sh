@@ -659,6 +659,12 @@ checkInstall "rg" "${PACKAGE_INSTALL} ripgrep" '[ $(command -v "rg") ]'
 checkInstallDefault jq
 
 ########################################
+# Install suggestions
+echo 'Consider installing [33mfdfind [34mhttps://github.com/sharkdp/fd[m'
+echo 'Consider installing [33mzoxide [34mhttps://github.com/ajeetdsouza/zoxide[m'
+echo 'Consider installing [33msimpalt-rs [34mhttps://github.com/m-lima/simpalt-rs[m'
+
+########################################
 # Create ~/bin
 echo -n "[34mChecking bin folder.. [[m"
 if [ -d "${HOME}"/bin ]
