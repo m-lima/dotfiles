@@ -655,6 +655,10 @@ checkInstall "fzf" 'git clone --depth 1 https://github.com/junegunn/fzf.git ${HO
 checkInstall "rg" "${PACKAGE_INSTALL} ripgrep" '[ $(command -v "rg") ]'
 
 ########################################
+# Install jq
+checkInstallDefault jq
+
+########################################
 # Create ~/bin
 echo -n "[34mChecking bin folder.. [[m"
 if [ -d "${HOME}"/bin ]
