@@ -89,6 +89,11 @@ if [ -f ~/.fzf.zsh ]; then
   fi
 fi
 
+# ZOxide
+if which -p zoxide &> /dev/null; then
+  source <(zoxide init zsh)
+fi
+
 # Auto Suggestion config
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=4"
 ZSH_AUTOSUGGEST_USE_ASYNC="ON"
