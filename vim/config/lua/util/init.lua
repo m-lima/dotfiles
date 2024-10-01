@@ -25,8 +25,8 @@ local function extract_color(name, default, background)
     return default
   end
 
-  local color = vim.api.nvim_get_hl_by_name(name, true)
-  local ref = background and color.background or color.foreground
+  local color = vim.api.nvim_get_hl(0, { name = name })
+  local ref = background and color.bg or color.fg
   if ref then
     return string.format('#%06x', ref)
   end
@@ -70,8 +70,8 @@ float.show_raw = function(str, ft)
     table.insert(lines, line)
   end
 
-  local width = vim.api.nvim_get_option('columns')
-  local height = vim.api.nvim_get_option('lines')
+  local width = vim.api.nvim_get_option_value('columns', {})
+  local height = vim.api.nvim_get_option_value('lines', {})
 
   local win_height = math.ceil(height * 0.8 - 4)
   local win_width = math.ceil(width * 0.8)
@@ -80,11 +80,11 @@ float.show_raw = function(str, ft)
   local col = math.ceil((width - win_width) / 2)
 
   local target = vim.api.nvim_create_buf(false, true)
-  vim.api.nvim_buf_set_option(target, 'bufhidden', 'wipe')
+  vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = target })
   vim.api.nvim_buf_set_keymap(target, '', '<Esc>', '<cmd>q!<CR>', { noremap = true, silent = true })
-  vim.api.nvim_buf_set_option(target, 'filetype', ft)
+  vim.api.nvim_set_option_value('filetype', ft, { buf = target })
   vim.api.nvim_buf_set_lines(target, 0, #lines, false, lines)
-  vim.api.nvim_buf_set_option(target, 'readonly', true)
+  vim.api.nvim_set_option_value('readonly', true, { buf = target })
 
   vim.api.nvim_open_win(target, true, {
     style = 'minimal',
