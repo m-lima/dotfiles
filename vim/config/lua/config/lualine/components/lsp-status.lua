@@ -87,7 +87,7 @@ function lsp_status:register_request()
     if not method or #method == 0 then
       return req(bufnr, method, params, orig_handler)
     end
-    local clients = vim.lsp.buf_get_clients(bufnr)
+    local clients = vim.lsp.get_clients({ bufnr = bufnr })
     if not clients or #clients == 0 then
       return req(bufnr, method, params, orig_handler)
     end
@@ -118,7 +118,7 @@ function lsp_status:register_request()
     if not method or #method == 0 then
       return req_all(bufnr, method, params, orig_callback)
     end
-    local clients = vim.lsp.buf_get_clients(bufnr)
+    local clients = vim.lsp.get_clients({ bufnr = bufnr })
     if not clients or #clients == 0 then
       return req_all(bufnr, method, params, orig_callback)
     end
@@ -145,7 +145,7 @@ function lsp_status:register_request()
     if not method or #method == 0 then
       return req_sync(bufnr, method, params, timeout_ms)
     end
-    local clients = vim.lsp.buf_get_clients(bufnr)
+    local clients = vim.lsp.get_clients({ bufnr = bufnr })
     if not clients or #clients == 0 then
       return req_sync(bufnr, method, params, timeout_ms)
     end
@@ -178,7 +178,7 @@ function lsp_status:update_status()
   end
 
   if not self.timer then
-    self.timer = vim.loop.new_timer()
+    self.timer = vim.uv.new_timer()
     self.timer:start(0, 200, function()
       if self.spinner_index == #self.spinner then
         self.spinner_index = 1
@@ -219,8 +219,8 @@ function lsp_status:update_status()
     end
   end
 
-  progress = table.concat(progress, ' ╱ ')
-  return spinner .. ' ' .. progress
+  local progress_str = table.concat(progress, ' ╱ ')
+  return spinner .. ' ' .. progress_str
 end
 
 return lsp_status
