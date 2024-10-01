@@ -54,13 +54,13 @@ function lsp_status:register_progress()
     local progress = client.progresses[key]
 
     if value.kind == 'begin' then
-      progress.title = value.title
+      progress.title = value.title:gsub('%%', '%%%%')
     elseif value.kind == 'report' then
       if value.percentage then
-        progress.percentage = value.percentage
+        progress.percentage = tonumber(value.percentage)
       end
       if value.message then
-        progress.message = value.message
+        progress.message = value.message:gsub('%%', '%%%%')
       end
     elseif value.kind == 'end' then
       client.progresses[key] = nil
