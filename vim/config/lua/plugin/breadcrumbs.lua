@@ -12,16 +12,16 @@ local default_config = {
 }
 
 local prepare_hl = function()
-  local visual = vim.api.nvim_get_hl_by_name('Visual', true).background
+  local visual = vim.api.nvim_get_hl(0, { name = 'Visual' }).bg
 
-  vim.api.nvim_set_hl(namespace, 'mlima_breadcrumbs_normal',   { fg = 'white', bg = 'black' })
+  vim.api.nvim_set_hl(namespace, 'mlima_breadcrumbs_normal', { fg = 'white', bg = 'black' })
   vim.api.nvim_set_hl(namespace, 'mlima_breadcrumbs_selected', { fg = 'white', bg = visual })
-  vim.api.nvim_set_hl(namespace, 'mlima_breadcrumbs_selected_start',   { fg = 'black', bg = visual })
+  vim.api.nvim_set_hl(namespace, 'mlima_breadcrumbs_selected_start', { fg = 'black', bg = visual })
   vim.api.nvim_set_hl(namespace, 'mlima_breadcrumbs_selected_end', { fg = visual, bg = 'black' })
 end
 
 local map_action = function(bufnr, config, action)
-  if vim.tbl_islist(config[action]) then
+  if vim.islist(config[action]) then
     for _, key in ipairs(config[action]) do
       map('', key, M[action], { buffer = bufnr })
     end
@@ -32,8 +32,10 @@ end
 
 local prepare_popup = function(config, width)
   local bufnr = vim.api.nvim_create_buf(false, true)
-  vim.api.nvim_buf_set_option(bufnr, "swapfile", false)
-  vim.api.nvim_buf_set_option(bufnr, 'bufhidden', 'wipe')
+  vim.api.nvim_set_option_value("swapfile", false, { buf = bufnr })
+  vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = bufnr })
+  vim.api.nvim_set_option_value("swapfile", false, { buf = bufnr })
+  vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = bufnr })
 
   map_action(bufnr, config, 'close')
   map_action(bufnr, config, 'select_left')
@@ -80,11 +82,11 @@ local render = function(breadcrumbs)
   end
 
   stringified = stringified .. ' '
-  vim.api.nvim_buf_set_option(breadcrumbs.bufnr, 'readonly', false)
-  vim.api.nvim_buf_set_option(breadcrumbs.bufnr, 'modifiable', true)
+  vim.api.nvim_set_option_value('readonly', false, { buf = breadcrumbs.bufnr })
+  vim.api.nvim_set_option_value('modifiable', true, { buf = breadcrumbs.bufnr })
   vim.api.nvim_buf_set_lines(breadcrumbs.bufnr, 0, 1, false, { stringified })
-  vim.api.nvim_buf_set_option(breadcrumbs.bufnr, 'readonly', true)
-  vim.api.nvim_buf_set_option(breadcrumbs.bufnr, 'modifiable', false)
+  vim.api.nvim_set_option_value('readonly', true, { buf = breadcrumbs.bufnr })
+  vim.api.nvim_set_option_value('modifiable', false, { buf = breadcrumbs.bufnr })
 
   vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_normal', 0, 0, #stringified)
   for _, div in ipairs(divs) do
@@ -95,7 +97,8 @@ local render = function(breadcrumbs)
     local length = #breadcrumbs.names[1] + 2
     vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_selected', 0, 0, length)
     if #breadcrumbs.names > 1 then
-      vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_selected_end', 0, length, length + 2)
+      vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_selected_end', 0, length,
+        length + 2)
     end
     return
   end
@@ -105,7 +108,8 @@ local render = function(breadcrumbs)
     start = start + #breadcrumbs.names[i] + 5 -- 5 = start space + end space + two-byte delimiter
   end
 
-  local stop = start + #breadcrumbs.names[breadcrumbs.selected] + 2 -- 2 = start space + end space
+  local stop = start + #breadcrumbs.names[breadcrumbs.selected] +
+      2                                                                                                                 -- 2 = start space + end space
 
   vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_selected_start', 0, start - 3, start) -- 3 = two-byte delimiter + start space
   vim.api.nvim_buf_add_highlight(breadcrumbs.bufnr, namespace, 'mlima_breadcrumbs_selected', 0, start, stop)
@@ -167,7 +171,7 @@ local traverse_parents = function(err, res, ctx)
   while max_iterations > 0 and err == nil and res do
     max_iterations = max_iterations - 1
 
-    if vim.tbl_islist(res) then
+    if vim.islist(res) then
       res = res[1]
     end
 
@@ -189,7 +193,7 @@ local traverse_parents = function(err, res, ctx)
       vim.notify('Error while building breadcrumbs: ' .. err, vim.log.levels.ERR)
       break
     end
-    res = res[client].result
+    res = res and res[client] and res[client].result
   end
 
   return names, locations
@@ -267,7 +271,7 @@ M.jump_to_parent = function()
         return
       end
 
-      if vim.tbl_islist(res) then
+      if vim.islist(res) then
         res = res[1]
       end
 
