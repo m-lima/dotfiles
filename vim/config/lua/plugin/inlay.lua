@@ -96,7 +96,7 @@ local refresh = function()
     function(err, res, ctx)
       if err or not res then return end
 
-      if not vim.tbl_islist(res) then
+      if not vim.islist(res) then
         vim.notify('Unrecognized response: ' .. res, vim.log.levels.ERR)
       end
 
@@ -165,7 +165,7 @@ local debug = function()
     buf,
     'textDocument/inlayHint',
     params,
-    function(err, res, ctx)
+    function(err, res, _ctx)
       if res then
         require('util').float.show({ params = params, res = res })
       else
