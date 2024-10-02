@@ -100,7 +100,7 @@ local group_clients = function()
   local clients = {}
   local curr_bufnr = vim.api.nvim_get_current_buf()
 
-  for _, client in ipairs(vim.lsp.get_active_clients()) do
+  for _, client in ipairs(vim.lsp.get_clients()) do
     local client_object = {
       id = client.id,
       current = false,
