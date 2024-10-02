@@ -95,14 +95,16 @@ function lsp_status:register_request()
     local id = math.random()
     local name = method:match('/(.*)')
 
-    for client_id, client in pairs(clients) do
-      if client.supports_method(method) then
-        self:get_client(client_id).requests[id] = name
+    for _, client in pairs(clients) do
+      if client.id and client.supports_method(method) then
+        self:get_client(client.id).requests[id] = name
       end
     end
 
     local handler = function(err, result, ctx, config)
-      self.clients[ctx.client_id].requests[id] = nil
+      if self.clients[ctx.client_id] then
+        self.clients[ctx.client_id].requests[id] = nil
+      end
       self:clean_client(ctx.client_id)
 
       if orig_handler then
@@ -126,17 +128,21 @@ function lsp_status:register_request()
     local id = math.random()
     local name = method:match('/(.*)')
 
-    for client_id, _ in pairs(clients) do
-      self:get_client(client_id).requests[id] = name
+    for _, client in pairs(clients) do
+      if client.id and client.supports_method(method) then
+        self:get_client(client.id).requests[id] = name
+      end
     end
 
-    local callback = function(err, result, ctx, config)
-      for client_id, _ in pairs(clients) do
-        self.clients[client_id].requests[id] = nil
+    local callback = function(results)
+      for client_id, _ in pairs(results) do
+        if self.clients[client_id] then
+          self.clients[client_id].requests[id] = nil
+        end
         self:clean_client(client_id)
       end
 
-      orig_callback(err, result, ctx, config)
+      orig_callback(results)
     end
     return req_all(bufnr, method, params, callback)
   end
@@ -153,15 +159,21 @@ function lsp_status:register_request()
     local id = math.random()
     local name = method:match('/(.*)')
 
-    for client_id, _ in pairs(clients) do
-      self:get_client(client_id).requests[id] = name
+    for _, client in pairs(clients) do
+      if client.id and client.supports_method(method) then
+        self:get_client(client.id).requests[id] = name
+      end
     end
 
     local result, err = req_sync(bufnr, method, params, timeout_ms)
 
-    for client_id, _ in pairs(clients) do
-      self.clients[client_id].requests[id] = nil
-      self:clean_client(client_id)
+    for _, client in pairs(clients) do
+      if client.id then
+        if self.clients[client.id] then
+          self.clients[client.id].requests[id] = nil
+        end
+        self:clean_client(client.id)
+      end
     end
 
     return result, err
