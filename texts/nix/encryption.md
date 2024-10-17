@@ -119,18 +119,24 @@ $ cryptsetup luksOpen /dev/<device> <enc_name>
 > Example variables:
 >
 > - **device**: sda1
-> - **enc_name**: luks
+> - **enc_name**: crypt
 
-### Format the volume
+### Format the volumes
 
 ```
 $ mkfs.btrfs -L <vol_name> /dev/mapper/<enc_name>
+$ mkswap -L <swap_name> /dev/<swap_device>
+$ mkfs.fat -F 32 -n <boot_name> /dev/<boot_device>
 ```
 
 > Example variables:
 >
 > - **vol_name**: btrfs
-> - **enc_name**: luks
+> - **enc_name**: crypt
+> - **swap_name**: swap
+> - **swap_device**: sda2
+> - **boot_name**: boot
+> - **boot_device**: sda3
 
 ### Prepare subvolumes
 
@@ -138,9 +144,91 @@ https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html
 
 ```
 $ mount -o noatime,compress=zstd:3 -t btrfs /dev/mapper/<enc_name> /mnt
-$ btrfs subvolume create /mnt/root
+$ btrfs subvolume create /mnt/@
+$ btrfs subvolume create /mnt/@snapshots
+$ btrfs subvolume create /mnt/@nix
+$ btrfs subvolume create /mnt/@persist
+$ btrfs subvolume create /mnt/@log
+$ btrfs subvolume create /mnt/@podman
+$ btrfs subvolume snapshot -r /mnt/@ /mnt/@snapshots/_blank
+$ umount /mnt
 ```
 
 > Example variables:
 >
-> - **enc_name**: luks
+> - **enc_name**: crypt
+
+### Seal layout on NixOS
+
+Mount the root
+
+```
+$ mount -o noatime,compress=zstd:3,subvol=@ -t btrfs /dev/mapper/<enc_name> /mnt
+```
+
+Prepare the mounting points
+
+
+```
+$ mkdir /mnt/.btrfs
+$ mkdir /mnt/volume
+$ mkdir /mnt/snapshots
+$ mkdir /mnt/nix
+$ mkdir /mnt/persist
+$ mkdir /mnt/var
+$ mkdir /mnt/var/log
+$ mkdir /mnt/var/lib
+$ mkdir /mnt/var/lib/containers
+```
+
+Mount the subvolumes onto the root
+
+```
+$ mount -o noatime,compress=zstd:3 -t btrfs /dev/mapper/<enc_name> /mnt/.btrfs/volume
+$ mount -o noatime,compress=zstd:3,subvol=@snapshots -t btrfs /dev/mapper/<enc_name> /mnt/.btrfs/snapshots
+$ mount -o noatime,compress=zstd:3,subvol=@nix -t btrfs /dev/mapper/<enc_name> /mnt/nix
+$ mount -o noatime,compress=zstd:3,subvol=@persist -t btrfs /dev/mapper/<enc_name> /mnt/persist
+$ mount -o noatime,compress=zstd:3,subvol=@log -t btrfs /dev/mapper/<enc_name> /mnt/var/log
+$ mount -o noatime,compress=zstd:3,subvol=@podman -t btrfs /dev/mapper/<enc_name> /mnt/var/lib/containers
+
+```
+
+> Example variables:
+>
+> - **enc_name**: crypt
+
+Mount the other partitions for NixOS to pick them up
+
+```
+$ mkdir /mnt/boot
+$ mount -o umask=077 /dev/<boot_device> /mnt/boot
+$ swapon /dev/<swap_device>
+```
+
+> Example variables:
+>
+> - **boot_device**: sda3
+> - **swap_device**: sda2
+
+Seal the deal
+
+```
+$ nixos-generate-config --root /mnt
+```
+
+### Fix configuration to operate with encrypted drive
+
+#### In `/mnt/etc/nixos/hardware-configuration.nix`
+
+ - We need to add `noatime` and `compress=zstd:3` to the btrfs parameters for all volumes
+ - It is important to encrypt the swap. We need to add `randomEncryption.enable = true` to the swap device.
+ - It is not possible to use the disk UUID for the swap since it will be erased on every boot. It must use `/dev/disk/by-partuuid/<uuid>`, where the **partuuid** value can be grabbed by `ls`ing the given directory.
+
+#### In `/mnt/etc/nixos/configuration.nix`
+
+ - **TODO:** Need to confirm if `GRUB` is needed in UEFI or if `systemd-boot` is enough
+ - We need to tell initrd to decrypt the luks volume by adding `boot.initrd.luks.devices.<enc_name>.device = "/dev/disk/by-uuid/<uuid>";`
+
+> Example variables:
+>
+> - **enc_name**: crypt
