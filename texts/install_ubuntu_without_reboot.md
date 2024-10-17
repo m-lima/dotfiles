@@ -94,12 +94,13 @@ $ mkfs.btrfs -f -L root /dev/sdX
 ```
 $ mount -o ssd,noatime,space_cache,compress=zstd -t btrfs /dev/sda3 /mnt/root
 $ btrfs subvolume create /mnt/root/@
-$ btrfs subvolume create /mnt/root/@snapshots
+$ btrfs subvolume create /mnt/root/@.snapshots
 $ btrfs subvolume create /mnt/root/@root
 $ btrfs subvolume create /mnt/root/@home
 $ btrfs subvolume create /mnt/root/@<user>
 $ btrfs subvolume create /mnt/root/@opt
 $ btrfs subvolume create /mnt/root/@var
+$ btrfs subvolume create /mnt/root/@podman
 ```
 
 ## Replace the root mount with the targeted mount
@@ -238,7 +239,7 @@ $ cat /home/<USER>/.ssh/authorized_keys >> /etc/dropbear/initramfs/authorized_ke
 ```
 $ mkdir /root/snaps
 $ mount /dev/sda3 /mnt
-$ btrfs send /dev/sda3/@snapshots/_/<NAME> -f /root/snaps/_
+$ btrfs send /dev/sda3/@.snapshots/_/<NAME> -f /root/snaps/_
 # Repeat for all the other subvolumes
 # or
 $ for f in /mnt/*; do base=`basename $f`; src="$f/<NAME>"; dst="/root/snaps/${base}"; [ ! `ls $dst 2> /dev/null` ] && echo "$src -> $dst" && btrfs send $src -f $dst ; done
@@ -254,14 +255,14 @@ $ cryptsetup luksOpen /dev/sda3 btrfs_crypt   # Remember this last name, it'll c
 ```
 $ mkfs.btrfs -f -L root /dev/mapper/btrfs_crypt
 $ mount -o ssd,noatime,space_cache,compress=zstd -t btrfs /dev/sda3 /mnt
-$ btrfs subvolume create /mnt/root/@snapshots
+$ btrfs subvolume create /mnt/root/@.snapshots
 ```
 
 ### Restore the filesystem
 ```
-$ btrfs receive -f /root/snaps/_ /mnt/@snapshots/@ -m /mnt
+$ btrfs receive -f /root/snaps/_ /mnt/@.snapshots/@ -m /mnt
 # Repeat for all the other subvolumes
-$ btrfs subvolume snapshot @snapshots/_/<NAME> /mnt/@
+$ btrfs subvolume snapshot @.snapshots/_/<NAME> /mnt/@
 # Repeat for all the other subvolumes
 ```
 
