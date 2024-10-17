@@ -5,3 +5,5 @@
 [ ] Hyprland config
 [ ] Full Disk Encryption
 [ ] Impermanence
+[ ] ZSH
+[ ] Caps to ESC

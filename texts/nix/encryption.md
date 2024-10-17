@@ -65,6 +65,9 @@ Another decision is to go for [impermanence](https://github.com/nix-community/im
 $ lsblk
 ```
 
+## Check the sector sizes
+> https://wiki.archlinux.org/title/Advanced_Format
+
 ## Make partitions
 
 ```
