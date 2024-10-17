@@ -66,6 +66,7 @@ $ lsblk
 ```
 
 ## Check the sector sizes
+
 > https://wiki.archlinux.org/title/Advanced_Format
 
 ## Make partitions
@@ -149,7 +150,6 @@ $ btrfs subvolume create /mnt/@snapshots
 $ btrfs subvolume create /mnt/@nix
 $ btrfs subvolume create /mnt/@persist
 $ btrfs subvolume create /mnt/@log
-$ btrfs subvolume create /mnt/@podman
 $ btrfs subvolume snapshot -r /mnt/@ /mnt/@snapshots/_blank
 $ umount /mnt
 ```
@@ -168,7 +168,6 @@ $ mount -o noatime,compress=zstd:3,subvol=@ -t btrfs /dev/mapper/<enc_name> /mnt
 
 Prepare the mounting points
 
-
 ```
 $ mkdir /mnt/.btrfs
 $ mkdir /mnt/volume
@@ -177,8 +176,6 @@ $ mkdir /mnt/nix
 $ mkdir /mnt/persist
 $ mkdir /mnt/var
 $ mkdir /mnt/var/log
-$ mkdir /mnt/var/lib
-$ mkdir /mnt/var/lib/containers
 ```
 
 Mount the subvolumes onto the root
@@ -189,7 +186,6 @@ $ mount -o noatime,compress=zstd:3,subvol=@snapshots -t btrfs /dev/mapper/<enc_n
 $ mount -o noatime,compress=zstd:3,subvol=@nix -t btrfs /dev/mapper/<enc_name> /mnt/nix
 $ mount -o noatime,compress=zstd:3,subvol=@persist -t btrfs /dev/mapper/<enc_name> /mnt/persist
 $ mount -o noatime,compress=zstd:3,subvol=@log -t btrfs /dev/mapper/<enc_name> /mnt/var/log
-$ mount -o noatime,compress=zstd:3,subvol=@podman -t btrfs /dev/mapper/<enc_name> /mnt/var/lib/containers
 
 ```
 
@@ -220,14 +216,14 @@ $ nixos-generate-config --root /mnt
 
 #### In `/mnt/etc/nixos/hardware-configuration.nix`
 
- - We need to add `noatime` and `compress=zstd:3` to the btrfs parameters for all volumes
- - It is important to encrypt the swap. We need to add `randomEncryption.enable = true` to the swap device.
- - It is not possible to use the disk UUID for the swap since it will be erased on every boot. It must use `/dev/disk/by-partuuid/<uuid>`, where the **partuuid** value can be grabbed by `ls`ing the given directory.
+- We need to add `noatime` and `compress=zstd:3` to the btrfs parameters for all volumes
+- It is important to encrypt the swap. We need to add `randomEncryption.enable = true` to the swap device.
+- It is not possible to use the disk UUID for the swap since it will be erased on every boot. It must use `/dev/disk/by-partuuid/<uuid>`, where the **partuuid** value can be grabbed by `ls`ing the given directory.
 
 #### In `/mnt/etc/nixos/configuration.nix`
 
- - **TODO:** Need to confirm if `GRUB` is needed in UEFI or if `systemd-boot` is enough
- - We need to tell initrd to decrypt the luks volume by adding `boot.initrd.luks.devices.<enc_name>.device = "/dev/disk/by-uuid/<uuid>";`
+- **TODO:** Need to confirm if `GRUB` is needed in UEFI or if `systemd-boot` is enough
+- We need to tell initrd to decrypt the luks volume by adding `boot.initrd.luks.devices.<enc_name>.device = "/dev/disk/by-uuid/<uuid>";`
 
 > Example variables:
 >
