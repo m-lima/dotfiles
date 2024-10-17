@@ -1,0 +1,143 @@
+# Key concepts
+
+- LUKS
+- dm-crypt
+
+# Things to think about
+
+- Swap
+  - Hibernation
+    - Size should fit RAM?
+    - What about the key to the adhoc swap partition
+- Can/should the swap be in the same LUKS but under a separate LVM?
+- What's the performance impact of the virtual volume?
+- How will boot be handled?
+- Can we create a thumbstick? Or use the network for fetching the key from the LAN?
+
+# LUKS vs dm-crypt
+
+https://stackoverflow.com/questions/71688533/luks-and-dm-crypt-distinction-responsibilities
+
+Lets start from the kernel part:
+
+    Device mapper is a kernel driver that allows creating new block devices from existing ones. It provides multiple additional features like RAID, caching or encryption through so called targets.
+    dm-crypt is a device mapper target that provides transparent encryption. This means you can create a block device on top of your disk or partition and everything you write to this new device mapper device will be encrypted before the data is actually written to the disk. And vice versa for reading: if you read from the device, the data is read from the disk and decrypted before returning to you.
+    dm-integrity is also a device mapper target, this one has a special metadata area for each block which are used to store checksum of the data block. This allows detection of data corruption.
+
+Now the userspace level:
+
+You can use device mapper directly, but it's not user friendly. Say you want to use dm-crypt directly -- to access the data you need to know the encryption algorithm, used IV and of course the key (which isn't short and easy to remember). It wouldn't be very practical to ask for these during boot.
+
+That's where LUKS comes in. It provides two things: header and way to store (and manage) keys. Header allows system to identify the device as LUKS and contains all the metadata needed to work with the device. And key management allows you to safely store the encryption key on the disk, protected by easy to remember passphrase (or key file, TPM, FIDO token, etc.).
+
+So the LUKS format only gives system all the information needed to correctly set the device mapper device up. You'll most likely use cryptsetup for that -- tool and library that can read the LUKS metadata, decrypt the key stored in there and correctly create the DM device.
+
+The difference between LUKSv1 and LUKSv2 is in the format of the metadata. LUKSv2 adds some features, one of them is the authenticated encryption, which is combination of dm-crypt and dm-integrity -- integrity provides the checksums and crypt makes sure the checksums are also encrypted so it isn't possible to simply change both data and the cheksum hiding the change (plain integrity doesn't protect against this, it can be used only to protect about random data changes like bit rot). So authenticated encryption is provided by combining two technologies with LUKSv2 -- the metadata in the LUKSv2 header tell how the two device mapper targets needs to be configured and combined to get the data.
+
+# Decision
+
+Will go for three partitions:
+
+- boot
+- root
+- swap
+
+Where `root` is a LUKS volume, and `swap` uses "random encryption". E.g.:
+
+```
+  swapDevices = [ {
+    device = "/dev/sdXY";
+    randomEncryption.enable = true;
+  } ];
+```
+
+> TODO: Run `cryptsetup benchmark` to get the fastest algorithm
+
+It's also decided that there will be no hibernation. This is why the swap is OK to have a random encryption and to be outside of LUKS.
+
+Another decision is to go for [impermanence](https://github.com/nix-community/impermanence), but without using `tmpfs`. I cannot afford the RAM to use `tmpfs`. Instead, the whole drive will be `btrfs`, with the root partition being wiped on every reboot.
+
+# Steps:
+
+## Get blocks
+
+```
+$ lsblk
+```
+
+## Make partitions
+
+```
+$ parted /dev/<device>
+! mklabel gpt
+! mkpart luks 512MB -<swap>
+! mkpart swap linux-swap -<swap> 100%
+! mkpart boot fat32 1MB 512MB
+! set 3 esp on
+```
+
+> Example variables:
+>
+> - **device**: sda
+> - **swap**: 8GB
+
+## Encrypt
+
+```
+$ cryptsetup luksFormat --type luks2 /dev/<partition>
+```
+
+Type `YES` and then the password.
+
+> Example variables:
+>
+> - **partition**: sda1 (corresponds to the partition labeled "luks" above)
+
+### Optional: Create a key file
+
+```
+$ dd if=/dev/random of=<key> bs=4096 count=1
+$ cryptsetup luksAddKey /dev/<device> <key>
+```
+
+> Example variables:
+>
+> - **key**: /hdd.key
+> - **device**: sda1
+
+## Prepare encrypted drive
+
+### Open the volume
+
+```
+$ cryptsetup luksOpen /dev/<device> <enc_name>
+```
+
+> Example variables:
+>
+> - **device**: sda1
+> - **enc_name**: luks
+
+### Format the volume
+
+```
+$ mkfs.btrfs -L <vol_name> /dev/mapper/<enc_name>
+```
+
+> Example variables:
+>
+> - **vol_name**: btrfs
+> - **enc_name**: luks
+
+### Prepare subvolumes
+
+https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html
+
+```
+$ mount -o noatime,compress=zstd:3 -t btrfs /dev/mapper/<enc_name> /mnt
+$ btrfs subvolume create /mnt/root
+```
+
+> Example variables:
+>
+> - **enc_name**: luks
