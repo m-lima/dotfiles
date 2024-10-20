@@ -21,6 +21,7 @@
 
   outputs = {
     nixpkgs,
+    impermanence,
     ...
   } @ inputs: let {
     stateVersion = "24.05";
@@ -35,7 +36,19 @@
           system = "x86_64-linux";
           modules = [
             impermanence.nixosModules.impermanence
-            ./configuration.nix
+            ./hosts/coal
+          ];
+        };
+        utm = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+            stateVersion = stateVersion;
+            hostName = "utm";
+          };
+          system = "x86_64-linux";
+          modules = [
+            impermanence.nixosModules.impermanence
+            ./hosts/utm
           ];
         };
       };
