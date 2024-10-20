@@ -9,7 +9,7 @@
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
-    }
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,34 +23,34 @@
     nixpkgs,
     impermanence,
     ...
-  } @ inputs: let {
+  } @ inputs:
+  let
     stateVersion = "24.05";
-  } in {
+  in {
     nixosConfigurations = {
-        coal = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-            stateVersion = stateVersion;
-            hostName = "coal";
-          };
-          system = "x86_64-linux";
-          modules = [
-            impermanence.nixosModules.impermanence
-            ./hosts/coal
-          ];
+      coal = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+          stateVersion = stateVersion;
+          hostName = "coal";
         };
-        utm = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-            stateVersion = stateVersion;
-            hostName = "utm";
-          };
-          system = "x86_64-linux";
-          modules = [
-            impermanence.nixosModules.impermanence
-            ./hosts/utm
-          ];
+        system = "x86_64-linux";
+        modules = [
+          impermanence.nixosModules.impermanence
+          ./hosts/coal
+        ];
+      };
+      utm = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+          stateVersion = stateVersion;
+          hostName = "utm";
         };
+        system = "aarch64-linux";
+        modules = [
+          impermanence.nixosModules.impermanence
+          ./hosts/utm
+        ];
       };
     };
   };

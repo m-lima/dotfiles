@@ -11,10 +11,7 @@
   timeZone ? "Europe/Amsterdam",
   ...
 }: {
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
+  imports = [];
 
   # Enable all firmware, regardless of license
   hardware.enableAllFirmware = true;
@@ -57,7 +54,7 @@
   networking.hostName = hostName;
 
   # Set the time zone.
-  time.timeZone = timeZone;
+  time.timeZone = "Europe/Amsterdam";
 
   # Select internationalization properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -67,12 +64,6 @@
   #   keyMap = "us";
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
-
-  # Enable sound.
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -95,6 +86,9 @@
   };
 
   programs = {
+    # git = {
+    #   enable = true;
+    # };
     # zsh = {
     #   enable = true;
     # };
@@ -103,9 +97,6 @@
     #   enable = true;
     #   defaultEditor = true;
     #   viAlias = true;
-    # };
-    # git = {
-    #   enable = true;
     # };
     # # TODO: Move to user
     # hyprland = {
@@ -119,8 +110,10 @@
 
   users = {
     mutableUsers = false;
-    defaultUserShell = pkgs.zsh;
     users = {
+      root = {
+        hashedPasswordFile = "/persist/secrets/root.passwordFile";
+      };
       celo = {
         isNormalUser = true;
         hashedPasswordFile = "/persist/secrets/celo.passwordFile";
@@ -132,19 +125,19 @@
     };
   };
 
-  home-manager = {
-    users = {
-      celo = {
-        home.stateVersion = stateVersion;
+  # home-manager = {
+  #   users = {
+  #     celo = {
+  #       home.stateVersion = stateVersion;
 
-        programs = {
-          firefox = {
-            enable = true;
-          };
-        };
-      };
-    };
-  };
+  #       programs = {
+  #         firefox = {
+  #           enable = true;
+  #         };
+  #       };
+  #     };
+  #   };
+  # };
 
   services = {
     # Enable the OpenSSH daemon.
