@@ -1,0 +1,31 @@
+# TODO
+
+- [ ] Cursor for firefox
+- [ ] Font for terminal
+- [ ] Hyprland config
+- [x] Impermanence
+- [ ] ZSH
+- [ ] Caps to ESC
+- [x] Clean store
+- [x] Optimize store
+- [ ] HomeManager
+- [x] Unfree packages
+- [x] All firmware
+- [x] Latest Linux (still a thing with flakes?)
+- [ ] Disko with LUKS + BTRFS + (keyfile | ssh)
+- [x] Limit number of NixOS boots
+- [x] Password for user and for WiFi
+- [x] Make user immutable (investigate if really want this)
+- [x] Global stateVersion
+  - [!] Specify the nixpkgs url as well
+- [x] https://github.com/NixOS/nixpkgs/pull/273384/files
+  - [x] /boot
+  - [x] /nix
+  - [x] /var/lib/nixos
+  - [x] Immutable users or `passwd` `group` `shadow` `gshadow` `subuid` `subgid`
+  - [x] /etc/machine-id
+  - [x] /var/lib/systemd
+  - [x] /var/log
+    - [x] /var/log/journal
+- [x] Full Disk Encryption
+- [ ] Diskos

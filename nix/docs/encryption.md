@@ -147,8 +147,8 @@ https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html
 $ mount -o noatime,compress=zstd:3 -t btrfs /dev/mapper/<enc_name> /mnt
 $ btrfs subvolume create /mnt/@
 $ btrfs subvolume create /mnt/@snapshots
-$ btrfs subvolume create /mnt/@nix
 $ btrfs subvolume create /mnt/@persist
+$ btrfs subvolume create /mnt/@nix
 $ btrfs subvolume create /mnt/@log
 $ btrfs subvolume snapshot -r /mnt/@ /mnt/@snapshots/_blank
 $ umount /mnt
@@ -170,8 +170,8 @@ Prepare the mounting points
 
 ```
 $ mkdir /mnt/.btrfs
-$ mkdir /mnt/volume
-$ mkdir /mnt/snapshots
+$ mkdir /mnt/.btrfs/volume
+$ mkdir /mnt/.btrfs/snapshots
 $ mkdir /mnt/nix
 $ mkdir /mnt/persist
 $ mkdir /mnt/var
@@ -219,12 +219,4 @@ $ nixos-generate-config --root /mnt
 - We need to add `noatime` and `compress=zstd:3` to the btrfs parameters for all volumes
 - It is important to encrypt the swap. We need to add `randomEncryption.enable = true` to the swap device.
 - It is not possible to use the disk UUID for the swap since it will be erased on every boot. It must use `/dev/disk/by-partuuid/<uuid>`, where the **partuuid** value can be grabbed by `ls`ing the given directory.
-
-#### In `/mnt/etc/nixos/configuration.nix`
-
-- **TODO:** Need to confirm if `GRUB` is needed in UEFI or if `systemd-boot` is enough
-- We need to tell initrd to decrypt the luks volume by adding `boot.initrd.luks.devices.<enc_name>.device = "/dev/disk/by-uuid/<uuid>";`
-
-> Example variables:
->
-> - **enc_name**: crypt
+- For capturing boot logs, the `@log` subvolume must be mounted with `neededForBoot = true`
