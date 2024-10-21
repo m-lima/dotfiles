@@ -3,7 +3,7 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/nvme1n1";
+        device = "/dev/vda";
         content = {
           type = "gpt";
           partitions = {
@@ -17,7 +17,7 @@
                 settings.allowDiscards = true;
                 content = {
                   type = "btrfs";
-                  type = "crypt";
+                  name = "crypt";
                   extraArgs = ["-f"];
                   subvolumes = {
                     "@" = {
@@ -62,8 +62,7 @@
               content = {
                 type = "filesystem";
                 format = "vfat";
-                name = "boot";
-                mountpoint = "/boot";
+               mountpoint = "/boot";
                 mountOptions = [ "umask=0077" ];
               };
             };
