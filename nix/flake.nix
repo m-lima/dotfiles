@@ -22,6 +22,7 @@
   outputs = {
     nixpkgs,
     impermanence,
+    disko,
     ...
   } @ inputs:
   let
@@ -49,6 +50,7 @@
         system = "aarch64-linux";
         modules = [
           impermanence.nixosModules.impermanence
+          disko.nixosModules.disko
           ./hosts/utm
         ];
       };
