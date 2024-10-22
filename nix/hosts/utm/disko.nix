@@ -7,17 +7,35 @@
         content = {
           type = "gpt";
           partitions = {
-            luks = {
-              start = "512M";
-              end = "-8G";
+            boot = {
+              size = "512M";
+              name = "boot";
+              type = "EF00";
               content = {
-                type = "luks2";
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = [ "umask=0077" ];
+              };
+            };
+            swap = {
+              size = "8G";
+              name = "swap";
+              content = {
+                type = "swap";
+                randomEncryption = true;
+              };
+            };
+            luks = {
+              size = "100%";
+              name = "luks";
+              content = {
+                type = "luks";
                 name = "luks";
                 askPassword = true;
                 settings.allowDiscards = true;
                 content = {
                   type = "btrfs";
-                  name = "crypt";
                   extraArgs = ["-f"];
                   subvolumes = {
                     "@" = {
@@ -44,26 +62,6 @@
                   mountpoint = "/.btrfs/volume";
                   mountOptions = [ "noatime" "compress=zstd:3" ];
                 };
-              };
-            };
-            swap = {
-              start = "-8G";
-              end = "100%";
-              content = {
-                type = "swap";
-                name = "swap";
-                randomEncryption = true;
-              };
-            };
-            boot = {
-              start = "0";
-              end = "512M";
-              type = "EF00";
-              content = {
-                type = "filesystem";
-                format = "vfat";
-               mountpoint = "/boot";
-                mountOptions = [ "umask=0077" ];
               };
             };
           };
