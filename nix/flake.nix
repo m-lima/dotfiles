@@ -27,7 +27,7 @@
   } @ inputs:
   let
     stateVersion = "24.05";
-    mkMachine = {
+    mkHost = {
       hostModule,
       hostName,
       system
@@ -43,7 +43,7 @@
             disko.nixosModules.disko
             hostModule
           ];
-        }
+        };
   in {
     nixosConfigurations = {
       coal = mkHost {

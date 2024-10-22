@@ -26,42 +26,36 @@
                 randomEncryption = true;
               };
             };
-            luks = {
+            main = {
               size = "100%";
-              name = "luks";
+              name = "main";
               content = {
-                type = "luks";
-                name = "luks";
-                askPassword = true;
-                settings.allowDiscards = true;
-                content = {
-                  type = "btrfs";
-                  extraArgs = ["-f"];
-                  subvolumes = {
-                    "@" = {
-                      mountpoint = "/";
-                      mountOptions = [ "noatime" "compress=zstd:3" ];
-                    };
-                    "@nix" = {
-                      mountpoint = "/nix";
-                      mountOptions = [ "noatime" "compress=zstd:3" ];
-                    };
-                    "@persist" = {
-                      mountpoint = "/persist";
-                      mountOptions = [ "noatime" "compress=zstd:3" ];
-                    };
-                    "@log" = {
-                      mountpoint = "/var/log";
-                      mountOptions = [ "noatime" "compress=zstd:3" ];
-                    };
-                    "@snapshots" = {
-                      mountpoint = "/.btrfs/snapshots";
-                      mountOptions = [ "noatime" "compress=zstd:3" ];
-                    };
+                type = "btrfs";
+                extraArgs = ["-f"];
+                subvolumes = {
+                  "@" = {
+                    mountpoint = "/";
+                    mountOptions = [ "noatime" "compress=zstd:3" ];
                   };
-                  mountpoint = "/.btrfs/volume";
-                  mountOptions = [ "noatime" "compress=zstd:3" ];
+                  "@nix" = {
+                    mountpoint = "/nix";
+                    mountOptions = [ "noatime" "compress=zstd:3" ];
+                  };
+                  "@persist" = {
+                    mountpoint = "/persist";
+                    mountOptions = [ "noatime" "compress=zstd:3" ];
+                  };
+                  "@log" = {
+                    mountpoint = "/var/log";
+                    mountOptions = [ "noatime" "compress=zstd:3" ];
+                  };
+                  "@snapshots" = {
+                    mountpoint = "/.btrfs/snapshots";
+                    mountOptions = [ "noatime" "compress=zstd:3" ];
+                  };
                 };
+                mountpoint = "/.btrfs/volume";
+                mountOptions = [ "noatime" "compress=zstd:3" ];
               };
             };
           };
