@@ -34,7 +34,7 @@ function mkpass {
 
 function prepare_persist {
   echo "[34mCreating dotfiles in persist[m"
-  cp -a ${base}/.. /mnt/persist/.
+  cp -a ${base}/.. /mnt/persist/dotfiles
   mkdir /mnt/persist/etc
   ln -s /persist/dotfiles/nix /mnt/persist/etc/nixos
 }
