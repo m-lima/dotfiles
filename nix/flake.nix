@@ -27,32 +27,34 @@
   } @ inputs:
   let
     stateVersion = "24.05";
+    mkMachine = {
+      hostModule,
+      hostName,
+      system
+    } : nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+          stateVersion = stateVersion;
+          hostName = hostName;
+        };
+          system = system;
+          modules = [
+            impermanence.nixosModules.impermanence
+            disko.nixosModules.disko
+            hostModule
+          ];
+        }
   in {
     nixosConfigurations = {
-      coal = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          stateVersion = stateVersion;
-          hostName = "coal";
-        };
+      coal = mkHost {
+        hostModule = ./hosts/coal;
+        hostName = "coal";
         system = "x86_64-linux";
-        modules = [
-          impermanence.nixosModules.impermanence
-          ./hosts/coal
-        ];
       };
-      utm = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          stateVersion = stateVersion;
-          hostName = "utm";
-        };
+      utm = mkHost {
+        hostModule = ./hosts/utm;
+        hostName = "utm";
         system = "aarch64-linux";
-        modules = [
-          impermanence.nixosModules.impermanence
-          disko.nixosModules.disko
-          ./hosts/utm
-        ];
       };
     };
   };

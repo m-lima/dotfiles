@@ -65,8 +65,12 @@
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # Make persistent fileSystems available at boot
+  fileSystems = {
+    "/persist".neededForBoot = true;
+    "/var/log".neededForBoot = true;
+  };
+
   environment = {
     persistence."/persist" = {
       directories = [
