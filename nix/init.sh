@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# TODO: Make this nix
+
 base=$(dirname $(realpath "${0}"))
 
 if [ -z "${1}" ]; then
@@ -10,7 +12,7 @@ fi
 
 host=${1}
 
-echo -n "[33mWARNING!![m This will format the disk. Proceed? [y/N]"
+echo -n "[33mWARNING!![m This will format the disk. Proceed? [y/N] "
 read input
 case "${input}" in
   [Yy] ) ;;
