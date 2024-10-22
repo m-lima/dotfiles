@@ -28,4 +28,9 @@ mkpasswd > /mnt/persist/secrets/root.passwordFile
 echo "[34mSetting password for celo[m"
 mkpasswd > /mnt/persist/secrets/celo.passwordFile
 
+echo "[34mCreating dotfiles in persist[m"
+cp -a ${base}/.. /mnt/persist/.
+mkdir /mnt/persist/etc
+ln -s /persist/dotfiles/nix /mnt/persist/etc/nixos
+
 nixos-install --flake "${base}#${host}"
