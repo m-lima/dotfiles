@@ -3,22 +3,29 @@
 base=$(dirname $(realpath "${0}"))
 
 if [ -z "${1}" ]; then
-  echo "Host name not provided" >&2
-  echo "Available hosts:" >&2
+  echo "[31mHost name not provided. Available hosts:[m" >&2
   ls ${base}/hosts | xargs -I{} echo {}
   exit 1
 fi
 
 host=${1}
 
+echo -n "[33mWARNING!![m This will format the disk. Proceed? [y/N]"
+read input
+case "${input}" in
+  [Yy] ) ;;
+  * ) exit ;;
+esac
+
 set -e
 
+echo "[34mnix --experimental-features 'nix-command flakes' run github:nix-community/disko/latest -- --mode disko '${base}/hosts/${host}/disko.nix'[m"
 nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko "${base}/hosts/${host}/disko.nix"
 
-mkdir /persist/secrets
-echo Setting password for root
-mkpasswd > /persist/secrets/root.passwordFile
-echo Setting password for celo
-mkpasswd > /persist/secrets/celo.passwordFile
+mkdir /mnt/persist/secrets
+echo "[34mSetting password for root[m"
+mkpasswd > /mnt/persist/secrets/root.passwordFile
+echo "[34mSetting password for celo[m"
+mkpasswd > /mnt/persist/secrets/celo.passwordFile
 
 nixos-install --flake "${base}#${host}"
