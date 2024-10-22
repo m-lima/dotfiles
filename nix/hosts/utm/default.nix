@@ -3,6 +3,11 @@
     ./hardware-configuration.nix
     ./disko.nix
     ../../modules/base.nix
-    (import ../../modules/impermanence.nix { btrfsDevice = "/dev/vda3"; })
+    ../../modules/impermanence.nix
   ];
+
+  modules.impermanence = {
+    enable = true;
+    device = "/dev/vda3";
+  };
 }
