@@ -12,8 +12,6 @@
   timeZone ? "Europe/Amsterdam",
   ...
 }: {
-  imports = [];
-
   # Enable all firmware, regardless of license
   hardware.enableAllFirmware = true;
 
@@ -66,29 +64,11 @@
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
-  # Make persistent fileSystems available at boot
-  fileSystems = {
-    "/persist".neededForBoot = true;
-    "/var/log".neededForBoot = true;
-  };
-
-  environment = {
-    persistence."/persist" = {
-      directories = [
-        "/etc/nixos"
-        "/var/lib/nixos"
-      ];
-      files = [
-        "/etc/machine-id"
-      ];
-    };
-    systemPackages = with pkgs; [
-      # alacritty
-      curl
-      git
-      vim
-    ];
-  };
+  environment.systemPackages = with pkgs; [
+    curl
+    git
+    vim
+  ];
 
   programs = {
     # git = {
