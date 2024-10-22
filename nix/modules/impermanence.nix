@@ -17,16 +17,9 @@ in {
   };
 
   config = mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = cfg.device != null;
-        message = "Impermance was enabled without a device to wipe";
-      }
-    ];
-
     boot.initrd.postDeviceCommands = mkAfter ''
       mkdir /btrfs
-      mount -o noatime,compress=zstd:3 ${btrfsDevice} /btrfs
+      mount -o noatime,compress=zstd:3 ${cfg.device} /btrfs
       if [[ -e /btrfs/@ ]]; then
           mkdir -p /btrfs/old
           timestamp=$(date --date="@$(stat -c %Y /btrfs/@)" "+%Y-%m-%-d_%H:%M:%S")
