@@ -141,6 +141,17 @@
     openssh = {
       enable = true;
     };
+
+    # Enable local DNS resolution
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      publish = {
+        enable = true;
+        domain = true;
+        addresses = true;
+      };
+    };
   };
 
   system.stateVersion = stateVersion;
