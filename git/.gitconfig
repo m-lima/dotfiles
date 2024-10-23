@@ -1,3 +1,6 @@
+[core]
+	excludesfile = ~/.config/m-lima/git/ignore
+
 [include]
 	path = ~/.config/m-lima/git/gitconfig
 	path = ~/.config/m-lima/git/delta
