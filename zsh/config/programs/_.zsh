@@ -2,11 +2,10 @@ PREV_DIR="${CURR_DIR}"
 CURR_DIR="${funcsourcetrace[1]%/*}/"
 
 # Bat
-if type batcat &> /dev/null; then
-  alias bat=batcat
-fi
 if type bat &> /dev/null; then
   source "${CURR_DIR}/bat.zsh"
+elif type batcat &> /dev/null; then
+  eval $(sed 's/bat /batcat /g' "${CURR_DIR}/bat.zsh")
 fi
 
 # Fzf
@@ -37,7 +36,10 @@ fi
 if type nvim &> /dev/null; then
   source "${CURR_DIR}/nvim.zsh"
 elif type vim &> /dev/null; then
-  source "${CURR_DIR}/vim.zsh"
+  eval $(sed 's/nvim/vim/g' "${CURR_DIR}/nvim.zsh")
+else
+  eval $(sed 's/nvim/vi/g' "${CURR_DIR}/nvim.zsh")
+  unalias vi
 fi
 
 # Vim

@@ -1,1 +1,2 @@
-alias bbat='bat --paging=auto --style=auto'
+alias bat='bat --theme=TwoDark --style=plain --paging=never'
+alias bbat='\bat --theme=TwoDark'
