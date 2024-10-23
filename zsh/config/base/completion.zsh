@@ -1,3 +1,6 @@
+# Enable autocompletion
+autoload -U compinit && compinit
+
 # Do not autoselect the first completion entry
 unsetopt menu_complete
 
