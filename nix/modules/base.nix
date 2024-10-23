@@ -69,7 +69,9 @@
     git
     neovim
     ripgrep
+    # TODO: Persist
     zoxide
+    # TODO: Persist history
     zsh
   ];
 
@@ -91,6 +93,9 @@
     # # TODO: Neovim!!
     # neovim = {
     # };
+    # TODO: nali-autosuggestions
+    # TODO: simpalt
+    # TODO: syntax highlight
     zsh = {
       enable = true;
       histSize = 100000;
