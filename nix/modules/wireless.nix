@@ -1,9 +1,13 @@
-{ ... }:
+{
+  lib,
+  config,
+  ...
+}:
 with lib;
 let
   cfg = config.modules.wireless;
 in {
-  options.modules.sound = {
+  options.modules.wireless = {
     enable = mkEnableOption "sound";
   };
 
