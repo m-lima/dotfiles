@@ -77,6 +77,100 @@
     zsh = {
       enable = true;
       histSize = 100000;
+      interactiveShellInit = ''
+## colors.zsh
+# Colors for ls
+LSCOLORS='Gxfxcxdxbxagafxbabacad'
+LS_COLORS='di=1;36:ln=35:so=32:pi=33:ex=31:bd=30;46:cd=30;45:su=0;41:sg=30;41:tw=30;42:ow=30;43'
+
+# Match the completion colors to LS_COLORS
+zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
+
+# Nicer colors for the `kill` completion
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+
+## completion.zsh
+# Do not autoselect the first completion entry
+unsetopt menu_complete
+
+# Disable start/stop flow control characters in the editor
+unsetopt flowcontrol
+
+# Show completion menu on successive tab press
+setopt auto_menu
+
+# Set the completion ahead of the cursor
+setopt complete_in_word
+
+# Don't do partial completions, always do the full completion
+setopt always_to_end
+
+# Make completions case- and hyphen-insensitive
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]-_}={[:upper:][:lower:]_-}' 'r:|=*' 'l:|=* r:|=*'
+
+# Complete '.' and '..'
+zstyle ':completion:*' special-dirs true
+
+# Start the selection unconditionally
+zstyle ':completion:*:*:*:*:*' menu select
+
+zstyle ':completion:*:*:*:*:processes' command 'ps -u '"''${USERNAME}"' -o pid,user,comm -w -w'
+
+# Don't complete uninteresting users
+zstyle ':completion:*:*:*:users' '_*'
+
+# Override the ignores in single case scenario
+zstyle '*' single-ignored show
+
+# Disable named-directories autocompletion
+zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
+
+# Load bash completions
+autoload -U +X bashcompinit && bashcompinit
+
+# # TODO: Enable this?
+# zstyle ':completion:*' use-cache yes
+# # TODO: Make this persistent?
+# zstyle ':completion:*' cache-path /Users/celo/.zgen/robbyrussell/oh-my-zsh-master/cache
+
+## history.zsh
+HISTSIZE=100000
+SAVEHIST=100000
+
+# Record timestamp of command in HISTFILE
+setopt extended_history
+
+# Delete duplicates first when size is reached
+setopt hist_expire_dups_first
+
+# Ignore duplicates
+setopt hist_ignore_all_dups
+
+# Don't save to history if starting with a space
+setopt hist_ignore_space
+
+# When reloading from history, don't just run it, but update the buffer
+setopt hist_verify
+
+# Share history across sessions
+setopt share_history
+
+## keys.zsh
+# Enable vim editing of command
+autoload edit-command-line
+zle -N edit-command-line
+bindkey '^e' edit-command-line
+
+## misc.zsh
+# Enable multiple streams: echo >file1 >file2
+setopt multios
+
+# Show long lint format job notifications
+setopt long_list_jobs
+
+# Recognize comments
+setopt interactivecomments
+      '';
     };
     # # TODO: Configure globally
     # neovim = {
