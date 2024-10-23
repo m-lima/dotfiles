@@ -10,12 +10,12 @@ fi
 
 # Fzf
 if [ -f ~/.fzf.zsh ]; then
-  echo source "${CURR_DIR}/fzf.zsh"
-  if type fdfind &> /dev/null; then
-    alias fd=fdfind
-  fi
+  source "${CURR_DIR}/fzf.zsh"
   if type fd &> /dev/null; then
     source "${CURR_DIR}/fzf_fd.zsh"
+  elif type fdfind &> /dev/null; then
+    eval $(sed 's/fd /fdfind /g' "${CURR_DIR}/fzf_fd.zsh")
+    alias fd=fdfind
   fi
 fi
 
