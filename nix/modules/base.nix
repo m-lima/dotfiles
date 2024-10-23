@@ -77,11 +77,13 @@
     zsh = {
       enable = true;
       histSize = 100000;
+      enableLsColors = false;
+      shellAliases = {};
       interactiveShellInit = ''
 ## colors.zsh
 # Colors for ls
-LSCOLORS='Gxfxcxdxbxagafxbabacad'
-LS_COLORS='di=1;36:ln=35:so=32:pi=33:ex=31:bd=30;46:cd=30;45:su=0;41:sg=30;41:tw=30;42:ow=30;43'
+export LSCOLORS='Gxfxcxdxbxagafxbabacad'
+export LS_COLORS='di=1;36:ln=35:so=32:pi=33:ex=31:bd=30;46:cd=30;45:su=0;41:sg=30;41:tw=30;42:ow=30;43'
 
 # Match the completion colors to LS_COLORS
 zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
@@ -124,6 +126,9 @@ zstyle '*' single-ignored show
 
 # Disable named-directories autocompletion
 zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
+
+# Enable autocompletion
+autoload -U compinit && compinit
 
 # Load bash completions
 autoload -U +X bashcompinit && bashcompinit
