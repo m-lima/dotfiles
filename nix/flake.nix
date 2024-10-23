@@ -39,6 +39,7 @@
           modules = [
             impermanence.nixosModules.impermanence
             disko.nixosModules.disko
+            ./modules
             ./hosts/${hostName}
           ];
         };
