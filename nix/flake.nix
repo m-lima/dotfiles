@@ -21,8 +21,9 @@
 
   outputs = {
     nixpkgs,
-    impermanence,
     disko,
+    home-manager,
+    impermanence,
     ...
   } @ inputs:
   let
