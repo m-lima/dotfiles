@@ -69,12 +69,14 @@
     git
     neovim
     ripgrep
+    # TODO: Makes little sense to be global
     # TODO: Persist
     zoxide
     # TODO: Persist history
     zsh
   ];
 
+  # TODO: This is a smell.. Should go into HM
   environment.etc = with builtins; {
     gitignore.text = readFile ../../git/config/ignore;
     gitconfig.text = ''
@@ -85,6 +87,7 @@
       + readFile ../../git/config/delta;
   };
 
+  # TODO: Any guy here should go into HM
   programs = {
     fzf = {
       keybindings = true;
@@ -154,5 +157,6 @@
     };
   };
 
+  # TODO: Does this need to be a variable
   system.stateVersion = stateVersion;
 }

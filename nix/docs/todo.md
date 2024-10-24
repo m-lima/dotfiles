@@ -28,7 +28,7 @@
   - [x] /var/log
     - [x] /var/log/journal
 - [x] Full Disk Encryption
-- [ ] Diskos
+- [x] Diskos
 - [ ] Git gpg
 - [ ] ssh key
 - [ ] Abort configuration if `/persist/secrets/<file>` does not exist
