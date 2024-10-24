@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 export PATH="/usr/local/opt/qt/bin:$PATH"
 bundle=`cargo bundle --release`

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 printf "Normal\n"
 printf "\e[31mRed\e[m\n"

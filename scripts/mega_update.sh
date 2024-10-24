@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 function prompt_question {
   printf "[34m${1}"

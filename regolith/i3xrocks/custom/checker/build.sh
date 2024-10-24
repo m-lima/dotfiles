@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 gcc -O3 gpu-usage.c -o gpu-usage -flto -lX11 \
   && strip gpu-usage \
   && sudo chown root:root gpu-usage \
