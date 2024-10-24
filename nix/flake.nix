@@ -37,8 +37,9 @@
           };
           system = system;
           modules = [
-            impermanence.nixosModules.impermanence
             disko.nixosModules.disko
+            home-manager.nixosModules.home-manager
+            impermanence.nixosModules.impermanence
             ./modules
             ./hosts/${hostName}
           ];
