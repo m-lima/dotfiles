@@ -22,6 +22,11 @@ function format {
   nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko --flake "${base}#${host}"
 }
 
+function mount {
+  echo "[34mnix --experimental-features 'nix-command flakes' run github:nix-community/disko/latest -- --mode mount --flake '${base}#${host}'[m"
+  nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode mount --flake "${base}#${host}"
+}
+
 function mkpass {
   mkdir /mnt/persist/secrets
   echo "[34mSetting password for root[m"
@@ -33,8 +38,8 @@ function mkpass {
 function prepare_persist {
   echo "[34mCreating dotfiles in persist[m"
   cp -a ${base}/.. /mnt/persist/dotfiles
-  mkdir /mnt/persist/etc
-  ln -s /persist/dotfiles/nix /mnt/persist/etc/nixos
+  mkdir -p /mnt/persist/etc/nixos
+  ln -s /persist/dotfiles/nix/flake.nix /mnt/persist/etc/nixos/.
 }
 
 function install {

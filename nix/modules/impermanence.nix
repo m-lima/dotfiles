@@ -57,6 +57,7 @@ in {
       ];
       files = [
         "/etc/machine-id"
+        "/etc/nixos/flake.nix"
       ] ++ (
         if config.modules.ssh.enable then [
           "/etc/ssh/ssh_host_rsa_key"
