@@ -14,6 +14,7 @@ in {
     device = mkOption {
       description = "The device to wipe on reboot";
       example = "/dev/mapper/btrfs";
+      default = config.fileSystems."/.btrfs/volume".device;
       type = types.str;
     };
   };

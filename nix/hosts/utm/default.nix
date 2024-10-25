@@ -4,9 +4,7 @@
     ./disko.nix
   ];
 
-  modules.impermanence = {
-    enable = true;
-    # TODO: Derive from disko
-    device = "/dev/vda3";
+  modules = {
+    impermanence.enable = true;
   };
 }
