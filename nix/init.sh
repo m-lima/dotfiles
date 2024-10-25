@@ -20,8 +20,10 @@ function format {
     * ) exit ;;
   esac
 
-  echo "[34mnix --experimental-features 'nix-command flakes' run github:nix-community/disko/latest -- --mode disko '${base}/hosts/${host}/disko.nix'[m"
-  nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko "${base}/hosts/${host}/disko.nix"
+  # echo "[34mnix --experimental-features 'nix-command flakes' run github:nix-community/disko/latest -- --mode disko '${base}/hosts/${host}/disko.nix'[m"
+  # nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko "${base}/hosts/${host}/disko.nix"
+  echo "[34mnix --experimental-features 'nix-command flakes' run github:nix-community/disko/latest -- --mode disko --flake '${base}#${host}'[m"
+  nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko --flake "${base}#${host}"
 }
 
 function mkpass {
@@ -40,6 +42,7 @@ function prepare_persist {
 }
 
 function install {
+  echo "[34mnixos-install --flake '${base}#${host}'[m"
   nixos-install --flake "${base}#${host}"
 }
 
