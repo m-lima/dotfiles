@@ -10,7 +10,6 @@ in {
   options.modules.impermanence = {
     enable = mkEnableOption "impermanence";
 
-    # TODO: Try to grab from disko
     device = mkOption {
       description = "The device to wipe on reboot";
       example = "/dev/mapper/btrfs";

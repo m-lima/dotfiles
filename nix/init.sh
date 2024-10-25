@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# TODO: Make this nix
-
 base=$(dirname $(realpath "${0}"))
 
 if [ -z "${1}" ]; then
@@ -20,8 +18,6 @@ function format {
     * ) exit ;;
   esac
 
-  # echo "[34mnix --experimental-features 'nix-command flakes' run github:nix-community/disko/latest -- --mode disko '${base}/hosts/${host}/disko.nix'[m"
-  # nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko "${base}/hosts/${host}/disko.nix"
   echo "[34mnix --experimental-features 'nix-command flakes' run github:nix-community/disko/latest -- --mode disko --flake '${base}#${host}'[m"
   nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko --flake "${base}#${host}"
 }
