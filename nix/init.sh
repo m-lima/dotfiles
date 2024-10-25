@@ -59,4 +59,12 @@ case "${2}" in
   "install")
     install
     ;;
+  * )
+    echo "[31mUnrecognized command '${2}'. Available commands:[m" >&2
+    echo all
+    echo mount
+    echo mkpass
+    echo install
+    exit 1
+    ;;
 esac
