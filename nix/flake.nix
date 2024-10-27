@@ -31,9 +31,10 @@
       hostName,
       userName,
       system,
+      timeZone ? "Europe/Amsterdam",
     } : nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs hostName userName;
+            inherit inputs hostName userName timeZone;
             stateVersion = "24.05";
           };
           system = system;

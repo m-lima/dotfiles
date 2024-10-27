@@ -5,7 +5,7 @@
   hostName,
   userName,
   stateVersion,
-  timeZone ? "Europe/Amsterdam",
+  timeZone,
   ...
 }: {
   # Enable all firmware, regardless of license
