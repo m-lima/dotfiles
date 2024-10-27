@@ -1,4 +1,7 @@
 {
+  pkgs,
+  ...
+}: {
   # To search for available packages:
   # $ nix search nixpkgs wget
   environment.systemPackages = with pkgs; [
