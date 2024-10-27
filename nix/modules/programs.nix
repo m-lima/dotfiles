@@ -6,6 +6,7 @@
   # $ nix search nixpkgs wget
   environment.systemPackages = with pkgs; [
     curl
+    git
     neovim
     zsh
   ];
@@ -30,7 +31,9 @@
         + readFile ../../zsh/config/base/completion.zsh
         + readFile ../../zsh/config/base/history.zsh
         + readFile ../../zsh/config/base/keys.zsh
-        + readFile ../../zsh/config/base/misc.zsh;
+        + readFile ../../zsh/config/base/misc.zsh
+        + readFile ../../zsh/config/programs/git.zsh
+        + readFile ../../zsh/config/programs/ls.zsh;
     };
   };
 
