@@ -63,6 +63,7 @@
   environment.systemPackages = with pkgs; [
     curl
     neovim
+    zsh
   ];
 
   # environment.systemPackages = with pkgs; [
@@ -133,10 +134,22 @@
           + readFile ../../vim/config/mapping.vim;
       };
     };
+    zsh = {
+      enable = true;
+      enableLsColors = false;
+      shellAliases = {};
+      interactiveShellInit = with builtins; ''''
+        + readFile ../../zsh/config/base/colors.zsh
+        + readFile ../../zsh/config/base/completion.zsh
+        + readFile ../../zsh/config/base/history.zsh
+        + readFile ../../zsh/config/base/keys.zsh
+        + readFile ../../zsh/config/base/misc.zsh;
+    };
   };
 
   users = {
     mutableUsers = false;
+    defaultUserShell = pkgs.zsh;
     users = {
       root = {
         hashedPasswordFile = "/persist/secrets/root.passwordFile";
