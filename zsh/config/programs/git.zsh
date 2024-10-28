@@ -28,6 +28,7 @@ alias gsi='git stash push --keep-index'
 
 # Status
 alias gsb='git status -sb'
+alias glg='git log --stat'
 alias glgg='git log --graph --all --oneline'
 
 # Submodules
