@@ -1,3 +1,5 @@
 alias lt='ls -lathr'
 alias l='ls -lAhv'
 alias ll='ls -lh'
+alias md='mkdir -p'
+alias rd='rmdir'
