@@ -1,4 +1,6 @@
 {
+  config,
+  pkgs,
   userName,
   homeDirectory,
   stateVersion,
@@ -9,7 +11,7 @@
   home.homeDirectory = homeDirectory;
   programs.home-manager.enable = true;
 
-  home.packages = [
+  home.packages = with pkgs; [
     bat       # Configured in ZSH
     curl      # No-op
     delta     # Configured in Git
