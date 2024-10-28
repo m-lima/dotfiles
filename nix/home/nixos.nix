@@ -1,7 +1,7 @@
 {
   userName,
   ...
-}:
+} @ inputs:
 let
   homeDirectory = "/home/${userName}";
 in {
