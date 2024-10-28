@@ -32,3 +32,8 @@
 - [ ] Git gpg
 - [ ] ssh key
 - [ ] Abort configuration if `/persist/secrets/<file>` does not exist
+- [ ] HomeManager modules are not compatible with a "raw" install
+  - [ ] ZSH is being configured with manual includes
+  - [ ] FZF is being configured with module options
+  - [ ] Bat is being configured as part of ZSH
+  - [ ] Git is a bit of a mess.. A little here a little there
