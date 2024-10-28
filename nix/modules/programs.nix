@@ -2,6 +2,7 @@
   pkgs,
   ...
 }: {
+
   # To search for available packages:
   # $ nix search nixpkgs wget
   environment.systemPackages = with pkgs; [
@@ -11,17 +12,13 @@
     zsh
   ];
 
+  environment.etc = {
+    "xdg/nvim/init.vim".text = with builtins; ''''
+        + readFile ../../vim/config/options.vim
+        + readFile ../../vim/config/mapping.vim;
+ };
+
   programs = {
-    neovim = {
-      enable = true;
-      viAlias = true;
-      defaultEditor = true;
-      configure = {
-        customRC = with builtins; ''''
-          + readFile ../../vim/config/options.vim
-          + readFile ../../vim/config/mapping.vim;
-      };
-    };
     zsh = {
       enable = true;
       enableLsColors = false;
@@ -33,7 +30,8 @@
         + readFile ../../zsh/config/base/keys.zsh
         + readFile ../../zsh/config/base/misc.zsh
         + readFile ../../zsh/config/programs/git.zsh
-        + readFile ../../zsh/config/programs/ls.zsh;
+        + readFile ../../zsh/config/programs/ls.zsh
+        + readFile ../../zsh/config/programs/nvim.zsh;
     };
   };
 
