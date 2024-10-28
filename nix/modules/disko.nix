@@ -9,6 +9,12 @@ let
 in {
   options.modules.disko = {
     luks = mkEnableOption "LUKS encryption";
+    swap = mkOption {
+      default = null;
+      type = types.nullOr types.str;
+      description = "Size of the swap partition";
+      example = "8G";
+    };
   };
 
   config = {
@@ -61,12 +67,12 @@ in {
                     mountOptions = [ "umask=0077" ];
                   };
                 };
-                swap = {
-                  size = "1G";
+                swap = mkIf (! isNull cfg.swap) {
+                  size = cfg.swap;
                   name = "swap";
                   content = {
                     type = "swap";
-                    randomEncryption = true;
+                    randomEncryption = cfg.luks;
                   };
                 };
                 main = {

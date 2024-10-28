@@ -4,7 +4,9 @@
   ];
 
   modules = {
-    impermanence.enable = true;
-    disko.luks = false;
+    disko = {
+      luks = false;
+      swap = "1G";
+    };
   };
 }

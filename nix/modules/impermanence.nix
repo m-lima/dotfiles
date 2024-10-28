@@ -8,7 +8,13 @@ let
   cfg = config.modules.impermanence;
 in {
   options.modules.impermanence = {
-    enable = mkEnableOption "impermanence";
+    enable = mkOption {
+      default = true;
+      description = ''
+        Enable impermanence.
+      '';
+      type = types.bool;
+    };
 
     device = mkOption {
       description = "The device to wipe on reboot";
