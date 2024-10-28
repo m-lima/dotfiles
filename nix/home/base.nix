@@ -6,10 +6,9 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users."${userName}" = {
-      home.stateVersion = stateVersion;
 
-      programs.home-manager.enable = true;
-    };
+    users."${userName}" = import ./home.nix;
+    users."${userName}".home.stateVersion = stateVersion;
+    users."${userName}".programs.home-manager.enable = true;
   };
 }
