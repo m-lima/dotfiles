@@ -53,9 +53,6 @@
       initExtraFirst = with builtins; ''''
         + readFile ../../zsh/config/programs/bat.zsh
         + readFile ../../zsh/config/programs/fzf_fd.zsh
-        + readFile ../../zsh/config/programs/git.zsh
-        + readFile ../../zsh/config/programs/ls.zsh
-        + readFile ../../zsh/config/programs/nvim.zsh
         + readFile ../../zsh/config/programs/rg.zsh
         + readFile ../../zsh/config/programs/zoxide.zsh;
     };
