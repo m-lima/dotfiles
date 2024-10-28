@@ -1,4 +1,5 @@
 {
+  stateVersion,
   userName,
   ...
 }:
@@ -8,6 +9,6 @@ in {
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users."${userName}" = import ./home.nix;
+    users."${userName}" = (import ./home.nix) { inherit stateVersion userName homeDirectory; };
   };
 }

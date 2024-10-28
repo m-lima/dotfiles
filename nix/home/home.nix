@@ -1,10 +1,15 @@
 {
+  stateVersion,
+  userName,
+  homeDirectory,
+}:
+{
   pkgs,
   ...
 }: {
-  home.stateVersion = "24.05";
-  home.username = "celo";
-  home.homeDirectory = "/home/celo";
+  home.stateVersion = stateVersion;
+  home.username = userName;
+  home.homeDirectory = homeDirectory;
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
