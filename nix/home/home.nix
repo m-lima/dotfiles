@@ -40,7 +40,7 @@
       ];
       delta = {
         enable = true;
-      }
+      };
     };
     # # TODO: Neovim!!
     # neovim = {
