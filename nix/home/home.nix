@@ -16,7 +16,7 @@
     curl      # No-op
     delta     # Configured in Git
     fd        # Configured in ZSH
-    fzf       # Done
+    fzf       # Defaults are OK
     git
     jq        # No-op
     neovim
@@ -30,9 +30,6 @@
   # TODO: Fonts
 
   programs = {
-    fzf = {
-      zshIntegration = true;
-    };
     git = {
       userName = "m-lima";
       userEmail = "m-lima@users.noreply.github.com";
