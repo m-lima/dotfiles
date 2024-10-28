@@ -41,7 +41,6 @@
             disko.nixosModules.disko
             home-manager.nixosModules.home-manager
             impermanence.nixosModules.impermanence
-            # impermanence.nixosModules.home-manager.impermanence
             ./modules
             ./home/nixos.nix
             ./hosts/${hostName}

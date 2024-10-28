@@ -1,10 +1,8 @@
 {
+  pkgs,
   stateVersion,
   userName,
   homeDirectory,
-}:
-{
-  pkgs,
   ...
 }: {
   home.stateVersion = stateVersion;
@@ -52,6 +50,7 @@
       # TODO: nali-autosuggestions
       # TODO: simpalt
       # TODO: syntax highlight
+      # TODO: Completion not working. E.g. git
       enable = true;
       initExtraFirst = with builtins; ''''
         + readFile ../../zsh/config/programs/bat.zsh

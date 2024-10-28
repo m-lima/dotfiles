@@ -1,6 +1,7 @@
 {
   stateVersion,
   userName,
+  impermanence,
   ...
 }:
 let
@@ -9,6 +10,11 @@ in {
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users."${userName}" = (import ./home.nix) { inherit stateVersion userName homeDirectory; };
+    users."${userName}" = {
+      imports = [
+        impermanence.nixosModules.home-manager.impermanence
+        ./home.nix
+      ];
+    };
   };
 }
