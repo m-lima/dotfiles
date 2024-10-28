@@ -1,9 +1,10 @@
 {
-  config,
-  pkgs,
   userName,
   homeDirectory,
   stateVersion,
+}:
+{
+  pkgs,
   ...
 }: {
   home.stateVersion = stateVersion;
