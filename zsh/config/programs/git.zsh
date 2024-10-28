@@ -45,8 +45,9 @@ alias gwb='git switch --create'
 # Search through all branches
 alias ggal="git branch -a | tr -d \* | sed '/->/d' | xargs git grep -HI"
 
-# Update HEAD to track divergence point from master
-alias grpr='git reset $(git merge-base master HEAD)'
+# Reset
+alias grh='git reset'
+alias grpr='git reset $(git merge-base master HEAD)' # Update HEAD to track divergence point from master
 
 # Show remote status of branches
 function gbs {
