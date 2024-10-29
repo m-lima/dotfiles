@@ -1,15 +1,7 @@
 {
   pkgs,
-  stateVersion,
-  userName,
-  homeDirectory,
   ...
 }: {
-  home.stateVersion = stateVersion;
-  home.username = userName;
-  home.homeDirectory = homeDirectory;
-  programs.home-manager.enable = true;
-
   home.packages = with pkgs; [
     bat       # Configured in ZSH
     curl      # No-op
