@@ -13,8 +13,7 @@
     neovim
     ripgrep   # Configured in ZSH
     tmux
-    # Persist
-    zoxide
+    zoxide    # Done one level up
     zsh
   ];
 
