@@ -1,6 +1,9 @@
 HISTSIZE=100000
 SAVEHIST=100000
 
+# Use system lock for the history instead of zsh's adhoc one
+setopt hist_fcntl_lock
+
 # Record timestamp of command in HISTFILE
 setopt extended_history
 
