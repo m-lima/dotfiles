@@ -38,6 +38,11 @@
     # neovim = {
     # };
     zsh = {
+      history = {
+        ignoreAllDups = true;
+        expireDuplicatesFirst = true;
+        extended = true;
+      };
       # TODO: nali-autosuggestions
       # TODO: simpalt
       # TODO: syntax highlight
