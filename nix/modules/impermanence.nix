@@ -17,14 +17,14 @@ in {
           description = "The device to wipe on reboot";
           example = "/dev/mapper/btrfs";
           default = config.fileSystems."/.btrfs/volume".device;
-          type = types.str;
+          type = lib.types.str;
         };
       };
     };
   };
 
-  config = mkIf cfg.enable {
-    boot.initrd.postDeviceCommands = mkIf cfg.wipe.enable (mkAfter ''
+  config = lib.mkIf cfg.enable {
+    boot.initrd.postDeviceCommands = lib.mkIf cfg.wipe.enable (lib.mkAfter ''
       mkdir /btrfs
       mount -o noatime,compress=zstd:3 ${cfg.wipe.device} /btrfs
       if [[ -e /btrfs/@ ]]; then

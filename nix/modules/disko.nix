@@ -12,7 +12,7 @@ in {
       luks = lib.mkEnableOption "LUKS encryption";
       swap = lib.mkOption {
         default = null;
-        type = types.nullOr types.str;
+        type = lib.types.nullOr lib.types.str;
         description = "Size of the swap partition";
         example = "8G";
       };
