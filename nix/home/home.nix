@@ -2,11 +2,12 @@
   pkgs,
   lib,
   config,
+  sysconfig ? import (<nixpkgs/nixos> {}).config,
   ...
 }:
 with lib;
 let
-  cfg = config.modules;
+  cfg = sysconfig.modules;
 in {
   home.packages = with pkgs; [
     bat       # Configured in ZSH
