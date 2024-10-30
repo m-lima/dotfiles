@@ -8,5 +8,6 @@
       luks = false;
       swap = "1G";
     };
+    ui = true;
   };
 }

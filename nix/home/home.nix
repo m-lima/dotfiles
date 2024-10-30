@@ -1,7 +1,13 @@
 {
   pkgs,
+  lib,
+  config,
   ...
-}: {
+}:
+with lib;
+let
+  cfg = config.modules;
+in {
   home.packages = with pkgs; [
     bat       # Configured in ZSH
     curl      # No-op
@@ -15,7 +21,11 @@
     tmux
     zoxide    # Done one level up
     zsh
-  ];
+  ] ++ (
+    if cfg.ui then [
+      hyprland
+    ] else []
+  );
 
   # TODO: Fonts
 
@@ -38,6 +48,7 @@
     # neovim = {
     # };
     zsh = {
+      # TODO: This is repeating stuff from the root to avoid the override from homemanager
       history = {
         ignoreAllDups = true;
         expireDuplicatesFirst = true;
