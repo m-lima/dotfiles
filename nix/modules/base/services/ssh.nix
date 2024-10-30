@@ -2,26 +2,17 @@
   lib,
   config,
   userName,
+  mkDisableOption,
   ...
 }:
 with lib;
 let
-  cfg = config.modules.ssh;
+  cfg = config.modules.base.services.ssh;
 in {
-  options.modules.ssh = {
-    enable = mkOption {
-      default = true;
-      description = ''
-        Enable OpenSSH daemon.
-      '';
-      type = types.bool;
-    };
-    mdns = mkOption {
-      default = true;
-      description = ''
-        Enable mDNS resolution and publishing.
-      '';
-      type = types.bool;
+  options = {
+    modules.base.services.ssh = {
+      enable = mkDisableOption "OpenSSH daemon";
+      mdns.enable = mkDisableOption "mDNS resolution and publishing";
     };
   };
 
@@ -39,7 +30,7 @@ in {
         enable = true;
       };
 
-      avahi = mkIf cfg.mdns {
+      avahi = mkIf cfg.mdns.enable {
         enable = true;
         nssmdns4 = true;
         publish = {

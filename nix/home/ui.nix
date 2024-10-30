@@ -6,9 +6,8 @@
 }:
 with lib;
 let
-  cfg = sysconfig.modules;
-in mkIf cfg.ui {
-
+  cfg = sysconfig.modules.ui;
+in mkIf cfg.ui.enable {
   home.packages = with pkgs; [
     hyprland
   ];

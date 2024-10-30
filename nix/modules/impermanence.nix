@@ -1,33 +1,33 @@
 {
+  userName,
   lib,
   config,
+  mkDisableOption,
   ...
 }:
 with lib;
 let
   cfg = config.modules.impermanence;
 in {
-  options.modules.impermanence = {
-    enable = mkOption {
-      default = true;
-      description = ''
-        Enable impermanence.
-      '';
-      type = types.bool;
-    };
-
-    device = mkOption {
-      description = "The device to wipe on reboot";
-      example = "/dev/mapper/btrfs";
-      default = config.fileSystems."/.btrfs/volume".device;
-      type = types.str;
+  options = {
+    modules.impermanence = {
+      enable = mkDisableOption "impermanence";
+      wipe = {
+        enable = mkDisableOption "disk wiping";
+        device = mkOption {
+          description = "The device to wipe on reboot";
+          example = "/dev/mapper/btrfs";
+          default = config.fileSystems."/.btrfs/volume".device;
+          type = types.str;
+        };
+      };
     };
   };
 
   config = mkIf cfg.enable {
-    boot.initrd.postDeviceCommands = mkAfter ''
+    boot.initrd.postDeviceCommands = mkIf cfg.wipe.enable mkAfter ''
       mkdir /btrfs
-      mount -o noatime,compress=zstd:3 ${cfg.device} /btrfs
+      mount -o noatime,compress=zstd:3 ${cfg.wipe.device} /btrfs
       if [[ -e /btrfs/@ ]]; then
           mkdir -p /btrfs/old
           timestamp=$(date --date="@$(stat -c %Y /btrfs/@)" "+%Y-%m-%-d_%H:%M:%S")
@@ -61,17 +61,28 @@ in {
         "/etc/nixos"
         "/var/lib/nixos"
       ];
+
       files = [
         "/etc/machine-id"
         "/etc/nixos/flake.nix"
       ] ++ (
-        if config.modules.ssh.enable then [
+        if config.modules.base.services.ssh.enable then [
           "/etc/ssh/ssh_host_rsa_key"
           "/etc/ssh/ssh_host_rsa_key.pub"
           "/etc/ssh/ssh_host_ed25519_key"
           "/etc/ssh/ssh_host_ed25519_key.pub"
         ] else []
       );
+
+      users."${userName}" = {
+        directories = [
+          "code"
+          ".local/share/zoxide"
+        ];
+        files = [
+          ".zsh_history"
+        ];
+      };
     };
   };
 }

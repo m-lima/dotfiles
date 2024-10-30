@@ -17,8 +17,6 @@
     zsh
   ];
 
-  # TODO: Fonts
-
   programs = {
     fzf = {
       enable = true;

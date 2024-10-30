@@ -8,6 +8,8 @@
       luks = false;
       swap = "1G";
     };
-    ui = true;
+    ui = {
+      enable = true;
+    };
   };
 }

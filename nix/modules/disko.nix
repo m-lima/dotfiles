@@ -7,13 +7,16 @@ with lib;
 let
   cfg = config.modules.disko;
 in {
-  options.modules.disko = {
-    luks = mkEnableOption "LUKS encryption";
-    swap = mkOption {
-      default = null;
-      type = types.nullOr types.str;
-      description = "Size of the swap partition";
-      example = "8G";
+  options = {
+    modules.disko = {
+      # TODO: Go over every config
+      luks = mkEnableOption "LUKS encryption";
+      swap = mkOption {
+        default = null;
+        type = types.nullOr types.str;
+        description = "Size of the swap partition";
+        example = "8G";
+      };
     };
   };
 
