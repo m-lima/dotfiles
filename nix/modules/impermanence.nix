@@ -24,7 +24,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    boot.initrd.postDeviceCommands = mkIf cfg.wipe.enable mkAfter ''
+    boot.initrd.postDeviceCommands = mkIf cfg.wipe.enable (mkAfter ''
       mkdir /btrfs
       mount -o noatime,compress=zstd:3 ${cfg.wipe.device} /btrfs
       if [[ -e /btrfs/@ ]]; then
@@ -47,7 +47,7 @@ in {
 
       btrfs subvolume create /btrfs/@
       umount /btrfs
-    '';
+    '');
 
     # Make persistent fileSystems available at boot
     fileSystems = {
