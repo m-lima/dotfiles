@@ -3,15 +3,14 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.modules.disko;
 in {
   options = {
     modules.disko = {
       # TODO: Go over every config
-      luks = mkEnableOption "LUKS encryption";
-      swap = mkOption {
+      luks = lib.mkEnableOption "LUKS encryption";
+      swap = lib.mkOption {
         default = null;
         type = types.nullOr types.str;
         description = "Size of the swap partition";
@@ -70,7 +69,7 @@ in {
                     mountOptions = [ "umask=0077" ];
                   };
                 };
-                swap = mkIf (! isNull cfg.swap) {
+                swap = lib.mkIf (! isNull cfg.swap) {
                   size = cfg.swap;
                   name = "swap";
                   content = {

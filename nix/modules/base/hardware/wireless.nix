@@ -3,17 +3,16 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.modules.base.hardware.wireless;
 in {
   options = {
     modules.base.hardware.wireless = {
-      enable = mkEnableOption "wireless support via wpa_supplicant";
+      enable = lib.mkEnableOption "wireless support via wpa_supplicant";
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     networking.wireless = {
       enable = true;
       environmentFile = "/persist/secrets/wireless.env";

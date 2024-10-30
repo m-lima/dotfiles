@@ -5,7 +5,6 @@
   util,
   ...
 }:
-with lib;
 let
   cfg = config.modules.impermanence;
 in {
@@ -14,7 +13,7 @@ in {
       enable = util.mkDisableOption "impermanence";
       wipe = {
         enable = util.mkDisableOption "disk wiping";
-        device = mkOption {
+        device = lib.mkOption {
           description = "The device to wipe on reboot";
           example = "/dev/mapper/btrfs";
           default = config.fileSystems."/.btrfs/volume".device;
