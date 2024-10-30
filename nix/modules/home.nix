@@ -16,7 +16,7 @@ in {
       users."${userName}" = {
         imports = [
           inputs.impermanence.nixosModules.home-manager.impermanence
-          ./home.nix
+          ../home
         ];
       };
 

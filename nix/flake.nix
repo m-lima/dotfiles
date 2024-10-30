@@ -42,7 +42,6 @@
             home-manager.nixosModules.home-manager
             impermanence.nixosModules.impermanence
             ./modules
-            ./home/nixos.nix
             ./hosts/${hostName}
           ];
         };
