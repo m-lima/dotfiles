@@ -10,6 +10,18 @@ let
   homeDirectory = "/home/${userName}";
 in {
   config = {
+    environment.persistence."/persist" = lib.mkIf config.modules.impermanence.enable {
+      users."${userName}" = {
+        directories = [
+          "code"
+          ".local/share/zoxide"
+        ];
+        files = [
+          ".zsh_history"
+        ];
+      };
+    };
+
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
@@ -23,16 +35,6 @@ in {
           stateVersion = stateVersion;
           username = userName;
           homeDirectory = homeDirectory;
-          persistence."/persist/${homeDirectory}" = lib.mkIf config.modules.impermanence.enable {
-            allowOther = true;
-            directories = [
-              "code"
-              ".local/share/zoxide"
-            ];
-            files = [
-              ".zsh_history"
-            ];
-          };
         };
 
         programs.home-manager.enable = true;
