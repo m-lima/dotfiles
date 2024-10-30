@@ -2,7 +2,7 @@
   lib,
   config,
   userName,
-  mkDisableOption,
+  util,
   ...
 }:
 with lib;
@@ -11,8 +11,8 @@ let
 in {
   options = {
     modules.base.services.ssh = {
-      enable = mkDisableOption "OpenSSH daemon";
-      mdns.enable = mkDisableOption "mDNS resolution and publishing";
+      enable = util.mkDisableOption "OpenSSH daemon";
+      mdns.enable = util.mkDisableOption "mDNS resolution and publishing";
     };
   };
 

@@ -6,15 +6,7 @@
   stateVersion,
   timeZone,
   ...
-}:
-let
-  mkDisableOption = name: lib.mkOption {
-      default = true;
-      description = "Whether to enable ${name}.";
-      example = false;
-      type = lib.types.bool;
-    };
-in {
+}: {
   imports = [
     ./base
     ./ui

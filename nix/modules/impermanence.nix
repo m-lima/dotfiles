@@ -2,7 +2,7 @@
   userName,
   lib,
   config,
-  mkDisableOption,
+  util,
   ...
 }:
 with lib;
@@ -11,9 +11,9 @@ let
 in {
   options = {
     modules.impermanence = {
-      enable = mkDisableOption "impermanence";
+      enable = util.mkDisableOption "impermanence";
       wipe = {
-        enable = mkDisableOption "disk wiping";
+        enable = util.mkDisableOption "disk wiping";
         device = mkOption {
           description = "The device to wipe on reboot";
           example = "/dev/mapper/btrfs";

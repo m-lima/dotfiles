@@ -1,7 +1,7 @@
 {
+  lib,
   config,
-  mkUiIf,
-  mkDisableOption,
+  util,
   ...
 }:
 let
@@ -9,11 +9,11 @@ let
 in {
   options = {
     modules.ui.programs.hyprland = {
-      enable = mkDisableOption "hyprland";
+      enable = util.mkDisableOption "hyprland";
     };
   };
 
-  config = mkUiIf cfg.enable {
+  config = util.mkIfUi config cfg.enable {
     programs.hyprland = {
       enable = true;
     };

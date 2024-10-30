@@ -1,7 +1,7 @@
 {
+  lib,
   config,
-  mkUiIf,
-  mkDisableOption,
+  util,
   ...
 }:
 let
@@ -9,11 +9,11 @@ let
 in {
   options = {
     modules.ui.hardware.sound = {
-      enable = mkDisableOption "pipewire daemon";
+      enable = util.mkDisableOption "pipewire daemon";
     };
   };
 
-  config = mkUiIf cfg.enable {
+  config = util.mkIfUi config cfg.enable {
     services.pipewire = {
       enable = true;
       pulse.enable = true;

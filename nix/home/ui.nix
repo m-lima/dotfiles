@@ -4,6 +4,7 @@
   sysconfig,
   ...
 }:
+# TODO: Remove these `with`s and be explicit
 with lib;
 let
   cfg = sysconfig.modules.ui;
