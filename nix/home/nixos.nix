@@ -10,6 +10,22 @@ let
   homeDirectory = "/home/${userName}";
 in {
   config = {
+    home-manager = {
+      useGlobalPkgs = true;
+      useUserPackages = true;
+      users."${userName}" = {
+        imports = [
+          inputs.impermanence.nixosModules.home-manager.impermanence
+          ./home.nix
+        ];
+      };
+
+      extraSpecialArgs = {
+        inherit inputs userName homeDirectory stateVersion;
+        sysconfig = config;
+      };
+    };
+
     environment.persistence."/persist" = lib.mkIf config.modules.impermanence.enable {
       users."${userName}" = {
         directories = [
@@ -19,25 +35,6 @@ in {
         files = [
           ".zsh_history"
         ];
-      };
-    };
-
-    home-manager = {
-      useGlobalPkgs = true;
-      useUserPackages = true;
-      users."${userName}" = {
-        imports = [
-          inputs.impermanence.nixosModules.home-manager.impermanence
-          ./home.nix
-        ];
-
-        home = {
-          stateVersion = stateVersion;
-          username = userName;
-          homeDirectory = homeDirectory;
-        };
-
-        programs.home-manager.enable = true;
       };
     };
   };

@@ -1,14 +1,25 @@
 {
+  stateVersion,
+  userName,
+  homeDirectory,
   pkgs,
   lib,
   config,
-  sysconfig ? import (<nixpkgs/nixos> {}).config,
+  sysconfig,
   ...
 }:
 with lib;
 let
   cfg = sysconfig.modules;
 in {
+  home = {
+    stateVersion = stateVersion;
+    username = userName;
+    homeDirectory = homeDirectory;
+  };
+
+  programs.home-manager.enable = true;
+
   home.packages = with pkgs; [
     bat       # Configured in ZSH
     curl      # No-op
