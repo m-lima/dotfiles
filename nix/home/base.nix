@@ -63,7 +63,7 @@ in {
 
   home.file = {
     ".config/tmux/tmux.conf" = {
-      source = ../../tmux/tmux.conf;
+      source = ../../tmux/base.conf;
     };
     ".config/tmux/script/edit.zsh" = {
       source = ../../tmux/script/edit.zsh;
