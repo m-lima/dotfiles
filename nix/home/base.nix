@@ -1,7 +1,11 @@
 {
   pkgs,
+  sysconfig,
   ...
-}: {
+}:
+let
+  cfg = sysconfig.modules.ui;
+in {
   home.packages = with pkgs; [
     bat       # Configured in ZSH
     curl      # No-op
@@ -14,7 +18,10 @@
     ripgrep   # Configured in ZSH
     tmux
     zoxide    # Done one level up
-    zsh
+    zsh       # Done
+    # GPG
+    # simpalt
+    # skull
   ];
 
   programs = {
@@ -43,7 +50,6 @@
         extended = true;
       };
       # TODO: nali-autosuggestions
-      # TODO: simpalt
       # TODO: syntax highlight
       # TODO: Completion not working. E.g. git
       enable = true;
@@ -52,6 +58,33 @@
         + readFile ../../zsh/config/programs/fzf_fd.zsh
         + readFile ../../zsh/config/programs/rg.zsh
         + readFile ../../zsh/config/programs/zoxide.zsh;
+    };
+  };
+
+  home.file = {
+    ".config/tmux/tmux.conf" = {
+      source = ../../tmux/tmux.conf;
+    };
+    ".config/tmux/script/edit.zsh" = {
+      source = ../../tmux/script/edit.zsh;
+      executable = true;
+    };
+    ".config/tmux/script/clear_scratches.sh" = {
+      source = ../../tmux/script/clear_scratches.sh;
+      executable = true;
+    };
+    ".config/tmux/script/condense_windows.sh" = {
+      source = ../../tmux/script/condense_windows.sh;
+      executable = true;
+    };
+    ".config/tmux/script/status_right.sh" = with builtins; {
+      text = ''#!/usr/bin/env bash
+        ''
+        + readFile ../../tmux/script/status/simpalt.sh
+        # TODO
+        # + (if cfg.enable then readFile ../../tmux/script/status/spotify.sh else "")
+        + readFile ../../tmux/script/status/time.sh;
+      executable = true;
     };
   };
 }
