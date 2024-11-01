@@ -12,11 +12,11 @@ in {
     delta     # Configured in Git
     fd        # Configured in ZSH
     fzf       # Done
-    git
+    git       # Done
     jq        # No-op
     neovim
     ripgrep   # Configured in ZSH
-    tmux
+    tmux      # Done
     zoxide    # Done one level up
     zsh       # Done
     # GPG
@@ -27,17 +27,6 @@ in {
   programs = {
     fzf = {
       enable = true;
-    };
-    git = {
-      userName = "m-lima";
-      userEmail = "m-lima@users.noreply.github.com";
-      ignores = [
-        "*~"
-        ".DS_Store"
-      ];
-      delta = {
-        enable = true;
-      };
     };
     # # TODO: Neovim!!
     # neovim = {
@@ -62,6 +51,14 @@ in {
   };
 
   home.file = {
+    ".config/git/config" = with builtins; {
+      text = ''''
+        + readFile ../../git/config/gitconfig
+        + readFile ../../git/config/delta;
+    };
+    ".config/git/ignore" = {
+      source = ../../git/config/ignore;
+    };
     ".config/tmux/tmux.conf" = {
       source = ../../tmux/base.conf;
     };
