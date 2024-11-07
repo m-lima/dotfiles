@@ -13,8 +13,10 @@ in {
     fd        # Configured in ZSH
     fzf       # Done
     git       # Done
+    gnupg
     jq        # No-op
     neovim
+    openssh
     ripgrep   # Configured in ZSH
     tmux      # Done
     zoxide    # Done one level up
@@ -28,9 +30,18 @@ in {
     fzf = {
       enable = true;
     };
+    gpg = {
+      enable = true;
+      mutableKeys = false;
+      mutableTrust = false;
+    };
     # # TODO: Neovim!!
     # neovim = {
     # };
+    ssh = {
+      enable = true;
+      addKeysToAgent = "yes";
+    };
     zsh = {
       # TODO: This is repeating stuff from the root to avoid the override from homemanager
       history = {

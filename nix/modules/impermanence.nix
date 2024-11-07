@@ -77,6 +77,8 @@ in {
         directories = [
           "code"
           ".local/share/zoxide"
+          # TODO: Specify files like it was done in the system level
+          ".ssh"
         ];
         files = [
           ".zsh_history"

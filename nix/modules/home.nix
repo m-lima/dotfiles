@@ -14,7 +14,6 @@ in {
     useUserPackages = true;
     users."${userName}" = {
       imports = [
-        inputs.impermanence.nixosModules.home-manager.impermanence
         ../home
       ];
     };
