@@ -1,6 +1,7 @@
 {
   pkgs,
   sysconfig,
+  inputs,
   ...
 }:
 let
@@ -22,8 +23,8 @@ in {
     zoxide    # Done one level up
     zsh       # Done
     # GPG
-    # simpalt
     # skull
+    inputs.simpalt.packages."${pkgs.system}".default
   ];
 
   programs = {

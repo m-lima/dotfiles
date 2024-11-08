@@ -16,6 +16,9 @@
     impermanence = {
       url = "github:nix-community/impermanence";
     };
+    simpalt = {
+      url = "github:m-lima/simpalt-rs?ref=nix";
+    };
   };
 
   outputs = {
