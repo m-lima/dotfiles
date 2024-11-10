@@ -74,4 +74,35 @@ OK
 
 enable_network 0
 OK
+
+quit
+```
+
+3. Create WiFi secret file
+
+```
+cat << EOF >> /persist/secrets/wireless.env
+SSID="SSID"
+PSK="SECRET"
+EOF
+```
+
+## Recovering from bad internet connection
+
+1. Boot into NixOS stick
+
+2. Repeat steps **1** and **2** from [above](#wifi)
+
+3. Repeat steps **3** and **4** from the [main flow](#initializing)
+
+4. Mount the disks
+
+```
+$ ./dotfiles/nix/init.sh <HOST> mount
+```
+
+5. Entert the system
+
+```
+$ nixos-enter --root /mnt
 ```

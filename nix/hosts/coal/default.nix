@@ -9,6 +9,13 @@
       luks = true;
       swap = "8G";
     };
+    base = {
+      hardware = {
+        wireless = {
+          enable = true;
+        };
+      };
+    };
     ui = {
       enable = true;
     };
