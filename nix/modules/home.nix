@@ -3,6 +3,7 @@
   userName,
   inputs,
   lib,
+  util,
   config,
   ...
 }:
@@ -19,7 +20,7 @@ in {
     };
 
     extraSpecialArgs = {
-      inherit inputs userName homeDirectory stateVersion;
+      inherit inputs util userName homeDirectory stateVersion;
       sysconfig = config;
     };
   };

@@ -5,8 +5,8 @@
   ...
 }: {
   imports = [
-    ./base.nix
-    ./ui.nix
+    ./base
+    ./ui
   ];
 
   home = {
