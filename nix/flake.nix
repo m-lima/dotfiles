@@ -17,7 +17,7 @@
       url = "github:nix-community/impermanence";
     };
     simpalt = {
-      url = "github:m-lima/simpalt-rs?ref=nix";
+      url = "github:m-lima/simpalt-rs";
     };
   };
 

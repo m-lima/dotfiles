@@ -221,7 +221,6 @@
       },
       "original": {
         "owner": "m-lima",
-        "ref": "nix",
         "repo": "simpalt-rs",
         "type": "github"
       }
