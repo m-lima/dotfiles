@@ -8,5 +8,8 @@
       luks = true;
       swap = "8G";
     };
+    ui = {
+      enable = true;
+    };
   };
 }
