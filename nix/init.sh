@@ -28,11 +28,18 @@ function mount {
 }
 
 function mkpass {
+  local user_name
+  if [ -z "${1}" ]; then
+    user_name='celo'
+  else
+    user_name="${1}"
+  fi
+
   mkdir /mnt/persist/secrets
   echo "[34mSetting password for root[m"
   mkpasswd > /mnt/persist/secrets/root.passwordFile
-  echo "[34mSetting password for celo[m"
-  mkpasswd > /mnt/persist/secrets/celo.passwordFile
+  echo "[34mSetting password for ${user_name}[m"
+  mkpasswd > /mnt/persist/secrets/${user_name}.passwordFile
 }
 
 function prepare_persist {
@@ -55,7 +62,7 @@ case "${2}" in
     mount
     ;;
   "mkpass")
-    mkpass
+    mkpass "${3}"
     ;;
   "install")
     install
