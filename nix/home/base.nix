@@ -6,6 +6,7 @@
 }:
 let
   cfg = sysconfig.modules.ui;
+  simpalt = inputs.simpalt.packages."${pkgs.system}";
 in {
   home.packages = with pkgs; [
     bat       # Configured in ZSH
@@ -24,7 +25,7 @@ in {
     zsh       # Done
     # GPG
     # skull
-    inputs.simpalt.packages."${pkgs.system}".default
+    simpalt.default
   ];
 
   programs = {
@@ -60,39 +61,7 @@ in {
         + readFile ../../zsh/config/programs/rg.zsh
         + readFile ../../zsh/config/programs/zoxide.zsh;
 
-      # Move to output of simpalt flake
-      initExtra = with builtins; ''
-        __simpalt_build_prompt() {
-          (( ? != 0 )) && local has_error='-e'
-          [ "''${jobstates}" ] && local has_jobs='-j'
-          simpalt l -z $SIMPALT_MODE 'ɳ' $has_error $has_jobs
-        }
-
-        __simpalt_build_r_prompt() {
-          if (( COLUMNS > 120 )); then
-            simpalt r -z
-          fi
-        }
-
-        simpalt_toggle_mode() {
-          [ "$SIMPALT_MODE" ] && unset SIMPALT_MODE || SIMPALT_MODE='-l'
-          zle reset-prompt
-        }
-
-        # Allow toggling. E.g.:
-        # bindkey '^T' simpalt_toggle_mode
-        zle -N simpalt_toggle_mode
-
-        # Allow `eval` for the prompt
-        setopt promptsubst
-        PROMPT='$(__simpalt_build_prompt)'
-        RPROMPT='$(__simpalt_build_r_prompt)'
-
-        # Avoid penv from setting the PROMPT
-        VIRTUAL_ENV_DISABLE_PROMPT=1
-
-        # Simpalt toggle
-        bindkey '^T' simpalt_toggle_mode'';
+      initExtra = simpalt.zsh { symbol = "ɳ"; toggleBinding = "^T"; };
     };
   };
 
