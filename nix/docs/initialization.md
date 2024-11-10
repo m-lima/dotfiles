@@ -24,8 +24,7 @@ $ git clone https://github.com/m-lima/dotfiles
 5. Format the drives
 
 ```
-$ cd dotfiles/nix
-$ nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko ./hosts/<HOST>/disko.nix
+$ ./dotfiles/nix/init.sh <HOST> all [USER]
 ```
 
 6. Generate the config

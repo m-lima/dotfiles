@@ -5,6 +5,7 @@
 
   modules = {
     disko = {
+      device = "/dev/nvme0n1";
       luks = true;
       swap = "8G";
     };

@@ -8,7 +8,11 @@ let
 in {
   options = {
     modules.disko = {
-      # TODO: Go over every config
+      device = lib.mkOption {
+        type = lib.types.str;
+        description = "Device to use";
+        example = "/dev/vda";
+      };
       luks = lib.mkEnableOption "LUKS encryption";
       swap = lib.mkOption {
         default = null;
@@ -54,7 +58,7 @@ in {
         disk = {
           main = {
             type = "disk";
-            device = "/dev/vda";
+            device = cfg.device;
             content = {
               type = "gpt";
               partitions = {
