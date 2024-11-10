@@ -21,7 +21,7 @@ in util.mkIfUi sysconfig cfg.enable {
     settings = {
       "$terminal" = "alacritty";
       "$fileManager" = "dolphin";
-      "$launcher" = "bemenu";
+      "$launcher" = "bemenu-run";
 
       input = {
         kb_layout = "us";
