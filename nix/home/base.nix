@@ -65,7 +65,7 @@ in {
         __simpalt_build_prompt() {
           (( ? != 0 )) && local has_error='-e'
           [ "''${jobstates}" ] && local has_jobs='-j'
-          simpalt l -z $SIMPALT_MODE $COMPUTER_SYMBOL $has_error $has_jobs
+          simpalt l -z $SIMPALT_MODE 'ɳ' $has_error $has_jobs
         }
 
         __simpalt_build_r_prompt() {
