@@ -34,7 +34,6 @@ in util.mkIfUi sysconfig cfg.enable {
     hyprpaper = {
       enable = true;
       settings = {
-        splash = true;
         preload = [
           "${cfg.wallpaper}"
         ];
@@ -89,6 +88,11 @@ in util.mkIfUi sysconfig cfg.enable {
         "col.inactive_border" = "rgb(${cfg.color.background})";
 
         layout = "dwindle";
+      };
+
+      misc = {
+        disable_hyprland_logo = true;
+        disable_splash_rendering = true;
       };
 
       dwindle = {
