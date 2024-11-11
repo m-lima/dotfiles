@@ -45,6 +45,10 @@ in util.mkIfUi sysconfig cfg.enable {
         "QT_QPA_PLATFORMTHEME,qt5ct"
       ];
 
+      animations = {
+        enabled = false;
+      };
+
       input = {
         kb_layout = "us";
         # Don't refocus on mouse hover
