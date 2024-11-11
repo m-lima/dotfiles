@@ -17,6 +17,7 @@ in {
       color = {
         foreground = util.mkColorOption "foreground" "cccccc";
         background = util.mkColorOption "background" "333333";
+        background_dark = util.mkColorOption "background" "222222";
         accent = util.mkColorOption "accent" "ffa500";
       };
       wallpaper = lib.mkOption {

@@ -21,17 +21,22 @@ in util.mkIfUi sysconfig cfg.enable {
         list = "10 down";
         prompt = "open";
         ignorecase = true;
-        fb = "#1e1e2e";
-        ff = "#cdd6f4";
-        nb = "#1e1e2e";
-        nf = "#cdd6f4";
-        tb = "#1e1e2e";
-        hb = "#1e1e2e";
-        tf = "#f38ba8";
-        hf = "#f9e2af";
-        af = "#cdd6f4";
-        ab = "#1e1e2e";
         width-factor = 0.3;
+
+        tb = "#${cfg.color.background_dark}";
+        tf = "#${cfg.color.accent}";
+
+        fb = "#${cfg.color.background_dark}";
+        ff = "#${cfg.color.foreground}";
+
+        nb = "#${cfg.color.background_dark}";
+        nf = "#${cfg.color.foreground}";
+
+        hb = "#${cfg.color.background_dark}";
+        hf = "#${cfg.color.accent}";
+
+        ab = "#${cfg.color.background}";
+        af = "#${cfg.color.accent}";
       };
     };
   };
