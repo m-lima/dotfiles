@@ -33,6 +33,12 @@ in {
       enable = true;
       wayland.enable = true;
       theme = "sugar-dark";
+      extraPackages = with pkgs; [
+        qtbase
+        qtsvg
+        qtgraphicaleffects
+        qtquickcontrols2
+      ];
     };
   };
 }
