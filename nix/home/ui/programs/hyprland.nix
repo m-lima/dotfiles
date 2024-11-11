@@ -75,6 +75,10 @@ in util.mkIfUi sysconfig cfg.enable {
         preserve_split = true;
       };
 
+      binds = {
+        allow_workspace_cycles = true;
+      };
+
       bind = [
         # Top-level commands
         "SUPER SHIFT, Q, exit"
@@ -102,6 +106,7 @@ in util.mkIfUi sysconfig cfg.enable {
         "SUPER SHIFT, L, swapwindow, r"
 
         # Workspaces
+        "SUPER, GRAVE, workspace, previous"
         "SUPER, 1, workspace, 1"
         "SUPER, 2, workspace, 2"
         "SUPER, 3, workspace, 3"
