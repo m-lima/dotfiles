@@ -21,6 +21,35 @@ in util.mkIfUi sysconfig cfg.enable {
           layer = "top";
           position = "top";
           height = 30;
+
+          modules-left = [
+           "hyprland/workspaces"
+          ];
+          modules-center = [];
+          modules-right = [
+            "clock"
+          ];
+
+          "hyprland/workspaces" = {
+            on-scroll-up = "hyprctl dispatch workspace r-1";
+            on-scroll-down = "hyprctl dispatch workspace r+1";
+            on-click = "activate";
+            active-only = false;
+            all-outputs = true;
+            format = "{}";
+            format-icons = {
+              urgent = "";
+              active = "";
+              default = "";
+            };
+            persistent-workspaces = {
+              "*" = 5;
+            };
+          };
+
+          clock = {
+            format = "{:%a, %d. %b %H:%M}";
+          };
         };
       };
     };
