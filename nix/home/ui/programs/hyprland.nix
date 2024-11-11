@@ -14,6 +14,19 @@ in util.mkIfUi sysconfig cfg.enable {
     bemenu
   ];
 
+  qt = {
+    enable = true;
+    platformTheme = {
+      name = "qtct";
+    };
+    style = {
+      package = with pkgs; [
+        breeze-icons
+        breeze-qt5
+      ];
+    };
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
 
@@ -21,6 +34,11 @@ in util.mkIfUi sysconfig cfg.enable {
       "$terminal" = "alacritty";
       "$fileManager" = "dolphin";
       "$launcher" = "bemenu-run";
+
+      env = [
+        "QT_QPA_PLATFORM,wayland"
+        "QT_QPA_PLATFORMTHEME,qt5ct"
+      ];
 
       input = {
         kb_layout = "us";
@@ -47,7 +65,7 @@ in util.mkIfUi sysconfig cfg.enable {
       bind = [
         # Top-level commands
         "SUPER SHIFT, Q, exit"
-        "SUPER, C, killactive"
+        "SUPER, W, killactive"
         "SUPER, E, exec, $fileManager"
         "SUPER, SPACE, exec, $launcher"
         "SUPER, RETURN, exec, $terminal"

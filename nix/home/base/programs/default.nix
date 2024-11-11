@@ -69,6 +69,7 @@ in {
     ".config/git/config" = with builtins; {
       text = ''''
         + readFile ../../../../git/config/gitconfig
+        # Colors are off
         + readFile ../../../../git/config/delta;
     };
     ".config/git/ignore" = {
