@@ -15,17 +15,7 @@ in util.mkIfUi sysconfig cfg.enable {
 
   home.file = {
     ".config/alacritty/alacritty.toml" = with builtins; {
-      text = ''
-          [shell]
-          program = "tmux"
-
-          [font]
-          normal = { family = "Hack Nerd Font Mono", style = "Regular" }
-          bold = { style = "Bold" }
-          bold_italic = { style = "Bold Italic" }
-          italic = { style = "Italic" }
-        ''
-        + readFile ../../../../alacritty/config/colors.toml;
+      text = readFile ../../../../alacritty/config/colors.toml;
     };
   };
 }
