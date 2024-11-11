@@ -19,6 +19,12 @@ in {
         background = util.mkColorOption "background" "333333";
         accent = util.mkColorOption "accent" "ffa500";
       };
+      wallpaper = lib.mkOption {
+        type = lib.types.path;
+        description = "Wallpaper path";
+        default = ./res/background.jpg;
+        example = ./res/background.jpg;
+      };
     };
   };
 
@@ -33,7 +39,7 @@ in {
       sugarCandyNix = {
         enable = true;
         settings = {
-          Background = lib.cleanSource ./res/background.jpg;
+          Background = lib.cleanSource cfg.wallpaper;
           ScreenWidth = 3840;
           ScreenHeight = 2160;
           FullBlur = true;

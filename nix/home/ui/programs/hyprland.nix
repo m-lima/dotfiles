@@ -10,8 +10,9 @@ let
   cfg = sysconfig.modules.ui.programs.hyprland;
 in util.mkIfUi sysconfig cfg.enable {
   home.packages = with pkgs; lib.mkAfter [
-    dolphin
     bemenu
+    dolphin
+    hyprpaper
   ];
 
   qt = {
@@ -20,10 +21,22 @@ in util.mkIfUi sysconfig cfg.enable {
       name = "qtct";
     };
     style = {
+      name = "breeze";
       package = with pkgs; [
         breeze-icons
         breeze-qt5
       ];
+    };
+  };
+
+  services = {
+    hyprpaper = {
+      enable = true;
+      settings = {
+        wallpaper = [
+          ",${cfg.wallpaper}"
+        ];
+      };
     };
   };
 
@@ -35,6 +48,10 @@ in util.mkIfUi sysconfig cfg.enable {
       "$fileManager" = "dolphin";
       "$launcher" = "bemenu-run";
 
+      exec-once = [
+        "hyprpaper"
+      ];
+
       env = [
         "QT_QPA_PLATFORM,wayland"
         "QT_QPA_PLATFORMTHEME,qt5ct"
@@ -42,7 +59,6 @@ in util.mkIfUi sysconfig cfg.enable {
 
       input = {
         kb_layout = "us";
-        # kb_options = "caps:swapescape";
         # Don't refocus on mouse hover
         follow_mouse = 2;
       };
@@ -58,7 +74,7 @@ in util.mkIfUi sysconfig cfg.enable {
       };
 
       dwindle = {
-        # pseudotile = true;
+        pseudotile = true;
         preserve_split = true;
       };
 
