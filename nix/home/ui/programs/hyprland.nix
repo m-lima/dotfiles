@@ -131,6 +131,10 @@ in util.mkIfUi sysconfig cfg.enable {
         ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
         ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ];
+
+      windowrulev2 = [
+        "noanim,class:^(bemenu-run)$"
+      ];
     };
   };
 }

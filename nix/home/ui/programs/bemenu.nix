@@ -18,6 +18,7 @@ in util.mkIfUi sysconfig cfg.enable {
       enable = true;
       settings = {
         line-height = 28;
+        list = "10 down";
         prompt = "open";
         ignorecase = true;
         fb = "#1e1e2e";
