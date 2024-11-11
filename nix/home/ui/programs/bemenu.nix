@@ -17,7 +17,7 @@ in util.mkIfUi sysconfig cfg.enable {
     bemenu = {
       enable = true;
       settings = {
-        prompt = "open";
+        prompt = "Open";
         ignorecase = true;
 
         center = true;
@@ -25,20 +25,20 @@ in util.mkIfUi sysconfig cfg.enable {
         list = "10 down";
         width-factor = 0.3;
 
-        tb = "#${cfg.color.background_dark}";
-        tf = "#${cfg.color.accent}";
+        tb = "#${cfg.color.background}";
+        tf = "#${cfg.color.accent_alt}";
 
-        fb = "#${cfg.color.background_dark}";
+        fb = "#${cfg.color.background}";
         ff = "#${cfg.color.foreground}";
 
         nb = "#${cfg.color.background_dark}";
         nf = "#${cfg.color.foreground}";
 
+        ab = "#${cfg.color.background_dark}";
+        af = "#${cfg.color.foreground}";
+
         hb = "#${cfg.color.background_dark}";
         hf = "#${cfg.color.accent}";
-
-        ab = "#${cfg.color.background}";
-        af = "#${cfg.color.accent}";
       };
     };
   };
