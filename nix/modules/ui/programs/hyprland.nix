@@ -14,6 +14,11 @@ in {
       sddm = {
         enable = util.mkDisableOption "SDDM";
       };
+      color = {
+        foreground = util.mkColorOption "foreground" "cccccc";
+        background = util.mkColorOption "background" "333333";
+        accent = util.mkColorOption "accent" "ffa500";
+      };
     };
   };
 
@@ -28,11 +33,14 @@ in {
       sugarCandyNix = {
         enable = true;
         settings = {
-          Background = lib.cleanSource ./Backgrounds/Rocks.jpg;
+          Background = lib.cleanSource ./res/background.jpg;
           ScreenWidth = 3840;
           ScreenHeight = 2160;
-          PartialBlur = true;
-          FormPosition = "left";
+          FullBlur = true;
+          MainColor = "#${cfg.color.foreground}";
+          BackgroundColor = "#${cfg.color.background}";
+          AccentColor = "#${cfg.color.accent}";
+          OverrideLoginButtonTextColor = "#${cfg.color.background}";
           ForceHideCompletePassword = true;
         };
       };
