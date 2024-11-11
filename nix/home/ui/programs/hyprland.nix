@@ -13,32 +13,47 @@ in util.mkIfUi sysconfig cfg.enable {
     bemenu
     dolphin
     hyprpaper
+    waybar
   ];
 
-  qt = {
-    enable = true;
-    platformTheme = {
-      name = "qtct";
-    };
-    style = {
-      name = "breeze";
-      package = with pkgs; [
-        breeze-icons
-        breeze-qt5
-      ];
-    };
-  };
+  # qt = {
+  #   enable = true;
+  #   platformTheme = {
+  #     name = "qtct";
+  #   };
+  #   style = {
+  #     name = "breeze";
+  #     package = with pkgs; [
+  #       breeze-icons
+  #       breeze-qt5
+  #     ];
+  #   };
+  # };
 
   services = {
     hyprpaper = {
       enable = true;
       settings = {
+        splash = true;
         preload = [
           "${cfg.wallpaper}"
         ];
         wallpaper = [
           ",${cfg.wallpaper}"
         ];
+      };
+    };
+  };
+
+  programs = {
+    waybar = {
+      enable = true;
+      settings = {
+        mainBar = {
+          layer = "top";
+          position = "top";
+          height = 30;
+        };
       };
     };
   };
@@ -52,7 +67,7 @@ in util.mkIfUi sysconfig cfg.enable {
       "$launcher" = "bemenu-run";
 
       exec-once = [
-        "hyprpaper"
+        "hyprpaper & waybar"
       ];
 
       env = [
