@@ -24,7 +24,7 @@ in {
 
     environment.systemPackages =
     let
-      themes = pkgs.callPackage ./sddm/themes.nix {};
+      themes = pkgs.libsForQt5.callPackage ./sddm/themes.nix {};
     in lib.mkIf cfg.sddm.enable [
       themes.sugarDark
     ];
@@ -33,12 +33,6 @@ in {
       enable = true;
       wayland.enable = true;
       theme = "sugar-dark";
-      extraPackages = with pkgs; [
-        qtbase
-        qtsvg
-        qtgraphicaleffects
-        qtquickcontrols2
-      ];
     };
   };
 }
