@@ -118,6 +118,7 @@ in util.mkIfUi sysconfig cfg.enable {
         "SUPER, 9, workspace, 9"
         "SUPER, 0, workspace, 10"
 
+        "SUPER SHIFT, GRAVE, movetoworkspace, previous"
         "SUPER SHIFT, 1, movetoworkspace, 1"
         "SUPER SHIFT, 2, movetoworkspace, 2"
         "SUPER SHIFT, 3, movetoworkspace, 3"
