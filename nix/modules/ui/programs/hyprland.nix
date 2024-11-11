@@ -22,17 +22,20 @@ in {
       enable = true;
     };
 
-    environment.systemPackages =
-    let
-      themes = pkgs.libsForQt5.callPackage ./sddm/themes.nix {};
-    in lib.mkIf cfg.sddm.enable [
-      themes.sugarDark
-    ];
-
     services.displayManager.sddm = lib.mkIf cfg.sddm.enable {
       enable = true;
       wayland.enable = true;
-      theme = "sugar-dark";
+      sugarCandyNix = {
+        enable = true;
+        settings = {
+          Background = lib.cleanSource ./Backgrounds/Rocks.jpg;
+          ScreenWidth = 3840;
+          ScreenHeight = 2160;
+          PartialBlur = true;
+          FormPosition = "left";
+          ForceHideCompletePassword = true;
+        };
+      };
     };
   };
 }

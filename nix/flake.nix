@@ -16,6 +16,10 @@
     impermanence = {
       url = "github:nix-community/impermanence";
     };
+    sddm-sugar-candy-nix = {
+      url = "gitlab:Zhaith-Izaliel/sddm-sugar-candy-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     simpalt = {
       url = "github:m-lima/simpalt-rs";
     };
@@ -26,6 +30,7 @@
     disko,
     home-manager,
     impermanence,
+    sddm-sugar-candy-nix,
     ...
   } @ inputs:
   let
@@ -45,6 +50,7 @@
             disko.nixosModules.disko
             home-manager.nixosModules.home-manager
             impermanence.nixosModules.impermanence
+            sddm-sugar-candy-nix.nixosModules.default
             ./modules
             ./hosts/${hostName}
           ];
