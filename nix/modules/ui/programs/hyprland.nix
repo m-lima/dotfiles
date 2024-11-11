@@ -36,6 +36,7 @@ in {
     services.displayManager.sddm = lib.mkIf cfg.sddm.enable {
       enable = true;
       wayland.enable = true;
+      # TODO: The TTY changes, causing a blank screen
       sugarCandyNix = {
         enable = true;
         settings = {
