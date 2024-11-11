@@ -17,10 +17,12 @@ in util.mkIfUi sysconfig cfg.enable {
     bemenu = {
       enable = true;
       settings = {
-        line-height = 28;
-        list = "10 down";
         prompt = "open";
         ignorecase = true;
+
+        center = true;
+        line-height = 28;
+        list = "10 down";
         width-factor = 0.3;
 
         tb = "#${cfg.color.background_dark}";
