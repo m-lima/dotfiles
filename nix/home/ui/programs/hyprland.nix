@@ -33,6 +33,9 @@ in util.mkIfUi sysconfig cfg.enable {
     hyprpaper = {
       enable = true;
       settings = {
+        preload = [
+          "${cfg.wallpaper}"
+        ];
         wallpaper = [
           ",${cfg.wallpaper}"
         ];
