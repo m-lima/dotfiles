@@ -1,8 +1,9 @@
 {
   imports = [
     ./alacritty.nix
-    ./fonts.nix
+    ./bemenu.nix
     ./hyprland.nix
+    ./waybar.nix
   ];
 
   # TODO: Fonts

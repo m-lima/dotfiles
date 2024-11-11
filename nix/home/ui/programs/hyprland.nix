@@ -1,4 +1,3 @@
-# TODO: Break up this file
 {
   pkgs,
   lib,
@@ -13,8 +12,6 @@ in util.mkIfUi sysconfig cfg.enable {
   home.packages = with pkgs; lib.mkAfter [
     bemenu
     dolphin
-    hyprpaper
-    waybar
   ];
 
   # qt = {
@@ -30,33 +27,6 @@ in util.mkIfUi sysconfig cfg.enable {
   #     ];
   #   };
   # };
-
-  services = {
-    hyprpaper = {
-      enable = true;
-      settings = {
-        preload = [
-          "${cfg.wallpaper}"
-        ];
-        wallpaper = [
-          ",${cfg.wallpaper}"
-        ];
-      };
-    };
-  };
-
-  programs = {
-    waybar = {
-      enable = true;
-      settings = {
-        mainBar = {
-          layer = "top";
-          position = "top";
-          height = 30;
-        };
-      };
-    };
-  };
 
   wayland.windowManager.hyprland = {
     enable = true;
