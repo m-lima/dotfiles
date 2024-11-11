@@ -24,6 +24,20 @@ in {
         accent = util.mkColorOption "accent" "ffa500";
         accent_alt = util.mkColorOption "accent" "d33682";
       };
+      gap = {
+        outer = lib.mkOption {
+          type = lib.types.ints.u8;
+          description = "Outer gap in pixels";
+          default = 8;
+          example = 12;
+        };
+        inner = lib.mkOption {
+          type = lib.types.ints.u8;
+          description = "Inner gap in pixels";
+          default = 4;
+          example = 12;
+        };
+      };
       wallpaper = lib.mkOption {
         type = lib.types.path;
         description = "Wallpaper path";

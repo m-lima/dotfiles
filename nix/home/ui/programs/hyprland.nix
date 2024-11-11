@@ -56,8 +56,8 @@ in util.mkIfUi sysconfig cfg.enable {
       };
 
       general = {
-        gaps_in = 4;
-        gaps_out = 8;
+        gaps_in = cfg.gap.inner;
+        gaps_out = cfg.gap.outer;
 
         "col.active_border" = "rgb(${cfg.color.accent})";
         "col.inactive_border" = "rgb(${cfg.color.background})";

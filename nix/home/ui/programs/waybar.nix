@@ -42,6 +42,24 @@ in util.mkIfUi sysconfig cfg.enable {
           };
         };
       };
+
+      style = ''
+        window#waybar {
+          color: #${cfg.color.foreground};
+          text-shadow: 0 0 4px black;
+          background-color: rgba(0, 0, 0, 0.2);
+
+          transition-duration: 0.5s;
+          transition-property: background-color;
+        }
+
+        .modules-left,
+        .modules-right
+        {
+          padding-right: ${toString cfg.gap.outer}px;
+          padding-left: ${toString cfg.gap.outer}px;
+        }
+      '';
     };
   };
 }
