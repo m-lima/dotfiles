@@ -93,7 +93,6 @@ in util.mkIfUi sysconfig cfg.enable {
         "SUPER, S, togglespecialworkspace, magic"
         "SUPER SHIFT, S, movetoworkspace, special:magic"
         "SUPER, D, togglesplit"
-        "SUPER SHIFT, D, togglefloating"
 
         # Movement
         "SUPER, H, movefocus, l"
