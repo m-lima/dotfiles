@@ -50,6 +50,7 @@ in {
       };
 
       # TODO: This is repeating stuff from the root to avoid the override from homemanager
+      # TODO: Fix word separators for navigation
       history = {
         ignoreAllDups = true;
         expireDuplicatesFirst = true;
