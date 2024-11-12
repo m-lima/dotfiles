@@ -63,10 +63,10 @@ in {
       initExtraFirst = with builtins; ''''
         + readFile ../../../../zsh/config/programs/bat.zsh
         + readFile ../../../../zsh/config/programs/fzf_fd.zsh
-        + readFile ../../../../zsh/config/programs/rg.zsh
-        + readFile ../../../../zsh/config/programs/zoxide.zsh;
+        + readFile ../../../../zsh/config/programs/rg.zsh;
 
-      initExtra = simpalt.zsh { symbol = "ɳ"; toggleBinding = "^T"; };
+      initExtra = simpalt.zsh { symbol = "ɳ"; toggleBinding = "^T"; }
+        + builtins.readFile ../../../../zsh/config/programs/zoxide.zsh;
     };
   };
 
