@@ -57,7 +57,6 @@ in {
 
     environment.persistence."/persist" = {
       directories = [
-        "/etc/nixos"
         "/var/lib/nixos"
       ];
 
@@ -77,11 +76,15 @@ in {
         directories = [
           "code"
           ".local/share/zoxide"
-          # TODO: Specify files like it was done in the system level
-          ".ssh"
         ];
         files = [
+          ".ssh/id_rsa"
+          ".ssh/id_rsa.pub"
+          ".ssh/id_ed25519"
+          ".ssh/id_ed25519.pub"
+          ".ssh/known_hosts"
           ".zsh_history"
+          ".gnupg/pubring.kbx"
         ];
       };
     };
