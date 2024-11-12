@@ -28,6 +28,21 @@ function mount {
 }
 
 function mkpass {
+  function get_password {
+    local password confirmation
+
+    while true; do
+      printf 'Password: ' >&2
+      read -s password
+      echo >&2
+      printf 'Password (again): ' >&2
+      read -s confirmation
+      echo >&2
+      [ "${password}" = "${confirmation}" ] && printf "${password}" && break
+      echo "Please try again" >&2
+    done
+  }
+
   local user_name
   if [ -z "${1}" ]; then
     user_name='celo'
@@ -37,9 +52,9 @@ function mkpass {
 
   mkdir /mnt/persist/secrets
   echo "[34mSetting password for root[m"
-  mkpasswd > /mnt/persist/secrets/root.passwordFile
+  get_password | mkpasswd -s > /mnt/persist/secrets/root.passwordFile
   echo "[34mSetting password for ${user_name}[m"
-  mkpasswd > /mnt/persist/secrets/${user_name}.passwordFile
+  get_password | mkpasswd -s > /mnt/persist/secrets/${user_name}.passwordFile
 }
 
 function prepare_persist {
