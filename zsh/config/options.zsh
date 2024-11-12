@@ -8,7 +8,7 @@ else
   export VISUAL='vim'
 fi
 export PAGER='less'
-export LESS='-F -g -i -M -R -S -w -X -z-4'
+export LESS='-F -i -M -R -S -w -z-4'
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
