@@ -23,7 +23,6 @@ in {
     tmux      # Done
     zoxide    # Done one level up
     zsh       # Done
-    # GPG
     # skull
     simpalt.default
   ];
@@ -56,9 +55,7 @@ in {
         expireDuplicatesFirst = true;
         extended = true;
       };
-      # TODO: nali-autosuggestions
-      # TODO: syntax highlight
-      # TODO: Completion not working. E.g. git
+
       enable = true;
       initExtraFirst = with builtins; ''''
         + readFile ../../../../zsh/config/programs/bat.zsh

@@ -5,6 +5,4 @@
     ./hyprland.nix
     ./waybar.nix
   ];
-
-  # TODO: Fonts
 }
