@@ -10,3 +10,7 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "^[OA" up-line-or-beginning-search
 bindkey "^[OB" down-line-or-beginning-search
+
+# Navigate with ALT+ARROW
+bindkey "^[[1;3C" forward-word
+bindkey "^[[1;3D" backward-word
