@@ -57,12 +57,12 @@ in {
 
     environment.persistence."/persist" = {
       directories = [
+        "/etc/nixos"
         "/var/lib/nixos"
       ];
 
       files = [
         "/etc/machine-id"
-        "/etc/nixos/flake.nix"
       ] ++ (
         if config.modules.base.services.ssh.enable then [
           "/etc/ssh/ssh_host_rsa_key"
