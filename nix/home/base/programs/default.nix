@@ -45,6 +45,11 @@ in {
       addKeysToAgent = "yes";
     };
     zsh = {
+      autosuggestion = {
+        enable = true;
+        highlight = "fg=blue";
+      };
+
       # TODO: This is repeating stuff from the root to avoid the override from homemanager
       history = {
         ignoreAllDups = true;
