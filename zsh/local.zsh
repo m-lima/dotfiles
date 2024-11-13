@@ -12,6 +12,8 @@ export COMPUTER_SYMBOL='§'
 # export COMPUTER_SYMBOL='τ'
 # export COMPUTER_SYMBOL='⏾'
 # export COMPUTER_SYMBOL=''
+# export COMPUTER_SYMBOL=''
+# export COMPUTER_SYMBOL='₵'
 
 # alias pc='pacaur --color always'
 # alias pcm='pacman --color always'
