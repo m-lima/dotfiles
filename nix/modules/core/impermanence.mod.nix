@@ -1,24 +1,22 @@
+path:
 {
-  userName,
   lib,
   config,
   util,
   ...
 }:
 let
-  cfg = config.modules.impermanence;
+  cfg = util.getModuleOpion path config;
+  userName = config.celo.userName;
 in {
-  options = {
-    modules.impermanence = {
-      enable = util.mkDisableOption "impermanence";
-      wipe = {
-        enable = util.mkDisableOption "disk wiping";
-        device = lib.mkOption {
-          description = "The device to wipe on reboot";
-          example = "/dev/mapper/btrfs";
-          default = config.fileSystems."/.btrfs/volume".device;
-          type = lib.types.str;
-        };
+  options = util.mkModuleOption path {
+    wipe = {
+      enable = lib.mkEnableOption "disk wiping";
+      device = lib.mkOption {
+        description = "The device to wipe on reboot";
+        example = "/dev/mapper/btrfs";
+        default = config.fileSystems."/.btrfs/volume".device;
+        type = lib.types.str;
       };
     };
   };

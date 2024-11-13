@@ -1,29 +1,29 @@
+path:
 {
   lib,
   config,
+  util,
   ...
 }:
 let
-  cfg = config.modules.disko;
+  cfg = util.getModuleOpion path config;
 in {
-  options = {
-    modules.disko = {
-      device = lib.mkOption {
-        type = lib.types.str;
-        description = "Device to use";
-        example = "/dev/vda";
-      };
-      luks = lib.mkEnableOption "LUKS encryption";
-      swap = lib.mkOption {
-        default = null;
-        type = lib.types.nullOr lib.types.str;
-        description = "Size of the swap partition";
-        example = "8G";
-      };
+  options = util.mkModuleOption path {
+    device = lib.mkOption {
+      type = lib.types.str;
+      description = "Device to use";
+      example = "/dev/vda";
+    };
+    luks = lib.mkEnableOption "LUKS encryption";
+    swap = lib.mkOption {
+      default = null;
+      type = lib.types.nullOr lib.types.str;
+      description = "Size of the swap partition";
+      example = "8G";
     };
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     disko.devices =
       let
         btrfs = {
