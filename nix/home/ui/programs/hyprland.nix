@@ -59,6 +59,8 @@ in util.mkIfUi sysconfig cfg.enable {
         gaps_in = cfg.gap.inner;
         gaps_out = cfg.gap.outer;
 
+        # TODO: Add very small radius
+
         "col.active_border" = "rgb(${cfg.color.accent})";
         "col.inactive_border" = "rgb(${cfg.color.background})";
 
