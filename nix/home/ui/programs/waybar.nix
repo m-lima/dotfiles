@@ -21,7 +21,7 @@ in util.mkIfUi sysconfig cfg.enable {
           layer = "top";
           position = "top";
           height = 30;
-          spacing = 4;
+          spacing = 10;
 
           modules-left = [
            "hyprland/workspaces"
@@ -31,8 +31,8 @@ in util.mkIfUi sysconfig cfg.enable {
           ];
           modules-right = [
             "idle_inhibitor"
-            "pulseaudio"
             "network"
+            "pulseaudio"
             "temperature"
             "cpu"
             "memory"
@@ -54,8 +54,18 @@ in util.mkIfUi sysconfig cfg.enable {
             };
           };
 
+          network = {
+            format-wifi = "";
+            format-ethernet = "";
+            format-linked = "{ifname} (No IP) 󰌙";
+            format-disconnected = "⚠";
+            format-alt = "{ifname}: {ipaddr}/{cidr}";
+            tooltip-format-ethernet = "{ifname}\n{ipaddr} 󰌘\n{gwaddr} 󱂇";
+            tooltip-format-wifi = "{ifname}\n{ipaddr} 󰌘\n{essid} \n{gwaddr} 󱂇";
+          };
+
           pulseaudio = {
-            format = "{volume}% {icon} {format_source}";
+            format = "{volume}% {icon}";
             format-bluetooth = "{volume}% {icon} {format_source}";
             format-bluetooth-muted = "󰝟 {icon} {format_source}";
             format-muted = "󰝟 {format_source}";
@@ -71,15 +81,6 @@ in util.mkIfUi sysconfig cfg.enable {
               default = ["" "" ""];
             };
             on-click = "pavucontrol";
-          };
-
-          network = {
-            format-wifi = "{essid} ({signalStrength}%) ";
-            format-ethernet = "{ipaddr}/{cidr} 󰈀";
-            tooltip-format = "{ifname} via {gwaddr} 󱂇";
-            format-linked = "{ifname} (No IP) 󰌙";
-            format-disconnected = "Disconnected ⚠";
-            format-alt = "{ifname}: {ipaddr}/{cidr}";
           };
 
           temperature = {
@@ -110,6 +111,13 @@ in util.mkIfUi sysconfig cfg.enable {
       };
 
       style = ''
+        * {
+          border: none;
+          border-radius: 0;
+          min-height: 0;
+          font-family: "Hack Nerd Font Mono", Roboto, Helvetica, Arial, sans-serif;
+        }
+
         window#waybar {
           color: #${cfg.color.foreground};
           text-shadow: 0 0 4px black;
@@ -124,6 +132,22 @@ in util.mkIfUi sysconfig cfg.enable {
         {
           padding-right: ${toString cfg.gap.outer}px;
           padding-left: ${toString cfg.gap.outer}px;
+        }
+
+        #network {
+          border-bottom: 1px solid rgba(255, 255, 0, 0.2);
+        }
+
+        #temperature {
+          border-bottom: 1px solid rgba(255, 0, 0, 0.2);
+        }
+
+        #cpu {
+          border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+        }
+
+        #memory {
+          border-bottom: 1px solid rgba(0, 0, 255, 0.2);
         }
       '';
     };
