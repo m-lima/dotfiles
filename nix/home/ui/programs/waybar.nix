@@ -56,12 +56,12 @@ in util.mkIfUi sysconfig cfg.enable {
 
           network = {
             format-wifi = "";
-            format-ethernet = "";
-            format-linked = "{ifname} (No IP) 󰌙";
+            format-ethernet = "󰈀";
+            format-linked = "󰌙";
             format-disconnected = "⚠";
             format-alt = "{ifname}: {ipaddr}/{cidr}";
-            tooltip-format-ethernet = "{ifname}\n{ipaddr} 󰌘\n{gwaddr} 󱂇";
-            tooltip-format-wifi = "{ifname}\n{ipaddr} 󰌘\n{essid} \n{gwaddr} 󱂇";
+            tooltip-format-ethernet = " {ifname}\n󰌘 {ipaddr}\n󱂇 {gwaddr}";
+            tooltip-format-wifi = "󰈀 {ifname}\n󰌘 {ipaddr}\n {essid}\n󱂇 {gwaddr}";
           };
 
           pulseaudio = {
@@ -95,7 +95,7 @@ in util.mkIfUi sysconfig cfg.enable {
           };
 
           memory = {
-            format = "{}% ";
+            format = "{}% ";
           };
 
           clock = {
@@ -134,20 +134,20 @@ in util.mkIfUi sysconfig cfg.enable {
           padding-left: ${toString cfg.gap.outer}px;
         }
 
-        #network {
-          border-bottom: 1px solid rgba(255, 255, 0, 0.2);
+        #pulseaudio {
+          border-bottom: 1px solid rgba(255, 255, 0, 0.5);
         }
 
         #temperature {
-          border-bottom: 1px solid rgba(255, 0, 0, 0.2);
+          border-bottom: 1px solid rgba(255, 0, 0, 0.5);
         }
 
         #cpu {
-          border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+          border-bottom: 1px solid rgba(0, 255, 0, 0.5);
         }
 
         #memory {
-          border-bottom: 1px solid rgba(0, 0, 255, 0.2);
+          border-bottom: 1px solid rgba(0, 0, 255, 0.5);
         }
       '';
     };
