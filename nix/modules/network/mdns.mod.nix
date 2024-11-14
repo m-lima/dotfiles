@@ -6,20 +6,20 @@ path:
   ...
 }:
 let
-  cfg = util.getModuleOpion path config;
+  cfg = util.getModuleOption path config;
 in {
-  options = util.mkModuleOptionDesc path "mDNS resolution and publishing" {};
+  options = util.mkModule path {
+    description = "mDNS resolution and publishing";
+  };
 
   config = lib.mkIf cfg.enable {
-    services = {
-      avahi = mkIf cfg.mdns.enable {
+    services.avahi = {
+      enable = true;
+      nssmdns4 = true;
+      publish = {
         enable = true;
-        nssmdns4 = true;
-        publish = {
-          enable = true;
-          domain = true;
-          addresses = true;
-        };
+        domain = true;
+        addresses = true;
       };
     };
   };

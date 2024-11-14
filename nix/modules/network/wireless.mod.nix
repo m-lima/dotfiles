@@ -6,9 +6,11 @@ path:
   ...
 }:
 let
-  cfg = util.getModuleOpion path config;
+  cfg = util.getModuleOption path config;
 in {
-  options = util.mkModuleOptionDesc path "wireless support via wpa_supplicant" {};
+  options = util.mkModule path {
+    description = "wireless support via wpa_supplicant";
+  };
 
   config = lib.mkIf cfg.enable {
     networking.wireless = {

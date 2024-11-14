@@ -6,10 +6,10 @@ path:
   ...
 }:
 let
-  cfg = util.getModuleOpion path config;
-  userName = config.celo.userName;
+  cfg = util.getModuleOption path config;
+  user = config.celo.core.user;
 in {
-  options = util.mkModuleOption path {
+  options = util.mkModule path {
     wipe = {
       enable = lib.mkEnableOption "disk wiping";
       device = lib.mkOption {
@@ -61,8 +61,9 @@ in {
 
       files = [
         "/etc/machine-id"
-      ] ++ (
-        if config.modules.base.services.ssh.enable then [
+      ]
+      ++ (
+        if config.celo.services.ssh.enable then [
           "/etc/ssh/ssh_host_rsa_key"
           "/etc/ssh/ssh_host_rsa_key.pub"
           "/etc/ssh/ssh_host_ed25519_key"
@@ -70,20 +71,22 @@ in {
         ] else []
       );
 
-      users."${userName}" = {
-        directories = [
-          "code"
-          ".local/share/zoxide"
-        ];
-        files = [
-          ".ssh/id_rsa"
-          ".ssh/id_rsa.pub"
-          ".ssh/id_ed25519"
-          ".ssh/id_ed25519.pub"
-          ".ssh/known_hosts"
-          ".zsh_history"
-          ".gnupg/pubring.kbx"
-        ];
+      users = lib.mkIf user.enable {
+        "${user.userName}" = {
+          directories = [
+            "code"
+            ".local/share/zoxide"
+          ];
+          files = [
+            ".ssh/id_rsa"
+            ".ssh/id_rsa.pub"
+            ".ssh/id_ed25519"
+            ".ssh/id_ed25519.pub"
+            ".ssh/known_hosts"
+            ".zsh_history"
+            ".gnupg/pubring.kbx"
+          ];
+        };
       };
     };
   };

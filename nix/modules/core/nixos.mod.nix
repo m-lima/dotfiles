@@ -3,28 +3,28 @@ path:
   lib,
   config,
   util,
+  pkgs,
   ...
 }:
 let
-  cfg = util.getModuleOpion path config;
-  userName = config.celo.userName;
+  cfg = util.getModuleOption path config;
 in {
-  options = util.mkModuleEnableOption path {
+  options = util.mkModule path {
     hostName = lib.mkOption {
       description = "Host name";
       example = "silver";
       type = lib.types.nonEmptyStr;
     };
 
-    timeZone = {
+    timeZone = lib.mkOption {
       description = "TimeZone to use";
       example = "Europe/Amsterdam";
-      default = "Europe/Amsterdam";
-      type = lib.types.nonEmptyStr;
+      default = null;
+      type = lib.types.nullOr lib.types.nonEmptyStr;
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     # Enable all firmware, regardless of license
     hardware.enableAllFirmware = true;
 

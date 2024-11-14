@@ -6,19 +6,21 @@ path:
   ...
 }:
 let
-  cfg = util.getModuleOpion path config;
+  cfg = util.getModuleOption path config;
   user = config.celo.core.user;
 in {
-  options = util.mkModuleEnableOption path {};
-
-  assertions = [
-    {
-      assertion = user.enable;
-      message = "Home manager enabled with user disabled";
-    }
-  ];
+  options = util.mkModule path {
+    description = "home manager";
+  };
 
   config = lib.mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = user.enable;
+        message = "Home manager enabled with user disabled";
+      }
+    ];
+
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
@@ -33,5 +35,6 @@ in {
           };
         };
       };
+    };
   };
 }

@@ -6,16 +6,16 @@ path:
   ...
 }:
 let
-  cfg = util.getModuleOpion path config;
+  cfg = util.getModuleOption path config;
 in {
-  options = util.mkModuleEnableOption path {
+  options = util.mkModule path {
     userName = lib.mkOption {
       description = "User name";
       example = "celo";
       type = lib.types.nonEmptyStr;
     };
 
-    homeDirectory = {
+    homeDirectory = lib.mkOption {
       description = "Home directory path";
       example = "/home/celo";
       type = lib.types.nonEmptyStr;

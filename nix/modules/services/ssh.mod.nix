@@ -6,11 +6,11 @@ path:
   ...
 }:
 let
-  cfg = util.getModuleOpion path config;
+  cfg = util.getModuleOption path config;
 in {
-  options = util.mkModuleOption path {
+  options = util.mkModule path {
     authorizedKeys = lib.mkOption {
-      type = types.listOf types.singleLineStr;
+      type = lib.types.listOf lib.types.singleLineStr;
       default = [];
       description = ''
           A list of verbatim OpenSSH public keys that should be added to the
@@ -29,16 +29,12 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    services = {
-      openssh = {
-        enable = true;
-      };
-    };
+    services.openssh.enable = true;
 
     users = lib.mkIf (cfg.authorizedKeys != []) {
-      users = if celo.core.user.enable then
+      users = if config.celo.core.user.enable then
         {
-          ${celo.core.user.userName} = {
+          ${config.celo.core.user.userName} = {
             openssh.authorizedKeys.keys = cfg.authorizedKeys;
           };
         } else {

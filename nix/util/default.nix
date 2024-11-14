@@ -29,15 +29,18 @@ let
         ];
     in
       lib.flatten innerFindModules;
-  load = root: findModules root ["celo"];
+  load = root: map ({file, path}: (import file) path) (findModules root ["celo"]);
 
-  mkModuleOptionDesc = path: description: options: lib.setAttrByPath path ({
-    enable = lib.mkEnableOption description;
-  } // options);
-  mkModuleOption = path: mkModuleOptionDesc path (lib.last path);
-  mkModuleSimple = path: mkModuleOption path {};
+  mkModule =
+    path:
+    options@{ description ? (lib.last path), ... }:
+    lib.setAttrByPath path (
+        { enable = lib.mkEnableOption description; }
+        // (removeAttrs options [ "description" ])
+      );
+  mkModuleEnable = path: mkModule path {};
 
-  getModuleOption = path: config: lib.getAttrFromPath [config] ++ path;
+  getModuleOption = path: config: lib.getAttrFromPath path config;
 
   mkColorOption = name: default: lib.mkOption {
     type = lib.types.nonEmptyStr;
@@ -48,9 +51,9 @@ let
 in {
   inherit
     load
-    mkModuleOptionDesc
-    mkModuleOption
+    mkModule
     mkModuleEnable
+    getModuleOption
     mkColorOption
   ;
 }

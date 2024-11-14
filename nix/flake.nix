@@ -43,26 +43,23 @@
   } @ inputs:
   let
     util = import ./util { inherit (nixpkgs) lib; };
-    mkHost = host: nixpkgs.lib.nixosSystem {
+    mkHost =
+      host:
+      system:
+      nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs util; };
-        system = "24.05";
-        modules = util.load ./modules ++ [ host ];
-          # disko.nixosModules.disko
-          # home-manager.nixosModules.home-manager
-          # impermanence.nixosModules.impermanence
-          # sddm-sugar-candy-nix.nixosModules.default
-          # ./modules
-          # ./hosts/${hostName}
+        system = system;
+        modules = util.load ./modules ++ [ host ] ++ [
+          disko.nixosModules.disko
+          home-manager.nixosModules.home-manager
+          impermanence.nixosModules.impermanence
+          sddm-sugar-candy-nix.nixosModules.default
+        ];
       };
   in {
     nixosConfigurations = {
-      coal = mkHost ./hosts/coal;
-      utm = mkHost ./hosts/utm;
-      #   {
-      #   hostName = "utm";
-      #   userName = "celo";
-      #   system = "aarch64-linux";
-      # };
+      coal = mkHost ./hosts/coal "x86_64-linux";
+      utm = mkHost ./hosts/utm "aarch64-linux";
     };
   };
 }
