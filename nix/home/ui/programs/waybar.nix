@@ -115,12 +115,12 @@ in util.mkIfUi sysconfig cfg.enable {
           border: none;
           border-radius: 0;
           min-height: 0;
-          font-family: "Hack Nerd Font Mono", Roboto, Helvetica, Arial, sans-serif;
+          font-family: "Hack Nerd Font Propo", Roboto, Helvetica, Arial, sans-serif;
         }
 
         window#waybar {
           color: #${cfg.color.foreground};
-          text-shadow: 0 0 4px black;
+          text-shadow: 0 0 2px black;
           background-color: rgba(0, 0, 0, 0.2);
 
           transition-duration: 0.5s;
@@ -132,22 +132,6 @@ in util.mkIfUi sysconfig cfg.enable {
         {
           padding-right: ${toString cfg.gap.outer}px;
           padding-left: ${toString cfg.gap.outer}px;
-        }
-
-        #pulseaudio {
-          border-bottom: 1px solid rgba(255, 255, 0, 0.5);
-        }
-
-        #temperature {
-          border-bottom: 1px solid rgba(255, 0, 0, 0.5);
-        }
-
-        #cpu {
-          border-bottom: 1px solid rgba(0, 255, 0, 0.5);
-        }
-
-        #memory {
-          border-bottom: 1px solid rgba(0, 0, 255, 0.5);
         }
       '';
     };
