@@ -13,7 +13,7 @@
   #     enable = true;
   #   };
   # };
-  celo = {
+  celo.module = {
     core = {
       disko = {
         enable = true;

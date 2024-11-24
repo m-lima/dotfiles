@@ -6,10 +6,10 @@ path:
   ...
 }:
 let
-  cfg = util.getModuleOption path config;
-  user = config.celo.core.user;
+  cfg = util.getOptions path config;
+  user = config.celo.module.core.user;
 in {
-  options = util.mkModule path {
+  options = util.mkOptions path {
     description = "home manager";
   };
 
@@ -26,7 +26,7 @@ in {
       useUserPackages = true;
 
       users = {
-        "${user.userName}" = {
+        ${user.userName} = {
           programs.home-manager.enable = true;
           home = {
             stateVersion = "24.05";

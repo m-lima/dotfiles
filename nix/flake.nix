@@ -49,12 +49,15 @@
       nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs util; };
         system = system;
-        modules = util.load ./modules ++ [ host ] ++ [
-          disko.nixosModules.disko
-          home-manager.nixosModules.home-manager
-          impermanence.nixosModules.impermanence
-          sddm-sugar-candy-nix.nixosModules.default
-        ];
+        modules = [host]
+          ++ util.loadModules ./modules
+          ++ util.loadProfiles ./profiles
+          ++ [
+            disko.nixosModules.disko
+            home-manager.nixosModules.home-manager
+            impermanence.nixosModules.impermanence
+            sddm-sugar-candy-nix.nixosModules.default
+          ];
       };
   in {
     nixosConfigurations = {

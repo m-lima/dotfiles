@@ -7,9 +7,9 @@ path:
   ...
 }:
 let
-  cfg = util.getModuleOption path config;
+  cfg = util.getOptions path config;
 in {
-  options = util.mkModule path {
+  options = util.mkOptions path {
     hostName = lib.mkOption {
       description = "Host name";
       example = "silver";

@@ -6,9 +6,9 @@ path:
   ...
 }:
 let
-  cfg = util.getModuleOption path config;
+  cfg = util.getOptions path config;
 in {
-  options = util.mkModule path {
+  options = util.mkOptions path {
     userName = lib.mkOption {
       description = "User name";
       example = "celo";

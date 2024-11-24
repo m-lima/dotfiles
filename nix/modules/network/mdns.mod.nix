@@ -6,9 +6,9 @@ path:
   ...
 }:
 let
-  cfg = util.getModuleOption path config;
+  cfg = util.getOptions path config;
 in {
-  options = util.mkModule path {
+  options = util.mkOptions path {
     description = "mDNS resolution and publishing";
   };
 

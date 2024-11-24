@@ -6,9 +6,9 @@ path:
   ...
 }:
 let
-  cfg = util.getModuleOption path config;
+  cfg = util.getOptions path config;
 in {
-  options = util.mkModule path {
+  options = util.mkOptions path {
     device = lib.mkOption {
       type = lib.types.str;
       description = "Device to use";

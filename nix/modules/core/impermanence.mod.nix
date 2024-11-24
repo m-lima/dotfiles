@@ -6,10 +6,10 @@ path:
   ...
 }:
 let
-  cfg = util.getModuleOption path config;
-  user = config.celo.core.user;
+  cfg = util.getOptions path config;
+  user = config.celo.module.core.user;
 in {
-  options = util.mkModule path {
+  options = util.mkOptions path {
     wipe = {
       enable = lib.mkEnableOption "disk wiping";
       device = lib.mkOption {
@@ -63,7 +63,7 @@ in {
         "/etc/machine-id"
       ]
       ++ (
-        if config.celo.services.ssh.enable then [
+        if config.celo.module.services.ssh.enable then [
           "/etc/ssh/ssh_host_rsa_key"
           "/etc/ssh/ssh_host_rsa_key.pub"
           "/etc/ssh/ssh_host_ed25519_key"
@@ -72,7 +72,7 @@ in {
       );
 
       users = lib.mkIf user.enable {
-        "${user.userName}" = {
+        ${user.userName} = {
           directories = [
             "code"
             ".local/share/zoxide"

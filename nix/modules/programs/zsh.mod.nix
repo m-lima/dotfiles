@@ -7,9 +7,9 @@ path:
   ...
 }:
 let
-  cfg = util.getModuleOption path config;
+  cfg = util.getOptions path config;
 in {
-  options = util.mkModuleEnable path;
+  options = util.mkOptionsEnable path;
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
