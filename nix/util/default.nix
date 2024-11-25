@@ -30,8 +30,8 @@ let
         ];
     in
       lib.flatten innerFindModules;
-  loadModules = root: map ({file, path}: (import file) path) (findFiles "mod" root ["celo" "module"]);
-  loadProfiles = root: map ({file, path}: {config, ...}: mkProfile path config (import file)) (findFiles "pro" root ["celo" "profile"]);
+  loadModules = root: map ({file, path}: (import file) path) (findFiles "mod" root ["celo" "modules"]);
+  loadProfiles = root: map ({file, path}: {config, ...}: mkProfile path config (import file)) (findFiles "pro" root ["celo" "profiles"]);
 
   mkOptions =
     path:
@@ -68,7 +68,7 @@ let
         );
     in {
       options = mkOptions path { description = "${lib.last path} profile"; };
-      config.celo.module = lib.mkIf (getOptions path config).enable profile;
+      config.celo.modules = lib.mkIf (getOptions path config).enable profile;
     };
 
   mkColorOption = name: default: lib.mkOption {

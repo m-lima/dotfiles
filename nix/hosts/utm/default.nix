@@ -4,9 +4,9 @@
   ];
 
   celo = {
-    profile.base.enable = true;
+    profiles.base.enable = true;
 
-    module = {
+    modules = {
       core = {
         disko = {
           device = "/dev/vda";

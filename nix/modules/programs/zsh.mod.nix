@@ -12,10 +12,6 @@ in {
   options = util.mkOptionsEnable path;
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      zsh
-    ];
-
     programs = {
       zsh = {
         enable = true;

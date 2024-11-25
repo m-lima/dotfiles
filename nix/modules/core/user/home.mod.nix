@@ -7,7 +7,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-  user = config.celo.module.core.user;
+  user = config.celo.modules.core.user;
 in {
   options = util.mkOptions path {
     description = "home manager";

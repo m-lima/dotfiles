@@ -7,7 +7,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-  user = config.celo.module.core.user;
+  user = config.celo.modules.core.user;
 in {
   options = util.mkOptions path {
     wipe = {
@@ -63,7 +63,7 @@ in {
         "/etc/machine-id"
       ]
       ++ (
-        if config.celo.module.services.ssh.enable then [
+        if config.celo.modules.services.ssh.enable then [
           "/etc/ssh/ssh_host_rsa_key"
           "/etc/ssh/ssh_host_rsa_key.pub"
           "/etc/ssh/ssh_host_ed25519_key"

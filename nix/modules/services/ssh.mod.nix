@@ -32,9 +32,9 @@ in {
     services.openssh.enable = true;
 
     users = lib.mkIf (cfg.authorizedKeys != []) {
-      users = if config.celo.module.core.user.enable then
+      users = if config.celo.modules.core.user.enable then
         {
-          ${config.celo.module.core.module.user.userName} = {
+          ${config.celo.modules.core.module.user.userName} = {
             openssh.authorizedKeys.keys = cfg.authorizedKeys;
           };
         } else {
