@@ -3,50 +3,24 @@
     ./hardware-configuration.nix
   ];
 
-  # modules = {
-  #   disko = {
-  #     device = "/dev/vda";
-  #     luks = false;
-  #     swap = "1G";
-  #   };
-  #   ui = {
-  #     enable = true;
-  #   };
-  # };
-  celo.module = {
-    core = {
-      disko = {
-        enable = true;
-        device = "/dev/vda";
-        luks = false;
-        swap = "1G";
-      };
-      impermanence = {
-        enable = true;
-        wipe = {
-          enable = true;
+  celo = {
+    profile.base.enable = true;
+
+    module = {
+      core = {
+        disko = {
+          device = "/dev/vda";
+          swap = "1G";
+        };
+        nixos = {
+          hostName = "utm";
+          timeZone = "Europe/Amsterdam";
+        };
+        user = {
+          userName = "celo";
+          homeDirectory = "/home/celo";
         };
       };
-      nixos = {
-        enable = true;
-        hostName = "utm";
-        timeZone = "Europe/Amsterdam";
-      };
-      user = {
-        enable = true;
-        userName = "celo";
-        homeDirectory = "/home/celo";
-        home.enable = true;
-      };
-    };
-    network = {
-      mdns.enable = true;
-    };
-    programs = {
-      curl.enable = true;
-    };
-    services = {
-      ssh.enable = true;
     };
   };
 }
