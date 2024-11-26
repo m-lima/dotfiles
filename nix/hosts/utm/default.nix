@@ -21,6 +21,11 @@
           homeDirectory = "/home/celo";
         };
       };
+      programs = {
+        simpalt = {
+          symbol = "μ";
+        };
+      };
     };
   };
 }

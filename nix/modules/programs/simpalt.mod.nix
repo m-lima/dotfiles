@@ -12,7 +12,13 @@ let
   cfg = util.getOptions path config;
   simpalt = inputs.simpalt.packages."${pkgs.system}";
 in {
-  options = util.mkOptionsEnable path;
+  options = util.mkOptions path {
+    symbol = lib.mkOption {
+      description = "Symbol to identify the host in the prompt";
+      example = "₵";
+      type = lib.types.str;
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     assertions = [
@@ -25,9 +31,8 @@ in {
       ];
 
       programs = lib.mkIf celo.programs.core.zsh.enable {
-        # TODO: Make computer symbol variable
         # TODO: Make this a module in simpalt
-        zsh.initExtra = simpalt.zsh { symbol = "₵"; toggleBinding = "^T"; };
+        zsh.initExtra = simpalt.zsh { symbol = cfg.symbol; toggleBinding = "^T"; };
       };
     };
   };

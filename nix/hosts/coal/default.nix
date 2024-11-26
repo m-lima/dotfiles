@@ -25,6 +25,11 @@
       network = {
         wireless.enable = true;
       };
+      programs = {
+        simpalt = {
+          symbol = "₵";
+        };
+      };
     };
   };
 }
