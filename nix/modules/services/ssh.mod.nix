@@ -43,5 +43,22 @@ in {
           };
         };
     };
+
+    environment.persistence = util.withImpermanence config {
+      global.files = [
+        "/etc/ssh/ssh_host_rsa_key"
+        "/etc/ssh/ssh_host_rsa_key.pub"
+        "/etc/ssh/ssh_host_ed25519_key"
+        "/etc/ssh/ssh_host_ed25519_key.pub"
+      ];
+
+      home.files = [
+        ".ssh/id_rsa"
+        ".ssh/id_rsa.pub"
+        ".ssh/id_ed25519"
+        ".ssh/id_ed25519.pub"
+        ".ssh/known_hosts"
+      ];
+    };
   };
 }

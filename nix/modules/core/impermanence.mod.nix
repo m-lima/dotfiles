@@ -61,29 +61,15 @@ in {
 
       files = [
         "/etc/machine-id"
-      ]
-      ++ (
-        if config.celo.modules.services.ssh.enable then [
-          "/etc/ssh/ssh_host_rsa_key"
-          "/etc/ssh/ssh_host_rsa_key.pub"
-          "/etc/ssh/ssh_host_ed25519_key"
-          "/etc/ssh/ssh_host_ed25519_key.pub"
-        ] else []
-      );
+      ];
 
       users = lib.mkIf user.enable {
         ${user.userName} = {
           directories = [
             "code"
-            ".local/share/zoxide"
           ];
+
           files = [
-            ".ssh/id_rsa"
-            ".ssh/id_rsa.pub"
-            ".ssh/id_ed25519"
-            ".ssh/id_ed25519.pub"
-            ".ssh/known_hosts"
-            ".zsh_history"
             ".gnupg/pubring.kbx"
           ];
         };

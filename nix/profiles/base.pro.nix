@@ -18,6 +18,7 @@
     curl.enable = true;
     git.enable = true;
     neovim.enable = true;
+    zoxide.enable = true;
     zsh.enable = true;
   };
   services = {

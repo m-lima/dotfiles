@@ -62,8 +62,7 @@ in {
         + readFile ../../../../zsh/config/programs/fzf_fd.zsh
         + readFile ../../../../zsh/config/programs/rg.zsh;
 
-      initExtra = simpalt.zsh { symbol = "₵"; toggleBinding = "^T"; }
-        + builtins.readFile ../../../../zsh/config/programs/zoxide.zsh;
+      initExtra = simpalt.zsh { symbol = "₵"; toggleBinding = "^T"; };
     };
   };
 

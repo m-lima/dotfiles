@@ -77,6 +77,30 @@ let
     default = default;
     example = "ffa500";
   };
+
+  withHome =
+    config:
+    settings:
+    let
+      user = config.celo.modules.core.user;
+    in
+      lib.mkIf user.home.enable {
+        users.${user.userName} = settings;
+      };
+
+  withImpermanence =
+    config:
+    { global ? {}, home ? {} }:
+    let
+      impermanence = config.celo.modules.core.impermanence;
+      user = config.celo.modules.core.user;
+    in
+      lib.mkIf impermanence.enable {
+        "/persist" = global // {
+          users.${user.userName} = lib.mkIf user.enable home;
+        };
+      };
+
 in {
   inherit
     loadModules
@@ -85,5 +109,7 @@ in {
     mkOptionsEnable
     getOptions
     mkColorOption
+    withHome
+    withImpermanence
   ;
 }
