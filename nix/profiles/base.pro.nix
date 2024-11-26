@@ -21,7 +21,11 @@
     fd.enable = true;
     fzf.enable = true;
     git.enable = true;
+    jq.enable = true;
     neovim.enable = true;
+    rg.enable = true;
+    simpalt.enable = true;
+    tmux.enable = true;
     zoxide.enable = true;
     zsh.enable = true;
   };
