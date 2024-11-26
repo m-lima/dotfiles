@@ -8,6 +8,7 @@ path:
   ...
 }:
 let
+  celo = config.celo.modules;
   cfg = util.getOptions path config;
   simpalt = inputs.simpalt.packages."${pkgs.system}";
 in {
@@ -23,7 +24,7 @@ in {
         simpalt.default
       ];
 
-      programs = util.mkIfProgram config "zsh" {
+      programs = lib.mkIf celo.programs.core.zsh.enable {
         # TODO: Make computer symbol variable
         # TODO: Make this a module in simpalt
         zsh.initExtra = simpalt.zsh { symbol = "₵"; toggleBinding = "^T"; };

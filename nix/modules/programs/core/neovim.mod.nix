@@ -18,8 +18,8 @@ in {
 
     environment.etc = {
       "xdg/nvim/init.vim".text = with builtins; ''''
-          + readFile ../../../vim/config/options.vim
-          + readFile ../../../vim/config/mapping.vim;
+          + readFile ../../../../vim/config/options.vim
+          + readFile ../../../../vim/config/mapping.vim;
     };
   };
 }

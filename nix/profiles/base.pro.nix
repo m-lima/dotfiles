@@ -15,19 +15,21 @@
     mdns.enable = true;
   };
   programs = {
+    core = {
+      curl.enable = true;
+      git.enable = true;
+      neovim.enable = true;
+      zsh.enable = true;
+    };
     bat.enable = true;
-    curl.enable = true;
     delta.enable = true;
     fd.enable = true;
     fzf.enable = true;
-    git.enable = true;
     jq.enable = true;
-    neovim.enable = true;
     rg.enable = true;
     simpalt.enable = true;
     tmux.enable = true;
     zoxide.enable = true;
-    zsh.enable = true;
   };
   services = {
     ssh.enable = true;

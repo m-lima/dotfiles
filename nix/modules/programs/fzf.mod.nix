@@ -7,6 +7,7 @@ path:
   ...
 }:
 let
+  celo = config.celo.modules;
   cfg = util.getOptions path config;
 in {
   options = util.mkOptionsEnable path;
@@ -26,7 +27,7 @@ in {
           enable = true;
         };
 
-        zsh = util.mkIfProgram config [ "zsh" "fd" ] {
+        zsh = lib.mkIf (celo.programs.core.zsh.enable && celo.programs.fd.enable) {
           initExtraFirst = builtins.readFile ../../../zsh/config/programs/fzf_fd.zsh;
         };
       };

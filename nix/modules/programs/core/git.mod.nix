@@ -7,6 +7,7 @@ path:
   ...
 }:
 let
+  celo = config.celo.modules;
   cfg = util.getOptions path config;
 in {
   options = util.mkOptionsEnable path;
@@ -24,17 +25,17 @@ in {
 
         file = {
           ".config/git/config" = {
-            text = builtins.readFile ../../../git/config/gitconfig;
+            text = builtins.readFile ../../../../git/config/gitconfig;
           };
           ".config/git/ignore" = {
-            source = ../../../git/config/ignore;
+            source = ../../../../git/config/ignore;
           };
         };
       };
     };
 
-    programs = util.mkIfProgram config "zsh" {
-      zsh.interactiveShellInit = builtins.readFile ../../../zsh/config/programs/git.zsh;
+    programs = lib.mkIf celo.programs.core.zsh.enable {
+      zsh.interactiveShellInit = builtins.readFile ../../../../zsh/config/programs/git.zsh;
     };
   };
 }

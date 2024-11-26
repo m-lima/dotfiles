@@ -7,6 +7,7 @@ path:
   ...
 }:
 let
+  celo = config.celo.modules;
   cfg = util.getOptions path config;
 in {
   options = util.mkOptionsEnable path;
@@ -22,7 +23,7 @@ in {
           delta
         ];
 
-        file = util.mkIfProgram config "git" {
+        file = lib.mkIf celo.programs.core.git.enable {
           # TODO: Colors are off
           ".config/git/config" = {
             text = builtins.readFile ../../../git/config/delta;

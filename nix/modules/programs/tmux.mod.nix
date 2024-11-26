@@ -7,6 +7,7 @@ path:
   ...
 }:
 let
+  celo = config.celo.modules;
   cfg = util.getOptions path config;
 in {
   options = util.mkOptionsEnable path;
@@ -26,7 +27,7 @@ in {
           ".config/tmux/tmux.conf" = {
             source = ../../../tmux/base.conf;
           };
-          ".config/tmux/script/edit.zsh" = util.mkIfProgram config "zsh" {
+          ".config/tmux/script/edit.zsh" = lib.mkIf celo.programs.core.zsh.enable {
             source = ../../../tmux/script/edit.zsh;
             executable = true;
           };

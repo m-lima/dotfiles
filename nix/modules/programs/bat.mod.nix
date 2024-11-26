@@ -7,6 +7,7 @@ path:
   ...
 }:
 let
+  celo = config.celo.modules;
   cfg = util.getOptions path config;
 in {
   options = util.mkOptionsEnable path;
@@ -21,7 +22,7 @@ in {
         bat
       ];
 
-      programs = util.mkIfProgram config "zsh" {
+      programs = lib.mkIf celo.programs.core.zsh.enable {
         zsh.initExtraFirst = builtins.readFile ../../../zsh/config/programs/bat.zsh;
       };
     };
