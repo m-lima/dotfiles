@@ -18,17 +18,7 @@ in {
 
     home-manager = util.withHome config {
       home.packages = with pkgs; [
-        zoxide
-      ];
-
-      programs = util.mkIfProgram config "zsh" {
-        zsh.initExtra = builtins.readFile ../../../zsh/config/programs/zoxide.zsh;
-      };
-    };
-
-    environment.persistence = util.withImpermanence config {
-      home.files = [
-        ".local/share/zoxide"
+        fd
       ];
     };
   };

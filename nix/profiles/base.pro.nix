@@ -15,7 +15,10 @@
     mdns.enable = true;
   };
   programs = {
+    bat.enable = true;
     curl.enable = true;
+    delta.enable = true;
+    fd.enable = true;
     git.enable = true;
     neovim.enable = true;
     zoxide.enable = true;

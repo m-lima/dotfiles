@@ -7,6 +7,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  user = config.celo.modules.core.module.user;
 in {
   options = util.mkOptions path {
     authorizedKeys = lib.mkOption {
@@ -32,9 +33,9 @@ in {
     services.openssh.enable = true;
 
     users = lib.mkIf (cfg.authorizedKeys != []) {
-      users = if config.celo.modules.core.user.enable then
+      users = if user.enable then
         {
-          ${config.celo.modules.core.module.user.userName} = {
+          ${user.userName} = {
             openssh.authorizedKeys.keys = cfg.authorizedKeys;
           };
         } else {

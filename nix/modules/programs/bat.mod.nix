@@ -18,18 +18,12 @@ in {
 
     home-manager = util.withHome config {
       home.packages = with pkgs; [
-        zoxide
+        bat
       ];
 
       programs = util.mkIfProgram config "zsh" {
-        zsh.initExtra = builtins.readFile ../../../zsh/config/programs/zoxide.zsh;
+        zsh.initExtraFirst = builtins.readFile ../../../zsh/config/programs/bat.zsh;
       };
-    };
-
-    environment.persistence = util.withImpermanence config {
-      home.files = [
-        ".local/share/zoxide"
-      ];
     };
   };
 }

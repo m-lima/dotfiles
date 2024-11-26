@@ -17,17 +17,24 @@ in {
     ];
 
     home-manager = util.withHome config {
-      home.file = {
-        ".config/git/config" = with builtins; {
-          text = ''''
-            + readFile ../../../git/config/gitconfig
-            # Colors are off
-            + readFile ../../../git/config/delta;
-        };
-        ".config/git/ignore" = {
-          source = ../../../git/config/ignore;
+      home = {
+        packages = with pkgs; [
+          git
+        ];
+
+        file = {
+          ".config/git/config" = {
+            text = builtins.readFile ../../../git/config/gitconfig;
+          };
+          ".config/git/ignore" = {
+            source = ../../../git/config/ignore;
+          };
         };
       };
+    };
+
+    programs = util.mkIfProgram config "zsh" {
+      zsh.interactiveShellInit = builtins.readFile ../../../zsh/config/programs/git.zsh;
     };
   };
 }

@@ -101,6 +101,19 @@ let
         };
       };
 
+  assertHome =
+    config:
+    path:
+    {
+      assertion = config.celo.modules.core.user.home.enable;
+      message = "${lib.last path} enabled without home-manager";
+    };
+
+  mkIfProgram =
+    config:
+    program:
+    lib.mkIf config.celo.modules.programs.${program}.enable;
+
 in {
   inherit
     loadModules
@@ -111,5 +124,7 @@ in {
     mkColorOption
     withHome
     withImpermanence
+    assertHome
+    mkIfProgram
   ;
 }

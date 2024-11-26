@@ -15,5 +15,11 @@ in {
     environment.systemPackages = with pkgs; [
       curl
     ];
+
+    home-manager = util.withHome config {
+      home.packages = with pkgs; [
+        curl
+      ];
+    };
   };
 }
