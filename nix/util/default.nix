@@ -111,8 +111,11 @@ let
 
   mkIfProgram =
     config:
-    program:
-    lib.mkIf config.celo.modules.programs.${program}.enable;
+    prg:
+    if (builtins.isList prg) then
+      lib.mkIf (builtins.all (p: config.celo.modules.programs.${p}.enable) prg)
+    else
+      lib.mkIf config.celo.modules.programs.${prg}.enable;
 
 in {
   inherit
