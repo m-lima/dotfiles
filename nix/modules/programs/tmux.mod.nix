@@ -40,8 +40,8 @@ in {
             executable = true;
           };
           ".config/tmux/script/status_right.sh" = with builtins; {
-            text = "#!/usr/bin/env bash"
-              + lib.optionalString config.celo.modules.programs.simpalt.enable readFile ../../../tmux/script/status/simpalt.sh
+            text = ''#!/usr/bin/env bash
+              '' + lib.optionalString celo.programs.simpalt.enable readFile ../../../tmux/script/status/simpalt.sh
               # TODO
               # + (if cfg.enable then readFile ../../tmux/script/status/spotify.sh else "")
               + readFile ../../../tmux/script/status/time.sh;
