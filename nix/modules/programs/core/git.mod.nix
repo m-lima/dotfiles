@@ -18,19 +18,13 @@ in {
     ];
 
     home-manager = util.withHome config {
-      home = {
-        packages = with pkgs; [
-          git
-        ];
+      home.packages = with pkgs; [
+        git
+      ];
 
-        file = {
-          ".config/git/config" = {
-            text = builtins.readFile ../../../../git/config/gitconfig;
-          };
-          ".config/git/ignore" = {
-            source = ../../../../git/config/ignore;
-          };
-        };
+      xdg.configFile = {
+        "git/config".text = builtins.readFile ../../../../git/config/gitconfig;
+        "git/ignore".text = builtins.readFile ../../../../git/config/ignore;
       };
     };
 

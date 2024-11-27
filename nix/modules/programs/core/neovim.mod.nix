@@ -21,5 +21,13 @@ in {
           + readFile ../../../../vim/config/options.vim
           + readFile ../../../../vim/config/mapping.vim;
     };
+
+    home-manager = util.withHome config {
+      programs = {
+        neovim = {
+          enable = true;
+        };
+      };
+    };
   };
 }

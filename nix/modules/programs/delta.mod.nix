@@ -18,17 +18,13 @@ in {
     ];
 
     home-manager = util.withHome config {
-      home = {
-        packages = with pkgs; [
-          delta
-        ];
+      home.packages = with pkgs; [
+        delta
+      ];
 
-        file = lib.mkIf celo.programs.core.git.enable {
-          # TODO: Colors are off
-          ".config/git/config" = {
-            text = builtins.readFile ../../../git/config/delta;
-          };
-        };
+      xdg = lib.mkIf celo.programs.core.git.enable {
+        # TODO: Colors are off
+        configFile."git/config".text = builtins.readFile ../../../git/config/delta;
       };
     };
   };
