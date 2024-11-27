@@ -44,15 +44,6 @@ let
 
   getOptions = path: config: lib.getAttrFromPath path config;
 
-  # mkInstallMode = mode: lib.mkOption {
-  #   description = "Whether to install system-wide or user only";
-  #   type = lib.types.oneOf ["sys" "hm"];
-  #   example = "hm";
-  #   default = mode;
-  # };
-  # mkInstallSys = mkInstallMode "sys";
-  # mkInstallHm = mkInstallMode "hm";
-
   mkProfile =
     path:
     config:
