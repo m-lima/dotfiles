@@ -15,5 +15,11 @@ in {
       enable = true;
       pulse.enable = true;
     };
+
+    environment.persistence = util.withImpermanence config {
+      home.directories = [
+        ".local/state/wireplumber"
+      ];
+    };
   };
 }
