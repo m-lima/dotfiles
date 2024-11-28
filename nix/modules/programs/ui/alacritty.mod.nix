@@ -8,6 +8,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  hyprCfg = config.celo.modules.programs.ui.hyprland;
 in {
   options = util.mkOptionsEnable path;
 
@@ -24,6 +25,12 @@ in {
       };
 
       xdg.configFile."alacritty/alacritty.toml".text = builtins.readFile ../../../../alacritty/config/colors.toml;
+
+      wayland.windowManager.hyprland = lib.mkIf hyprCfg.enable {
+        settings = {
+          "$terminal" = "alacritty";
+        };
+      };
     };
   };
 }

@@ -53,10 +53,8 @@ in {
         enable = true;
 
         settings = {
-          "$terminal" = "alacritty";
           "$fileManager" = "dolphin";
           "$launcher" = "bemenu-run";
-          "$browser" = "firefox";
 
           exec-once = [
             "hyprpaper & waybar"

@@ -8,6 +8,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  hyprCfg = config.celo.modules.programs.ui.hyprland;
 in {
   options = util.mkOptionsEnable path;
 
@@ -25,6 +26,12 @@ in {
 
       programs = {
         firefox.enable = true;
+      };
+
+      wayland.windowManager.hyprland = lib.mkIf hyprCfg.enable {
+        settings = {
+          "$browser" = "firefox";
+        };
       };
     };
   };
