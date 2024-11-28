@@ -7,16 +7,9 @@ path:
   ...
 }:
 let
-  cfg = util.getOptions path config;
-  hyprCfg = config.celo.modules.programs.ui.hyprland;
+  cfg = config.celo.modules.programs.ui.hyprland;
 in {
-  options = util.mkOptionsEnable path;
-
   config = lib.mkIf cfg.enable {
-    assertions = [
-      (util.assertHome config path)
-    ];
-
     home-manager = util.withHome config {
       home.packages = with pkgs; [
         bemenu
@@ -34,20 +27,20 @@ in {
             list = "10 down";
             width-factor = 0.3;
 
-            tb = "#${hyprCfg.color.background}";
-            tf = "#${hyprCfg.color.accent_alt}";
+            tb = "#${cfg.color.background}";
+            tf = "#${cfg.color.accent_alt}";
 
-            fb = "#${hyprCfg.color.background}";
-            ff = "#${hyprCfg.color.foreground}";
+            fb = "#${cfg.color.background}";
+            ff = "#${cfg.color.foreground}";
 
-            nb = "#${hyprCfg.color.background_dark}";
-            nf = "#${hyprCfg.color.foreground}";
+            nb = "#${cfg.color.background_dark}";
+            nf = "#${cfg.color.foreground}";
 
-            ab = "#${hyprCfg.color.background_dark}";
-            af = "#${hyprCfg.color.foreground}";
+            ab = "#${cfg.color.background_dark}";
+            af = "#${cfg.color.foreground}";
 
-            hb = "#${hyprCfg.color.background_dark}";
-            hf = "#${hyprCfg.color.accent}";
+            hb = "#${cfg.color.background_dark}";
+            hf = "#${cfg.color.accent}";
           };
         };
       };

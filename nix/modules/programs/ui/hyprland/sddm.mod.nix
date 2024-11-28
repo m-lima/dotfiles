@@ -7,16 +7,9 @@ path:
   ...
 }:
 let
-  cfg = util.getOptions path config;
-  hyprCfg = config.celo.modules.programs.ui.hyprland;
+  cfg = config.celo.modules.programs.ui.hyprland;
 in {
-  options = util.mkOptionsEnable path;
-
   config = lib.mkIf cfg.enable {
-    assertions = [
-      (util.assertHome config path)
-    ];
-
     services.displayManager.sddm = {
       enable = true;
       wayland.enable = true;
@@ -25,14 +18,14 @@ in {
       sugarCandyNix = {
         enable = true;
         settings = {
-          Background = lib.cleanSource hyprCfg.wallpaper;
+          Background = lib.cleanSource cfg.wallpaper;
           ScreenWidth = 3840;
           ScreenHeight = 2160;
           FullBlur = true;
-          MainColor = "#${hyprCfg.color.foreground}";
-          BackgroundColor = "#${hyprCfg.color.background}";
-          AccentColor = "#${hyprCfg.color.accent}";
-          OverrideLoginButtonTextColor = "#${hyprCfg.color.background}";
+          MainColor = "#${cfg.color.foreground}";
+          BackgroundColor = "#${cfg.color.background}";
+          AccentColor = "#${cfg.color.accent}";
+          OverrideLoginButtonTextColor = "#${cfg.color.background}";
           ForceHideCompletePassword = true;
         };
       };

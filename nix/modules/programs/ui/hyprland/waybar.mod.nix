@@ -7,8 +7,7 @@ path:
   ...
 }:
 let
-  cfg = util.getOptions path config;
-  hyprCfg = config.celo.modules.programs.ui.hyprland;
+  cfg = config.celo.modules.programs.ui.hyprland;
 in {
   options = util.mkOptionsEnable path;
 
@@ -128,7 +127,7 @@ in {
             }
 
             window#waybar {
-              color: #${hyprCfg.color.foreground};
+              color: #${cfg.color.foreground};
               text-shadow: 0 0 2px black;
               background-color: rgba(0, 0, 0, 0.2);
 
@@ -139,8 +138,8 @@ in {
             .modules-left,
             .modules-right
             {
-              padding-right: ${toString hyprCfg.gap.outer}px;
-              padding-left: ${toString hyprCfg.gap.outer}px;
+              padding-right: ${toString cfg.gap.outer}px;
+              padding-left: ${toString cfg.gap.outer}px;
             }
           '';
         };

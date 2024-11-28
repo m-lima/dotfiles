@@ -7,16 +7,9 @@ path:
   ...
 }:
 let
-  cfg = util.getOptions path config;
-  hyprCfg = config.celo.modules.programs.ui.hyprland;
+  cfg = config.celo.modules.programs.ui.hyprland;
 in {
-  options = util.mkOptionsEnable path;
-
   config = lib.mkIf cfg.enable {
-    assertions = [
-      (util.assertHome config path)
-    ];
-
     home-manager = util.withHome config {
       home.packages = with pkgs; [
         hyprpaper
@@ -27,10 +20,10 @@ in {
           enable = true;
           settings = {
             preload = [
-              "${hyprCfg.wallpaper}"
+              "${cfg.wallpaper}"
             ];
             wallpaper = [
-              ",${hyprCfg.wallpaper}"
+              ",${cfg.wallpaper}"
             ];
           };
         };
