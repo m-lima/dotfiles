@@ -165,8 +165,8 @@ in util.mkIfUi sysconfig cfg.enable {
 
         # Organize the windows
         # TODO: Verify classes
-        "maximize,    class:^(Firefox)$"
-        "workspace 1, class:^(Firefox)$"
+        "maximize,    class:^(firefox)$"
+        "workspace 1, class:^(firefox)$"
       ];
     };
   };
