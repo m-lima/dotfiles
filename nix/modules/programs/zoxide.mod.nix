@@ -28,7 +28,7 @@ in {
     };
 
     environment.persistence = util.withImpermanence config {
-      home.files = [
+      home.directories = [
         ".local/share/zoxide"
       ];
     };
