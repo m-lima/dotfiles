@@ -6,6 +6,7 @@
   celo = {
     profiles.base.enable = true;
     profiles.hyprland.enable = true;
+    profiles.ui.enable = true;
 
     modules = {
       core = {
