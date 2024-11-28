@@ -52,6 +52,15 @@ in {
                 sort-by-number = true;
                 on-scroll-up = "hyprctl dispatch workspace e-1";
                 on-scroll-down = "hyprctl dispatch workspace e+1";
+                format = "{icon}";
+                format-icons = {
+                  "1"= "";
+                  "2"= "";
+                  "3"= "";
+                  "4"= "";
+                  "5"= "󰿎";
+                  "10"= "";
+                };
               };
 
               idle_inhibitor = {
@@ -74,9 +83,9 @@ in {
 
               pulseaudio = {
                 format = "{volume}% {icon}";
-                format-bluetooth = "{volume}% {icon} {format_source}";
-                format-bluetooth-muted = "󰝟 {icon} {format_source}";
-                format-muted = "󰝟 {format_source}";
+                format-bluetooth = "{volume}% {icon}";
+                format-bluetooth-muted = " ";
+                format-muted = "";
                 format-source = "{volume}% ";
                 format-source-muted = "";
                 format-icons = {
@@ -133,6 +142,18 @@ in {
 
               transition-duration: 0.5s;
               transition-property: background-color;
+            }
+
+            #window {
+              font-wieght: bold;
+            }
+
+            #workspaces button.active {
+              color: #${cfg.color.accent};
+            }
+
+            #workspaces button.urgent {
+              color: #${cfg.color.accent_alt};
             }
 
             .modules-left,

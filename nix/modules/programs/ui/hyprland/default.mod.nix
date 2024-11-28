@@ -87,6 +87,10 @@ in {
             layout = "dwindle";
           };
 
+          decoration = {
+            rounding = 4;
+          };
+
           misc = {
             disable_hyprland_logo = true;
             disable_splash_rendering = true;
@@ -108,12 +112,9 @@ in {
             "SUPER,       SPACE,  exec,               $launcher"
 
             # Applications
-            "SUPER,       RETURN, exec, [workspace 1] $browser"
-            "SUPER SHIFT, RETURN, exec,               $browser"
-            "SUPER,       ESCAPE, exec, [workspace 3] $terminal"
-            "SUPER SHIFT, ESCAPE, exec,               $terminal"
-            "SUPER,       E,      exec, [workspace 4] $fileManager"
-            "SUPER SHIFT, E,      exec,               $fileManager"
+            "SUPER,       ESCAPE, exec, [workspace 1] $terminal"
+            "SUPER,       RETURN, exec, [workspace 2] $browser"
+            "SUPER,       E,      exec, [workspace 3] $fileManager"
 
             # Layout
             "SUPER,       F, fullscreen"
@@ -181,11 +182,6 @@ in {
             "rounding 0,   floating:0, onworkspace:w[tv1]"
             "bordersize 0, floating:0, onworkspace:f[1]"
             "rounding 0,   floating:0, onworkspace:f[1]"
-
-            # Organize the windows
-            # TODO: Verify classes
-            "maximize,    class:^(firefox)$"
-            "workspace 1, class:^(firefox)$"
           ];
         };
       };
