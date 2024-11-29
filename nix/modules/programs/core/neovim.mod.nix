@@ -8,11 +8,12 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  pkgs = pkgsUnstable;
 in {
   options = util.mkOptionsEnable path;
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgsUnstable; [
+    environment.systemPackages = with pkgs; [
       neovim
     ];
 
@@ -28,7 +29,8 @@ in {
       programs = {
         neovim = {
           enable = true;
-          plugins = with pkgsUnstable.vimPlugins; [
+          package = pkgs.neovim-unwrapped;
+          plugins = with pkgs.vimPlugins; [
             vim-repeat
             plenary-nvim
             nvim-web-devicons
@@ -68,7 +70,7 @@ in {
             toggleterm-nvim
             undotree
           ];
-          extraPackages = with pkgsUnstable; [
+          extraPackages = with pkgs; [
             eslint
             gopls
             haskell-language-server
