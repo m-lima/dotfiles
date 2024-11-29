@@ -55,7 +55,7 @@ in
           "$fileManager" = "dolphin";
           "$launcher" = "bemenu-run";
 
-          exec-once = [ "hyprpaper & waybar" ];
+          exec-once = [ "waybar" ];
 
           env = [
             "QT_QPA_PLATFORM,wayland"
