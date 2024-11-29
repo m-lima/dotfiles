@@ -101,7 +101,7 @@ require('config.null_ls')
 require('config.project')
 require('config.telescope')
 require('config.toggleterm')
-require('config.treesitter')
+require('config.treesitter.all')
 require('config.undotree')
 require('config.vsession')
 

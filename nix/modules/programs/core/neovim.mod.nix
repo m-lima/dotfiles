@@ -109,7 +109,7 @@ in {
             require('config.project')
             require('config.telescope')
             require('config.toggleterm')
-            require('config.treesitter')
+            require('config.treesitter.none')
             require('config.undotree')
 
             -- Personal
