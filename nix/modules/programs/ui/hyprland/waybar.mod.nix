@@ -145,7 +145,7 @@ in {
             }
 
             #window {
-              font-wieght: bold;
+              font-weight: bold;
             }
 
             #workspaces button.active {
