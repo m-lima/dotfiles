@@ -165,6 +165,13 @@ in {
             "SUPER, mouse:273, resizewindow"
           ];
 
+          binde = [
+            "SUPER CONTROL, H, resizeactive, -10   0"
+            "SUPER CONTROL, J, resizeactive,   0 -10"
+            "SUPER CONTROL, K, resizeactive,   0  10"
+            "SUPER CONTROL, L, resizeactive,  10   0"
+          ];
+
           bindel = [
             ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
             ",XF86AudioLowerVolume, exec, wpctl set-volume      @DEFAULT_AUDIO_SINK@ 5%-"
