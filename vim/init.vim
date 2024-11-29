@@ -6,6 +6,3 @@ if has('nvim')
   source ~/.config/m-lima/vim/nvim/init.vim
   source ~/.config/m-lima/vim/nvim/plugins/init.vim
 endif
-
-" Functions
-source ~/.config/m-lima/vim/functions.vim

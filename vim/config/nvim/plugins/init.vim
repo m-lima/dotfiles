@@ -109,6 +109,7 @@ require('config.vsession')
 require('plugin.breadcrumbs')
 require('plugin.buffer_stack')
 require('plugin.dupe_comment')
+require('plugin.overlength')
 EOF
 
 " Testing

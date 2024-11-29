@@ -716,9 +716,8 @@ fi
 if [ $(command -v nvim) ]
 then
   installFile s vim/init.vim .config/nvim
-  installFile s vim/grayalt.vim .config/nvim/colors
   installFile s vim/simpalt.vim .config/nvim/colors
-  installFile s vim/config/lua .config/nvim
+  installFile s vim/config/nvim/lua .config/nvim
 else
   echo "[33mSkipping NeoVim links[m"
 fi
@@ -726,7 +725,6 @@ fi
 if [ $(command -v vim) ]
 then
   installFile s vim/init.vim . .vimrc
-  installFile s vim/grayalt.vim .vim/colors
   installFile s vim/simpalt.vim .vim/colors
 else
   echo "[33mSkipping Vim links[m"
@@ -734,7 +732,7 @@ fi
 
 if [ $(command -v nvim) ] || [ $(command -v vim) ]
 then
-  installFile s vim/.ideavimrc .
+  installFile s vim/idea.vim . .ideavimrc
 else
   echo "[33mSkipping IdeaVim links[m"
 fi
@@ -854,6 +852,8 @@ then
         else
           echo "[31mCould not set virtual environment[m"
         fi
+
+        echo 'let python3_host_prog = expand("$HOME/code/python/env/vim/bin/python")' > ~/.config/m-lima/vim/nvim/extra.vim
     esac
   fi
 fi
