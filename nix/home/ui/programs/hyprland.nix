@@ -8,11 +8,14 @@
 }:
 let
   cfg = sysconfig.modules.ui.programs.hyprland;
-in util.mkIfUi sysconfig cfg.enable {
-  home.packages = with pkgs; lib.mkAfter [
-    bemenu
-    dolphin
-  ];
+in
+util.mkIfUi sysconfig cfg.enable {
+  home.packages =
+    with pkgs;
+    lib.mkAfter [
+      bemenu
+      dolphin
+    ];
 
   # qt = {
   #   enable = true;
@@ -37,9 +40,7 @@ in util.mkIfUi sysconfig cfg.enable {
       "$launcher" = "bemenu-run";
       "$browser" = "firefox";
 
-      exec-once = [
-        "hyprpaper & waybar"
-      ];
+      exec-once = [ "hyprpaper & waybar" ];
 
       env = [
         "QT_QPA_PLATFORM,wayland"

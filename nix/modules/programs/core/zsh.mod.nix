@@ -8,7 +8,8 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-in {
+in
+{
   options = util.mkOptionsEnable path;
 
   config = lib.mkIf cfg.enable {
@@ -16,8 +17,10 @@ in {
       zsh = {
         enable = true;
         enableLsColors = false;
-        shellAliases = {};
-        interactiveShellInit = with builtins; ''''
+        shellAliases = { };
+        interactiveShellInit =
+          with builtins;
+          ''''
           + readFile ../../../../zsh/config/base/colors.zsh
           + readFile ../../../../zsh/config/base/completion.zsh
           + readFile ../../../../zsh/config/base/history.zsh
@@ -30,11 +33,7 @@ in {
 
     users.defaultUserShell = pkgs.zsh;
 
-    environment.persistence = util.withImpermanence config {
-      home.files = [
-        ".zsh_history"
-      ];
-    };
+    environment.persistence = util.withImpermanence config { home.files = [ ".zsh_history" ]; };
 
     home-manager = util.withHome config {
       programs = {

@@ -7,7 +7,8 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-in {
+in
+{
   options = util.mkOptions path {
     userName = lib.mkOption {
       description = "User name";

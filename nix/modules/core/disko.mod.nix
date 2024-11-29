@@ -7,7 +7,8 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-in {
+in
+{
   options = util.mkOptions path {
     device = lib.mkOption {
       type = lib.types.str;
@@ -28,33 +29,52 @@ in {
       let
         btrfs = {
           type = "btrfs";
-          extraArgs = ["-f"];
+          extraArgs = [ "-f" ];
           subvolumes = {
             "@" = {
               mountpoint = "/";
-              mountOptions = [ "noatime" "compress=zstd:3" ];
+              mountOptions = [
+                "noatime"
+                "compress=zstd:3"
+              ];
             };
             "@nix" = {
               mountpoint = "/nix";
-              mountOptions = [ "noatime" "compress=zstd:3" ];
+              mountOptions = [
+                "noatime"
+                "compress=zstd:3"
+              ];
             };
             "@persist" = {
               mountpoint = "/persist";
-              mountOptions = [ "noatime" "compress=zstd:3" ];
+              mountOptions = [
+                "noatime"
+                "compress=zstd:3"
+              ];
             };
             "@log" = {
               mountpoint = "/var/log";
-              mountOptions = [ "noatime" "compress=zstd:3" ];
+              mountOptions = [
+                "noatime"
+                "compress=zstd:3"
+              ];
             };
             "@snapshots" = {
               mountpoint = "/.btrfs/snapshots";
-              mountOptions = [ "noatime" "compress=zstd:3" ];
+              mountOptions = [
+                "noatime"
+                "compress=zstd:3"
+              ];
             };
           };
           mountpoint = "/.btrfs/volume";
-          mountOptions = [ "noatime" "compress=zstd:3" ];
+          mountOptions = [
+            "noatime"
+            "compress=zstd:3"
+          ];
         };
-      in {
+      in
+      {
         disk = {
           main = {
             type = "disk";
@@ -73,7 +93,7 @@ in {
                     mountOptions = [ "umask=0077" ];
                   };
                 };
-                swap = lib.mkIf (! isNull cfg.swap) {
+                swap = lib.mkIf (!isNull cfg.swap) {
                   size = cfg.swap;
                   name = "swap";
                   content = {
@@ -84,14 +104,17 @@ in {
                 main = {
                   size = "100%";
                   name = "main";
-                  content = if cfg.luks
-                    then {
-                      type = "luks";
-                      name = "luks";
-                      askPassword = true;
-                      settings.allowDiscards = true;
-                      content = btrfs;
-                    } else btrfs;
+                  content =
+                    if cfg.luks then
+                      {
+                        type = "luks";
+                        name = "luks";
+                        askPassword = true;
+                        settings.allowDiscards = true;
+                        content = btrfs;
+                      }
+                    else
+                      btrfs;
                 };
               };
             };

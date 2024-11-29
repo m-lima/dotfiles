@@ -7,7 +7,8 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-in {
+in
+{
   options = util.mkOptionsEnable path;
 
   config = lib.mkIf cfg.enable {
@@ -17,9 +18,7 @@ in {
     };
 
     environment.persistence = util.withImpermanence config {
-      home.directories = [
-        ".local/state/wireplumber"
-      ];
+      home.directories = [ ".local/state/wireplumber" ];
     };
   };
 }

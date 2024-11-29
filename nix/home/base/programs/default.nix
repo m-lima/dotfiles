@@ -7,22 +7,23 @@
 let
   cfg = sysconfig.modules.ui;
   simpalt = inputs.simpalt.packages."${pkgs.system}";
-in {
+in
+{
   home.packages = with pkgs; [
-    bat       # Configured in ZSH
-    curl      # No-op
-    delta     # Configured in Git
-    fd        # Configured in ZSH
-    fzf       # Done
-    git       # Done
+    bat # Configured in ZSH
+    curl # No-op
+    delta # Configured in Git
+    fd # Configured in ZSH
+    fzf # Done
+    git # Done
     gnupg
-    jq        # No-op
+    jq # No-op
     neovim
     openssh
-    ripgrep   # Configured in ZSH
-    tmux      # Done
-    zoxide    # Done one level up
-    zsh       # Done
+    ripgrep # Configured in ZSH
+    tmux # Done
+    zoxide # Done one level up
+    zsh # Done
     # skull
     simpalt.default
   ];
@@ -57,18 +58,24 @@ in {
       };
 
       enable = true;
-      initExtraFirst = with builtins; ''''
+      initExtraFirst =
+        with builtins;
+        ''''
         + readFile ../../../../zsh/config/programs/bat.zsh
         + readFile ../../../../zsh/config/programs/fzf_fd.zsh
         + readFile ../../../../zsh/config/programs/rg.zsh;
 
-      initExtra = simpalt.zsh { symbol = "₵"; toggleBinding = "^T"; };
+      initExtra = simpalt.zsh {
+        symbol = "₵";
+        toggleBinding = "^T";
+      };
     };
   };
 
   home.file = {
     ".config/git/config" = with builtins; {
-      text = ''''
+      text =
+        ''''
         + readFile ../../../../git/config/gitconfig
         # Colors are off
         + readFile ../../../../git/config/delta;
@@ -92,7 +99,9 @@ in {
       executable = true;
     };
     ".config/tmux/script/status_right.sh" = with builtins; {
-      text = ''#!/usr/bin/env bash
+      text =
+        ''
+          #!/usr/bin/env bash
         ''
         + readFile ../../../../tmux/script/status/simpalt.sh
         # TODO
@@ -102,4 +111,3 @@ in {
     };
   };
 }
-

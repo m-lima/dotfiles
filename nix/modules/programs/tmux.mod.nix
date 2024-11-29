@@ -9,18 +9,15 @@ path:
 let
   celo = config.celo.modules;
   cfg = util.getOptions path config;
-in {
+in
+{
   options = util.mkOptionsEnable path;
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      (util.assertHome config path)
-    ];
+    assertions = [ (util.assertHome config path) ];
 
     home-manager = util.withHome config {
-      home.packages = with pkgs; [
-        tmux
-      ];
+      home.packages = with pkgs; [ tmux ];
 
       xdg.configFile = {
         "tmux/tmux.conf".source = ../../../tmux/base.conf;
@@ -37,8 +34,9 @@ in {
           executable = true;
         };
         "tmux/script/status_right.sh" = with builtins; {
-          text = ''
-            #!/usr/bin/env bash
+          text =
+            ''
+              #!/usr/bin/env bash
             ''
             + lib.optionalString celo.programs.simpalt.enable readFile ../../../tmux/script/status/simpalt.sh
             # TODO

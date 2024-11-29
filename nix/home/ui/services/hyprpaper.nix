@@ -8,21 +8,16 @@
 }:
 let
   cfg = sysconfig.modules.ui.programs.hyprland;
-in util.mkIfUi sysconfig cfg.enable {
-  home.packages = with pkgs; lib.mkAfter [
-    hyprpaper
-  ];
+in
+util.mkIfUi sysconfig cfg.enable {
+  home.packages = with pkgs; lib.mkAfter [ hyprpaper ];
 
   services = {
     hyprpaper = {
       enable = true;
       settings = {
-        preload = [
-          "${cfg.wallpaper}"
-        ];
-        wallpaper = [
-          ",${cfg.wallpaper}"
-        ];
+        preload = [ "${cfg.wallpaper}" ];
+        wallpaper = [ ",${cfg.wallpaper}" ];
       };
     };
   };

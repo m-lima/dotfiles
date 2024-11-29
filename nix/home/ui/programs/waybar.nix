@@ -8,10 +8,9 @@
 }:
 let
   cfg = sysconfig.modules.ui.programs.hyprland;
-in util.mkIfUi sysconfig cfg.enable {
-  home.packages = with pkgs; lib.mkAfter [
-    waybar
-  ];
+in
+util.mkIfUi sysconfig cfg.enable {
+  home.packages = with pkgs; lib.mkAfter [ waybar ];
 
   programs = {
     waybar = {
@@ -23,12 +22,8 @@ in util.mkIfUi sysconfig cfg.enable {
           height = 30;
           spacing = 10;
 
-          modules-left = [
-           "hyprland/workspaces"
-          ];
-          modules-center = [
-            "hyprland/window"
-          ];
+          modules-left = [ "hyprland/workspaces" ];
+          modules-center = [ "hyprland/window" ];
           modules-right = [
             "idle_inhibitor"
             "network"
@@ -78,7 +73,11 @@ in util.mkIfUi sysconfig cfg.enable {
               phone = "";
               portable = "󰺐";
               car = "";
-              default = ["" "" ""];
+              default = [
+                ""
+                ""
+                ""
+              ];
             };
             on-click = "pavucontrol";
           };
@@ -86,7 +85,12 @@ in util.mkIfUi sysconfig cfg.enable {
           temperature = {
             critical-threshold = 80;
             format = "{temperatureC}°C {icon}";
-            format-icons = ["" "" "" ""];
+            format-icons = [
+              ""
+              ""
+              ""
+              ""
+            ];
           };
 
           cpu = {

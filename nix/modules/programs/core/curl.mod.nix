@@ -8,18 +8,13 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-in {
+in
+{
   options = util.mkOptionsEnable path;
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      curl
-    ];
+    environment.systemPackages = with pkgs; [ curl ];
 
-    home-manager = util.withHome config {
-      home.packages = with pkgs; [
-        curl
-      ];
-    };
+    home-manager = util.withHome config { home.packages = with pkgs; [ curl ]; };
   };
 }

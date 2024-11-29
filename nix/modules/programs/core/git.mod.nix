@@ -9,18 +9,15 @@ path:
 let
   celo = config.celo.modules;
   cfg = util.getOptions path config;
-in {
+in
+{
   options = util.mkOptionsEnable path;
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      git
-    ];
+    environment.systemPackages = with pkgs; [ git ];
 
     home-manager = util.withHome config {
-      home.packages = with pkgs; [
-        git
-      ];
+      home.packages = with pkgs; [ git ];
 
       xdg.configFile = {
         "git/config".text = builtins.readFile ../../../../git/config/gitconfig;

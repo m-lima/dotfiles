@@ -7,7 +7,8 @@
 }:
 let
   cfg = config.modules.ui.programs.hyprland;
-in {
+in
+{
   # Using an unstable module
   # imports = [ "${inputs.nixpkgs-unstable}/nixos/modules/programs/wayland/uwsm" ];
 

@@ -1,6 +1,1 @@
-{
-  imports = [
-    ./hyprpaper.nix
-  ];
-}
-
+{ imports = [ ./hyprpaper.nix ]; }

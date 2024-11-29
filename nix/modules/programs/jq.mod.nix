@@ -8,18 +8,13 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-in {
+in
+{
   options = util.mkOptionsEnable path;
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      (util.assertHome config path)
-    ];
+    assertions = [ (util.assertHome config path) ];
 
-    home-manager = util.withHome config {
-      home.packages = with pkgs; [
-        jq
-      ];
-    };
+    home-manager = util.withHome config { home.packages = with pkgs; [ jq ]; };
   };
 }

@@ -12,6 +12,9 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+    };
     impermanence = {
       url = "github:nix-community/impermanence";
     };
@@ -32,40 +35,46 @@
     };
   };
 
-  outputs = {
-    nixpkgs,
-    nixpkgs-unstable,
-    disko,
-    home-manager,
-    impermanence,
-    sddm-sugar-candy-nix,
-    ...
-  } @ inputs:
-  let
-    util = import ./util { inherit (nixpkgs) lib; };
-    mkHost =
-      host:
-      system:
-      nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs util;
-          pkgsUnstable = nixpkgs-unstable.legacyPackages.${system};
+  outputs =
+    {
+      nixpkgs,
+      nixpkgs-unstable,
+      disko,
+      home-manager,
+      flake-utils,
+      impermanence,
+      sddm-sugar-candy-nix,
+      ...
+    }@inputs:
+    let
+      util = import ./util { inherit (nixpkgs) lib; };
+      mkHost =
+        host: system:
+        nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs util;
+            pkgsUnstable = nixpkgs-unstable.legacyPackages.${system};
+          };
+          system = system;
+          modules =
+            [ host ]
+            ++ util.loadModules ./modules
+            ++ util.loadProfiles ./profiles
+            ++ [
+              disko.nixosModules.disko
+              home-manager.nixosModules.home-manager
+              impermanence.nixosModules.impermanence
+              sddm-sugar-candy-nix.nixosModules.default
+            ];
         };
-        system = system;
-        modules = [host]
-          ++ util.loadModules ./modules
-          ++ util.loadProfiles ./profiles
-          ++ [
-            disko.nixosModules.disko
-            home-manager.nixosModules.home-manager
-            impermanence.nixosModules.impermanence
-            sddm-sugar-candy-nix.nixosModules.default
-          ];
+    in
+    {
+      nixosConfigurations = {
+        coal = mkHost ./hosts/coal "x86_64-linux";
+        utm = mkHost ./hosts/utm "aarch64-linux";
       };
-  in {
-    nixosConfigurations = {
-      coal = mkHost ./hosts/coal "x86_64-linux";
-      utm = mkHost ./hosts/utm "aarch64-linux";
+      formatter = flake-utils.lib.eachDefaultSystemPassThrough (system: {
+        ${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
+      });
     };
-  };
 }

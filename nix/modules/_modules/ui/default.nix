@@ -1,7 +1,5 @@
+{ lib, ... }:
 {
-  lib,
-  ...
-}: {
   imports = [
     ./hardware
     ./programs

@@ -3,7 +3,8 @@
   userName,
   homeDirectory,
   ...
-}: {
+}:
+{
   imports = [
     ./base
     ./ui
@@ -17,4 +18,3 @@
 
   programs.home-manager.enable = true;
 }
-

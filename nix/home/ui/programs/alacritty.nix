@@ -8,10 +8,9 @@
 }:
 let
   cfg = sysconfig.modules.ui.programs.hyprland;
-in util.mkIfUi sysconfig cfg.enable {
-  home.packages = with pkgs; lib.mkAfter [
-    alacritty
-  ];
+in
+util.mkIfUi sysconfig cfg.enable {
+  home.packages = with pkgs; lib.mkAfter [ alacritty ];
 
   home.file = {
     ".config/alacritty/alacritty.toml" = with builtins; {
@@ -19,4 +18,3 @@ in util.mkIfUi sysconfig cfg.enable {
     };
   };
 }
-

@@ -8,7 +8,8 @@
 }:
 let
   cfg = config.home.ui.programs.firefox;
-in {
+in
+{
   options = {
     home.ui.programs.firefox = {
       enable = util.mkDisableOption "firefox";
@@ -16,9 +17,7 @@ in {
   };
 
   config = util.mkIfUi sysconfig cfg.enable {
-    home.packages = with pkgs; lib.mkAfter [
-      firefox
-    ];
+    home.packages = with pkgs; lib.mkAfter [ firefox ];
 
     programs = {
       firefox = {
@@ -27,4 +26,3 @@ in {
     };
   };
 }
-

@@ -7,10 +7,9 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-in {
-  options = util.mkOptions path {
-    description = "wireless support via wpa_supplicant";
-  };
+in
+{
+  options = util.mkOptions path { description = "wireless support via wpa_supplicant"; };
 
   config = lib.mkIf cfg.enable {
     networking.wireless = {

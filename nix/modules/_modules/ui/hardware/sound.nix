@@ -6,7 +6,8 @@
 }:
 let
   cfg = config.modules.ui.hardware.sound;
-in {
+in
+{
   options = {
     modules.ui.hardware.sound = {
       enable = util.mkDisableOption "pipewire daemon";

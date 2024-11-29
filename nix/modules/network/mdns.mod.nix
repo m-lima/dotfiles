@@ -7,10 +7,9 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-in {
-  options = util.mkOptions path {
-    description = "mDNS resolution and publishing";
-  };
+in
+{
+  options = util.mkOptions path { description = "mDNS resolution and publishing"; };
 
   config = lib.mkIf cfg.enable {
     services.avahi = {

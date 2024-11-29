@@ -8,7 +8,8 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-in {
+in
+{
   options = util.mkOptions path {
     color = {
       foreground = util.mkColorOption "foreground" "cccccc";
@@ -40,9 +41,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      (util.assertHome config path)
-    ];
+    assertions = [ (util.assertHome config path) ];
 
     programs = {
       hyprland.enable = true;
@@ -56,9 +55,7 @@ in {
           "$fileManager" = "dolphin";
           "$launcher" = "bemenu-run";
 
-          exec-once = [
-            "hyprpaper & waybar"
-          ];
+          exec-once = [ "hyprpaper & waybar" ];
 
           env = [
             "QT_QPA_PLATFORM,wayland"

@@ -8,18 +8,15 @@ path:
 }:
 let
   cfg = config.celo.modules.programs.ui.hyprland;
-in {
+in
+{
   options = util.mkOptionsEnable path;
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      (util.assertHome config path)
-    ];
+    assertions = [ (util.assertHome config path) ];
 
     home-manager = util.withHome config {
-      home.packages = with pkgs; [
-        waybar
-      ];
+      home.packages = with pkgs; [ waybar ];
 
       programs = {
         waybar = {
@@ -31,12 +28,8 @@ in {
               height = 30;
               spacing = 10;
 
-              modules-left = [
-               "hyprland/workspaces"
-              ];
-              modules-center = [
-                "hyprland/window"
-              ];
+              modules-left = [ "hyprland/workspaces" ];
+              modules-center = [ "hyprland/window" ];
               modules-right = [
                 "idle_inhibitor"
                 "network"
@@ -54,12 +47,12 @@ in {
                 on-scroll-down = "hyprctl dispatch workspace e+1";
                 format = "{icon}";
                 format-icons = {
-                  "1"= "";
-                  "2"= "";
-                  "3"= "";
-                  "4"= "";
-                  "5"= "󰿎";
-                  "10"= "";
+                  "1" = "";
+                  "2" = "";
+                  "3" = "";
+                  "4" = "";
+                  "5" = "󰿎";
+                  "10" = "";
                 };
               };
 
@@ -95,7 +88,11 @@ in {
                   phone = "";
                   portable = "󰺐";
                   car = "";
-                  default = ["" "" ""];
+                  default = [
+                    ""
+                    ""
+                    ""
+                  ];
                 };
                 on-click = "pavucontrol";
               };
@@ -103,7 +100,12 @@ in {
               temperature = {
                 critical-threshold = 80;
                 format = "{temperatureC}°C {icon}";
-                format-icons = ["" "" "" ""];
+                format-icons = [
+                  ""
+                  ""
+                  ""
+                  ""
+                ];
               };
 
               cpu = {

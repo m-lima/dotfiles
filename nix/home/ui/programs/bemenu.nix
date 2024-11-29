@@ -8,10 +8,9 @@
 }:
 let
   cfg = sysconfig.modules.ui.programs.hyprland;
-in util.mkIfUi sysconfig cfg.enable {
-  home.packages = with pkgs; lib.mkAfter [
-    bemenu
-  ];
+in
+util.mkIfUi sysconfig cfg.enable {
+  home.packages = with pkgs; lib.mkAfter [ bemenu ];
 
   programs = {
     bemenu = {
@@ -43,4 +42,3 @@ in util.mkIfUi sysconfig cfg.enable {
     };
   };
 }
-

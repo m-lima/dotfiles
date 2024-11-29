@@ -8,25 +8,17 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-in {
+in
+{
   options = util.mkOptionsEnable path;
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      (util.assertHome config path)
-    ];
+    assertions = [ (util.assertHome config path) ];
 
     home-manager = util.withHome config {
       fonts.fontconfig.enable = true;
 
-      home.packages = [
-        (
-          pkgs.nerdfonts.override {
-            fonts = [ "Hack" ];
-          }
-        )
-      ];
+      home.packages = [ (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) ];
     };
   };
 }
-

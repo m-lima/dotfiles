@@ -9,18 +9,15 @@ path:
 let
   celo = config.celo.modules;
   cfg = util.getOptions path config;
-in {
+in
+{
   options = util.mkOptionsEnable path;
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      (util.assertHome config path)
-    ];
+    assertions = [ (util.assertHome config path) ];
 
     home-manager = util.withHome config {
-      home.packages = with pkgs; [
-        zoxide
-      ];
+      home.packages = with pkgs; [ zoxide ];
 
       programs = lib.mkIf celo.programs.core.zsh.enable {
         zsh.initExtra = builtins.readFile ../../../zsh/config/programs/zoxide.zsh;
@@ -28,9 +25,7 @@ in {
     };
 
     environment.persistence = util.withImpermanence config {
-      home.directories = [
-        ".local/share/zoxide"
-      ];
+      home.directories = [ ".local/share/zoxide" ];
     };
   };
 }

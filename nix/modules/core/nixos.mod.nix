@@ -8,7 +8,8 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-in {
+in
+{
   options = util.mkOptions path {
     hostName = lib.mkOption {
       description = "Host name";
@@ -43,7 +44,10 @@ in {
         # Optimize storage
         auto-optimise-store = true;
         # Enable some experimental features
-        experimental-features = [ "nix-command" "flakes" ];
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
       };
     };
 

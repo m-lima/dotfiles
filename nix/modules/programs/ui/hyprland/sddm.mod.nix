@@ -8,7 +8,8 @@ path:
 }:
 let
   cfg = config.celo.modules.programs.ui.hyprland;
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     services.displayManager.sddm = {
       enable = true;

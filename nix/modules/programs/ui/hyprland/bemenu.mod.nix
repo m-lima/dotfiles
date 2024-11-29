@@ -8,12 +8,11 @@ path:
 }:
 let
   cfg = config.celo.modules.programs.ui.hyprland;
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     home-manager = util.withHome config {
-      home.packages = with pkgs; [
-        bemenu
-      ];
+      home.packages = with pkgs; [ bemenu ];
 
       programs = {
         bemenu = {
