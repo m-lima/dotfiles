@@ -11,9 +11,6 @@
       home.enable = true;
     };
   };
-  network = {
-    mdns.enable = true;
-  };
   programs = {
     core = {
       curl.enable = true;
@@ -32,6 +29,7 @@
     zoxide.enable = true;
   };
   services = {
+    mdns.enable = true;
     ssh.enable = true;
   };
 }

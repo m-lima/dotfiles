@@ -81,7 +81,7 @@ quit
 3. Create WiFi secret file
 
 ```
-cat << EOF >> /persist/secrets/wireless.env
+cat << EOF >> /persist/secrets/wifi.env
 SSID="SSID"
 PSK="SECRET"
 EOF

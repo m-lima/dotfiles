@@ -22,8 +22,9 @@
           homeDirectory = "/home/celo";
         };
       };
-      network = {
-        wireless.enable = true;
+      hardware = {
+        wifi.enable = true;
+        bluetooth.enable = true;
       };
       programs = {
         simpalt = {

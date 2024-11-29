@@ -23,7 +23,7 @@ The persistent subvolume **must** be marked with `requiredForBoot`
 
 # Expected files
 
-## /persist/secrets/wireless.env
+## /persist/secrets/wifi.env
 
 > https://search.nixos.org/options?show=networking.wireless.environmentFile&from=0&size=50&sort=relevance&type=packages&query=networking.wireless
 
