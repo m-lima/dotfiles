@@ -112,22 +112,23 @@ in {
             "SUPER,       SPACE,  exec,               $launcher"
 
             # Applications
-            "SUPER,       ESCAPE, exec, [workspace 1] $terminal"
-            "SUPER,       RETURN, exec, [workspace 2] $browser"
-            "SUPER,       E,      exec, [workspace 3] $fileManager"
+            "SUPER, ESCAPE, exec, [workspace 1] $terminal"
+            "SUPER, RETURN, exec, [workspace 2] $browser"
+            "SUPER, E,      exec, [workspace 3] $fileManager"
 
             # Layout
-            "SUPER,       F, fullscreen"
-            "SUPER SHIFT, F, togglefloating"
-            "SUPER,       S, togglespecialworkspace, magic"
-            "SUPER SHIFT, S, movetoworkspace, special:magic"
-            "SUPER,       D, togglesplit"
+            "SUPER,         F, fullscreen,             1"
+            "SUPER SHIFT,   F, fullscreen"
+            "SUPER CONTROl, F, togglefloating"
+            "SUPER,         S, togglespecialworkspace, magic"
+            "SUPER SHIFT,   S, movetoworkspace,        special:magic"
+            "SUPER,         D, togglesplit"
 
             # Movement
-            "SUPER,       H, movefocus, l"
-            "SUPER,       J, movefocus, d"
-            "SUPER,       K, movefocus, u"
-            "SUPER,       L, movefocus, r"
+            "SUPER,       H, movefocus,  l"
+            "SUPER,       J, movefocus,  d"
+            "SUPER,       K, movefocus,  u"
+            "SUPER,       L, movefocus,  r"
             "SUPER SHIFT, H, swapwindow, l"
             "SUPER SHIFT, J, swapwindow, d"
             "SUPER SHIFT, K, swapwindow, u"
