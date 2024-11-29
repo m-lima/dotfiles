@@ -64,7 +64,9 @@ require('neo-tree').setup({
     filtered_items = {
       visible = true,
     },
-    follow_current_file = true,
+    follow_current_file = {
+      enable = true,
+    },
     window = {
       mappings = {
         ['<leader>p'] = 'telescope_find',
