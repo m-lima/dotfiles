@@ -6,4 +6,4 @@ end
 
 local ensure_installed = 'all'
 
-require('config.treesitter.setup')(ensure_installed, ignore_install)
+require('config.treesitter.setup').setup(ensure_installed, ignore_install)

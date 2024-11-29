@@ -1,4 +1,3 @@
-require('config.lspconfig.servers').setup()
 local map = require('util').map
 
 map('n',        ']e',                vim.diagnostic.goto_next)

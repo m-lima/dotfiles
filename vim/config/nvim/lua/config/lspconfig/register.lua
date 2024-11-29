@@ -226,12 +226,14 @@ local base_opts = function(server, opts)
   }, opts or {})
 end
 
-return function(server, opts, defer_init)
-  opts = base_opts(server, opts)
-  if defer_init then
-    opts = defer(server, opts)
-  else
-    run_one_shot(server, opts.one_shot)
-  end
-  lspconfig[server].setup(opts)
-end
+return {
+  register = function(server, opts, defer_init)
+    opts = base_opts(server, opts)
+    if defer_init then
+      opts = defer(server, opts)
+    else
+      run_one_shot(server, opts.one_shot)
+    end
+    lspconfig[server].setup(opts)
+  end,
+}

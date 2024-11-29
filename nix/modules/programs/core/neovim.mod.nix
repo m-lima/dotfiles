@@ -73,16 +73,12 @@ in {
           extraPackages = with pkgs; [
             eslint
             gopls
-            haskell-language-server
-            jdt-language-server
-            kotlin-language-server
             lua-language-server
+            nil
+            nixfmt-rfc-style
             pyright
-            # qmlls
             rust-analyzer
-            slint-lsp
             typescript-language-server
-            vue-language-server
           ];
         };
       };
@@ -103,6 +99,12 @@ in {
             require('config.gitsigns')
             require('config.lightspeed')
             require('config.lspconfig')
+            require('config.lspconfig.servers.go')
+            require('config.lspconfig.servers.js').setup()
+            require('config.lspconfig.servers.lua')
+            require('config.lspconfig.servers.nil')
+            require('config.lspconfig.servers.python')
+            require('config.lspconfig.servers.rust')
             require('config.lua_out')
             require('config.lualine')
             require('config.neo_tree')

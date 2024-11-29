@@ -1,1 +1,1 @@
-require('config.treesitter.setup')()
+require('config.treesitter.setup').setup()
