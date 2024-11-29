@@ -1,5 +1,0 @@
-" Base config
-source ~/.config/m-lima/vim/base.vim
-
-" Idea config
-source ~/.config/m-lima/vim/idea.vim

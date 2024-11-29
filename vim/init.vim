@@ -1,24 +1,11 @@
 " Base config
-source ~/.config/m-lima/vim/base.vim
+source ~/.config/m-lima/vim/base/init.vim
 
-" Coloring
-source ~/.config/m-lima/vim/coloring.vim
-
-" Plugins
-if has('nvim-0.7')
-  source ~/.config/m-lima/vim/plugins/nvim_latest.vim
-elseif has('nvim-0.5')
-  source ~/.config/m-lima/vim/plugins/nvim_coc.vim
-elseif has('nvim')
-  source ~/.config/m-lima/vim/plugins/compatible_full.vim
-else
-  source ~/.config/m-lima/vim/plugins/compatible_minimal.vim
+" Neovim specific
+if has('nvim')
+  source ~/.config/m-lima/vim/nvim/init.vim
+  source ~/.config/m-lima/vim/nvim/plugins/init.vim
 endif
 
 " Functions
 source ~/.config/m-lima/vim/functions.vim
-
-" Filetypes
-if has('nvim-0.7')
-  luafile ~/.config/m-lima/vim/filetypes.lua
-endif

@@ -2,6 +2,9 @@ local components = require('config.lualine.components')
 local extensions = require('config.lualine.extensions')
 local themes = require('config.lualine.themes')
 
+-- Hide mode, since we take care of it here
+vim.o.showmode = false
+
 require('lualine').setup({
   extensions = { 'quickfix', extensions.toggleterm, extensions.neotree },
   options = {

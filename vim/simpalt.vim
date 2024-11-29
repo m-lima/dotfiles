@@ -1,26 +1,16 @@
 " TODO: Shuffle the plugins (bring LSP and TS to the top and link below?)
 
 """ Prepare
+syntax enable
+syntax reset
 highlight clear
-
-if exists('syntax_on')
-  syntax reset
-endif
-
-set background=dark
-
-if has('termguicolors')
-  set termguicolors
-endif
-
 let g:colors_name = 'simpalt'
+set background=dark
+set termguicolors
+set cul
 
 """ Base
-if exists('g:simpalt_transparent_bg') && g:simpalt_transparent_bg
-  highlight Normal guifg=#909090 ctermfg=245 guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
-else
-  highlight Normal guifg=#909090 ctermfg=245 guibg=#262626 ctermbg=235  gui=NONE cterm=NONE
-endif
+highlight Normal guifg=#909090 ctermfg=245 guibg=#262626 ctermbg=235  gui=NONE cterm=NONE
 
 """ General
 highlight Directory    guifg=#a8a8a8 ctermfg=248  guibg=NONE    ctermbg=NONE gui=BOLD cterm=BOLD
@@ -42,9 +32,10 @@ highlight PmenuThumb   guifg=NONE    ctermfg=NONE guibg=#bcbcbc ctermbg=250  gui
 highlight WinSeparator guifg=#444444 ctermfg=238  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
 
 """ Position
-highlight CursorLine   guifg=NONE    ctermfg=NONE guibg=#303030 ctermbg=236  gui=NONE cterm=NONE
-highlight CursorLineNr guifg=#bcbcbc ctermfg=250  guibg=NONE    ctermbg=NONE gui=BOLD cterm=BOLD
-highlight LineNr       guifg=#585858 ctermfg=240  guibg=NONE    ctermbg=NONE gui=NONE cterm=NONE
+highlight CursorHidden guifg=white   ctermfg=white guibg=white   ctermbg=white blend=100
+highlight CursorLine   guifg=NONE    ctermfg=NONE  guibg=#303030 ctermbg=236   gui=NONE cterm=NONE
+highlight CursorLineNr guifg=#bcbcbc ctermfg=250   guibg=NONE    ctermbg=NONE  gui=BOLD cterm=BOLD
+highlight LineNr       guifg=#585858 ctermfg=240   guibg=NONE    ctermbg=NONE  gui=NONE cterm=NONE
 highlight clear SignColumn
 
 """ Diff
@@ -69,10 +60,10 @@ highlight Conceal      guifg=#606060 ctermfg=240  guibg=NONE    ctermbg=NONE gui
 highlight Todo         guifg=#d7ba7d ctermfg=180  guibg=NONE    ctermbg=NONE gui=BOLD cterm=BOLD " Todo
 
 """ Diagnostics (LSP Plugin)
-highlight DiagnosticError   guifg=#df5f5f ctermfg=167 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
-highlight DiagnosticWarn    guifg=#ffaf00 ctermfg=214 guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
-highlight DiagnosticInfo    guifg=#51a0cf ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
-highlight DiagnosticHint    guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=NONE      cterm=NONE
+highlight DiagnosticError   guifg=#df5f5f ctermfg=167 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight DiagnosticWarn    guifg=#ffaf00 ctermfg=214 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight DiagnosticInfo    guifg=#51a0cf ctermfg=74  guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight DiagnosticHint    guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
 """ Command
 highlight MsgArea guifg=#eeeeee ctermfg=255 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
@@ -115,13 +106,11 @@ highlight Debug          guifg=#dadada ctermfg=253 guibg=NONE ctermbg=NONE gui=N
 
 """ Plugins
 " NeoTree
-if !(exists('g:simpalt_transparent_nvimtree') && g:simpalt_transparent_nvimtree)
-  highlight NeoTreeNormal       guifg=#909090 ctermfg=245  guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
-  highlight NeoTreeNormalNC     guifg=#909090 ctermfg=245  guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
-  highlight NeoTreeVertSplit    guifg=#262626 ctermfg=235  guibg=#262626 ctermbg=235 gui=NONE cterm=NONE
-  highlight NeoTreeWinSeparator guifg=#262626 ctermfg=235  guibg=#262626 ctermbg=235 gui=NONE cterm=NONE
-  highlight NeoTreeCursorLine   guifg=NONE    ctermfg=NONE guibg=#262626 ctermbg=235 gui=NONE cterm=NONE
-endif
+highlight NeoTreeNormal       guifg=#909090 ctermfg=245  guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
+highlight NeoTreeNormalNC     guifg=#909090 ctermfg=245  guibg=#303030 ctermbg=236 gui=NONE cterm=NONE
+highlight NeoTreeVertSplit    guifg=#262626 ctermfg=235  guibg=#262626 ctermbg=235 gui=NONE cterm=NONE
+highlight NeoTreeWinSeparator guifg=#262626 ctermfg=235  guibg=#262626 ctermbg=235 gui=NONE cterm=NONE
+highlight NeoTreeCursorLine   guifg=NONE    ctermfg=NONE guibg=#262626 ctermbg=235 gui=NONE cterm=NONE
 
 " LSP
 highlight LspReferenceText     guifg=#ffffff ctermfg=15  guibg=NONE ctermbg=NONE gui=UNDERLINE cterm=UNDERLINE
