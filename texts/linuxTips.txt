@@ -238,6 +238,15 @@ gpg --edit-key <KEY>
 > key 1
 > expire
 
+# Create subkey
+gpg --edit-key <KEY>
+(or gpg --pinentry-mode loopbak --edit-key <KEY>
+> addkey
+
+# Export a subkey
+gpg --output <FILE> --export-secret-subkeys <SUBHASH>
+(where <SUBHASH> can be extracted with `gpg --edit-key <HASH>`)
+
 ##################################################
 # FFMPEG
 ##################################################
