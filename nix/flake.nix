@@ -4,6 +4,15 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    agenix-rekey = {
+      url = "github:oddlama/agenix-rekey";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,8 +46,11 @@
 
   outputs =
     {
+      self,
       nixpkgs,
       nixpkgs-unstable,
+      agenix,
+      agenix-rekey,
       disko,
       home-manager,
       flake-utils,
@@ -61,6 +73,8 @@
             ++ util.loadModules ./modules
             ++ util.loadProfiles ./profiles
             ++ [
+              agenix.nixosModules.default
+              agenix-rekey.nixosModules.default
               disko.nixosModules.disko
               home-manager.nixosModules.home-manager
               impermanence.nixosModules.impermanence
@@ -73,6 +87,12 @@
         coal = mkHost ./hosts/coal "x86_64-linux";
         utm = mkHost ./hosts/utm "aarch64-linux";
       };
+
+      agenix-rekey = agenix-rekey.configure {
+        userFlake = self;
+        nixosConfigurations = self.nixosConfigurations;
+      };
+
       formatter = flake-utils.lib.eachDefaultSystemPassThrough (system: {
         ${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
       });
