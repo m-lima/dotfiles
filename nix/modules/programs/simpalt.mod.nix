@@ -25,7 +25,7 @@ in
     assertions = [ (util.assertHome config path) ];
 
     home-manager = util.withHome config {
-      home.packages = with pkgs; [ simpalt.default ];
+      home.packages = [ simpalt.default ];
 
       programs = lib.mkIf celo.programs.core.zsh.enable {
         # TODO: Make this a module in simpalt

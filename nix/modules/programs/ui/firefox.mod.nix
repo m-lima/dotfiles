@@ -23,16 +23,8 @@ in
 
           policies =
             let
-              lock-false = {
-                Value = false;
-                Status = "locked";
-              };
-              lock-true = {
-                Value = true;
-                Status = "locked";
-              };
-              lock-empty = {
-                Value = "";
+              lock = value: {
+                Value = value;
                 Status = "locked";
               };
             in
@@ -43,12 +35,12 @@ in
               DisablePocket = true;
 
               Preferences = {
-                "extensions.pocket.enabled" = lock-false;
-                "browser.newtabpage.pinned" = lock-empty;
-                "browser.topsites.contile.enabled" = lock-false;
-                "browser.newtabpage.activity-stream.showSponsored" = lock-false;
-                "browser.newtabpage.activity-stream.system.showSponsored" = lock-false;
-                "browser.newtabpage.activity-stream.showSponsoredTopSites" = lock-false;
+                "extensions.pocket.enabled" = lock false;
+                "browser.newtabpage.pinned" = lock "";
+                "browser.topsites.contile.enabled" = lock false;
+                "browser.newtabpage.activity-stream.showSponsored" = lock false;
+                "browser.newtabpage.activity-stream.system.showSponsored" = lock false;
+                "browser.newtabpage.activity-stream.showSponsoredTopSites" = lock false;
               };
 
               ExtensionSettings = {

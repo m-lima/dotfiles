@@ -53,17 +53,10 @@ let
 
   getOptions = path: config: lib.getAttrFromPath path config;
 
-  mkProfile =
-    path: config: profile:
-    let
-      mkDefault = builtins.mapAttrs (
-        name: value: if (builtins.isAttrs value) then mkDefault value else lib.mkDefault value
-      );
-    in
-    {
-      options = mkOptions path { description = "${lib.last path} profile"; };
-      config.celo.modules = lib.mkIf (getOptions path config).enable profile;
-    };
+  mkProfile = path: config: profile: {
+    options = mkOptions path { description = "${lib.last path} profile"; };
+    config.celo.modules = lib.mkIf (getOptions path config).enable profile;
+  };
 
   mkColorOption =
     name: default:
