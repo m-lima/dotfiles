@@ -79,7 +79,7 @@ in
       mutableUsers = false;
       users = {
         root = {
-          hashedPasswordFile = "/persist/secrets/root.passwordFile";
+          hashedPasswordFile = "/persist/secrets/root/passwordFile";
         };
       };
     };

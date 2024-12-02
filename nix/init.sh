@@ -43,18 +43,32 @@ function mkpass {
     done
   }
 
-  local user_name
+  local user
   if [ -z "${1}" ]; then
-    user_name='celo'
+    user='celo'
   else
-    user_name="${1}"
+    user="${1}"
   fi
 
   mkdir /mnt/persist/secrets
+  mkdir /mnt/persist/secrets/root
   echo "[34mSetting password for root[m"
-  get_password | mkpasswd -s > /mnt/persist/secrets/root.passwordFile
-  echo "[34mSetting password for ${user_name}[m"
-  get_password | mkpasswd -s > /mnt/persist/secrets/${user_name}.passwordFile
+  get_password | mkpasswd -s > /mnt/persist/secrets/root/passwordFile
+  mkdir "/mnt/persist/secrets/${user}"
+  echo "[34mSetting password for ${user}[m"
+  get_password | mkpasswd -s > "/mnt/persist/secrets/${user}/passwordFile"
+}
+
+function mksshid {
+  local user
+  if [ -z "${1}" ]; then
+    user='celo'
+  else
+    user="${1}"
+  fi
+
+  mkdir -p "/mnt/persist/secrets/${user}"
+  ssh-keygen -t ed25519 -C "${user}@${host}" -N '' -f "/mnt/persist/secrets/${user}/id_ed25519"
 }
 
 function prepare_persist {
@@ -79,6 +93,9 @@ case "${2}" in
   "mkpass")
     mkpass "${3}"
     ;;
+  "mksshid")
+    mksshid "${3}"
+    ;;
   "install")
     install
     ;;
@@ -87,6 +104,7 @@ case "${2}" in
     echo all
     echo mount
     echo mkpass
+    echo mksshid
     echo install
     exit 1
     ;;

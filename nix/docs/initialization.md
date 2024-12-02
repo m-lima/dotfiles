@@ -38,8 +38,9 @@ $ nixos-generate-config --no-filesystems --root /mnt
 See [permanence.md](./permanence.md)
 
 ```
-$ mkdir /mnt/persist/secrets
-$ mkpasswd > /mnt/persist/secrets/<USER>.passwordFile
+$ mkdir -p /mnt/persist/secrets/<USER>
+$ mkpasswd > /mnt/persist/secrets/<USER>/passwordFile
+$ ssh-keygen -t ed25519 -C "<USER>@<HOST>" -N '' -f "/mnt/persist/secrets/<USER>/id_ed25519"
 ```
 
 8. Install NixOS

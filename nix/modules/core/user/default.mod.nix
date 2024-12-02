@@ -29,7 +29,7 @@ in
         ${cfg.userName} = {
           isNormalUser = true;
           home = cfg.homeDirectory;
-          hashedPasswordFile = "/persist/secrets/${cfg.userName}.passwordFile";
+          hashedPasswordFile = "/persist/secrets/${cfg.userName}/passwordFile";
           extraGroups = [ "wheel" ];
         };
       };

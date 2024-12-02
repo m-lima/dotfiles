@@ -27,7 +27,7 @@ The persistent subvolume **must** be marked with `requiredForBoot`
 
 > https://search.nixos.org/options?show=networking.wireless.environmentFile&from=0&size=50&sort=relevance&type=packages&query=networking.wireless
 
-## /persist/secrets/users/name.passwordFile
+## /persist/secrets/name/passwordFile
 
 > https://search.nixos.org/options?show=users.users.%3Cname%3E.hashedPassword
 
@@ -36,7 +36,7 @@ A new hash can be created with:
 ```
 $ mspasswd
 $ # OR
-$ print "VALUE" | mkpasswd -s > /persist/secrets/users/name.passwordFile
+$ print "VALUE" | mkpasswd -s > /persist/secrets/name/passwordFile
 ```
 
 **Note:** Don't forget about root
