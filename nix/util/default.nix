@@ -90,10 +90,30 @@ let
       };
     };
 
-  assertHome = config: path: {
+  assertHome = path: config: {
     assertion = config.celo.modules.core.user.home.enable;
     message = "${lib.last path} enabled without home-manager";
   };
+
+  mkSecret = path: name: mkSecretWith path name { };
+
+  mkSecretWith =
+    path: name: extra:
+    let
+      fullPath = lib.strings.concatStringsSep "." (builtins.tail (builtins.tail path)) + "." + name;
+    in
+    {
+      "${fullPath}" = {
+        rekeyFile = ../secrets/${fullPath}.age;
+      } // extra;
+    };
+
+  getSecret =
+    path: config: name:
+    let
+      fullPath = lib.strings.concatStringsSep "." (builtins.tail (builtins.tail path)) + "." + name;
+    in
+    config.age.secrets."${fullPath}";
 
 in
 {
@@ -107,5 +127,8 @@ in
     withHome
     withImpermanence
     assertHome
+    mkSecret
+    mkSecretWith
+    getSecret
     ;
 }

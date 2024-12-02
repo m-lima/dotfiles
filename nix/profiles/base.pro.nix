@@ -6,6 +6,7 @@
       enable = true;
       wipe.enable = true;
     };
+    rage.enable = true;
     user = {
       enable = true;
       home.enable = true;
