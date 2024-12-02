@@ -14,7 +14,7 @@ in
   options = util.mkOptionsEnable path;
 
   config = lib.mkIf cfg.enable {
-    assertions = [ (util.assertHome config path) ];
+    assertions = [ (util.assertHome path config) ];
 
     home-manager = util.withHome config {
       home.packages = with pkgs; [ fzf ];

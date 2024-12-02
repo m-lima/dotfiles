@@ -41,7 +41,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    assertions = [ (util.assertHome config path) ];
+    assertions = [ (util.assertHome path config) ];
 
     programs = {
       hyprland.enable = true;
