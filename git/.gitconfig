@@ -3,5 +3,6 @@
 
 [include]
 	path = ~/.config/m-lima/git/gitconfig
+	path = ~/.config/m-lima/git/sign
 	path = ~/.config/m-lima/git/delta
 	path = ~/.config/m-lima/git/local
