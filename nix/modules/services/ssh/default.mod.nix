@@ -50,17 +50,21 @@ in
     };
 
     age.secrets =
-      util.mkSecretWith path "key-${user.userName}-${config.celo.modules.core.nixos.hostName}"
-        {
-          path = "${user.homeDirectory}/.ssh/id_ed25519";
-          mode = "600";
-          owner = user.userName;
-          group = config.users.users.${user.userName}.group;
-        };
+      let
+        name = util.mkPathName path "${user.userName}-${config.celo.modules.core.nixos.hostName}";
+      in {
+      ${name} = {
+        rekeyFile =  ./secrets/${name}.age;
+        path = "${user.homeDirectory}/.ssh/id_ed25519";
+        mode = "600";
+        owner = user.userName;
+        group = config.users.users.${user.userName}.group;
+      };
+    };
 
     home-manager = util.withHome config {
       home.file = {
-        ".ssh/id_ed25519.pub".source = ../../secrets/services.ssh.key-${user.userName}-${config.celo.modules.core.nixos.hostName}.pub;
+        ".ssh/id_ed25519.pub".source = ./secrets/${user.userName}-${config.celo.modules.core.nixos.hostName}.pub;
       };
     };
 
