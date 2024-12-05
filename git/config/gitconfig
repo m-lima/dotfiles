@@ -2,10 +2,6 @@
 	email = m-lima@users.noreply.github.com
 	name = Marcelo Lima
 	username = m-lima
-	signingkey = 0804194C20C052EFAADCEBC167EDC7240617DA53
-
-[commit]
-	gpgsign = true
 
 [fetch]
 	prune = true
