@@ -90,14 +90,23 @@ let
       };
     };
 
+  mkSecret =
+    path: config:
+    {
+      global ? { },
+      home ? { },
+    }:
+    let
+      realPath = lib.strings.concatStringsSep "." (builtins.tail (builtins.tail path));
+    in
+    {
+      ${realPath} = (global // (lib.optionalAttrs config.celo.modules.core.user.home.enable home));
+    };
+
   assertHome = path: config: {
     assertion = config.celo.modules.core.user.home.enable;
     message = "${lib.last path} enabled without home-manager";
   };
-
-  mkPathName =
-    path: name:
-    lib.strings.concatStringsSep "." (builtins.tail (builtins.tail path)) + ".${name}";
 
 in
 {
@@ -111,6 +120,6 @@ in
     withHome
     withImpermanence
     assertHome
-    mkPathName
+    mkSecret
     ;
 }
