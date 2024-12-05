@@ -18,23 +18,6 @@ in
     home-manager = util.withHome config {
       home.packages = with pkgs; [ waybar ];
 
-      xdg.dataFile."waybar/power.sh" = {
-        text = ''
-          #!/usr/bin/env bash
-
-          case $(echo 'Sleep
-          Logoff
-          Poweroff
-          Reboot' | bemenu --prompt "") in
-            Sleep) systemctl suspend ;;
-            Logoff) hyprctl dispatch exit ;;
-            Poweroff) systemctl poweroff ;;
-            Reboot ) systemctl reboot ;;
-          esac
-        '';
-        executable = true;
-      };
-
       programs = {
         waybar = {
           enable = true;
@@ -148,7 +131,7 @@ in
                 format = "";
                 on-click = "${
                   config.home-manager.users.${config.celo.modules.core.user.userName}.xdg.dataHome
-                }/waybar/power.sh";
+                }/hypr/power.sh";
               };
             };
           };
@@ -178,17 +161,19 @@ in
               color: #${cfg.color.foreground};
             }
 
-            #workspaces button:hover {
-              color: #${cfg.color.background};
-              background-color: #${cfg.color.accent};
-            }
-
             #workspaces button.active {
               color: #${cfg.color.accent};
             }
 
             #workspaces button.urgent {
               color: #${cfg.color.accent_alt};
+            }
+
+            #workspaces button:hover {
+              color: #${cfg.color.background};
+              background: none;
+              border: none;
+              background-color: #${cfg.color.accent};
             }
 
             #custom-power {

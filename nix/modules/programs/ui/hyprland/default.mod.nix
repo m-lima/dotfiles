@@ -48,6 +48,23 @@ in
     };
 
     home-manager = util.withHome config {
+      xdg.dataFile."hypr/power.sh" = {
+        text = ''
+          #!/usr/bin/env bash
+
+          case $(echo 'Sleep
+          Logoff
+          Poweroff
+          Reboot' | bemenu --prompt "") in
+            Sleep) systemctl suspend ;;
+            Logoff) hyprctl dispatch exit ;;
+            Poweroff) systemctl poweroff ;;
+            Reboot ) systemctl reboot ;;
+          esac
+        '';
+        executable = true;
+      };
+
       wayland.windowManager.hyprland = {
         enable = true;
 
@@ -76,8 +93,6 @@ in
             gaps_in = cfg.gap.inner;
             gaps_out = cfg.gap.outer;
 
-            # TODO: Add very small radius
-
             "col.active_border" = "rgb(${cfg.color.accent})";
             "col.inactive_border" = "rgb(${cfg.color.background})";
 
@@ -104,7 +119,9 @@ in
 
           bind = [
             # Top-level commands
-            "SUPER SHIFT, Q,                          exit"
+            "SUPER SHIFT, Q,      exec,               ${
+              config.home-manager.users.${config.celo.modules.core.user.userName}.xdg.dataHome
+            }/hypr/power.sh"
             "SUPER,       W,                          killactive"
             "SUPER,       SPACE,  exec,               $launcher"
 
