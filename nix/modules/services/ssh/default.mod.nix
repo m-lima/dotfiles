@@ -8,6 +8,7 @@ path:
 let
   cfg = util.getOptions path config;
   user = config.celo.modules.core.user;
+  secret = "${user.userName}-${config.celo.modules.core.nixos.hostName}";
 in
 {
   options = util.mkOptions path {
@@ -49,25 +50,17 @@ in
           };
     };
 
-    age.secrets =
-      let
-        name = "${user.userName}-${config.celo.modules.core.nixos.hostName}";
-      in
-      util.mkSecret path config {
-        home = {
-          ${name} = {
-            rekeyFile = ./secrets/${name}.age;
-            path = "${user.homeDirectory}/.ssh/id_ed25519";
-            mode = "600";
-            owner = user.userName;
-            group = config.users.users.${user.userName}.group;
-          };
-        };
-      };
+    age.secrets.${util.mkSecretPath path secret} = lib.mkIf (util.isHome config) {
+      rekeyFile = ./secrets/${secret}.age;
+      path = "${user.homeDirectory}/.ssh/id_ed25519";
+      mode = "600";
+      owner = user.userName;
+      group = config.users.users.${user.userName}.group;
+    };
 
     home-manager = util.withHome config {
       home.file = {
-        ".ssh/id_ed25519.pub".source = ./secrets/${user.userName}-${config.celo.modules.core.nixos.hostName}.pub;
+        ".ssh/id_ed25519.pub".source = ./secrets/${secret}.pub;
       };
     };
 
