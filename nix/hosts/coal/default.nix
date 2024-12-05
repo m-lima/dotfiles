@@ -9,9 +9,6 @@
     modules = {
       core = {
         hostName = "coal";
-        agenix = {
-          pubkey = ./ssh.key.pub;
-        };
         disko = {
           device = "/dev/nvme0n1";
           luks = true;

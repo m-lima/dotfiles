@@ -13,8 +13,16 @@ in
 {
   options = util.mkOptions path {
     authorizedKeys = lib.mkOption {
-      type = lib.types.listOf lib.types.singleLineStr;
-      default = [ ];
+      type = lib.types.listOf (
+        lib.types.coercedTo lib.types.path (
+          x: if builtins.isPath x then builtins.readFile x else x
+        ) lib.types.singleLineStr
+      );
+      default = lib.flatten (
+        lib.mapAttrsToList (k: v: lib.optional (v == "regular" && lib.hasSuffix ".pub" k) ./secrets/${k}) (
+          builtins.readDir ./secrets
+        )
+      );
       description = ''
         A list of verbatim OpenSSH public keys that should be added to the
         user's authorized keys. The keys are added to a file that the SSH
