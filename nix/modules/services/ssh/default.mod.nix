@@ -58,12 +58,21 @@ in
           };
     };
 
-    age.secrets.${util.mkSecretPath path secret} = lib.mkIf (util.isHome config) {
-      rekeyFile = ./secrets/${secret}.age;
-      path = "${user.homeDirectory}/.ssh/id_ed25519";
-      mode = "600";
-      owner = user.userName;
-      group = config.users.users.${user.userName}.group;
+    age.secrets = {
+      ${util.mkSecretPath path secret} = lib.mkIf (util.isHome config) {
+        rekeyFile = ./secrets/${secret}.age;
+        path = "${user.homeDirectory}/.ssh/id_ed25519";
+        mode = "600";
+        owner = user.userName;
+        group = config.users.users.${user.userName}.group;
+      };
+      ${util.mkSecretPath path "hosts"} = lib.mkIf (util.isHome config) {
+        rekeyFile = ./secrets/hosts.age;
+        path = "${user.homeDirectory}/.ssh/config";
+        mode = "644";
+        owner = user.userName;
+        group = config.users.users.${user.userName}.group;
+      };
     };
 
     home-manager = util.withHome config {
