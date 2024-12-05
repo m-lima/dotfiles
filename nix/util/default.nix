@@ -40,13 +40,14 @@ let
       ]
     );
 
+  mkOptionsRaw = path: options: lib.setAttrByPath path options;
   mkOptions =
     path:
     options@{
       description ? (lib.last path),
       ...
     }:
-    lib.setAttrByPath path (
+    mkOptionsRaw path (
       { enable = lib.mkEnableOption description; } // (removeAttrs options [ "description" ])
     );
   mkOptionsEnable = path: mkOptions path { };
@@ -105,6 +106,7 @@ in
   inherit
     loadModules
     loadProfiles
+    mkOptionsRaw
     mkOptions
     mkOptionsEnable
     getOptions

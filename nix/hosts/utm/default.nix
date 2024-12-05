@@ -6,16 +6,16 @@
 
     modules = {
       core = {
+        hostName = "utm";
+        agenix = {
+          pubkey = ./ssh.key.pub;
+        };
         disko = {
           device = "/dev/vda";
           swap = "1G";
         };
         nixos = {
-          hostName = "utm";
           timeZone = "Europe/Amsterdam";
-        };
-        rage = {
-          pubkey = ./ssh.key.pub;
         };
         user = {
           userName = "celo";

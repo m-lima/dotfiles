@@ -1,12 +1,12 @@
 {
   core = {
+    agenix.enable = true;
     disko.enable = true;
-    nixos.enable = true;
     impermanence = {
       enable = true;
       wipe.enable = true;
     };
-    rage.enable = true;
+    nixos.enable = true;
     user = {
       enable = true;
       home.enable = true;

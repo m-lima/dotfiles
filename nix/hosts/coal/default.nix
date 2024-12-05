@@ -8,17 +8,17 @@
 
     modules = {
       core = {
+        hostName = "coal";
+        agenix = {
+          pubkey = ./ssh.key.pub;
+        };
         disko = {
           device = "/dev/nvme0n1";
           luks = true;
           swap = "8G";
         };
         nixos = {
-          hostName = "coal";
           timeZone = "Europe/Amsterdam";
-        };
-        rage = {
-          pubkey = ./ssh.key.pub;
         };
         user = {
           userName = "celo";

@@ -4,10 +4,12 @@ path:
   config,
   util,
   pkgs,
+  inputs,
   ...
 }:
 let
   cfg = util.getOptions path config;
+  agenix = inputs.agenix-rekey.packages."${pkgs.system}";
 in
 {
   options = util.mkOptions path {
@@ -15,13 +17,16 @@ in
       type = lib.types.coercedTo lib.types.path (
         x: if builtins.isPath x then builtins.readFile x else x
       ) lib.types.str;
-      default = "/etc/ssh/ssh_host_rsa_key.pub";
+      default = ../../hosts/${config.celo.modules.core.hostName}/ssh.key.pub;
       example = "ssh-rsa AAAAB3NzaC1yc2etc/etc/etcjwrsh8e596z6J0l7 example@host";
     };
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ rage ];
+    environment.systemPackages = with pkgs; [
+      rage
+      agenix.default
+    ];
 
     age = {
       rekey = {
@@ -33,7 +38,7 @@ in
           }
         ];
         storageMode = "local";
-        localStorageDir = ../../secrets/rekeyed/${config.celo.modules.core.nixos.hostName};
+        localStorageDir = ../../secrets/rekeyed/${config.celo.modules.core.hostName};
       };
     };
 
