@@ -7,9 +7,6 @@
     modules = {
       core = {
         hostName = "utm";
-        agenix = {
-          pubkey = ./ssh.key.pub;
-        };
         disko = {
           device = "/dev/vda";
           swap = "1G";
