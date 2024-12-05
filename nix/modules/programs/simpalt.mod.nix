@@ -10,7 +10,7 @@ path:
 let
   celo = config.celo.modules;
   cfg = util.getOptions path config;
-  simpalt = inputs.simpalt.packages."${pkgs.system}";
+  simpalt = inputs.simpalt.packages.${pkgs.system};
 in
 {
   options = util.mkOptions path {

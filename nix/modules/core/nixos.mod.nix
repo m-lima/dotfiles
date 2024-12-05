@@ -11,12 +11,6 @@ let
 in
 {
   options = util.mkOptions path {
-    hostName = lib.mkOption {
-      description = "Host name";
-      example = "silver";
-      type = lib.types.nonEmptyStr;
-    };
-
     timeZone = lib.mkOption {
       description = "TimeZone to use";
       example = "Europe/Amsterdam";
@@ -67,7 +61,7 @@ in
     };
 
     # Define the hostname
-    networking.hostName = cfg.hostName;
+    networking.hostName = config.celo.modules.core.hostName;
 
     # Set the time zone.
     time.timeZone = cfg.timeZone;
