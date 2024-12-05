@@ -20,7 +20,11 @@ in
       home.packages = with pkgs; [ git ];
 
       xdg.configFile = {
-        "git/config".text = builtins.readFile ../../../../git/config/gitconfig + (lib.optionalString config.celo.modules.services.ssh.enable (builtins.readFile ../../../../git/config/sign));
+        "git/config".text =
+          builtins.readFile ../../../../git/config/gitconfig
+          + (lib.optionalString config.celo.modules.services.ssh.enable (
+            builtins.readFile ../../../../git/config/sign
+          ));
         "git/ignore".text = builtins.readFile ../../../../git/config/ignore;
       };
     };
