@@ -1,27 +1,31 @@
-{
-  imports = [ ./hardware-configuration.nix ];
+id: {
+  system = "aarch64-linux";
+  host = {
+    imports = [ ./hardware-configuration.nix ];
 
-  celo = {
-    profiles.base.enable = true;
+    celo = {
+      hostId = id;
 
-    modules = {
-      core = {
-        hostName = "utm";
-        disko = {
-          device = "/dev/vda";
-          swap = "1G";
+      profiles.base.enable = true;
+
+      modules = {
+        core = {
+          disko = {
+            device = "/dev/vda";
+            swap = "1G";
+          };
+          nixos = {
+            timeZone = "Europe/Amsterdam";
+          };
+          user = {
+            userName = "celo";
+            homeDirectory = "/home/celo";
+          };
         };
-        nixos = {
-          timeZone = "Europe/Amsterdam";
-        };
-        user = {
-          userName = "celo";
-          homeDirectory = "/home/celo";
-        };
-      };
-      programs = {
-        simpalt = {
-          symbol = "μ";
+        programs = {
+          simpalt = {
+            symbol = "μ";
+          };
         };
       };
     };
