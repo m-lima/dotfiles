@@ -1,34 +1,40 @@
-{
-  imports = [ ./hardware-configuration.nix ];
+id: {
+  system = "x86_64-linux";
+  host = {
+    imports = [ ./hardware-configuration.nix ];
 
-  celo = {
-    profiles.base.enable = true;
-    profiles.hyprland.enable = true;
-    profiles.ui.enable = true;
+    celo = {
+      hostId = id;
 
-    modules = {
-      core = {
-        hostName = "coal";
-        disko = {
-          device = "/dev/nvme0n1";
-          luks = true;
-          swap = "8G";
-        };
-        nixos = {
-          timeZone = "Europe/Amsterdam";
-        };
-        user = {
-          userName = "celo";
-          homeDirectory = "/home/celo";
-        };
+      profiles = {
+        base.enable = true;
+        hyprland.enable = true;
+        ui.enable = true;
       };
-      hardware = {
-        wifi.enable = true;
-        bluetooth.enable = true;
-      };
-      programs = {
-        simpalt = {
-          symbol = "₵";
+
+      modules = {
+        core = {
+          disko = {
+            device = "/dev/nvme0n1";
+            luks = true;
+            swap = "8G";
+          };
+          nixos = {
+            timeZone = "Europe/Amsterdam";
+          };
+          user = {
+            userName = "celo";
+            homeDirectory = "/home/celo";
+          };
+        };
+        hardware = {
+          wifi.enable = true;
+          bluetooth.enable = true;
+        };
+        programs = {
+          simpalt = {
+            symbol = "₵";
+          };
         };
       };
     };
