@@ -1,12 +1,12 @@
-id: {
+{
   system = "aarch64-linux";
-  host = {
+  module = {
     imports = [ ./hardware-configuration.nix ];
 
     celo = {
-      hostId = id;
-
-      profiles.base.enable = true;
+      profiles = {
+        base.enable = true;
+      };
 
       modules = {
         core = {

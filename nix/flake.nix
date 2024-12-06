@@ -64,18 +64,17 @@
     let
       util = import ./util { inherit (nixpkgs) lib; };
       mkHost =
-        { system, host }:
+        { system, hostModules }:
         nixpkgs.lib.nixosSystem {
+          inherit system;
+
           specialArgs = {
             inherit inputs util;
             pkgsUnstable = nixpkgs-unstable.legacyPackages.${system};
           };
-          system = system;
+
           modules =
-            [
-              ./hosts
-              host
-            ]
+            hostModules
             ++ util.loadModules ./modules
             ++ util.loadProfiles ./profiles
             ++ [
@@ -89,9 +88,7 @@
         };
     in
     {
-      nixosConfigurations = builtins.mapAttrs (host: _: mkHost ((import ./hosts/${host}) host)) (
-        builtins.removeAttrs (builtins.readDir ./hosts) [ "default.nix" ]
-      );
+      nixosConfigurations = (import ./hosts) mkHost;
 
       agenix-rekey = agenix-rekey.configure {
         userFlake = self;

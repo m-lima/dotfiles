@@ -14,7 +14,7 @@ in
     hostName = lib.mkOption {
       type = lib.types.nonEmptyStr;
       description = "Host name";
-      default = config.celo.hostId;
+      default = config.celo.host.id;
       example = "coal";
     };
     timeZone = lib.mkOption {
