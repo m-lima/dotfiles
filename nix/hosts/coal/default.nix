@@ -22,10 +22,6 @@ id: {
           nixos = {
             timeZone = "Europe/Amsterdam";
           };
-          user = {
-            userName = "celo";
-            homeDirectory = "/home/celo";
-          };
         };
         hardware = {
           wifi.enable = true;

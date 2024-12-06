@@ -17,10 +17,6 @@ id: {
           nixos = {
             timeZone = "Europe/Amsterdam";
           };
-          user = {
-            userName = "celo";
-            homeDirectory = "/home/celo";
-          };
         };
         programs = {
           simpalt = {

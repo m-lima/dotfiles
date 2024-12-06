@@ -12,12 +12,14 @@ in
   options = util.mkOptions path {
     userName = lib.mkOption {
       description = "User name";
+      default = "celo";
       example = "celo";
       type = lib.types.nonEmptyStr;
     };
 
     homeDirectory = lib.mkOption {
       description = "Home directory path";
+      default = "/home/${cfg.userName}";
       example = "/home/celo";
       type = lib.types.nonEmptyStr;
     };
