@@ -1,11 +1,9 @@
-id: {
+{
   system = "x86_64-linux";
-  host = {
+  module = {
     imports = [ ./hardware-configuration.nix ];
 
     celo = {
-      hostId = id;
-
       profiles = {
         base.enable = true;
         hyprland.enable = true;
