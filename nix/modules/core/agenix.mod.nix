@@ -29,6 +29,9 @@ in
     ];
 
     age = {
+      identityPaths = lib.mkIf config.celo.modules.core.impermanence.enable [
+        "/persist/etc/ssh/ssh_host_ed25519_key"
+      ];
       rekey = {
         hostPubkey = cfg.pubkey;
         masterIdentities = [

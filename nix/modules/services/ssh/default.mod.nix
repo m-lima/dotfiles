@@ -59,6 +59,7 @@ in
     };
 
     age.secrets = {
+      # TODO: Move these to home-manager, for home-manager-only systems
       ${util.mkSecretPath path secret} = lib.mkIf (util.isHome config) {
         rekeyFile = ./secrets/${secret}.age;
         path = "${user.homeDirectory}/.ssh/id_ed25519";
