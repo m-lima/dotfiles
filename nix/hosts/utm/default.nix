@@ -19,6 +19,14 @@
           };
         };
         programs = {
+          core = {
+            neovim = {
+              plugins = [
+                "lua"
+                "nix"
+              ];
+            };
+          };
           simpalt = {
             symbol = "μ";
           };

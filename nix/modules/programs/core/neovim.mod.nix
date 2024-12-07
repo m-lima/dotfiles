@@ -9,9 +9,58 @@ path:
 let
   cfg = util.getOptions path config;
   pkgs = pkgsUnstable;
+  plugins = {
+    go = {
+      pkg = [ pkgs.gopls ];
+      setup = "require('config.lspconfig.servers.go')";
+    };
+    js = {
+      pkg = [
+        pkgs.eslint
+        pkgs.typescript-language-server
+      ];
+      setup = "require('config.lspconfig.servers.js').setup()";
+    };
+    lua = {
+      pkg = [ pkgs.lua-language-server ];
+      setup = "require('config.lspconfig.servers.lua')";
+    };
+    nix = {
+      pkg = [
+        pkgs.nil
+        pkgs.nixfmt-rfc-style
+      ];
+      setup = "require('config.lspconfig.servers.nil')";
+    };
+    python = {
+      pkg = [ pkgs.pyright ];
+      setup = "require('config.lspconfig.servers.python')";
+    };
+    rust = {
+      pkg = [ pkgs.rust-analyzer ];
+      setup = "require('config.lspconfig.servers.rust')";
+    };
+  };
 in
 {
-  options = util.mkOptionsEnable path;
+  options = util.mkOptions path {
+    plugins = lib.mkOption {
+      type = lib.types.listOf (
+        lib.types.enum [
+          "go"
+          "js"
+          "lua"
+          "nix"
+          "python"
+          "rust"
+        ]
+      );
+      description = ''
+        A list of plugin names to install. Check the `pkgs` for available names.
+      '';
+      default = [ "nix" ];
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ neovim ];
@@ -71,16 +120,7 @@ in
             toggleterm-nvim
             undotree
           ];
-          extraPackages = with pkgs; [
-            eslint
-            gopls
-            lua-language-server
-            nil
-            nixfmt-rfc-style
-            pyright
-            rust-analyzer
-            typescript-language-server
-          ];
+          extraPackages = lib.flatten (map (l: plugins.${l}.pkg) cfg.plugins);
         };
       };
 
@@ -102,12 +142,6 @@ in
             require('config.gitsigns')
             require('config.lightspeed')
             require('config.lspconfig')
-            require('config.lspconfig.servers.go')
-            require('config.lspconfig.servers.js').setup()
-            require('config.lspconfig.servers.lua')
-            require('config.lspconfig.servers.nil')
-            require('config.lspconfig.servers.python')
-            require('config.lspconfig.servers.rust')
             require('config.lua_out')
             require('config.lualine')
             require('config.neo_tree')
@@ -122,8 +156,9 @@ in
             require('plugin.buffer_stack')
             require('plugin.dupe_comment')
             require('plugin.overlength')
-            EOF
-          '';
+          ''
+          + (lib.strings.concatMapStringsSep "\n" (l: plugins.${l}.setup) cfg.plugins)
+          + "\nEOF";
         "nvim/colors/simpalt.vim".source = ../../../../vim/simpalt.vim;
         "nvim/lua".source = ../../../../vim/config/nvim/lua;
       };
