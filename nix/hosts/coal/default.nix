@@ -6,6 +6,7 @@
     celo = {
       profiles = {
         base.enable = true;
+        dev.enable = true;
         hyprland.enable = true;
         ui.enable = true;
       };
@@ -26,18 +27,6 @@
           bluetooth.enable = true;
         };
         programs = {
-          core = {
-            neovim = {
-              plugins = [
-                "go"
-                "js"
-                "lua"
-                "nix"
-                "python"
-                "rust"
-              ];
-            };
-          };
           simpalt = {
             symbol = "₵";
           };
