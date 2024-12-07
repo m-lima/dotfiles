@@ -26,6 +26,18 @@
           bluetooth.enable = true;
         };
         programs = {
+          core = {
+            neovim = {
+              plugins = [
+                "go"
+                "js"
+                "lua"
+                "nix"
+                "python"
+                "rust"
+              ];
+            };
+          };
           simpalt = {
             symbol = "₵";
           };
