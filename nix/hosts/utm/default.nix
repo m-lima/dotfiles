@@ -6,6 +6,7 @@
     celo = {
       profiles = {
         base.enable = true;
+        dev.enable = true;
       };
 
       modules = {
@@ -19,14 +20,6 @@
           };
         };
         programs = {
-          core = {
-            neovim = {
-              plugins = [
-                "lua"
-                "nix"
-              ];
-            };
-          };
           simpalt = {
             symbol = "μ";
           };
