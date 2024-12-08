@@ -12,10 +12,10 @@ in
 {
   options = util.mkOptionsEnable path;
 
-  config = lib.mkIf cfg.enable {
-    assertions = [ (util.assertHome path config) ];
-
-    home-manager = util.withHome config { home.packages = with pkgs; [ spotify ]; };
+  config = util.enforceHome path config cfg.enable {
+    home-manager = {
+      home.packages = with pkgs; [ spotify ];
+    };
 
     environment = {
       persistence = util.withImpermanence config {

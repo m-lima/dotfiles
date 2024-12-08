@@ -67,7 +67,29 @@ let
       example = "ffa500";
     };
 
-  isHome = config: config.celo.modules.core.user.home.enable;
+  enforceHome =
+    path: config: enable:
+    {
+      assertions ? [ ],
+      home-manager ? { },
+      ...
+    }@settings:
+    lib.mkIf enable (
+      (removeAttrs settings [
+        "assertions"
+        "home-manager"
+      ])
+      // {
+        assertions = [
+          {
+            assertion = config.celo.modules.core.user.home.enable;
+            message = "${lib.last path} enabled without home-manager";
+          }
+        ] ++ assertions;
+
+        home-manager = withHome config home-manager;
+      }
+    );
 
   withHome =
     config: settings:
@@ -92,11 +114,6 @@ let
       };
     };
 
-  assertHome = path: config: {
-    assertion = config.celo.modules.core.user.home.enable;
-    message = "${lib.last path} enabled without home-manager";
-  };
-
   mkSecretPath =
     path: name: lib.strings.concatStringsSep "." (builtins.tail (builtins.tail path)) + ".${name}";
 
@@ -109,10 +126,9 @@ in
     mkOptionsEnable
     getOptions
     mkColorOption
-    isHome
     withHome
+    enforceHome
     withImpermanence
-    assertHome
     mkSecretPath
     ;
 }

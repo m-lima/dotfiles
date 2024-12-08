@@ -12,10 +12,8 @@ in
 {
   options = util.mkOptionsEnable path;
 
-  config = lib.mkIf cfg.enable {
-    assertions = [ (util.assertHome path config) ];
-
-    home-manager = util.withHome config {
+  config = util.enforceHome path config cfg.enable {
+    home-manager = {
       programs.direnv = {
         enable = true;
         enableZshIntegration = true;

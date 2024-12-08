@@ -21,10 +21,8 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
-    assertions = [ (util.assertHome path config) ];
-
-    home-manager = util.withHome config {
+  config = util.enforceHome path config cfg.enable {
+    home-manager = {
       home.packages = [ simpalt.default ];
 
       programs = lib.mkIf celo.programs.core.zsh.enable {

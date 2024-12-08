@@ -7,6 +7,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  home = config.celo.modules.core.user.home;
   user = config.celo.modules.core.user;
   secret = "${user.userName}-${config.celo.host.id}";
 in
@@ -60,14 +61,14 @@ in
 
     age.secrets = {
       # TODO: Move these to home-manager, for home-manager-only systems
-      ${util.mkSecretPath path secret} = lib.mkIf (util.isHome config) {
+      ${util.mkSecretPath path secret} = lib.mkIf home.enable {
         rekeyFile = ./secrets/${secret}.age;
         path = "${user.homeDirectory}/.ssh/id_ed25519";
         mode = "600";
         owner = user.userName;
         group = config.users.users.${user.userName}.group;
       };
-      ${util.mkSecretPath path "hosts"} = lib.mkIf (util.isHome config) {
+      ${util.mkSecretPath path "hosts"} = lib.mkIf home.enable {
         rekeyFile = ./secrets/hosts.age;
         path = "${user.homeDirectory}/.ssh/config";
         mode = "644";
