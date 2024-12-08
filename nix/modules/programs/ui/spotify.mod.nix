@@ -13,12 +13,11 @@ in
   options = util.mkOptionsEnable path;
 
   config = lib.mkIf cfg.enable {
-    environment = {
-      systemPackages = with pkgs; [
-        spotify
-        playerctl
-      ];
+    assertions = [ (util.assertHome path config) ];
 
+    home-manager = util.withHome config { home.packages = with pkgs; [ spotify ]; };
+
+    environment = {
       persistence = util.withImpermanence config {
         home.directories = [
           ".config/spotify"

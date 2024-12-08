@@ -23,10 +23,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      rage
-      agenix.default
-    ];
+    environment.systemPackages = [ agenix.default ];
 
     age = {
       identityPaths = lib.mkIf config.celo.modules.core.impermanence.enable [
@@ -44,7 +41,5 @@ in
         localStorageDir = ../../secrets/rekeyed/${config.celo.host.id};
       };
     };
-
-    home-manager = util.withHome config { home.packages = with pkgs; [ rage ]; };
   };
 }
