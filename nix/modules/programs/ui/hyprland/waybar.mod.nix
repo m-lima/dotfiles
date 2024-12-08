@@ -18,6 +18,30 @@ in
     home-manager = util.withHome config {
       home.packages = with pkgs; [ waybar ];
 
+      xdg.dataFile = {
+        "hypr/player.sh" = {
+          text = ''
+            #!/usr/bin/env bash
+
+            # if $(playerctl -l | grep spotify > /dev/null); then
+            #   player="-p spotify"
+            # else
+            #   player=""
+            # fi
+
+            case $(playerctl -p playerctld status) in
+              "Playing") status="" ;;
+              "Paused") status="" ;;
+            esac
+
+            if [ -n "$status" ]; then
+              echo "$status $(playerctl -p playerctld metadata -f '{{trunc(title, 32)}} - {{trunc(artist, 32)}}' | sed 's/&/&amp;/; s/</&lt;/; s/>/&gt;/; s/\"/&quot;/')"
+            fi
+          '';
+          executable = true;
+        };
+      };
+
       programs = {
         waybar = {
           enable = true;
@@ -31,6 +55,7 @@ in
               modules-left = [ "hyprland/workspaces" ];
               modules-center = [ "hyprland/window" ];
               modules-right = [
+                "custom/player"
                 "idle_inhibitor"
                 "network"
                 "pulseaudio"
@@ -127,11 +152,20 @@ in
                 spacing = 10;
               };
 
+              # TODO: If bemenu
               "custom/power" = {
                 format = "";
                 on-click = "${
                   config.home-manager.users.${config.celo.modules.core.user.userName}.xdg.dataHome
                 }/hypr/power.sh";
+              };
+
+              # TODO: If playerctl
+              "custom/player" = {
+                interval = 1;
+                exec = "${
+                  config.home-manager.users.${config.celo.modules.core.user.userName}.xdg.dataHome
+                }/hypr/player.sh";
               };
             };
           };
