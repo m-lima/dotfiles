@@ -30,6 +30,9 @@
           simpalt = {
             symbol = "₵";
           };
+          ui = {
+            spotify.enable = true;
+          };
         };
       };
     };
