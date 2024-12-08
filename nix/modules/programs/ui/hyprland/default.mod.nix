@@ -48,23 +48,6 @@ in
     };
 
     home-manager = util.withHome config {
-      xdg.dataFile."hypr/power.sh" = {
-        text = ''
-          #!/usr/bin/env bash
-
-          case $(echo 'Sleep
-          Logoff
-          Poweroff
-          Reboot' | bemenu --prompt "") in
-            Sleep) systemctl suspend ;;
-            Logoff) hyprctl dispatch exit ;;
-            Poweroff) systemctl poweroff ;;
-            Reboot ) systemctl reboot ;;
-          esac
-        '';
-        executable = true;
-      };
-
       wayland.windowManager.hyprland = {
         enable = true;
 

@@ -14,6 +14,23 @@ in
     home-manager = util.withHome config {
       home.packages = with pkgs; [ bemenu ];
 
+      xdg.dataFile."hypr/power.sh" = {
+        text = ''
+          #!/usr/bin/env bash
+
+          case $(echo 'Sleep
+          Logoff
+          Poweroff
+          Reboot' | bemenu --prompt "") in
+            Sleep) systemctl suspend ;;
+            Logoff) hyprctl dispatch exit ;;
+            Poweroff) systemctl poweroff ;;
+            Reboot ) systemctl reboot ;;
+          esac
+        '';
+        executable = true;
+      };
+
       programs = {
         bemenu = {
           enable = true;
