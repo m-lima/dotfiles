@@ -40,14 +40,12 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
-    assertions = [ (util.assertHome path config) ];
-
+  config = util.enforceHome path config cfg.enable {
     programs = {
       hyprland.enable = true;
     };
 
-    home-manager = util.withHome config {
+    home-manager = {
       wayland.windowManager.hyprland = {
         enable = true;
 

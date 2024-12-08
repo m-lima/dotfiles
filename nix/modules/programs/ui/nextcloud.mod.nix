@@ -12,10 +12,8 @@ in
 {
   options = util.mkOptionsEnable path;
 
-  config = lib.mkIf cfg.enable {
-    assertions = [ (util.assertHome config path) ];
-
-    home-manager = util.withHome config {
+  config = util.enforceHome path config cfg.enable {
+    home-manager = {
       services.nextcloud-client = {
         enable = true;
         startInBackground = true;

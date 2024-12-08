@@ -10,8 +10,8 @@ let
   cfg = config.celo.modules.programs.ui.hyprland;
 in
 {
-  config = lib.mkIf cfg.enable {
-    home-manager = util.withHome config {
+  config = util.enforceHome path config cfg.enable {
+    home-manager = {
       home.packages = with pkgs; [ playerctl ];
 
       xdg.dataFile = {

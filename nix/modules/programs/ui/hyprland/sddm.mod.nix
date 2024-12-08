@@ -10,7 +10,7 @@ let
   cfg = config.celo.modules.programs.ui.hyprland;
 in
 {
-  config = lib.mkIf cfg.enable {
+  config = util.enforceHome path config cfg.enable {
     services.displayManager.sddm = {
       enable = true;
       wayland.enable = true;
