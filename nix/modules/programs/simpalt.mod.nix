@@ -10,9 +10,9 @@ path:
 let
   celo = config.celo.modules;
   cfg = util.getOptions path config;
-  simpalt = {
-    pkg = inputs.simpalt.packages.${pkgs.system};
-    zsh = inputs.simpalt.integrations.zsh;
+  simpalt = with inputs.simpalt {
+    pkg = packages.${pkgs.system}.default;
+    zsh = integrations.zsh;
   };
 in
 {
