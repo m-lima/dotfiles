@@ -19,7 +19,7 @@ in
           text = ''
             #!/usr/bin/env bash
 
-            case $(playerctl -p playerctld status) in
+            case $(playerctl -p playerctld status 2> /dev/null) in
               "Playing") status="" ;;
               "Paused") status="" ;;
             esac
