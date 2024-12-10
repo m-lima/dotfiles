@@ -34,16 +34,10 @@
       url = "gitlab:Zhaith-Izaliel/sddm-sugar-candy-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # TODO: Repackage this better. Expose a module
     simpalt = {
-      url = "github:m-lima/simpalt-rs";
-      inputs.cargo2nix.follows = "cargo2nix";
-    };
-
-    # Transient
-    cargo2nix = {
-      url = "github:cargo2nix/cargo2nix/release-0.11.0";
+      url = "github:m-lima/simpalt-rs?tag=v0.3.5";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
   };
 

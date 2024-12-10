@@ -10,7 +10,10 @@ path:
 let
   celo = config.celo.modules;
   cfg = util.getOptions path config;
-  simpalt = inputs.simpalt.packages.${pkgs.system};
+  simpalt = {
+    pkg = inputs.simpalt.packages.${pkgs.system}.default;
+    zsh = inputs.simpalt.integrations.${pkgs.system}.zsh;
+  };
 in
 {
   options = util.mkOptions path {
@@ -23,7 +26,7 @@ in
 
   config = util.enforceHome path config cfg.enable {
     home-manager = {
-      home.packages = [ simpalt.default ];
+      home.packages = [ simpalt.pkg ];
 
       programs = lib.mkIf celo.programs.core.zsh.enable {
         # TODO: Make this a module in simpalt
