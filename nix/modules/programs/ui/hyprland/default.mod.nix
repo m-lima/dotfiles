@@ -51,12 +51,11 @@ in
     home-manager = {
       wayland.windowManager.hyprland = {
         enable = true;
+        systemd.enable = false;
 
         settings = {
           "$fileManager" = "dolphin";
           "$launcher" = "bemenu-run";
-
-          exec-once = [ "waybar" ];
 
           env = [
             "QT_QPA_PLATFORM,wayland"

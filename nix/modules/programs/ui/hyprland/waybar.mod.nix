@@ -16,9 +16,16 @@ in
     home-manager = {
       home.packages = with pkgs; [ waybar ];
 
+      # Fix for start ordering
+      # By default the Unit starts after `graphical-session-pre`
+      # However hyprland starts after UWSM and only after `graphical-session`
+      # So this manaually sets the service to start after UWSM
+      systemd.user.services.waybar.Unit.After = lib.mkForce "graphical-session.target";
+
       programs = {
         waybar = {
           enable = true;
+          systemd.enable = true;
           settings = {
             mainBar = {
               layer = "top";
