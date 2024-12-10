@@ -42,7 +42,10 @@ in
 
   config = util.enforceHome path config cfg.enable {
     programs = {
-      hyprland.enable = true;
+      hyprland = {
+        enable = true;
+        withUWSM = true;
+      };
     };
 
     home-manager = {

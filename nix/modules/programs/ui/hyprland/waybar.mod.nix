@@ -77,8 +77,9 @@ in
                 format-linked = "󰌙";
                 format-disconnected = "⚠";
                 format-alt = "{ifname}: {ipaddr}/{cidr}";
-                tooltip-format-ethernet = " {ifname}\n󰌘 {ipaddr}\n󱂇 {gwaddr}";
                 tooltip-format-wifi = "󰈀 {ifname}\n󰌘 {ipaddr}\n {essid}\n󱂇 {gwaddr}";
+                tooltip-format-ethernet = " {ifname}\n󰌘 {ipaddr}\n󱂇 {gwaddr}";
+                tooltip-format-disconnected = "⚠ Disconnected";
               };
 
               pulseaudio = {

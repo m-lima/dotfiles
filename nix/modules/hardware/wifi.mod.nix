@@ -14,10 +14,11 @@ in
   config = lib.mkIf cfg.enable {
     networking.wireless = {
       enable = true;
-      environmentFile = "/persist/secrets/wifi.env";
+      userControlled.enable = true;
+      secretsFile = "/persist/secrets/wifi.env";
       networks = {
-        "@SSID@" = {
-          psk = "@PSK@";
+        "CIA Surveillance Van" = {
+          pskRaw = "ext:PSK_RAW";
         };
       };
     };
