@@ -10,3 +10,7 @@ https://codeberg.org/Gipphe/dotfiles
 # Home manager options
 
 https://nix-community.github.io/home-manager/options.xhtml
+
+# Searching for packages
+
+`nix search nixpkgs <package>`

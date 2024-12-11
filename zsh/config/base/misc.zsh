@@ -1,3 +1,6 @@
+# Startup in emacs mode
+setopt emacs
+
 # Enable multiple streams: echo >file1 >file2
 setopt multios
 

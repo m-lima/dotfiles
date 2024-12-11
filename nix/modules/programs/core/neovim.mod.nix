@@ -7,6 +7,7 @@ path:
   ...
 }:
 let
+  celo = config.celo.modules;
   cfg = util.getOptions path config;
   pkgs = pkgsUnstable;
   plugins = {
@@ -162,6 +163,10 @@ in
         "nvim/colors/simpalt.vim".source = ../../../../vim/simpalt.vim;
         "nvim/lua".source = ../../../../vim/config/nvim/lua;
       };
+    };
+
+    programs = lib.mkIf celo.programs.core.zsh.enable {
+      zsh.interactiveShellInit = builtins.readFile ../../../../zsh/config/programs/nvim.zsh;
     };
   };
 }
