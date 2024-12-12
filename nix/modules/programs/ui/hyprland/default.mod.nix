@@ -67,11 +67,6 @@ in
           "$fileManager" = "dolphin";
           "$launcher" = "fuzzel";
 
-          env = [
-            "QT_QPA_PLATFORM,wayland"
-            "QT_QPA_PLATFORMTHEME,qt5ct"
-          ];
-
           animations = {
             enabled = false;
           };
