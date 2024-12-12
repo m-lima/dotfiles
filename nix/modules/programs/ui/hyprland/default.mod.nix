@@ -18,18 +18,28 @@ in
       accent = util.mkColorOption "accent" "ffa500";
       accent_alt = util.mkColorOption "accent" "d33682";
     };
-    gap = {
-      outer = lib.mkOption {
-        type = lib.types.ints.u8;
-        description = "Outer gap in pixels";
-        default = 8;
-        example = 12;
+    size = {
+      gap = {
+        outer = lib.mkOption {
+          type = lib.types.ints.u8;
+          description = "Outer gap in pixels";
+          default = 8;
+          example = 12;
+        };
+        inner = lib.mkOption {
+          type = lib.types.ints.u8;
+          description = "Inner gap in pixels";
+          default = 4;
+          example = 12;
+        };
       };
-      inner = lib.mkOption {
-        type = lib.types.ints.u8;
-        description = "Inner gap in pixels";
-        default = 4;
-        example = 12;
+      border = {
+        radius = lib.mkOption {
+          type = lib.types.ints.u8;
+          description = "Corner radius";
+          default = 4;
+          example = 12;
+        };
       };
     };
     wallpaper = lib.mkOption {
@@ -55,7 +65,7 @@ in
 
         settings = {
           "$fileManager" = "dolphin";
-          "$launcher" = "bemenu-run";
+          "$launcher" = "fuzzel";
 
           env = [
             "QT_QPA_PLATFORM,wayland"
@@ -73,8 +83,8 @@ in
           };
 
           general = {
-            gaps_in = cfg.gap.inner;
-            gaps_out = cfg.gap.outer;
+            gaps_in = cfg.size.gap.inner;
+            gaps_out = cfg.size.gap.outer;
 
             "col.active_border" = "rgb(${cfg.color.accent})";
             "col.inactive_border" = "rgb(${cfg.color.background})";
@@ -83,7 +93,7 @@ in
           };
 
           decoration = {
-            rounding = 4;
+            rounding = cfg.size.border.radius;
           };
 
           misc = {

@@ -197,8 +197,8 @@ in
             .modules-left,
             .modules-right
             {
-              padding-right: ${toString cfg.gap.outer}px;
-              padding-left: ${toString cfg.gap.outer}px;
+              padding-right: ${toString cfg.size.gap.outer}px;
+              padding-left: ${toString cfg.size.gap.outer}px;
             }
           '';
         };
