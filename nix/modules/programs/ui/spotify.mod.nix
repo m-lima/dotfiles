@@ -8,6 +8,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  hyprCfg = config.celo.modules.programs.ui.hyprland;
 in
 {
   options = util.mkOptionsEnable path;
@@ -15,6 +16,12 @@ in
   config = util.enforceHome path config cfg.enable {
     home-manager = {
       home.packages = with pkgs; [ spotify ];
+
+      wayland.windowManager.hyprland = lib.mkIf hyprCfg.enable {
+        settings = {
+          "$player" = "spotify";
+        };
+      };
     };
 
     environment = {

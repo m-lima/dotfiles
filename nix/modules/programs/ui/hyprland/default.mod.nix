@@ -110,62 +110,65 @@ in
             allow_workspace_cycles = true;
           };
 
-          bind = [
-            # Top-level commands
-            "SUPER SHIFT, Q,      exec,               ${
-              config.home-manager.users.${config.celo.modules.core.user.userName}.xdg.dataHome
-            }/hypr/power.sh"
-            "SUPER,       W,                          killactive"
-            "SUPER,       SPACE,  exec,               $launcher"
+          bind =
+            let
+              hyprData = config.home-manager.users.${config.celo.modules.core.user.userName}.xdg.dataHome;
+            in
+            [
+              # Top-level commands
+              "SUPER,       SPACE,  exec,               $launcher"
+              "SUPER SHIFT, W,                          killactive"
+              "SUPER SHIFT, Q,      exec,               ${hyprData}/hypr/power.sh"
 
-            # Applications
-            "SUPER, ESCAPE, exec, [workspace 1] $terminal"
-            "SUPER, RETURN, exec, [workspace 2] $browser"
-            "SUPER, E,      exec, [workspace 3] $fileManager"
+              # Applications
+              "SUPER, RETURN, exec, $terminal"
+              "SUPER, N,      exec, $browser"
+              "SUPER, M,      exec, $player"
+              "SUPER, E,      exec, $fileManager"
 
-            # Layout
-            "SUPER,         F, fullscreen,             1"
-            "SUPER SHIFT,   F, fullscreen"
-            "SUPER CONTROl, F, togglefloating"
-            "SUPER,         S, togglespecialworkspace, magic"
-            "SUPER SHIFT,   S, movetoworkspace,        special:magic"
-            "SUPER,         D, togglesplit"
+              # Layout
+              "SUPER,         F, fullscreen,             1"
+              "SUPER SHIFT,   F, fullscreen"
+              "SUPER CONTROl, F, togglefloating"
+              "SUPER,         S, togglespecialworkspace, magic"
+              "SUPER SHIFT,   S, movetoworkspace,        special:magic"
+              "SUPER,         D, togglesplit"
 
-            # Movement
-            "SUPER,       H, movefocus,  l"
-            "SUPER,       J, movefocus,  d"
-            "SUPER,       K, movefocus,  u"
-            "SUPER,       L, movefocus,  r"
-            "SUPER SHIFT, H, swapwindow, l"
-            "SUPER SHIFT, J, swapwindow, d"
-            "SUPER SHIFT, K, swapwindow, u"
-            "SUPER SHIFT, L, swapwindow, r"
+              # Movement
+              "SUPER,       H, movefocus,  l"
+              "SUPER,       J, movefocus,  d"
+              "SUPER,       K, movefocus,  u"
+              "SUPER,       L, movefocus,  r"
+              "SUPER SHIFT, H, swapwindow, l"
+              "SUPER SHIFT, J, swapwindow, d"
+              "SUPER SHIFT, K, swapwindow, u"
+              "SUPER SHIFT, L, swapwindow, r"
 
-            # Workspaces
-            "SUPER, GRAVE, workspace, previous"
-            "SUPER, 1,     workspace, 1"
-            "SUPER, 2,     workspace, 2"
-            "SUPER, 3,     workspace, 3"
-            "SUPER, 4,     workspace, 4"
-            "SUPER, 5,     workspace, 5"
-            "SUPER, 6,     workspace, 6"
-            "SUPER, 7,     workspace, 7"
-            "SUPER, 8,     workspace, 8"
-            "SUPER, 9,     workspace, 9"
-            "SUPER, 0,     workspace, 10"
+              # Workspaces
+              "SUPER, GRAVE, workspace, previous"
+              "SUPER, 1,     workspace, 1"
+              "SUPER, 2,     workspace, 2"
+              "SUPER, 3,     workspace, 3"
+              "SUPER, 4,     workspace, 4"
+              "SUPER, 5,     workspace, 5"
+              "SUPER, 6,     workspace, 6"
+              "SUPER, 7,     workspace, 7"
+              "SUPER, 8,     workspace, 8"
+              "SUPER, 9,     workspace, 9"
+              "SUPER, 0,     workspace, 10"
 
-            "SUPER SHIFT, GRAVE, movetoworkspace, previous"
-            "SUPER SHIFT, 1,     movetoworkspace, 1"
-            "SUPER SHIFT, 2,     movetoworkspace, 2"
-            "SUPER SHIFT, 3,     movetoworkspace, 3"
-            "SUPER SHIFT, 4,     movetoworkspace, 4"
-            "SUPER SHIFT, 5,     movetoworkspace, 5"
-            "SUPER SHIFT, 6,     movetoworkspace, 6"
-            "SUPER SHIFT, 7,     movetoworkspace, 7"
-            "SUPER SHIFT, 8,     movetoworkspace, 8"
-            "SUPER SHIFT, 9,     movetoworkspace, 9"
-            "SUPER SHIFT, 0,     movetoworkspace, 10"
-          ];
+              "SUPER SHIFT, GRAVE, movetoworkspace, previous"
+              "SUPER SHIFT, 1,     movetoworkspace, 1"
+              "SUPER SHIFT, 2,     movetoworkspace, 2"
+              "SUPER SHIFT, 3,     movetoworkspace, 3"
+              "SUPER SHIFT, 4,     movetoworkspace, 4"
+              "SUPER SHIFT, 5,     movetoworkspace, 5"
+              "SUPER SHIFT, 6,     movetoworkspace, 6"
+              "SUPER SHIFT, 7,     movetoworkspace, 7"
+              "SUPER SHIFT, 8,     movetoworkspace, 8"
+              "SUPER SHIFT, 9,     movetoworkspace, 9"
+              "SUPER SHIFT, 0,     movetoworkspace, 10"
+            ];
 
           bindm = [
             "SUPER, mouse:272, movewindow"
