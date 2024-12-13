@@ -14,3 +14,8 @@ https://nix-community.github.io/home-manager/options.xhtml
 # Searching for packages
 
 `nix search nixpkgs <package>`
+
+# Find firefox add-on IDs
+
+`https://addons.mozilla.org/api/v5/addons/search/?q=<NAME>`
+And extract `gui`

@@ -1,6 +1,7 @@
 # TODO
 
 - [ ] Firefox is not persistent
+- [ ] Snapshots for btrfs
 - [ ] Cursor for firefox
 - [ ] Caps to ESC
 - [ ] Abort configuration if `/persist/secrets/<file>` does not exist
