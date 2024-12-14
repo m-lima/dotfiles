@@ -2,6 +2,7 @@ import = [
   "~/.config/alacritty/system.toml",
   "~/.config/alacritty/transient.toml",
   "~/.config/alacritty/colors.toml",
+  "~/.config/alacritty/options.toml",
 ]
 
 [keyboard]
@@ -13,9 +14,3 @@ bindings = [
   { key = "Right",  mods = "Alt",     chars = "\u001Bf" },
   { key = "Z",      mods = "Super",   command = { program = "zsh", args = ["-c", "~/.config/alacritty/toggle_font.sh"] } },
 ]
-
-[window]
-dynamic_padding = true
-option_as_alt = "Both"
-dimensions = { columns = 200, lines = 60 }
-padding = { x = 3, y = 3 }

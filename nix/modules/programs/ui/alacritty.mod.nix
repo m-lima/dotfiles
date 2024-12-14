@@ -19,7 +19,10 @@ in
         packages = with pkgs; [ alacritty ];
       };
 
-      xdg.configFile."alacritty/alacritty.toml".text = builtins.readFile ../../../../alacritty/config/colors.toml;
+      xdg.configFile."alacritty/alacritty.toml".text =
+        ''''
+        + builtins.readFile ../../../../alacritty/config/colors.toml
+        + builtins.readFile ../../../../alacritty/config/options.toml;
 
       wayland.windowManager.hyprland = lib.mkIf hyprCfg.enable {
         settings = {
