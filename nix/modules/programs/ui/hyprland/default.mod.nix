@@ -18,6 +18,12 @@ in
       accent = util.mkColorOption "accent" "ffa500";
       accent_alt = util.mkColorOption "accent" "d33682";
     };
+    scale = lib.mkOption {
+      type = lib.types.nullOr lib.types.float;
+      description = "Scale factor for the monitor resolution";
+      default = null;
+      example = 2.0;
+    };
     size = {
       gap = {
         outer = lib.mkOption {
@@ -66,6 +72,8 @@ in
         settings = {
           "$fileManager" = "dolphin";
           "$launcher" = "fuzzel";
+
+          monitor = lib.mkIf (cfg.scale != null) ", preferred, auto, ${toString cfg.scale}";
 
           animations = {
             enabled = false;

@@ -31,6 +31,9 @@
             symbol = "₵";
           };
           ui = {
+            hyprland = {
+              scale = 2.0;
+            };
             spotify.enable = true;
           };
         };
