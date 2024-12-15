@@ -35,6 +35,7 @@
               scale = 2.0;
             };
             spotify.enable = true;
+            gimp.enable = true;
           };
         };
       };
