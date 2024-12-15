@@ -98,6 +98,7 @@ in
       home.directories = [
         ".mozilla"
         ".cache/mozilla"
+        "Downloads"
       ];
     };
   };
