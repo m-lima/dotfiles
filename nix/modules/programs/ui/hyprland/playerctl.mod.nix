@@ -25,7 +25,8 @@ in
             esac
 
             if [ -n "$status" ]; then
-              echo "$status $(playerctl -p playerctld metadata -f '{{trunc(title, 32)}} - {{trunc(artist, 32)}}' | sed 's/&/&amp;/; s/</&lt;/; s/>/&gt;/; s/\"/&quot;/')"
+              name="$(playerctl -p playerctld metadata -f '{{title}} - {{artist}}' | sed 's/&/&amp;/; s/</&lt;/; s/>/&gt;/; s/\"/&quot;/')"
+              echo "{\"text\":\"$status\",\"alt\":\"$name\"}";
             fi
           '';
           executable = true;

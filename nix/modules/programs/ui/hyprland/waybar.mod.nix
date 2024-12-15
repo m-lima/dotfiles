@@ -30,41 +30,48 @@ in
             mainBar = {
               layer = "top";
               position = "top";
-              height = 30;
-              spacing = 10;
 
-              modules-left = [ "hyprland/workspaces" ];
-              modules-center = [ "hyprland/window" ];
+              modules-left = [ "hyprland/window" ];
+              modules-center = [ "hyprland/workspaces" ];
               modules-right = [
-                "custom/player"
-                "idle_inhibitor"
-                "network"
-                "pulseaudio"
-                "temperature"
-                "cpu"
-                "memory"
+                "group/media"
+                "group/hardware"
                 "tray"
                 "clock"
                 "custom/power"
               ];
 
+              "group/media" = {
+                orientation = "inherit";
+                modules = [
+                  "custom/player"
+                  "pulseaudio"
+                ];
+              };
+
+              "group/hardware" = {
+                orientation = "inherit";
+                modules = [
+                  "network"
+                  "temperature"
+                  "cpu"
+                  "memory"
+                  "idle_inhibitor"
+                ];
+              };
+
               "hyprland/workspaces" = {
                 sort-by-number = true;
                 on-scroll-up = "hyprctl dispatch workspace e-1";
                 on-scroll-down = "hyprctl dispatch workspace e+1";
-                format = "{icon}";
-                format-icons = {
-                  "1" = "";
-                  "2" = "";
-                  "3" = "";
-                  "4" = "";
-                  "5" = "󰿎";
-                  "10" = "";
-                };
               };
 
               "custom/player" = {
                 interval = 1;
+                return-type = "json";
+                format = "{}";
+                format-alt = "{} {alt}";
+                tooltip-format = "{alt}";
                 exec = "${
                   config.home-manager.users.${config.celo.modules.core.user.userName}.xdg.dataHome
                 }/hypr/player.sh";
@@ -90,11 +97,11 @@ in
               };
 
               pulseaudio = {
-                format = "{volume}% {icon}";
-                format-bluetooth = "{volume}% {icon}";
+                format = "{icon} {volume}%";
+                format-bluetooth = "{icon} {volume}%";
                 format-bluetooth-muted = " ";
                 format-muted = "";
-                format-source = "{volume}% ";
+                format-source = " {volume}%";
                 format-source-muted = "";
                 format-icons = {
                   headphone = "";
@@ -114,27 +121,34 @@ in
 
               temperature = {
                 critical-threshold = 80;
-                format = "{temperatureC}°C {icon}";
+                format = "{icon}";
+                format-alt = "{icon} {temperatureC}°C";
                 format-icons = [
                   ""
                   ""
                   ""
                   ""
                 ];
+                tooltip-format = "{temperatureC}°C";
               };
 
               cpu = {
-                format = "{usage}% ";
-                tooltip = false;
+                format = "";
+                format-alt = " {usage}%";
               };
 
               memory = {
-                format = "{}% ";
+                format = "";
+                format-alt = " {}%";
+                tooltip-format = ''
+                  {percentage}%
+                  {used}
+                  {avail}'';
               };
 
               clock = {
-                format = "{:%a, %d. %b %H:%M}";
-                format-alt = "{%H:%M}";
+                format = "{:%H:%M}";
+                format-alt = "{:%a, %d. %b %H:%M}";
               };
 
               tray = {
@@ -154,6 +168,7 @@ in
             * {
               border: none;
               border-radius: 0;
+              background: none;
               min-height: 0;
               font-family: "Hack Nerd Font Propo", Roboto, Helvetica, Arial, sans-serif;
             }
@@ -164,7 +179,38 @@ in
               background-color: rgba(0, 0, 0, 0.2);
 
               transition-duration: 0.5s;
-              transition-property: background-color;
+              transition-property: all;
+            }
+
+            .modules-left,
+            .modules-center,
+            .modules-right
+            {
+              margin: 4px;
+            }
+
+            #window,
+            #workspaces,
+            #media,
+            #hardware
+            {
+              background-color: rgba(0, 0, 0, 0.6);
+              border-radius: 30px;
+              padding: 4px;
+            }
+
+            .modules-left *,
+            .modules-right *,
+            #window *,
+            #media *,
+            #hardware *,
+            #workspaces *
+            {
+              margin-top: 0;
+              margin-bottom: 0;
+              margin-left: 4px;
+              margin-right: 4px;
+              padding: 0;
             }
 
             #window {
@@ -172,33 +218,30 @@ in
             }
 
             #workspaces button {
-              color: #${cfg.color.foreground};
+              background-color: #${cfg.color.background};
+              color: #${cfg.color.background};
+              border-radius: 30px;
             }
 
             #workspaces button.active {
-              color: #${cfg.color.accent};
+              padding-right: 10px;
+              padding-left: 10px;
             }
 
             #workspaces button.urgent {
-              color: #${cfg.color.accent_alt};
+              color: #${cfg.color.background};
+              background-color: #${cfg.color.accent_alt};
             }
 
             #workspaces button:hover {
+              box-shadow: inherit;
+              text-shadow: inherit;
               color: #${cfg.color.background};
-              background: none;
-              border: none;
               background-color: #${cfg.color.accent};
             }
 
             #custom-power {
               color: #${cfg.color.accent};
-            }
-
-            .modules-left,
-            .modules-right
-            {
-              padding-right: ${toString cfg.size.gap.outer}px;
-              padding-left: ${toString cfg.size.gap.outer}px;
             }
           '';
         };
