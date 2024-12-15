@@ -34,8 +34,9 @@
             hyprland = {
               scale = 2.0;
             };
-            spotify.enable = true;
             gimp.enable = true;
+            nextcloud.enable = true;
+            spotify.enable = true;
           };
         };
       };
