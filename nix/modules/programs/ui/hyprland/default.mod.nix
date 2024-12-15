@@ -81,6 +81,7 @@ in
 
           input = {
             kb_layout = "us";
+            kb_variant = "mac";
             # Don't refocus on mouse hover
             follow_mouse = 2;
           };
