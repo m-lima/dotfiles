@@ -7,7 +7,7 @@
       profiles = {
         base.enable = true;
         dev.enable = true;
-        hyprland.enable = true;
+        kde.enable = true;
         ui.enable = true;
       };
 

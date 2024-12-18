@@ -13,6 +13,10 @@ in
   options = util.mkOptionsEnable path;
 
   config = util.enforceHome path config cfg.enable {
+    services.displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
+    };
     services.desktopManager.plasma6 = {
       enable = true;
     };
