@@ -22,6 +22,7 @@ in
       xdg.configFile."alacritty/alacritty.toml".text =
         ''''
         + builtins.readFile ../../../../alacritty/config/colors.toml
+        + builtins.readFile ../../../../alacritty/config/font.toml
         + builtins.readFile ../../../../alacritty/config/options.toml;
 
       wayland.windowManager.hyprland = lib.mkIf hyprCfg.enable {

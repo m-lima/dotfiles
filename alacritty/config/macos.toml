@@ -1,9 +1,3 @@
-[font]
-normal = { family = "Hack Nerd Font Mono", style = "Regular" }
-bold = { style = "Bold" }
-bold_italic = { style = "Bold Italic" }
-italic = { style = "Italic" }
-
 [keyboard]
 bindings = [
   { key = "Q", mods = "Super",       action = "None" },

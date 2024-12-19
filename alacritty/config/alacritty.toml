@@ -1,8 +1,9 @@
 import = [
+  "~/.config/alacritty/colors.toml",
+  "~/.config/alacritty/font.toml",
+  "~/.config/alacritty/options.toml",
   "~/.config/alacritty/system.toml",
   "~/.config/alacritty/transient.toml",
-  "~/.config/alacritty/colors.toml",
-  "~/.config/alacritty/options.toml",
 ]
 
 [keyboard]
