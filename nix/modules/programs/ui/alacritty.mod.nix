@@ -11,9 +11,18 @@ let
   hyprCfg = config.celo.modules.programs.ui.hyprland;
 in
 {
-  options = util.mkOptionsEnable path;
+  options = util.mkOptions path {
+    tmuxStart = lib.mkEnableOption "Wrap the terminal in a tmux session by default";
+  };
 
   config = util.enforceHome path config cfg.enable {
+    assertions = [
+      {
+        assertion = cfg.tmuxStart -> config.celo.modules.programs.tmux.enable;
+        message = "tmuxStart can only be used if tmux is present";
+      }
+    ];
+
     home-manager = {
       home = {
         packages = with pkgs; [ alacritty ];
@@ -23,7 +32,11 @@ in
         ''''
         + builtins.readFile ../../../../alacritty/config/colors.toml
         + builtins.readFile ../../../../alacritty/config/font.toml
-        + builtins.readFile ../../../../alacritty/config/options.toml;
+        + builtins.readFile ../../../../alacritty/config/options.toml
+        + (lib.optionalString cfg.tmuxStart ''
+          [shell]
+          program = "tmux"
+        '');
 
       wayland.windowManager.hyprland = lib.mkIf hyprCfg.enable {
         settings = {
