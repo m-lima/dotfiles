@@ -9,6 +9,7 @@ path:
 let
   cfg = util.getOptions path config;
   hyprCfg = config.celo.modules.programs.ui.hyprland;
+  tmuxCfg = config.celo.modules.programs.tmux;
 in
 {
   options = util.mkOptions path {
@@ -18,7 +19,7 @@ in
   config = util.enforceHome path config cfg.enable {
     assertions = [
       {
-        assertion = cfg.tmuxStart -> config.celo.modules.programs.tmux.enable;
+        assertion = cfg.tmuxStart -> tmuxCfg.enable;
         message = "tmuxStart can only be used if tmux is present";
       }
     ];
@@ -34,8 +35,8 @@ in
         + builtins.readFile ../../../../alacritty/config/font.toml
         + builtins.readFile ../../../../alacritty/config/options.toml
         + (lib.optionalString cfg.tmuxStart ''
-          [shell]
-          program = "tmux"
+          [terminal]
+          shell = "tmux"
         '');
 
       wayland.windowManager.hyprland = lib.mkIf hyprCfg.enable {

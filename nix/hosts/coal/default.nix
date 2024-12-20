@@ -31,6 +31,9 @@
             symbol = "₵";
           };
           ui = {
+            alacritty = {
+              tmuxStart = true;
+            };
             hyprland = {
               scale = 2.0;
             };
