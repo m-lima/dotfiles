@@ -28,5 +28,14 @@ in
       konsole
       plasma-browser-integration
     ];
+
+    environment.persistence = util.withImpermanence config {
+      home.directories = [
+        ".local/share/kwalletd"
+      ];
+      home.files = [
+        ".config/kwalletrc"
+      ];
+    };
   };
 }
