@@ -16,6 +16,8 @@ in
         breeze-icons
         dolphin
         kcalc
+        kdePackages.kwallet-pam
+        kdePackages.kwalletmanager
         okular
       ];
 
@@ -27,6 +29,15 @@ in
           ];
         };
       };
+    };
+
+    environment.persistence = util.withImpermanence config {
+      home.directories = [
+        ".local/share/kwalletd"
+      ];
+      home.files = [
+        ".config/kwalletrc"
+      ];
     };
   };
 }
