@@ -3,6 +3,7 @@ path:
   lib,
   config,
   util,
+  inputs,
   ...
 }:
 let
@@ -23,6 +24,7 @@ in
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
+      sharedModules = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
 
       users = {
         ${user.userName} = {
