@@ -35,6 +35,8 @@ in
         + builtins.readFile ../../../../alacritty/config/font.toml
         + builtins.readFile ../../../../alacritty/config/options.toml
         + (lib.optionalString cfg.tmuxStart ''
+          [env]
+          TERM = "alacritty-direct"
           [terminal]
           shell = "tmux"
         '');
