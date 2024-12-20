@@ -2,6 +2,7 @@
   programs = {
     ui = {
       kde.enable = true;
+      fonts.hack.enable = true;
     };
   };
   hardware = {
