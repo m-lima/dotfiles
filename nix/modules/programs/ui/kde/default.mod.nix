@@ -17,6 +17,7 @@ in
       enable = true;
       wayland.enable = true;
     };
+
     services.desktopManager.plasma6 = {
       enable = true;
     };
@@ -28,14 +29,5 @@ in
       konsole
       plasma-browser-integration
     ];
-
-    environment.persistence = util.withImpermanence config {
-      home.directories = [
-        ".local/share/kwalletd"
-      ];
-      home.files = [
-        ".config/kwalletrc"
-      ];
-    };
   };
 }
