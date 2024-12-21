@@ -72,9 +72,7 @@ in
                 format = "{}";
                 format-alt = "{} {alt}";
                 tooltip-format = "{alt}";
-                exec = "${
-                  config.home-manager.users.${config.celo.modules.core.user.userName}.xdg.dataHome
-                }/hypr/player.sh";
+                exec = "${(util.xdg config).dataHome}/hypr/player.sh";
               };
 
               idle_inhibitor = {
@@ -157,9 +155,7 @@ in
 
               "custom/power" = {
                 format = "";
-                on-click = "${
-                  config.home-manager.users.${config.celo.modules.core.user.userName}.xdg.dataHome
-                }/hypr/power.sh";
+                on-click = "${(util.xdg config).dataHome}/hypr/power.sh";
               };
             };
           };

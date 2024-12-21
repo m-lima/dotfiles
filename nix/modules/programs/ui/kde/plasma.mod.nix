@@ -49,9 +49,7 @@ in
                   ];
                 in
                 lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-                  run echo -n '${builtins.toJSON payload}' > ${
-                    config.home-manager.users.${config.celo.modules.core.user.userName}.xdg.configHome
-                  }/kwinoutputconfig.json.new
+                  run echo -n '${builtins.toJSON payload}' > ${(util.xdg config).configHome}/kwinoutputconfig.json.new
                 '';
             };
           }

@@ -116,7 +116,7 @@ in
 
           bind =
             let
-              hyprData = config.home-manager.users.${config.celo.modules.core.user.userName}.xdg.dataHome;
+              hyprData = (util.xdg config).dataHome;
             in
             [
               # Top-level commands
