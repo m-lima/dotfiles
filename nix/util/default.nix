@@ -117,6 +117,8 @@ let
   mkSecretPath =
     path: name: lib.strings.concatStringsSep "." (builtins.tail (builtins.tail path)) + ".${name}";
 
+  xdg = config: config.home-manager.users.${config.celo.modules.core.user.userName}.xdg;
+
 in
 {
   inherit
@@ -130,5 +132,6 @@ in
     enforceHome
     withImpermanence
     mkSecretPath
+    xdg
     ;
 }

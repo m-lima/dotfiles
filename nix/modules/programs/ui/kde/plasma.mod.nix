@@ -14,7 +14,6 @@ in
     home-manager = {
       programs.plasma = {
         enable = true;
-        # overrideConfig = true;
 
         workspace = {
           lookAndFeel = "org.kde.breezedark.desktop";
@@ -31,12 +30,34 @@ in
             number = 4;
             rows = 2;
           };
-
-          # scripts.polonium = {
-          #   enable = true;
-          # };
         };
       };
+
+      # Need to use an import so that home-manager injects their lib
+      imports = [
+        (
+          { lib, ... }:
+          {
+            home.activation = lib.mkIf (cfg.scale != null) {
+              celo-kde-scale =
+                let
+                  payload = [
+                    {
+                      name = "outputs";
+                      data = [ { scale = cfg.scale; } ];
+                    }
+                  ];
+                in
+                lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+                  run echo -n '${builtins.toJSON payload}' > ${
+                    config.home-manager.users.${config.celo.modules.core.user.userName}.xdg.configHome
+                  }/kwinoutputconfig.json.new
+                '';
+            };
+          }
+        )
+      ];
+
     };
   };
 }

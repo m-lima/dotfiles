@@ -38,6 +38,9 @@
             hyprland = {
               scale = 2.0;
             };
+            kde = {
+              scale = 1.5;
+            };
             gimp.enable = true;
             nextcloud.enable = true;
             spotify.enable = true;

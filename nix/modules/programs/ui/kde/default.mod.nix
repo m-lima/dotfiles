@@ -10,7 +10,14 @@ let
   cfg = util.getOptions path config;
 in
 {
-  options = util.mkOptionsEnable path;
+  options = util.mkOptions path {
+    scale = lib.mkOption {
+      type = lib.types.nullOr lib.types.float;
+      description = "Scale factor for the monitor resolution";
+      default = null;
+      example = 2.0;
+    };
+  };
 
   config = util.enforceHome path config cfg.enable {
     services.displayManager.sddm = {
