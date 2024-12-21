@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs-2405.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     agenix = {
@@ -50,6 +51,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-2405,
       nixpkgs-unstable,
       agenix,
       agenix-rekey,
@@ -69,6 +71,7 @@
 
           specialArgs = {
             inherit inputs util;
+            pkgs2405 = nixpkgs-2405.legacyPackages.${system};
             pkgsUnstable = nixpkgs-unstable.legacyPackages.${system};
           };
 
