@@ -26,14 +26,5 @@ in
     environment.persistence = util.withImpermanence config {
       global.directories = [ "/var/lib/bluetooth" ];
     };
-
-    # TODO: Add bluedevil
-    # TODO: Add waybar icon
-
-    # home-manager = util.withHome config {
-    #   services = {
-    #     mpris-proxy.enable = true;
-    #   };
-    # };
   };
 }
