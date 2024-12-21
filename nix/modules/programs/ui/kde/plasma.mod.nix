@@ -22,7 +22,7 @@ in
         hotkeys.commands."launch-terminal" = {
           name = "Lauch terminal";
           key = "Meta+T";
-          command = "alacritty -e tmux";
+          command = "alacritty";
         };
 
         kwin = {
