@@ -33,29 +33,32 @@ in
         };
       };
 
-      # Need to use an import so that home-manager injects their lib
-      imports = [
-        (
-          { lib, ... }:
-          {
-            home.activation = lib.mkIf (cfg.scale != null) {
-              celo-kde-scale =
-                let
-                  payload = [
-                    {
-                      name = "outputs";
-                      data = [ { scale = cfg.scale; } ];
-                    }
-                  ];
-                in
-                lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-                  run echo -n '${builtins.toJSON payload}' > ${(util.xdg config).configHome}/kwinoutputconfig.json
-                '';
-            };
-          }
-        )
-      ];
+      # # Need to use an import so that home-manager injects their lib
+      # imports = [
+      #   (
+      #     { lib, ... }:
+      #     {
+      #       home.activation = lib.mkIf (cfg.scale != null) {
+      #         celo-kde-scale =
+      #           let
+      #             payload = [
+      #               {
+      #                 name = "outputs";
+      #                 data = [ { scale = cfg.scale; } ];
+      #               }
+      #             ];
+      #           in
+      #           lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      #             run echo -n '${builtins.toJSON payload}' > ${(util.xdg config).configHome}/kwinoutputconfig.json
+      #           '';
+      #       };
+      #     }
+      #   )
+      # ];
+    };
 
+    environment.persistence = util.withImpermanence config {
+      home.files = [ ".config/kwinoutputconfig.json" ];
     };
   };
 }
