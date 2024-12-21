@@ -9,7 +9,9 @@ let
   cfg = util.getOptions path config;
 in
 {
-  options = util.mkOptionsEnable path;
+  options = util.mkOptions path {
+    persist = lib.mkEnableOption "sound volume persistance";
+  };
 
   config = lib.mkIf cfg.enable {
     services.pipewire = {
@@ -22,7 +24,7 @@ in
     };
 
     environment.persistence = util.withImpermanence config {
-      home.directories = [ ".local/state/wireplumber" ];
+      home.directories = lib.optional cfg.persist ".local/state/wireplumber";
     };
   };
 }

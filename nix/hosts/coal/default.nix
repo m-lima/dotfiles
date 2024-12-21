@@ -25,6 +25,7 @@
         hardware = {
           wifi.enable = true;
           bluetooth.enable = true;
+          sound.persist = true;
         };
         programs = {
           simpalt = {
