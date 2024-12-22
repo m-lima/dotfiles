@@ -19,17 +19,22 @@ in
           lookAndFeel = "org.kde.breezedark.desktop";
         };
 
-        hotkeys.commands."launch-terminal" = {
-          name = "Lauch terminal";
-          key = "Meta+T";
-          command = "alacritty";
-        };
-
         kwin = {
           virtualDesktops = {
             number = 4;
             rows = 2;
           };
+        };
+
+        # Show all applications on TaskSwitcher
+        configFile."kwinrc" = {
+          TabBox = {
+            DesktopMode = 0;
+          };
+        };
+
+        session.sessionRestore = {
+          restoreOpenApplicationsOnLogin = "startWithEmptySession";
         };
       };
     };
