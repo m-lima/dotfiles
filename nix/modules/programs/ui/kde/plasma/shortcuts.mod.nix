@@ -59,14 +59,15 @@ in
             "show-on-mouse-pos" = "Meta+Shift+V";
             "next activity" = "";
           };
+          "services/org.kde.krunner.desktop" = {
+            _launch = [
+              "Search"
+              "Meta+Space"
+            ];
+          };
         };
 
         configFile = {
-          kglobalshortcutsrc = {
-            "org.kde.krunner.desktop" = {
-              _launch = "Search\tMeta+Space";
-            };
-          };
           kdeglobals = {
             Shortcuts = {
               Copy = "Ctrl+Ins; Meta+C; Ctrl+C";
