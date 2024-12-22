@@ -25,9 +25,10 @@
           };
         };
         hardware = {
-          wifi.enable = true;
           bluetooth.enable = true;
+          insomnia.enable = true;
           sound.persist = true;
+          wifi.enable = true;
         };
         programs = {
           simpalt = {
