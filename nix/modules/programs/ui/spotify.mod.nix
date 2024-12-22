@@ -14,6 +14,13 @@ in
   options = util.mkOptionsEnable path;
 
   config = util.enforceHome path config cfg.enable {
+    assertions = [
+      {
+        assertion = config.celo.modules.hardware.sound.enable;
+        message = "Spotify is useless without any sound";
+      }
+    ];
+
     home-manager = {
       home.packages = with pkgs; [ spotify ];
 

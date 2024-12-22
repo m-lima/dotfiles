@@ -6,8 +6,10 @@
     celo = {
       profiles = {
         base.enable = true;
+        creation.enable = true;
         dev.enable = true;
         kde.enable = true;
+        nextcloud.enable = true;
         ui.enable = true;
       };
 
@@ -38,9 +40,6 @@
             hyprland = {
               scale = 2.0;
             };
-            gimp.enable = true;
-            nextcloud.enable = true;
-            spotify.enable = true;
           };
         };
       };
