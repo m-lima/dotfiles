@@ -10,11 +10,16 @@ in
 {
   config = util.enforceHome path config cfg.enable {
     environment.persistence = util.withImpermanence config {
-      home.directories = [
-        ".local/share/kwalletd"
-      ];
       home.files = [
         ".config/kwalletrc"
+        ".config/kwinoutputconfig.json"
+      ];
+      home.directories = [
+        ".local/share/kwalletd"
+        "Documents"
+        "Music"
+        "Pictures"
+        "Videos"
       ];
     };
   };

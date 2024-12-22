@@ -1,6 +1,5 @@
 path:
 {
-  lib,
   config,
   util,
   pkgs,
