@@ -26,7 +26,6 @@
         };
         hardware = {
           bluetooth.enable = true;
-          insomnia.enable = true;
           sound.persist = true;
           wifi.enable = true;
         };
@@ -40,6 +39,9 @@
             };
             hyprland = {
               scale = 2.0;
+            };
+            kde = {
+              insomnia = true;
             };
           };
         };

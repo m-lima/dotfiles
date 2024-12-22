@@ -1,5 +1,6 @@
 path:
 {
+  lib,
   config,
   util,
   ...
@@ -33,6 +34,11 @@ in
 
         session.sessionRestore = {
           restoreOpenApplicationsOnLogin = "startWithEmptySession";
+        };
+
+        powerdevil = {
+          general.pausePlayersOnSuspend = false;
+          AC.autoSuspend.action = lib.mkIf cfg.insomnia "nothing";
         };
       };
     };
