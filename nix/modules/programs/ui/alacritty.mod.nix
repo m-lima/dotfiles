@@ -8,6 +8,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  hackCfg = config.celo.modules.programs.ui.fonts.hack;
   hyprCfg = config.celo.modules.programs.ui.hyprland;
   tmuxCfg = config.celo.modules.programs.tmux;
 in
@@ -32,8 +33,8 @@ in
       xdg.configFile."alacritty/alacritty.toml".text =
         ''''
         + builtins.readFile ../../../../alacritty/config/colors.toml
-        + builtins.readFile ../../../../alacritty/config/font.toml
         + builtins.readFile ../../../../alacritty/config/options.toml
+        + (lib.optionalString hackCfg.enable (builtins.readFile ../../../../alacritty/config/font.toml))
         + (lib.optionalString cfg.tmuxStart ''
           [env]
           TERM = "alacritty-direct"
