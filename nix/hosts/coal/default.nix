@@ -8,7 +8,6 @@
         base.enable = true;
         creation.enable = true;
         dev.enable = true;
-        kde.enable = true;
         nextcloud.enable = true;
         ui.enable = true;
       };
@@ -26,7 +25,10 @@
         };
         hardware = {
           bluetooth.enable = true;
-          sound.persist = true;
+          sound = {
+            enable = true;
+            persist = true;
+          };
           wifi.enable = true;
         };
         programs = {
@@ -37,10 +39,8 @@
             alacritty = {
               tmuxStart = true;
             };
-            hyprland = {
-              scale = 2.0;
-            };
             kde = {
+              enable = true;
               insomnia = true;
             };
           };
