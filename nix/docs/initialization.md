@@ -21,19 +21,27 @@ $ cd ~
 $ git clone https://github.com/m-lima/dotfiles
 ```
 
-5. Format the drives
+5. Create the host file
 
 ```
-$ ./dotfiles/nix/init.sh <HOST> all [USER]
+$ mkdir ./nix/hosts/<HOST>
+$ vi ./nix/hosts/<HOST>/default.nix
 ```
 
-6. Generate the config
+6. Format the drives
+
+```
+$ ./dotfiles/nix/init.sh <HOST> prepare [USER]
+```
+
+7. Generate the config
 
 ```
 $ nixos-generate-config --no-filesystems --root /mnt
+$ cp /mnt/etc/nixos/hardware-configuration.nix ./nix/hosts/<HOST>/.
 ```
 
-7. Put in the secrets
+8. Put in the secrets
 
 See [permanence.md](./permanence.md)
 
@@ -43,7 +51,24 @@ $ mkpasswd > /mnt/persist/secrets/<USER>/passwordFile
 $ ssh-keygen -t ed25519 -C "<USER>@<HOST>" -N '' -f "/mnt/persist/secrets/<USER>/id_ed25519"
 ```
 
-8. Install NixOS
+9. Copy the public key
+
+```
+$ mkdir ./nix/secrets/pubkey/<HOST>
+$ cp /etc/ssh/ssh_host_ed25519_key.pub ./nix/secrets/pubkey/<HOST>/ssh.key.pub
+```
+
+10. Rekey the secrets
+
+```
+$ nix shell github:oddlama/agenix-rekey
+$ cp /mnt/persist/secrets/<USER>/id_ed25519.pub ./modules/services/ssh/secrets/<USER>-<HOST>.pub
+# Encrypt /mnt/persist/secrets/<USER>/id_ed25519 into ./modules/services/ssh/secrets/<USER>-<HOST>.age
+$ agenix rekey
+$ git add .
+```
+
+11. Install NixOS
 
 ```
 $ nixos-install --flake .#<HOST>
@@ -112,7 +137,7 @@ $ nixos-enter --root /mnt
 
 > https://github.com/nix-community/nixos-images
 
-1. Download the image from `https://github.com/nix-community/nixos-images/releases`
+1. Download the image from `https://github.com/nix-community/nixos-images/releases`. e.g. `https://github.com/nix-community/nixos-images/releases/download/nixos-24.11/nixos-kexec-installer-x86_64-linux.tar.gz`
 
 2. Copy the public key to `/root/.ssh/authorized_keys`
 
