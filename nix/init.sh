@@ -100,6 +100,7 @@ function rekey {
 
   cd "${base}"
   nix run github:oddlama/agenix-rekey -- edit -i "/mnt/persist/secrets/${user}/id_ed25519" "./modules/services/ssh/secrets/${user}-${host}.age"
+  git add .
   nix run github:oddlama/agenix-rekey -- rekey
   git add .
 
