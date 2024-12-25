@@ -70,11 +70,11 @@ function mkpass {
     done
   }
 
-  mkdir /mnt/persist/secrets
-  mkdir /mnt/persist/secrets/root
+  mkdir -p /mnt/persist/secrets
+  mkdir -p /mnt/persist/secrets/root
   echo "[34mSetting password for root[m"
   get_password | mkpasswd -s > /mnt/persist/secrets/root/passwordFile
-  mkdir "/mnt/persist/secrets/${user}"
+  mkdir -p "/mnt/persist/secrets/${user}"
   echo "[34mSetting password for ${user}[m"
   get_password | mkpasswd -s > "/mnt/persist/secrets/${user}/passwordFile"
 }
@@ -85,21 +85,47 @@ function mksshid {
 }
 
 function rekey {
+  function copyPrivKey {
+    mkdir -p "${base}/secrets/pubkey/${host}"
+    cp /etc/ssh/ssh_host_ed25519_key.pub "${base}/secrets/pubkey/${host}/ssh.key.pub"
+    cp "/mnt/persist/secrets/${user}/id_ed25519.pub" "${base}/modules/services/ssh/secrets/${user}-${host}.pub"
+  }
+
+  function copySshKey {
+    cp /etc/ssh/ssh_host_rsa_key* /mnt/persist/etc/ssh/.
+  }
+
+  function rekeyEdit {
+    cd "${base}"
+    nix run github:oddlama/agenix-rekey -- edit -i "/mnt/persist/secrets/${user}/id_ed25519" "./modules/services/ssh/secrets/${user}-${host}.age"
+  }
+
   if [ -f "${base}/secrets/pubkey/${host}/ssh.key.pub" ]; then
     echo -n "[33mWARNING!![m There already exists a public key at ${base}/secrets/pubkey/${host}/ssh.key.pub. Proceed? [y/N] "
     read input
     case "${input}" in
+      [Yy] ) copyPrivKey ;;
+      * ) ;;
+    esac
+  else
+    copyPrivKey
+  fi
+
+  if [ -f "${base}/modules/services/ssh/secrets/${user}-${host}.age" ]; then
+    echo -n "[33mWARNING!![m There already exists a private key at ${base}/modules/services/ssh/secrets/${user}-${host}.age. Proceed? [y/N] "
+    read input
+    case "${input}" in
       [Yy] )
-        mkdir -p "${base}/secrets/pubkey/${host}"
-        cp /etc/ssh/ssh_host_ed25519_key.pub "${base}/secrets/pubkey/${host}/ssh.key.pub"
-        cp "/mnt/persist/secrets/${user}/id_ed25519.pub" "${base}/modules/services/ssh/secrets/${user}-${host}.pub"
+        rm "${base}/modules/services/ssh/secrets/${user}-${host}.age"
+        rekeyEdit
         ;;
       * ) ;;
     esac
+  else
+    rekeyEdit
   fi
 
   cd "${base}"
-  nix run github:oddlama/agenix-rekey -- edit -i "/mnt/persist/secrets/${user}/id_ed25519" "./modules/services/ssh/secrets/${user}-${host}.age"
   git add .
   nix run github:oddlama/agenix-rekey -- rekey
   git add .
@@ -119,11 +145,11 @@ function rekey {
     echo -n "[33mWARNING!![m There already exists a key at /mnt/persist/etc/ssh/ssh_host_rsa_key. Overwrite? [y/N] "
     read input
     case "${input}" in
-      [Yy] ) cp /etc/ssh/ssh_host_rsa_key* /mnt/persist/etc/ssh/. ;;
+      [Yy] ) copySshKey ;;
       * ) return ;;
     esac
   else
-    cp /etc/ssh/ssh_host_rsa_key* /mnt/persist/etc/ssh/.
+    copySshKey
   fi
 }
 
