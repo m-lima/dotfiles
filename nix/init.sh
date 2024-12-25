@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 base=$(dirname $(realpath "${0}"))
 
 if [ -z "${1}" ]; then
@@ -9,6 +11,18 @@ if [ -z "${1}" ]; then
 fi
 
 host=${1}
+
+if ! [ -d "${base}/hosts/${host}" ]; then
+  echo "[31mHost not yet configured. Available hosts:[m" >&2
+  ls ${base}/hosts | xargs -I{} echo {}
+  exit 1
+fi
+
+if [ -z "${3}" ]; then
+  user='celo'
+else
+  user="${3}"
+fi
 
 function format {
   echo -n "[33mWARNING!![m This will format the disk. Proceed? [y/N] "
@@ -27,6 +41,19 @@ function mount {
   nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode mount --flake "${base}#${host}"
 }
 
+function mkHardwareConfig {
+  if [ -f "${base}/hosts/${host}/hardware-configuration.nix" ]; then
+    echo -n "[33mWARNING!![m There already exists a hardware configuration at ${base}/hosts/${host}/hardware-configuration.nix. Proceed? [y/N] "
+    read input
+    case "${input}" in
+      [Yy] ) ;;
+      * ) exit ;;
+    esac
+  fi
+  nixos-generate-config --no-filesystems --root /mnt
+  cp /mnt/etc/nixos/hardware-configuration.nix "${base}/hosts/${host}/."
+}
+
 function mkpass {
   function get_password {
     local password confirmation
@@ -43,13 +70,6 @@ function mkpass {
     done
   }
 
-  local user
-  if [ -z "${1}" ]; then
-    user='celo'
-  else
-    user="${1}"
-  fi
-
   mkdir /mnt/persist/secrets
   mkdir /mnt/persist/secrets/root
   echo "[34mSetting password for root[m"
@@ -60,15 +80,50 @@ function mkpass {
 }
 
 function mksshid {
-  local user
-  if [ -z "${1}" ]; then
-    user='celo'
-  else
-    user="${1}"
-  fi
-
   mkdir -p "/mnt/persist/secrets/${user}"
   ssh-keygen -t ed25519 -C "${user}@${host}" -N '' -f "/mnt/persist/secrets/${user}/id_ed25519"
+}
+
+function rekey {
+  if [ -f "${base}/secrets/pubkey/${host}/ssh.key.pub" ]; then
+    echo -n "[33mWARNING!![m There already exists a public key at ${base}/secrets/pubkey/${host}/ssh.key.pub. Proceed? [y/N] "
+    read input
+    case "${input}" in
+      [Yy] )
+        mkdir -p "${base}/secrets/pubkey/${host}"
+        cp /etc/ssh/ssh_host_ed25519_key.pub "${base}/secrets/pubkey/${host}/ssh.key.pub"
+        cp "/mnt/persist/secrets/${user}/id_ed25519.pub" "${base}/modules/services/ssh/secrets/${user}-${host}.pub"
+        ;;
+      * ) ;;
+    esac
+  fi
+
+  cd "${base}"
+  nix run github:oddlama/agenix-rekey -- edit -i "/mnt/persist/secrets/${user}/id_ed25519" "./modules/services/ssh/secrets/${user}-${host}.age"
+  nix run github:oddlama/agenix-rekey -- rekey
+  git add .
+
+  if [ -f /mnt/persist/etc/ssh/ssh_host_ed25519_key ]; then
+    echo -n "[33mWARNING!![m There already exists a key at /mnt/persist/etc/ssh/ssh_host_ed25519_key. Overwrite? [y/N] "
+    read input
+    case "${input}" in
+      [Yy] ) cp /etc/ssh/ssh_host_ed25519_key* /mnt/persist/etc/ssh/. ;;
+      * ) return ;;
+    esac
+  else
+    cp /etc/ssh/ssh_host_ed25519_key* /mnt/persist/etc/ssh/.
+  fi
+
+  if [ -f /mnt/persist/etc/ssh/ssh_host_rsa_key ]; then
+    echo -n "[33mWARNING!![m There already exists a key at /mnt/persist/etc/ssh/ssh_host_rsa_key. Overwrite? [y/N] "
+    read input
+    case "${input}" in
+      [Yy] ) cp /etc/ssh/ssh_host_rsa_key* /mnt/persist/etc/ssh/. ;;
+      * ) return ;;
+    esac
+  else
+    cp /etc/ssh/ssh_host_rsa_key* /mnt/persist/etc/ssh/.
+  fi
 }
 
 function prepare_persist {
@@ -85,30 +140,13 @@ function install {
 
 case "${2}" in
   "prepare")
-    format && mkpass "${3}" && mksshid "${3}" && prepare_persist
+    format && mkHardwareConfig && mkpass && mksshid && rekey && prepare_persist
     ;;
   "all")
-    format && mkpass "${3}" && mksshid "${3}" && prepare_persist && install
-    ;;
-  "mount")
-    mount
-    ;;
-  "mkpass")
-    mkpass "${3}"
-    ;;
-  "mksshid")
-    mksshid "${3}"
-    ;;
-  "install")
-    install
+    format && mkHardwareConfig && mkpass && mksshid && rekey && prepare_persist && vi "${base}/hosts/${host}/default.nix" && install
     ;;
   * )
-    echo "[31mUnrecognized command '${2}'. Available commands:[m" >&2
-    echo all
-    echo mount
-    echo mkpass
-    echo mksshid
-    echo install
-    exit 1
+    shift
+    ${@}
     ;;
 esac
