@@ -18,6 +18,9 @@
           nixos = {
             timeZone = "Europe/Amsterdam";
           };
+          user = {
+            userName = "kinto";
+          };
         };
         programs = {
           simpalt = {
