@@ -12,6 +12,7 @@
         core = {
           disko = {
             device = "/dev/sda";
+            legacy = true;
             # luks = true;
             swap = "8G";
           };

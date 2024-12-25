@@ -57,13 +57,19 @@ in
       kernelPackages = pkgs.linuxPackages_latest;
 
       # Use the systemd-boot EFI boot loader.
-      loader = {
-        systemd-boot = {
-          enable = true;
-          configurationLimit = 10;
-        };
-        efi.canTouchEfiVariables = true;
-      };
+      loader =
+        if config.celo.modules.core.disko.legacy then
+          {
+            grub.enable = true;
+          }
+        else
+          {
+            systemd-boot = {
+              enable = true;
+              configurationLimit = 10;
+            };
+            efi.canTouchEfiVariables = true;
+          };
     };
 
     # Define the hostname

@@ -15,6 +15,7 @@ in
       description = "Device to use";
       example = "/dev/vda";
     };
+    legacy = lib.mkEnableOption "Use BIOS instead of UEFI";
     luks = lib.mkEnableOption "LUKS encryption";
     swap = lib.mkOption {
       default = null;
@@ -82,17 +83,25 @@ in
             content = {
               type = "gpt";
               partitions = {
-                boot = {
-                  size = "512M";
-                  name = "boot";
-                  type = "EF00";
-                  content = {
-                    type = "filesystem";
-                    format = "vfat";
-                    mountpoint = "/boot";
-                    mountOptions = [ "umask=0077" ];
-                  };
-                };
+                boot =
+                  if cfg.legacy then
+                    {
+                      size = "1M";
+                      name = "boot";
+                      type = "EF02";
+                    }
+                  else
+                    {
+                      size = "512M";
+                      name = "boot";
+                      type = "EF00";
+                      content = {
+                        type = "filesystem";
+                        format = "vfat";
+                        mountpoint = "/boot";
+                        mountOptions = [ "umask=0077" ];
+                      };
+                    };
                 swap = lib.mkIf (!isNull cfg.swap) {
                   size = cfg.swap;
                   name = "swap";
