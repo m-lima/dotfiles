@@ -84,6 +84,9 @@ function install {
 }
 
 case "${2}" in
+  "prepare")
+    format && mkpass "${3}" && mksshid "${3}" && prepare_persist
+    ;;
   "all")
     format && mkpass "${3}" && mksshid "${3}" && prepare_persist && install
     ;;
