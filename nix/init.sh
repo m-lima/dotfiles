@@ -85,7 +85,7 @@ function install {
 
 case "${2}" in
   "all")
-    format && mkpass && prepare_persist && install
+    format && mkpass "${3}" && mksshid "${3}" && prepare_persist && install
     ;;
   "mount")
     mount
