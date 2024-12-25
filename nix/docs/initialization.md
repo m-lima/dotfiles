@@ -107,3 +107,19 @@ $ ./dotfiles/nix/init.sh <HOST> mount
 ```
 $ nixos-enter --root /mnt
 ```
+
+# From the network
+
+> https://github.com/nix-community/nixos-images
+
+1. Download the image from `https://github.com/nix-community/nixos-images/releases`
+
+2. Copy the public key to `/root/.ssh/authorized_keys`
+
+3. Untar `tar -vxf <downloaded file>`
+
+4. Run `./kexec/run`
+
+5. Re-login and run `nix-channel --update`
+
+6. Continue as a normal installation
