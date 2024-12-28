@@ -83,25 +83,24 @@ in
             content = {
               type = "gpt";
               partitions = {
-                boot =
-                  if cfg.legacy then
-                    {
-                      size = "1M";
-                      name = "boot";
-                      type = "EF02";
-                    }
-                  else
-                    {
-                      size = "512M";
-                      name = "boot";
-                      type = "EF00";
-                      content = {
-                        type = "filesystem";
-                        format = "vfat";
-                        mountpoint = "/boot";
-                        mountOptions = [ "umask=0077" ];
-                      };
-                    };
+                legacy = lib.mkIf cfg.legacy {
+                  priority = 0;
+                  size = "1M";
+                  name = "legacy";
+                  type = "EF02";
+                };
+                boot = {
+                  priority = 1;
+                  size = "512M";
+                  name = "boot";
+                  type = "EF00";
+                  content = {
+                    type = "filesystem";
+                    format = "vfat";
+                    mountpoint = "/boot";
+                    mountOptions = [ "umask=0077" ];
+                  };
+                };
                 swap = lib.mkIf (!isNull cfg.swap) {
                   size = cfg.swap;
                   name = "swap";
