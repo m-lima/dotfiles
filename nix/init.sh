@@ -92,7 +92,17 @@ function rekey {
   }
 
   function copySshKey {
-    cp /etc/ssh/ssh_host_rsa_key* /mnt/persist/etc/ssh/.
+    if [ -f "/mnt/persist/etc/ssh/${1}" ]; then
+      echo -n "[33mWARNING!![m There already exists a key at /mnt/persist/etc/ssh/${1}. Overwrite? [y/N] "
+      read input
+      case "${input}" in
+        [Yy] ) ;;
+        * ) return ;;
+      esac
+    fi
+
+    mkdir -p /mnt/persist/etc/ssh/
+    cp /etc/ssh/"${1}"* /mnt/persist/etc/ssh/.
   }
 
   function rekeyEdit {
@@ -130,27 +140,8 @@ function rekey {
   nix run github:oddlama/agenix-rekey -- rekey
   git add .
 
-  if [ -f /mnt/persist/etc/ssh/ssh_host_ed25519_key ]; then
-    echo -n "[33mWARNING!![m There already exists a key at /mnt/persist/etc/ssh/ssh_host_ed25519_key. Overwrite? [y/N] "
-    read input
-    case "${input}" in
-      [Yy] ) cp /etc/ssh/ssh_host_ed25519_key* /mnt/persist/etc/ssh/. ;;
-      * ) return ;;
-    esac
-  else
-    cp /etc/ssh/ssh_host_ed25519_key* /mnt/persist/etc/ssh/.
-  fi
-
-  if [ -f /mnt/persist/etc/ssh/ssh_host_rsa_key ]; then
-    echo -n "[33mWARNING!![m There already exists a key at /mnt/persist/etc/ssh/ssh_host_rsa_key. Overwrite? [y/N] "
-    read input
-    case "${input}" in
-      [Yy] ) copySshKey ;;
-      * ) return ;;
-    esac
-  else
-    copySshKey
-  fi
+  copySshKey ssh_host_ed25519_key
+  copySshKey ssh_host_rsa_key
 }
 
 function prepare_persist {
