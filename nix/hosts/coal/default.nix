@@ -5,6 +5,7 @@
 
     celo = {
       profiles = {
+        minimal.enable = true;
         base.enable = true;
         creation.enable = true;
         dev.enable = true;
@@ -30,6 +31,9 @@
             persist = true;
           };
           wifi.enable = true;
+        };
+        services = {
+          mdns.enable = true;
         };
         programs = {
           simpalt = {

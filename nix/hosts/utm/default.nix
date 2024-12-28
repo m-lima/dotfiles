@@ -5,6 +5,7 @@
 
     celo = {
       profiles = {
+        minimal.enable = true;
         base.enable = true;
         dev.enable = true;
       };
@@ -18,6 +19,9 @@
           nixos = {
             timeZone = "Europe/Amsterdam";
           };
+        };
+        services = {
+          mdns.enable = true;
         };
         programs = {
           simpalt = {

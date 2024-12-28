@@ -5,7 +5,7 @@
 
     celo = {
       profiles = {
-        base.enable = true;
+        minimal.enable = true;
       };
 
       modules = {
