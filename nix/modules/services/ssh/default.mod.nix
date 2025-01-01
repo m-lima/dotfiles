@@ -3,6 +3,7 @@ path:
   lib,
   config,
   util,
+options,
   ...
 }:
 let
@@ -13,17 +14,10 @@ let
 in
 {
   options = util.mkOptions path {
-    authorizedKeys = lib.mkOption {
-      type = lib.types.listOf (
-        lib.types.coercedTo lib.types.path (
-          x: if builtins.isPath x then builtins.readFile x else x
-        ) lib.types.singleLineStr
-      );
-      default = lib.flatten (
-        lib.mapAttrsToList (k: v: lib.optional (v == "regular" && lib.hasSuffix ".pub" k) ./secrets/${k}) (
-          builtins.readDir ./secrets
-        )
-      );
+    authorizedKeys =
+      lib.mkOption {
+        type = lib.types.listOf lib.types.singleLineStr;
+      default = [];
       description = ''
         A list of verbatim OpenSSH public keys that should be added to the
         user's authorized keys. The keys are added to a file that the SSH
@@ -36,25 +30,36 @@ in
       example = [
         "ssh-rsa AAAAB3NzaC1yc2etc/etc/etcjwrsh8e596z6J0l7 example@host"
         "ssh-ed25519 AAAAC3NzaCetcetera/etceteraJZMfk3QPfQ foo@bar"
+        ./secrets/host/key.pub
       ];
     };
+    authorizeNixHosts = lib.mkEnableOption "add known Nix hosts as authorized keys";
+    ports = options.services.openssh.ports;
   };
 
   config = lib.mkIf cfg.enable {
-    services.openssh.enable = true;
+    services.openssh = {
+      enable = true;
+      ports = cfg.ports;
+    };
 
-    users = lib.mkIf (cfg.authorizedKeys != [ ]) {
+    users =
+     let authorizedKeys = cfg.authorizedKeys ++ (lib.optionals cfg.authorizeNixHosts (lib.flatten (
+        lib.mapAttrsToList (k: v: lib.optional (v == "regular" && lib.hasSuffix ".pub" k) ./secrets/${k}) (
+          builtins.readDir ./secrets
+        )
+      ))); in  lib.mkIf (authorizedKeys != [ ]) {
       users =
         if user.enable then
           {
             ${user.userName} = {
-              openssh.authorizedKeys.keys = cfg.authorizedKeys;
+              openssh.authorizedKeys.keys = authorizedKeys;
             };
           }
         else
           {
             root = {
-              openssh.authorizedKeys.keys = cfg.authorizedKeys;
+              openssh.authorizedKeys.keys = authorizedKeys;
             };
           };
     };
