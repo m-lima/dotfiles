@@ -52,9 +52,11 @@ in
         authorizedKeys =
           cfg.authorizedKeys
           ++ (lib.optionals cfg.authorizeNixHosts (
-            lib.flatten (
-              lib.mapAttrsToList (k: v: lib.optional (v == "regular" && lib.hasSuffix ".pub" k) ./secrets/${k}) (
-                builtins.readDir ./secrets
+            map builtins.readFile (
+              lib.flatten (
+                lib.mapAttrsToList (k: v: lib.optional (v == "regular" && lib.hasSuffix ".pub" k) ./secrets/${k}) (
+                  builtins.readDir ./secrets
+                )
               )
             )
           ));
