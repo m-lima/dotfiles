@@ -15,7 +15,7 @@ in
       description = "Device to use";
       example = "/dev/vda";
     };
-    legacy = lib.mkEnableOption "Use BIOS instead of UEFI";
+    legacy = lib.mkEnableOption "use BIOS instead of UEFI";
     luks = lib.mkEnableOption "LUKS encryption";
     swap = lib.mkOption {
       default = null;

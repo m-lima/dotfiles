@@ -14,7 +14,7 @@ let
 in
 {
   options = util.mkOptions path {
-    tmuxStart = lib.mkEnableOption "Wrap the terminal in a tmux session by default";
+    tmuxStart = lib.mkEnableOption "wrap the terminal in a tmux session by default";
   };
 
   config = util.enforceHome path config cfg.enable {
