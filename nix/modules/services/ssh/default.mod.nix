@@ -3,7 +3,7 @@ path:
   lib,
   config,
   util,
-options,
+  options,
   ...
 }:
 let
@@ -14,10 +14,9 @@ let
 in
 {
   options = util.mkOptions path {
-    authorizedKeys =
-      lib.mkOption {
-        type = lib.types.listOf lib.types.singleLineStr;
-      default = [];
+    authorizedKeys = lib.mkOption {
+      type = lib.types.listOf lib.types.singleLineStr;
+      default = [ ];
       description = ''
         A list of verbatim OpenSSH public keys that should be added to the
         user's authorized keys. The keys are added to a file that the SSH
@@ -44,25 +43,32 @@ in
     };
 
     users =
-     let authorizedKeys = cfg.authorizedKeys ++ (lib.optionals cfg.authorizeNixHosts (lib.flatten (
-        lib.mapAttrsToList (k: v: lib.optional (v == "regular" && lib.hasSuffix ".pub" k) ./secrets/${k}) (
-          builtins.readDir ./secrets
-        )
-      ))); in  lib.mkIf (authorizedKeys != [ ]) {
-      users =
-        if user.enable then
-          {
-            ${user.userName} = {
-              openssh.authorizedKeys.keys = authorizedKeys;
+      let
+        authorizedKeys =
+          cfg.authorizedKeys
+          ++ (lib.optionals cfg.authorizeNixHosts (
+            lib.flatten (
+              lib.mapAttrsToList (k: v: lib.optional (v == "regular" && lib.hasSuffix ".pub" k) ./secrets/${k}) (
+                builtins.readDir ./secrets
+              )
+            )
+          ));
+      in
+      lib.mkIf (authorizedKeys != [ ]) {
+        users =
+          if user.enable then
+            {
+              ${user.userName} = {
+                openssh.authorizedKeys.keys = authorizedKeys;
+              };
+            }
+          else
+            {
+              root = {
+                openssh.authorizedKeys.keys = authorizedKeys;
+              };
             };
-          }
-        else
-          {
-            root = {
-              openssh.authorizedKeys.keys = authorizedKeys;
-            };
-          };
-    };
+      };
 
     age.secrets = {
       # TODO: Move these to home-manager, for home-manager-only systems
