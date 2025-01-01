@@ -16,7 +16,10 @@ in
   options = util.mkOptions path {
     authorizedKeys = lib.mkOption {
       type = lib.types.listOf lib.types.singleLineStr;
-      default = [ ];
+      default = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJWz+qMP0BBpeBLzCCHxr4wLSNz8rGZpPvhoppP6zegF lima@silver"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIoQfGlWPRvuEcqapM3zOmvppowN9x+jF2LgfEl150hS celo@silvercog"
+      ];
       description = ''
         A list of verbatim OpenSSH public keys that should be added to the
         user's authorized keys. The keys are added to a file that the SSH
@@ -32,7 +35,9 @@ in
         ./secrets/host/key.pub
       ];
     };
-    authorizeNixHosts = lib.mkEnableOption "add known Nix hosts as authorized keys";
+    authorizeNixHosts = lib.mkEnableOption "add known Nix hosts as authorized keys" // {
+      default = true;
+    };
     ports = options.services.openssh.ports;
   };
 
