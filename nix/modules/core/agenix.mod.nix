@@ -34,7 +34,7 @@ in
         masterIdentities = [
           {
             identity = ../../secrets/key.age;
-            pubkey = "age1lgp45wxrz266fvw7lwgsuyu5cw35gjq9a8zqldva2vgs24xe4fgszksnrj";
+            pubkey = ../../secrets/key.pub;
           }
         ];
         storageMode = "local";
