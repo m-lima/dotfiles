@@ -99,10 +99,10 @@ local make_on_attach = function(overrides)
           desc = 'Refresh codelens',
           group = augroup(),
           buffer = bufnr,
-          callback = vim.lsp.codelens.refresh,
+          callback = function() vim.lsp.codelens.refresh({ bufnr = bufnr }) end,
         }
       )
-      vim.lsp.codelens.refresh()
+      vim.lsp.codelens.refresh({ bufnr = bufnr })
     end
 
     if opts.format then
