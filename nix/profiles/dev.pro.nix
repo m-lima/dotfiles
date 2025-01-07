@@ -4,6 +4,7 @@
       neovim = {
         enable = true;
         plugins = [
+          "cpp"
           "go"
           "js"
           "lua"

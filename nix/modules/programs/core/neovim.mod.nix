@@ -11,6 +11,10 @@ let
   cfg = util.getOptions path config;
   pkgs = pkgsUnstable;
   plugins = {
+    cpp = {
+      pkg = [ pkgs.clang-tools ];
+      setup = "require('config.lspconfig.servers.cpp')";
+    };
     go = {
       pkg = [ pkgs.gopls ];
       setup = "require('config.lspconfig.servers.go')";
@@ -31,7 +35,7 @@ let
         pkgs.nil
         pkgs.nixfmt-rfc-style
       ];
-      setup = "require('config.lspconfig.servers.nil')";
+      setup = "require('config.lspconfig.servers.nix')";
     };
     python = {
       pkg = [ pkgs.pyright ];
@@ -46,16 +50,7 @@ in
 {
   options = util.mkOptions path {
     plugins = lib.mkOption {
-      type = lib.types.listOf (
-        lib.types.enum [
-          "go"
-          "js"
-          "lua"
-          "nix"
-          "python"
-          "rust"
-        ]
-      );
+      type = lib.types.listOf (lib.types.enum (lib.attrNames plugins));
       description = ''
         A list of plugin names to install. Check the `pkgs` for available names.
       '';
