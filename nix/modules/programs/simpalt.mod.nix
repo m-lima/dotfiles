@@ -12,7 +12,7 @@ let
   cfg = util.getOptions path config;
   simpalt = {
     pkg = inputs.simpalt.packages.${pkgs.system}.default;
-    zsh = inputs.simpalt.integrations.${pkgs.system}.zsh;
+    zsh = inputs.simpalt.lib.${pkgs.system}.zsh;
   };
 in
 {
