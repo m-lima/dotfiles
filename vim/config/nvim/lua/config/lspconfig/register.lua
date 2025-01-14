@@ -198,6 +198,7 @@ local search_for_config = function(path, server, config)
     local maybe_config = path .. lspconfig_file
     local ok, cfg = pcall(dofile, maybe_config)
     if ok then
+      vim.notify('Loaded LSP overrides from ' .. maybe_config, vim.log.levels.INFO)
       if type(cfg) == 'function' then
         return cfg(server, config)
       end
