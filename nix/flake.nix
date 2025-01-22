@@ -2,48 +2,81 @@
   description = "Flake for NixOS installations";
 
   inputs = {
+    # NixOs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-2405.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    # Transient dependencies
+    crane.url = "github:ipetkov/crane";
+    systems.url = "github:nix-systems/default";
+
+    # Dependencies
     agenix = {
       url = "github:ryantm/agenix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
+        home.follows = "home-manager";
+        systems.follows = "systems";
       };
     };
     agenix-rekey = {
       url = "github:oddlama/agenix-rekey";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
     };
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
     };
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
     };
     flake-utils = {
       url = "github:numtide/flake-utils";
+      inputs = {
+        systems.follows = "systems";
+      };
     };
     impermanence = {
       url = "github:nix-community/impermanence";
     };
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home.follows = "home-manager";
+      };
     };
     sddm-sugar-candy-nix = {
       url = "gitlab:Zhaith-Izaliel/sddm-sugar-candy-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
     };
+
+    # Local dependencies
     simpalt = {
       url = "github:m-lima/simpalt-rs?tag=v0.3.5";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+        crane.follows = "crane";
+      };
+    };
+    ragenix = {
+      url = "github:m-lima/ragenix?tag=v0.1.0";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+        crane.follows = "crane";
+      };
     };
   };
 
@@ -59,6 +92,7 @@
       home-manager,
       flake-utils,
       impermanence,
+      ragenix,
       sddm-sugar-candy-nix,
       ...
     }@inputs:
@@ -85,6 +119,7 @@
               disko.nixosModules.disko
               home-manager.nixosModules.home-manager
               impermanence.nixosModules.impermanence
+              ragenix.nixosModules.default
               sddm-sugar-candy-nix.nixosModules.default
             ];
         };
