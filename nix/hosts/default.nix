@@ -7,6 +7,7 @@ let
       hostModules = [
         module
         hostModule
+        setupRagenix
         { celo.host.id = id; }
       ];
     };
@@ -24,6 +25,15 @@ let
           };
         };
       };
+    };
+  setupRagenix =
+    { lib, config, ... }:
+    let
+      user = config.celo.modules.core.user;
+      secret = "${user.userName}-${config.celo.host.id}";
+    in
+    {
+      ragenix.key = lib.mkDefault config.age.secrets."services.ssh.${secret}".path;
     };
 in
 mkHost: builtins.mapAttrs (id: _: mkHost (loadHost id)) listHosts

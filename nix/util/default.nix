@@ -119,6 +119,8 @@ let
 
   xdg = config: config.home-manager.users.${config.celo.modules.core.user.userName}.xdg;
 
+  rageSecret = config: builtins.decrypt (/. + builtins.toPath config.ragenix.key);
+
 in
 {
   inherit
@@ -133,5 +135,6 @@ in
     withImpermanence
     mkSecretPath
     xdg
+    rageSecret
     ;
 }
