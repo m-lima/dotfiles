@@ -29,10 +29,7 @@
           services = {
             mdns.enable = true;
             ssh = {
-              ports = [
-                22
-                (util.rageSecret config ./secrets/ssh_port.age)
-              ];
+              ports = [ 22 ] ++ (util.rageSecret config ./secrets/ssh_port.age);
             };
           };
           programs = {

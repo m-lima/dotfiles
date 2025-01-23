@@ -119,7 +119,14 @@ let
 
   xdg = config: config.home-manager.users.${config.celo.modules.core.user.userName}.xdg;
 
-  rageSecret = config: builtins.decrypt (/. + builtins.toPath config.ragenix.key);
+  rageSecret =
+    config: secret:
+    if builtins.hasAttr "decrypt" builtins then
+      [
+        (builtins.decrypt (/. + builtins.toPath config.ragenix.key) secret)
+      ]
+    else
+      builtins.warn "Ragenix is not yet initialized. Skipping ${secret}" [ ];
 
 in
 {
