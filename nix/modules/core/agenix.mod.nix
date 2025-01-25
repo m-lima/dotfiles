@@ -34,7 +34,7 @@ in
         masterIdentities = [
           {
             identity = ../../secrets/key.age;
-            pubkey = ../../secrets/key.pub;
+            pubkey = builtins.readFile ../../secrets/key.pub;
           }
         ];
         storageMode = "local";
