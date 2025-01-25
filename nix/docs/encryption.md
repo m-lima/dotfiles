@@ -20,9 +20,11 @@ https://stackoverflow.com/questions/71688533/luks-and-dm-crypt-distinction-respo
 
 Lets start from the kernel part:
 
-    Device mapper is a kernel driver that allows creating new block devices from existing ones. It provides multiple additional features like RAID, caching or encryption through so called targets.
-    dm-crypt is a device mapper target that provides transparent encryption. This means you can create a block device on top of your disk or partition and everything you write to this new device mapper device will be encrypted before the data is actually written to the disk. And vice versa for reading: if you read from the device, the data is read from the disk and decrypted before returning to you.
-    dm-integrity is also a device mapper target, this one has a special metadata area for each block which are used to store checksum of the data block. This allows detection of data corruption.
+```
+Device mapper is a kernel driver that allows creating new block devices from existing ones. It provides multiple additional features like RAID, caching or encryption through so called targets.
+dm-crypt is a device mapper target that provides transparent encryption. This means you can create a block device on top of your disk or partition and everything you write to this new device mapper device will be encrypted before the data is actually written to the disk. And vice versa for reading: if you read from the device, the data is read from the disk and decrypted before returning to you.
+dm-integrity is also a device mapper target, this one has a special metadata area for each block which are used to store checksum of the data block. This allows detection of data corruption.
+```
 
 Now the userspace level:
 

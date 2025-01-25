@@ -1,46 +1,46 @@
 # TODO
 
-- [ ] Firefox is not persistent
-- [ ] Snapshots for btrfs
-- [ ] Cursor for firefox
-- [ ] Caps to ESC
-- [ ] Abort configuration if `/persist/secrets/<file>` does not exist
-- [ ] `zsh: can't rename /home/<user>/.zsh_history.new to $HISTFILE` upon finishing a ZSH session
-- [ ] On finishing SSH operations
-  - [ ] `hostfile_replace_entries: link /home/celo/.ssh/known_hosts to /home/celo/.ssh/known_hosts.old: Invalid cross-device link`
-  - [ ] `update_known_hosts: hostfile_replace_entries failed for /home/celo/.ssh/known_hosts: Invalid cross-device link`
-- [x] Font for terminal
-- [x] Hyprland config
-- [x] Impermanence
-- [x] ZSH
-- [x] Clean store
-- [x] Optimize store
-- [x] HomeManager
-- [x] Unfree packages
-- [x] All firmware
-- [x] Latest Linux (still a thing with flakes?)
-- [x] Disko with LUKS + BTRFS + (keyfile | ssh)
-- [x] Limit number of NixOS boots
-- [x] Password for user and for WiFi
-- [x] Make user immutable (investigate if really want this)
-- [x] Global stateVersion
-  - [!] Specify the nixpkgs url as well
-- [x] https://github.com/NixOS/nixpkgs/pull/273384/files
-  - [x] /boot
-  - [x] /nix
-  - [x] /var/lib/nixos
-  - [x] Immutable users or `passwd` `group` `shadow` `gshadow` `subuid` `subgid`
-  - [x] /etc/machine-id
-  - [x] /var/lib/systemd
-  - [x] /var/log
-    - [x] /var/log/journal
-- [x] Full Disk Encryption
-- [x] Diskos
-- [x] Git gpg
-- [x] ssh key
-- [x] HomeManager modules are not compatible with a "raw" install
-  - [x] ZSH is being configured with manual includes
-  - [x] FZF is being configured with module options
-  - [x] Bat is being configured as part of ZSH
-  - [x] Git is a bit of a mess.. A little here a little there
-- [x] BEMENU_OPTS not available for hyprland with UWSM
+- \[ \] Firefox is not persistent
+- \[ \] Snapshots for btrfs
+- \[ \] Cursor for firefox
+- \[ \] Caps to ESC
+- \[ \] Abort configuration if `/persist/secrets/<file>` does not exist
+- \[ \] `zsh: can't rename /home/<user>/.zsh_history.new to $HISTFILE` upon finishing a ZSH session
+- \[ \] On finishing SSH operations
+  - \[ \] `hostfile_replace_entries: link /home/celo/.ssh/known_hosts to /home/celo/.ssh/known_hosts.old: Invalid cross-device link`
+  - \[ \] `update_known_hosts: hostfile_replace_entries failed for /home/celo/.ssh/known_hosts: Invalid cross-device link`
+- \[x\] Font for terminal
+- \[x\] Hyprland config
+- \[x\] Impermanence
+- \[x\] ZSH
+- \[x\] Clean store
+- \[x\] Optimize store
+- \[x\] HomeManager
+- \[x\] Unfree packages
+- \[x\] All firmware
+- \[x\] Latest Linux (still a thing with flakes?)
+- \[x\] Disko with LUKS + BTRFS + (keyfile | ssh)
+- \[x\] Limit number of NixOS boots
+- \[x\] Password for user and for WiFi
+- \[x\] Make user immutable (investigate if really want this)
+- \[x\] Global stateVersion
+  - \[!\] Specify the nixpkgs url as well
+- \[x\] https://github.com/NixOS/nixpkgs/pull/273384/files
+  - \[x\] /boot
+  - \[x\] /nix
+  - \[x\] /var/lib/nixos
+  - \[x\] Immutable users or `passwd` `group` `shadow` `gshadow` `subuid` `subgid`
+  - \[x\] /etc/machine-id
+  - \[x\] /var/lib/systemd
+  - \[x\] /var/log
+    - \[x\] /var/log/journal
+- \[x\] Full Disk Encryption
+- \[x\] Diskos
+- \[x\] Git gpg
+- \[x\] ssh key
+- \[x\] HomeManager modules are not compatible with a "raw" install
+  - \[x\] ZSH is being configured with manual includes
+  - \[x\] FZF is being configured with module options
+  - \[x\] Bat is being configured as part of ZSH
+  - \[x\] Git is a bit of a mess.. A little here a little there
+- \[x\] BEMENU_OPTS not available for hyprland with UWSM

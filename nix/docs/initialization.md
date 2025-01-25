@@ -8,7 +8,7 @@ $ sudo -i
 
 2. Optionally [enable WiFi](#wifi)
 
-3. Enable **git**
+1. Enable **git**
 
 ```
 $ nix-shell -p git
@@ -117,11 +117,11 @@ EOF
 
 1. Boot into NixOS stick
 
-2. Repeat steps **1** and **2** from [above](#wifi)
+1. Repeat steps **1** and **2** from [above](#wifi)
 
-3. Repeat steps **3** and **4** from the [main flow](#initializing)
+1. Repeat steps **3** and **4** from the [main flow](#initializing)
 
-4. Mount the disks
+1. Mount the disks
 
 ```
 $ ./dotfiles/nix/init.sh <HOST> mount
@@ -139,12 +139,12 @@ $ nixos-enter --root /mnt
 
 1. Download the image from `https://github.com/nix-community/nixos-images/releases`. e.g. `https://github.com/nix-community/nixos-images/releases/download/nixos-24.11/nixos-kexec-installer-x86_64-linux.tar.gz`
 
-2. Copy the public key to `/root/.ssh/authorized_keys`
+1. Copy the public key to `/root/.ssh/authorized_keys`
 
-3. Untar `tar -vxf <downloaded file>`
+1. Untar `tar -vxf <downloaded file>`
 
-4. Run `./kexec/run`
+1. Run `./kexec/run`
 
-5. Re-login and run `nix-channel --update`
+1. Re-login and run `nix-channel --update`
 
-6. Continue as a normal installation
+1. Continue as a normal installation

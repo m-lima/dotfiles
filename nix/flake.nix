@@ -60,6 +60,12 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+      };
+    };
 
     # Local dependencies
     simpalt = {
@@ -94,6 +100,7 @@
       impermanence,
       ragenix,
       sddm-sugar-candy-nix,
+      treefmt-nix,
       ...
     }@inputs:
     let
@@ -133,7 +140,26 @@
       };
 
       formatter = flake-utils.lib.eachDefaultSystemPassThrough (system: {
-        ${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
+        ${system} =
+          (treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${system} {
+            projectRootFile = "flake.nix";
+            programs = {
+              mdformat.enable = true;
+              nixfmt.enable = true;
+              shfmt.enable = true;
+            };
+            settings = {
+              formatter = {
+                shfmt.options = [ "-ci" ];
+              };
+              excludes = [
+                "*.age"
+                "*.jpg"
+                "*.lock"
+                "*.pub"
+              ];
+            };
+          }).config.build.wrapper;
       });
     };
 }

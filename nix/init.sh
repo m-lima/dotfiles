@@ -30,9 +30,9 @@ function format {
   echo -n "[33mWARNING!![m This will format the disk. Proceed? [y/N/a] "
   read input
   case "${input}" in
-    [Yy] ) ;;
-    [Aa] ) exit ;;
-    * ) return ;;
+    [Yy]) ;;
+    [Aa]) exit ;;
+    *) return ;;
   esac
 
   echo "[34mnix --experimental-features 'nix-command flakes' run github:nix-community/disko/latest -- --mode disko --flake '${base}#${host}'[m"
@@ -53,9 +53,9 @@ function mkHardwareConfig {
     echo -n "[33mWARNING!![m There already exists a hardware configuration at ${base}/hosts/${host}/hardware-configuration.nix. Proceed? [y/N/a] "
     read input
     case "${input}" in
-      [Yy] ) ;;
-      [Aa] ) exit ;;
-      * ) return ;;
+      [Yy]) ;;
+      [Aa]) exit ;;
+      *) return ;;
     esac
   fi
   nixos-generate-config --no-filesystems --root /mnt
@@ -85,14 +85,14 @@ function mkpass {
       echo -n "[33mWARNING!![m There already exists a password for '${1}'. Proceed? [y/N/a] "
       read input
       case "${input}" in
-        [Yy] ) ;;
-        [Aa] ) exit ;;
-        * ) return ;;
+        [Yy]) ;;
+        [Aa]) exit ;;
+        *) return ;;
       esac
     fi
 
     mkdir -p "/mnt/persist/secrets/${1}"
-    get_password | mkpasswd -s > "/mnt/persist/secrets/${1}/passwordFile"
+    get_password | mkpasswd -s >"/mnt/persist/secrets/${1}/passwordFile"
   }
 
   mkUserPass root
@@ -106,9 +106,9 @@ function mksshid {
     echo -n "[33mWARNING!![m There already exists an SSH key for '${1}'. Proceed? [y/N/a] "
     read input
     case "${input}" in
-      [Yy] ) ;;
-      [Aa] ) exit ;;
-      * ) return ;;
+      [Yy]) ;;
+      [Aa]) exit ;;
+      *) return ;;
     esac
   fi
 
@@ -124,9 +124,9 @@ function rekey {
       echo -n "[33mWARNING!![m There already exists a public key at ${base}/secrets/pubkey/${host}/ssh.key.pub. Proceed? [y/N/a] "
       read input
       case "${input}" in
-        [Yy] ) ;;
-        [Aa] ) exit ;;
-        * ) return ;;
+        [Yy]) ;;
+        [Aa]) exit ;;
+        *) return ;;
       esac
     fi
 
@@ -146,13 +146,13 @@ function rekey {
       echo -n "[33mWARNING!![m There already exists a private key at ${base}/modules/services/ssh/secrets/${user}-${host}.age. Proceed? [y/N/a] "
       read input
       case "${input}" in
-        [Yy] ) rm "${base}/modules/services/ssh/secrets/${user}-${host}.age" ;;
-        [Aa] ) exit ;;
-        * ) return ;;
+        [Yy]) rm "${base}/modules/services/ssh/secrets/${user}-${host}.age" ;;
+        [Aa]) exit ;;
+        *) return ;;
       esac
     fi
 
-    if ! [ -f "/mnt/persist/secrets/${user}/id_ed25519"  ]; then
+    if ! [ -f "/mnt/persist/secrets/${user}/id_ed25519" ]; then
       echo -n "[31mERROR!![m There is no key at /mnt/persist/secrets/${user}/id_ed25519.  Continuing.."
     fi
 
@@ -167,13 +167,13 @@ function rekey {
       echo -n "[33mWARNING!![m There already exists a key at /mnt/persist/etc/ssh/${1}. Overwrite? [y/N/a] "
       read input
       case "${input}" in
-        [Yy] ) ;;
-        [Aa] ) exit ;;
-        * ) return ;;
+        [Yy]) ;;
+        [Aa]) exit ;;
+        *) return ;;
       esac
     fi
 
-    if ! [ -f "/etc/ssh/${1}"  ]; then
+    if ! [ -f "/etc/ssh/${1}" ]; then
       echo -n "[31mERROR!![m There is no key at /etc/ssh/${1}.  Continuing.."
     fi
 
@@ -214,7 +214,7 @@ case "${2}" in
   "all")
     format && mkHardwareConfig && mkpass && mksshid && rekey && prepare_persist && vi "${base}/hosts/${host}/default.nix" && install
     ;;
-  * )
+  *)
     shift
     ${@}
     ;;
