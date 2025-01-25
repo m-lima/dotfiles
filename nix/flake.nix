@@ -16,7 +16,7 @@
       url = "github:ryantm/agenix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        home.follows = "home-manager";
+        home-manager.follows = "home-manager";
         systems.follows = "systems";
       };
     };
@@ -32,16 +32,16 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
     flake-utils = {
       url = "github:numtide/flake-utils";
       inputs = {
         systems.follows = "systems";
+      };
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
       };
     };
     impermanence = {
@@ -51,7 +51,7 @@
       url = "github:nix-community/plasma-manager";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        home.follows = "home-manager";
+        home-manager.follows = "home-manager";
       };
     };
     sddm-sugar-candy-nix = {
@@ -89,8 +89,8 @@
       agenix,
       agenix-rekey,
       disko,
-      home-manager,
       flake-utils,
+      home-manager,
       impermanence,
       ragenix,
       sddm-sugar-candy-nix,
