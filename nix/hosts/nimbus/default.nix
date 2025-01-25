@@ -12,6 +12,7 @@
       celo = {
         profiles = {
           minimal.enable = true;
+          base.enable = true;
         };
 
         modules = {
@@ -19,9 +20,10 @@
             disko = {
               device = "/dev/sda";
               legacy = true;
-              # luks = true;
+              luks = true;
               swap = "8G";
             };
+            dropbear.enable = true;
             nixos = {
               timeZone = "Europe/Amsterdam";
             };
