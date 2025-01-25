@@ -128,6 +128,13 @@ let
     else
       builtins.warn "Ragenix is not yet initialized. Skipping ${secret}" [ ];
 
+  warnMissingFile =
+    file:
+    if lib.pathIsRegularFile file then
+      file
+    else
+      builtins.warn "Path `${file}` is not a regular file" file;
+
 in
 {
   inherit
@@ -143,5 +150,6 @@ in
     mkSecretPath
     xdg
     rageSecret
+    warnMissingFile
     ;
 }

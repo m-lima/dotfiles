@@ -15,7 +15,9 @@ in
     networking.wireless = {
       enable = true;
       userControlled.enable = true;
+      # TDOO: Don't assume impermanence
       secretsFile = "/persist/secrets/wifi.env";
+      # TODO: Use ragenix
       networks = {
         "CIA Surveillance Van" = {
           pskRaw = "ext:PSK_RAW";

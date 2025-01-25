@@ -31,7 +31,9 @@ in
         ${cfg.userName} = {
           isNormalUser = true;
           home = cfg.homeDirectory;
-          hashedPasswordFile = "/persist/secrets/${cfg.userName}/passwordFile";
+          # TDOO: Don't assume impermanence
+          # TODO: Use ragenix
+          hashedPasswordFile = util.warnMissingFile "/persist/secrets/${cfg.userName}/passwordFile";
           extraGroups = [ "wheel" ];
         };
       };
