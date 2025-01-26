@@ -84,6 +84,7 @@ in
         mode = "600";
         owner = user.userName;
         group = config.users.users.${user.userName}.group;
+        symlink = false;
       };
       ${util.mkSecretPath path "hosts"} = lib.mkIf home.enable {
         rekeyFile = ./secrets/hosts.age;
@@ -91,6 +92,7 @@ in
         mode = "644";
         owner = user.userName;
         group = config.users.users.${user.userName}.group;
+        symlink = false;
       };
     };
 
