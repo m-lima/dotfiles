@@ -39,7 +39,7 @@ in
             ''
             + lib.optionalString celo.programs.simpalt.enable readFile ../../../tmux/script/status/simpalt.sh
             # TODO
-            # + (if cfg.enable then readFile ../../tmux/script/status/spotify.sh else "")
+            # + (lib.optionalString celo.programs.ui.spotify.enable (readFile ../../../tmux/script/status/spotify.sh))
             + readFile ../../../tmux/script/status/time.sh;
           executable = true;
         };
