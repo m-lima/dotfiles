@@ -3,6 +3,7 @@ path:
   lib,
   config,
   util,
+  options,
   ...
 }:
 let
@@ -23,6 +24,8 @@ in
       example = "/home/celo";
       type = lib.types.nonEmptyStr;
     };
+
+    motd = options.users.motd;
   };
 
   config = lib.mkIf cfg.enable {
@@ -37,6 +40,7 @@ in
           extraGroups = [ "wheel" ];
         };
       };
+      motd = cfg.motd;
     };
   };
 }
