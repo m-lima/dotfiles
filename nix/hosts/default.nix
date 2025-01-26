@@ -28,12 +28,10 @@ let
     };
   setupRagenix =
     { lib, config, ... }:
-    let
-      user = config.celo.modules.core.user;
-      secret = "${user.userName}-${config.celo.host.id}";
-    in
     {
-      ragenix.key = lib.mkDefault config.age.secrets."services.ssh.${secret}".path;
+      ragenix.key =
+        lib.mkDefault
+          (builtins.head (builtins.filter (k: k.type == "ed25519") config.services.openssh.hostKeys)).path;
     };
 in
 mkHost: builtins.mapAttrs (id: _: mkHost (loadHost id)) listHosts
