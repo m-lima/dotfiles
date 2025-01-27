@@ -9,7 +9,8 @@ path:
 let
   cfg = util.getOptions path config;
   user = config.celo.modules.core.user;
-  secret = "${user.userName}-${config.celo.host.id}";
+  host = config.celo.host.id;
+  secret = "${user.userName}-${host}";
 in
 {
   options = util.mkOptions path {
@@ -31,7 +32,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    age.secrets = lib.mkIf (config.celo.host.id == "utm") {
+    # TODO: Bring coal to the party
+    age.secrets = lib.mkIf (host != "coal") {
       ${util.mkSecretPath path secret} = {
         rekeyFile = ./secrets/${secret}.age;
       };
@@ -42,12 +44,11 @@ in
         ${cfg.userName} = {
           isNormalUser = true;
           home = cfg.homeDirectory;
-          # TDOO: Don't assume impermanence
-          # TODO: Use ragenix
           hashedPasswordFile =
-            if config.celo.host.id == "utm" then
+            if host != "coal" then
               config.age.secrets.${util.mkSecretPath path secret}.path
             else
+              # TODO: Remove when not needed
               util.warnMissingFile "/persist/secrets/${cfg.userName}/passwordFile";
           extraGroups = [ "wheel" ];
         };
