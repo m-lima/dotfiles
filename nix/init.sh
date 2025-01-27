@@ -91,9 +91,10 @@ function mkpass {
       esac
     fi
 
-    get_password | mkpasswd -s >"/tmp/passwd"
-    nix run github:oddlama/agenix-rekey -- edit -i "/tmp/passwd" "${2}"
-    rm "/tmp/passwd"
+    temp="$(mktemp)" && \
+    get_password | mkpasswd -s >"${temp}" && \
+    nix run github:oddlama/agenix-rekey -- edit -i "${temp}" "${2}"
+    rm "${temp}"
   }
 
   mkUserPass root "${base}/modules/core/nixos/secrets/${host}.age"
@@ -103,23 +104,29 @@ function mkpass {
 function mksshid {
   echo "[34mMaking SSH id[m"
 
-  if [ -f "/tmp/id_ed25519" ]; then
-    echo -n "[33mWARNING!![m There already exists an SSH key at '/tmp/id_ed25519'. Proceed? [y/N/a] "
+  if [ -f "${base}/modules/services/ssh/secrets/${user}-${host}.age" ]; then
+    echo -n "[33mWARNING!![m There already exists an SSH key at '${base}/modules/services/ssh/secrets/${user}-${host}.age'. Proceed? [y/N/a] "
     read input
     case "${input}" in
-      [Yy]) rm "/tmp/id_ed25519" ;;
+      [Yy])
+        rm "${base}/modules/services/ssh/secrets/${user}-${host}.age"
+        rm "${base}/modules/services/ssh/secrets/${user}-${host}.pub"
+        ;;
       [Aa]) exit ;;
       *) return ;;
     esac
   fi
 
-  ssh-keygen -t ed25519 -C "${user}@${host}" -N '' -f "/tmp/id_ed25519"
-  cp "/tmp/id_ed25519.pub" "${base}/modules/services/ssh/secrets/${user}-${host}.pub"
-  cd "${base}"
-  nix run github:oddlama/agenix-rekey -- edit -i "/tmp/id_ed25519" "./modules/services/ssh/secrets/${user}-${host}.age"
+  temp="$(mktemp)" && \
+  rm "${temp}" && \
+  ssh-keygen -t ed25519 -C "${user}@${host}" -N '' -f "${temp}" && \
+  mv "${temp}.pub" "${base}/modules/services/ssh/secrets/${user}-${host}.pub" && \
+  cd "${base}" && \
+  nix run github:oddlama/agenix-rekey -- edit -i "${temp}" "./modules/services/ssh/secrets/${user}-${host}.age" && \
+  rm "${temp}"
+
   git add "./modules/services/ssh/secrets/${user}-${host}.age"
   git add "./modules/services/ssh/secrets/${user}-${host}.pub"
-  rm "/tmp/id_ed25519" "/tmp/id_ed25519.pub"
 }
 
 function rekey {
