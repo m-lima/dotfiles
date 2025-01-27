@@ -31,8 +31,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # TODO: Bring coal to the party
-    age.secrets = lib.mkIf (host != "coal") {
+    age.secrets = {
       ${util.mkSecretPath path secret} = {
         rekeyFile = ./secrets/${secret}.age;
       };
@@ -43,12 +42,7 @@ in
         ${cfg.userName} = {
           isNormalUser = true;
           home = cfg.homeDirectory;
-          hashedPasswordFile =
-            if host != "coal" then
-              config.age.secrets.${util.mkSecretPath path secret}.path
-            else
-              # TODO: Remove when not needed
-              util.warnMissingFile "/persist/secrets/${cfg.userName}/passwordFile";
+          hashedPasswordFile = config.age.secrets.${util.mkSecretPath path secret}.path;
           extraGroups = [ "wheel" ];
         };
       };

@@ -82,8 +82,7 @@ in
     # Select internationalization properties.
     i18n.defaultLocale = "en_US.UTF-8";
 
-    # TODO: Bring coal to the party
-    age.secrets = lib.mkIf (host != "coal") {
+    age.secrets = {
       ${util.mkSecretPath path host} = {
         rekeyFile = ./secrets/${host}.age;
       };
@@ -93,11 +92,7 @@ in
       mutableUsers = false;
       users = {
         root = {
-          hashedPasswordFile =
-            if host != "coal" then
-              config.age.secrets.${util.mkSecretPath path host}.path
-            else
-              "/persist/secrets/root/passwordFile";
+          hashedPasswordFile = config.age.secrets.${util.mkSecretPath path host}.path;
         };
       };
     };
