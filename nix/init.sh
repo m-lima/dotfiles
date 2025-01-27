@@ -81,44 +81,50 @@ function mkpass {
   function mkUserPass {
     echo "[34mSetting password for ${1}[m"
 
-    if [ -f "/mnt/persist/secrets/${1}/passwordFile" ]; then
+    if [ -f "${2}" ]; then
       echo -n "[33mWARNING!![m There already exists a password for '${1}'. Proceed? [y/N/a] "
       read input
       case "${input}" in
-        [Yy]) ;;
+        [Yy]) rm "${2}" ;;
         [Aa]) exit ;;
         *) return ;;
       esac
     fi
 
-    mkdir -p "/mnt/persist/secrets/${1}"
-    get_password | mkpasswd -s >"/mnt/persist/secrets/${1}/passwordFile"
+    get_password | mkpasswd -s >"/tmp/passwd"
+    nix run github:oddlama/agenix-rekey -- edit -i "/tmp/passwd" "${2}"
+    rm "/tmp/passwd"
   }
 
-  mkUserPass root
-  mkUserPass "${user}"
+  mkUserPass root "${base}/modules/core/nixos/secrets/${host}.age"
+  mkUserPass "${user}" "${base}/modules/core/user/secrets/${user}-${host}.age"
 }
 
 function mksshid {
   echo "[34mMaking SSH id[m"
 
-  if [ -f "/mnt/persist/secrets/${user}/id_ed25519" ]; then
-    echo -n "[33mWARNING!![m There already exists an SSH key for '${1}'. Proceed? [y/N/a] "
+  if [ -f "/tmp/id_ed25519" ]; then
+    echo -n "[33mWARNING!![m There already exists an SSH key at '/tmp/id_ed25519'. Proceed? [y/N/a] "
     read input
     case "${input}" in
-      [Yy]) ;;
+      [Yy]) rm "/tmp/id_ed25519" ;;
       [Aa]) exit ;;
       *) return ;;
     esac
   fi
 
-  mkdir -p "/mnt/persist/secrets/${user}"
-  ssh-keygen -t ed25519 -C "${user}@${host}" -N '' -f "/mnt/persist/secrets/${user}/id_ed25519"
+  ssh-keygen -t ed25519 -C "${user}@${host}" -N '' -f "/tmp/id_ed25519"
+  cp "/tmp/id_ed25519.pub" "${base}/modules/services/ssh/secrets/${user}-${host}.pub"
+  cd "${base}"
+  nix run github:oddlama/agenix-rekey -- edit -i "/tmp/id_ed25519" "./modules/services/ssh/secrets/${user}-${host}.age"
+  git add "./modules/services/ssh/secrets/${user}-${host}.age"
+  git add "./modules/services/ssh/secrets/${user}-${host}.pub"
+  rm "/tmp/id_ed25519" "/tmp/id_ed25519.pub"
 }
 
 function rekey {
   function copyPubKey {
-    echo "[34mCopying public SSH key[m"
+    echo "[34mCopying host public SSH key[m"
 
     if [ -f "${base}/secrets/pubkey/${host}/ssh.key.pub" ]; then
       echo -n "[33mWARNING!![m There already exists a public key at ${base}/secrets/pubkey/${host}/ssh.key.pub. Proceed? [y/N/a] "
@@ -136,32 +142,15 @@ function rekey {
 
     mkdir -p "${base}/secrets/pubkey/${host}"
     cp /etc/ssh/ssh_host_ed25519_key.pub "${base}/secrets/pubkey/${host}/ssh.key.pub"
-    cp "/mnt/persist/secrets/${user}/id_ed25519.pub" "${base}/modules/services/ssh/secrets/${user}-${host}.pub"
-  }
-
-  function rekeyEdit {
-    echo "[34mAdding rekeyed SSH private key[m"
-
-    if [ -f "${base}/modules/services/ssh/secrets/${user}-${host}.age" ]; then
-      echo -n "[33mWARNING!![m There already exists a private key at ${base}/modules/services/ssh/secrets/${user}-${host}.age. Proceed? [y/N/a] "
-      read input
-      case "${input}" in
-        [Yy]) rm "${base}/modules/services/ssh/secrets/${user}-${host}.age" ;;
-        [Aa]) exit ;;
-        *) return ;;
-      esac
-    fi
-
-    if ! [ -f "/mnt/persist/secrets/${user}/id_ed25519" ]; then
-      echo -n "[31mERROR!![m There is no key at /mnt/persist/secrets/${user}/id_ed25519.  Continuing.."
-    fi
-
-    cd "${base}"
-    nix run github:oddlama/agenix-rekey -- edit -i "/mnt/persist/secrets/${user}/id_ed25519" "./modules/services/ssh/secrets/${user}-${host}.age"
   }
 
   function copySshKey {
-    echo "[34mOuter SSH key into mounted disks[m"
+    echo "[34mCopy outer SSH key into mounted disks[m"
+
+    if ! [ -d "/mnt/persist" ]; then
+      echo -n "[33mWARNING!![m There doesn't seem to be a persistent mount in /mnt/persist. Continuing.."
+      return
+    fi
 
     if [ -f "/mnt/persist/etc/ssh/${1}" ]; then
       echo -n "[33mWARNING!![m There already exists a key at /mnt/persist/etc/ssh/${1}. Overwrite? [y/N/a] "
@@ -175,6 +164,7 @@ function rekey {
 
     if ! [ -f "/etc/ssh/${1}" ]; then
       echo -n "[31mERROR!![m There is no key at /etc/ssh/${1}.  Continuing.."
+      return
     fi
 
     mkdir -p /mnt/persist/etc/ssh/
@@ -182,12 +172,10 @@ function rekey {
   }
 
   copyPubKey
-  rekeyEdit
 
   cd "${base}"
   git add .
-  nix run github:oddlama/agenix-rekey -- rekey
-  git add .
+  nix run github:oddlama/agenix-rekey -- rekey -a
 
   copySshKey ssh_host_ed25519_key
   copySshKey ssh_host_rsa_key
