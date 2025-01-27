@@ -23,7 +23,10 @@
               luks = true;
               swap = "8G";
             };
-            dropbear.enable = true;
+            dropbear = {
+              enable = true;
+              port = builtins.head ((util.rageSecret config ./secrets/core/dropbear/port.age) ++ [ 22 ]);
+            };
             nixos = {
               timeZone = "Europe/Amsterdam";
             };
