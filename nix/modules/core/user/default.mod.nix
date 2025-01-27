@@ -8,6 +8,8 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  user = config.celo.modules.core.user;
+  secret = "${user.userName}-${config.celo.host.id}";
 in
 {
   options = util.mkOptions path {
@@ -29,6 +31,12 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    age.secrets = lib.mkIf (config.celo.host.id == "utm") {
+      ${util.mkSecretPath path secret} = {
+        rekeyFile = ./secrets/${secret}.age;
+      };
+    };
+
     users = {
       users = {
         ${cfg.userName} = {
@@ -36,7 +44,11 @@ in
           home = cfg.homeDirectory;
           # TDOO: Don't assume impermanence
           # TODO: Use ragenix
-          hashedPasswordFile = util.warnMissingFile "/persist/secrets/${cfg.userName}/passwordFile";
+          hashedPasswordFile =
+            if config.celo.host.id == "utm" then
+              config.age.secrets.${util.mkSecretPath path secret}.path
+            else
+              util.warnMissingFile "/persist/secrets/${cfg.userName}/passwordFile";
           extraGroups = [ "wheel" ];
         };
       };
