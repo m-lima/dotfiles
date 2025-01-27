@@ -8,13 +8,14 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  host = config.celo.host.id;
 in
 {
   options = util.mkOptions path {
     hostName = lib.mkOption {
       type = lib.types.nonEmptyStr;
       description = "Host name";
-      default = config.celo.host.id;
+      default = host;
       example = "coal";
     };
     timeZone = lib.mkOption {
@@ -81,11 +82,21 @@ in
     # Select internationalization properties.
     i18n.defaultLocale = "en_US.UTF-8";
 
+    age.secrets = lib.mkIf (host == "utm") {
+      ${util.mkSecretPath path host} = {
+        rekeyFile = ./secrets/${host}.age;
+      };
+    };
+
     users = {
       mutableUsers = false;
       users = {
         root = {
-          hashedPasswordFile = "/persist/secrets/root/passwordFile";
+          hashedPasswordFile =
+            if host == "utm" then
+              config.age.secrets.${util.mkSecretPath path host}.path
+            else
+              "/persist/secrets/root/passwordFile";
         };
       };
     };
