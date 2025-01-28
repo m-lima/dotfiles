@@ -29,9 +29,7 @@ let
   setupRagenix =
     { lib, config, ... }:
     {
-      ragenix.key =
-        lib.mkDefault
-          builtins.head config.age.identityPaths;
+      ragenix.key = lib.mkDefault (builtins.head config.age.identityPaths);
     };
 in
 mkHost: builtins.mapAttrs (id: _: mkHost (loadHost id)) listHosts

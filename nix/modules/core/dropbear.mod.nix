@@ -60,18 +60,13 @@ in
             )
           ));
         hostKeys = [
-          config.age.secrets.${util.mkSecretPath path config.celo.host.id}.path
+          "/etc/ssh/ssh_host_ed25519_key"
+          "/etc/ssh/ssh_host_rsa_key"
         ];
       };
       postCommands = ''
         echo 'cryptsetup-askpass' >> /root/.profile
       '';
-    };
-
-    age.secrets = {
-      ${util.mkSecretPath path config.celo.host.id} = {
-        rekeyFile = ./secrets/${config.celo.host.id}.age;
-      };
     };
   };
 }
