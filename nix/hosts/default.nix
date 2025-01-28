@@ -31,7 +31,7 @@ let
     {
       ragenix.key =
         lib.mkDefault
-          (builtins.head (builtins.filter (k: k.type == "ed25519") config.services.openssh.hostKeys)).path;
+          builtins.head config.age.identityPaths;
     };
 in
 mkHost: builtins.mapAttrs (id: _: mkHost (loadHost id)) listHosts
