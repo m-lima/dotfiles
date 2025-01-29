@@ -20,6 +20,7 @@
             luks = true;
             swap = "8G";
           };
+          dropbear.enable = true;
           nixos = {
             timeZone = "Europe/Amsterdam";
           };
