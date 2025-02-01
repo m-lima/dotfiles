@@ -3,9 +3,7 @@ alias mud='telnet www.ateraan.com 4002'
 alias png='ping -c 4'
 
 ### Directory stuff
-alias lt='ls -lathr'
-alias l='ls -lAhv'
-alias ll='ls -lh'
+source ~/.config/m-lima/zsh/programs/ls.zsh
 
 ### Vim
 if command -v nvim &> /dev/null
@@ -44,7 +42,7 @@ source ~/.config/m-lima/zsh/programs/git.zsh
 
 if command -v lazygit &> /dev/null
 then
-  alias lg=lazygit
+  source ~/.config/m-lima/zsh/programs/lazygit.zsh
 fi
 
 ### Copy path
