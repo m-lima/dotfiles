@@ -51,6 +51,37 @@ alias grpr='git reset $(git merge-base master HEAD)' # Update HEAD to track dive
 
 # Show remote status of branches
 function gbs {
+  for arg in ${@}; do
+    case "${arg}" in
+      -h|--help)
+        cat <<EOF
+Usage:
+  ${0} [OPTION]
+
+Options:
+  -h   --help                This help message
+  -f   --full-color          All branches, coded by color
+  -fl  --full-color-local    All local branches, coded by color
+  -s   --simple-color        All branches, with coded coded symbols
+  -sl  --simple-color-local  All local branches, with coded coded symbols
+  -n   --no-color            All branches, no color, no coding
+  -nl  --no-color-local      All local branches, no color, no coding
+  -t   --tracked             Only tracked branches
+  -g   --gone                Only gone branches
+  -l   --local               Only local branches
+  -r   --remote              Only remote branches
+
+Colors:
+  Green:   Tracked
+  Red:     Gone
+  Blue:    Local
+  Magenta: Remote
+EOF
+        return
+        ;;
+    esac
+  done
+
   local tracked gone local remote terminator
   local show_tracked=1 show_gone=1 show_local=1 show_remote=1
   local trackeds=()
