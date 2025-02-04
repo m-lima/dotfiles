@@ -10,19 +10,19 @@ local_pluginManager=zgen
 local_zshFramework=omz
 
 # Load local config
-source "${HOME}/.config/m-lima/zsh/local.zsh"
+source ~/.config/m-lima/zsh/local.zsh
 
 # If using zgen, load plugins
-source "${HOME}/.config/m-lima/zsh/plugins.zsh"
+source ~/.config/m-lima/zsh/plugins.zsh
 
 # Load options
-source "${HOME}/.config/m-lima/zsh/options.zsh"
+source ~/.config/m-lima/zsh/options.zsh
 
 # Load the aliases
-source "${HOME}/.config/m-lima/zsh/alias.zsh"
+source ~/.config/m-lima/zsh/alias.zsh
 
 # If using iTerm2, set integration
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.config/m-lima/zsh/iterm.zsh"
+test -e ~/.iterm2_shell_integration.zsh && source ~/.config/m-lima/zsh/iterm.zsh
 
 # Clean up temporary variables
 unset local_plugins
@@ -35,4 +35,4 @@ then
 fi
 
 # Load final
-source "${HOME}/.config/m-lima/zsh/final.zsh"
+source ~/.config/m-lima/zsh/final.zsh
