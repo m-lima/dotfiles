@@ -77,6 +77,7 @@ esac
 if [ -f ~/.fzf.zsh ]; then
   source ~/.fzf.zsh
   if which -p fdfind &> /dev/null; then
+    export FZF_DEFAULT_OPTS='--height 40% --tmux bottom,40% --layout reverse --border top'
     export FZF_DEFAULT_COMMAND='fdfind --type file --follow --hidden --exclude .git'
     _fzf_compgen_path() {
       echo "${1}"

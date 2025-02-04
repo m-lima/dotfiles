@@ -1,3 +1,4 @@
+export FZF_DEFAULT_OPTS='--height 40% --tmux bottom,40% --layout reverse --border top'
 export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
 
 _fzf_compgen_path() {
