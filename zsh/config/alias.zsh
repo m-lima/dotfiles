@@ -35,6 +35,19 @@ then
   alias k=kubectl
 fi
 
+### Fd
+if which -p fdfind &> /dev/null
+then
+  alias ff='fdfind'
+fi
+
+### Ripgrep
+if command -v rg &> /dev/null
+then
+  alias rg='rg --smart-case'
+  alias rgc='rg -U "^\\s*//[^/][^\\n]*\\n\\s*//[^/\\n]*\\n"'
+fi
+
 ### Git stuff
 alias ghelp='bat ~/.zgen/robbyrussell/oh-my-zsh-master/plugins/git/git.plugin.zsh'
 unalias gbs
@@ -210,58 +223,6 @@ if command -v xdg-open &> /dev/null
 then
   alias open='xdg-open'
 fi
-
-### Ripgrep
-if command -v rg &> /dev/null
-then
-  alias rg='rg --smart-case'
-  alias rgc='rg -U "^\\s*//[^/][^\\n]*\\n\\s*//[^/\\n]*\\n"'
-fi
-
-### Faster find
-function fnd {
-  if [ ! "${1}" ]
-  then
-    return -1
-  fi
-
-  local case="-name"
-  local error=""
-  local root="."
-  local type=""
-  local flags=${2}
-
-  if [ "${flags}" ]
-  then
-    [[ "${flags}" == *i* ]] && case="-iname"
-    [[ "${flags}" == *e* ]] && error="true"
-    [[ "${flags}" == *r* ]] && root="/"
-    [[ "${flags}" == *f* ]] && type=("-type" "f")
-    [[ "${flags}" == *d* ]] && type=("-type" "d")
-  fi
-
-  if [ ${error} ]
-  then
-    find ${root} ${type} ${case} "${1}"
-  else
-    find ${root} ${type} ${case} "${1}" 2> /dev/null
-  fi
-}
-
-function _fnd {
-  if (( CURRENT == 3 ))
-  then
-    local flags=(
-    'i[Case insensitive]'
-    'e[Show errors]'
-    '(d)f[Set type to directory]'
-    '(f)d[Set type to file]'
-    )
-    _values -s '' 'flags' ${flags}
-  fi
-}
-
-compdef _fnd fnd
 
 ### Commands to remember
 ## Code
