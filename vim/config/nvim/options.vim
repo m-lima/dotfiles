@@ -26,3 +26,6 @@ augroup END
 
 " Set colorscheme
 colorscheme simpalt
+
+" Set single status bar
+set laststatus=3
