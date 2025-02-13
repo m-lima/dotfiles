@@ -11,7 +11,7 @@ require('lualine').setup({
     section_separators = { left = '', right = '' },
     component_separators = { left = '╲', right = '╱' },
     theme = themes.grayalt,
-    globalstatus = false,
+    globalstatus = true,
   },
   sections = {
     lualine_a = {
