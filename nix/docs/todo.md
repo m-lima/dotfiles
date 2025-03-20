@@ -1,14 +1,14 @@
 # TODO
 
-- \[ \] Firefox is not persistent
 - \[ \] Snapshots for btrfs
-- \[ \] Cursor for firefox
 - \[ \] Caps to ESC
-- \[ \] Abort configuration if `/persist/secrets/<file>` does not exist
 - \[ \] `zsh: can't rename /home/<user>/.zsh_history.new to $HISTFILE` upon finishing a ZSH session
 - \[ \] On finishing SSH operations
   - \[ \] `hostfile_replace_entries: link /home/celo/.ssh/known_hosts to /home/celo/.ssh/known_hosts.old: Invalid cross-device link`
   - \[ \] `update_known_hosts: hostfile_replace_entries failed for /home/celo/.ssh/known_hosts: Invalid cross-device link`
+- \[x\] Abort configuration if `/persist/secrets/<file>` does not exist
+- \[x\] Firefox is not persistent
+- \[x\] Cursor for firefox
 - \[x\] Font for terminal
 - \[x\] Hyprland config
 - \[x\] Impermanence
