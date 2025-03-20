@@ -87,13 +87,11 @@ require('dap').configurations.scala = {
   },
   {
     type = 'scala',
-    host = '127.0.0.1',
-    port = 7857,
-    metals = {
-      runType = 'server',
-      envFile = '.env',
-    },
-  }
+    request = 'attach',
+    name = 'Attach',
+    hostName = 'localhost',
+    port = 8668,
+  },
 }
 
 local metals_group = vim.api.nvim_create_augroup('nvim-metals', { clear = true })
