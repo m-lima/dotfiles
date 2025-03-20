@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if which cargo-hack > /dev/null; then
+  hack=1
+fi
+
 shift
 
 while (( $# > 0 )); do
@@ -8,6 +12,14 @@ while (( $# > 0 )); do
       nightly='+nightly' ;;
     run|r)
       run=1 ;;
+    skip|s)
+      shift
+      if [[ "${hack}" ]]; then
+        skip="--skip ${1}"
+      else
+        echo "[33mCould not find 'cargo-hack'. Ignoring the 'skip' parameter[m"
+      fi
+      ;;
     clean|c)
       clean=1 ;;
   esac
@@ -22,19 +34,19 @@ echo "[34mFormatting[m" && \
 cargo ${nightly} fmt --all && \
 if which cargo-hack > /dev/null; then
   echo "[34mChecking main[m" && \
-  cargo ${nightly} hack --feature-powerset check --workspace ${@} && \
+  cargo ${nightly} hack --feature-powerset ${skip} check --workspace ${@} && \
   echo "[34mChecking examples[m" && \
-  cargo ${nightly} hack --feature-powerset check --workspace --examples ${@} && \
+  cargo ${nightly} hack --feature-powerset ${skip} check --workspace --examples ${@} && \
   echo "[34mChecking tests[m" && \
-  cargo ${nightly} hack --feature-powerset check --workspace --tests ${@} && \
+  cargo ${nightly} hack --feature-powerset ${skip} check --workspace --tests ${@} && \
   echo "[34mLinting main[m" && \
-  cargo ${nightly} hack --feature-powerset clippy --workspace ${@} && \
+  cargo ${nightly} hack --feature-powerset ${skip} clippy --workspace ${@} && \
   echo "[34mLinting tests[m" && \
-  cargo ${nightly} hack --feature-powerset clippy --workspace --tests ${@} && \
+  cargo ${nightly} hack --feature-powerset ${skip} clippy --workspace --tests ${@} && \
   echo "[34mLinting examples[m" && \
-  cargo ${nightly} hack --feature-powerset clippy --workspace --examples ${@} && \
+  cargo ${nightly} hack --feature-powerset ${skip} clippy --workspace --examples ${@} && \
   echo "[34mTesting main[m" && \
-  cargo ${nightly} hack --feature-powerset test --workspace ${@}
+  cargo ${nightly} hack --feature-powerset ${skip} test --workspace ${@}
 else
   echo "[33mNot running feature powerset[m" && \
   echo "[34mChecking main[m" && \
