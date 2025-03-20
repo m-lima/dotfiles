@@ -3,13 +3,12 @@ path:
   lib,
   config,
   util,
-  pkgsUnstable,
+  pkgs,
   ...
 }:
 let
   celo = config.celo.modules;
   cfg = util.getOptions path config;
-  pkgs = pkgsUnstable;
   plugins = {
     cpp = {
       pkg = [ pkgs.clang-tools ];

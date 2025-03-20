@@ -3,13 +3,12 @@ path:
   lib,
   config,
   util,
-  pkgs2405,
+  pkgs,
   ...
 }:
 let
   celo = config.celo.modules;
   cfg = util.getOptions path config;
-  pkgs = pkgs2405;
 in
 {
   options = util.mkOptionsEnable path;

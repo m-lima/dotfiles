@@ -4,8 +4,8 @@
   inputs = {
     # NixOs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixpkgs-2405.url = "github:NixOS/nixpkgs/nixos-24.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # nixpkgs-2405.url = "github:NixOS/nixpkgs/nixos-24.05";
+    # nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # Transient dependencies
     crane.url = "github:ipetkov/crane";
@@ -63,7 +63,7 @@
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
+        nixpkgs.follows = "nixpkgs";
       };
     };
 
@@ -90,8 +90,8 @@
     {
       self,
       nixpkgs,
-      nixpkgs-2405,
-      nixpkgs-unstable,
+      # nixpkgs-2405,
+      # nixpkgs-unstable,
       agenix,
       agenix-rekey,
       disko,
@@ -112,8 +112,8 @@
 
           specialArgs = {
             inherit inputs util;
-            pkgs2405 = nixpkgs-2405.legacyPackages.${system};
-            pkgsUnstable = nixpkgs-unstable.legacyPackages.${system};
+            # pkgs2405 = nixpkgs-2405.legacyPackages.${system};
+            # pkgsUnstable = nixpkgs-unstable.legacyPackages.${system};
           };
 
           modules =
