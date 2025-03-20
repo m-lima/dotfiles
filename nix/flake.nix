@@ -5,7 +5,7 @@
     # NixOs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     # nixpkgs-2405.url = "github:NixOS/nixpkgs/nixos-24.05";
-    # nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # Transient dependencies
     crane.url = "github:ipetkov/crane";
@@ -24,6 +24,7 @@
       url = "github:oddlama/agenix-rekey";
       inputs = {
         nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
       };
     };
     disko = {
@@ -63,17 +64,20 @@
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
+        # To avoid multiple instances
+        nixpkgs.follows = "nixpkgs-unstable";
       };
     };
 
     # Local dependencies
     simpalt = {
-      url = "github:m-lima/simpalt-rs?tag=v0.3.5";
+      url = "github:m-lima/simpalt-rs?tag=v0.3.6";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
+        # To use 2024 edition
+        nixpkgs.follows = "nixpkgs-unstable";
         flake-utils.follows = "flake-utils";
         crane.follows = "crane";
+        treefmt-nix.follows = "treefmt-nix";
       };
     };
     ragenix = {
