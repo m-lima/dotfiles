@@ -1,7 +1,18 @@
 local map = require('util').map
 
+local inline = false
+
+local flip_multiline = function()
+  inline = not inline
+  return vim.diagnostic.config({
+    virtual_lines = not inline,
+    virtual_text = inline,
+  })
+end
+
 map('n',        ']e',                vim.diagnostic.goto_next)
 map('n',        '[e',                vim.diagnostic.goto_prev)
+map('n',        '<leader><leader>e', flip_multiline)
 map('n',        '<leader>d',         vim.lsp.buf.hover)
 map({'n', 's'}, '<leader>D',         vim.lsp.buf.signature_help)
 map('i',        '<C-d>',             vim.lsp.buf.signature_help)
@@ -13,6 +24,8 @@ vim.diagnostic.config({
   severity_sort = true,
   signs = false,
   underline = true,
+  virtual_lines = not inline,
+  virtual_text = inline,
 })
 
 vim.cmd([[
