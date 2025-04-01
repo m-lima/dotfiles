@@ -199,13 +199,22 @@ local traverse_parents = function(err, res, ctx)
   return names, locations
 end
 
+local go_to_location = function(location)
+  local show_document = vim.lsp.util.show_document
+  if not show_document then
+    return vim.lsp.util.jump_to_location(location, 'utf-8')
+  end
+
+  return show_document(location, 'utf-8', { focus = true })
+end
+
 M.show = function(config)
   config = vim.tbl_extend('force', default_config, config or {})
   M.close()
   vim.lsp.buf_request(
     0,
     'experimental/parentModule',
-    vim.lsp.util.make_position_params(),
+    vim.lsp.util.make_position_params(0, 'utf-8'),
     function(err, res, ctx)
       if err or res == nil or vim.tbl_isempty(res) then
         vim.notify('Could not find parent module', vim.log.levels.INFO)
@@ -256,7 +265,7 @@ end
 M.open_selected = function()
   local breadcrumbs = M.close()
   if breadcrumbs then
-    vim.lsp.util.jump_to_location(breadcrumbs.locations[breadcrumbs.selected])
+    go_to_location(breadcrumbs.locations[breadcrumbs.selected])
   end
 end
 
@@ -264,7 +273,7 @@ M.jump_to_parent = function()
   vim.lsp.buf_request(
     0,
     'experimental/parentModule',
-    vim.lsp.util.make_position_params(),
+    vim.lsp.util.make_position_params(0, 'utf-8'),
     function(err, res)
       if err or res == nil or vim.tbl_isempty(res) then
         vim.notify('Could not find parent module', vim.log.levels.INFO)
@@ -275,7 +284,7 @@ M.jump_to_parent = function()
         res = res[1]
       end
 
-      vim.lsp.util.jump_to_location(res)
+      go_to_location(res)
     end
   )
 end
