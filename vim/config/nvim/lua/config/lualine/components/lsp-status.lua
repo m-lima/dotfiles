@@ -116,13 +116,13 @@ function lsp_status:register_request()
     return req(bufnr, method, params, handler)
   end
 
-  vim.lsp.buf_request_all = function(bufnr, method, params, orig_callback)
+  vim.lsp.buf_request_all = function(bufnr, method, params, orig_handler)
     if not method or #method == 0 then
-      return req_all(bufnr, method, params, orig_callback)
+      return req_all(bufnr, method, params, orig_handler)
     end
     local clients = vim.lsp.get_clients({ bufnr = bufnr })
     if not clients or #clients == 0 then
-      return req_all(bufnr, method, params, orig_callback)
+      return req_all(bufnr, method, params, orig_handler)
     end
 
     local id = math.random()
@@ -134,7 +134,7 @@ function lsp_status:register_request()
       end
     end
 
-    local callback = function(results)
+    local callback = function(results, ctx)
       for client_id, _ in pairs(results) do
         if self.clients[client_id] then
           self.clients[client_id].requests[id] = nil
@@ -142,7 +142,7 @@ function lsp_status:register_request()
         self:clean_client(client_id)
       end
 
-      orig_callback(results)
+      orig_handler(results, ctx)
     end
     return req_all(bufnr, method, params, callback)
   end
