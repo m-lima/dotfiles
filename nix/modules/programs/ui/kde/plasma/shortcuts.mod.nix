@@ -70,12 +70,12 @@ in
         configFile = {
           kdeglobals = {
             Shortcuts = {
-              Copy = "Ctrl+Ins; Meta+C; Ctrl+C";
-              Cut = "Shift+Del; Ctrl+X; Meta+X";
+              Copy = "Ctrl+Ins; Ctrl+C; Meta+C";
+              Cut = "Ctrl+X; Meta+X";
               Find = "Ctrl+F; Meta+F";
-              Paste = "Meta+V; Ctrl+V; Shift+Ins";
+              Paste = "Shift+Ins; Ctrl+V; Meta+V";
               Redo = "Ctrl+Shift+Z; Meta+Shift+Z";
-              SelectAll = "Meta+A; Ctrl+A";
+              SelectAll = "Ctrl+A; Meta+A";
               Undo = "Ctrl+Z; Meta+Z";
             };
           };
