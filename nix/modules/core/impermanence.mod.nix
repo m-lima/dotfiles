@@ -66,7 +66,10 @@ in
 
       users = lib.mkIf user.enable {
         ${user.userName} = {
-          directories = [ "code" ];
+          directories = [
+            "code"
+            "bin"
+          ];
 
           files = [ ".gnupg/pubring.kbx" ];
         };

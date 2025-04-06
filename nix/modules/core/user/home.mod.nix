@@ -34,6 +34,7 @@ in
             stateVersion = "24.05";
             username = "${user.userName}";
             homeDirectory = "${user.homeDirectory}";
+            sessionPath = [ "${user.homeDirectory}/bin" ];
           };
         };
       };
