@@ -1,6 +1,6 @@
 local map = require('util').map
 
-local inline = false
+local inline = true
 
 local flip_multiline = function()
   inline = not inline

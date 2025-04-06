@@ -13,9 +13,11 @@ nnoremap gyg :let @+=trim(system('git remote get-url origin')) . '/blob/master/'
 
 " Disabling conflicting defaults
 " See https://neovim.io/doc/user/lsp.html#lsp-defaults
-nunmap grn
-nunmap gra
-nunmap grr
-nunmap gri
-nunmap gO
-iunmap <C-S>
+if has('nvim-0.11')
+  nunmap grn
+  nunmap gra
+  nunmap grr
+  nunmap gri
+  nunmap gO
+  iunmap <C-S>
+endif
