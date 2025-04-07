@@ -40,6 +40,7 @@
           simpalt = {
             symbol = "₵";
           };
+          skull.enable = true;
           ui = {
             alacritty = {
               tmuxStart = true;
