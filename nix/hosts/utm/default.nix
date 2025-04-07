@@ -33,6 +33,13 @@
             };
           };
           programs = {
+            core = {
+              nali.entries = {
+                cd = "~/code";
+                df = "~/code/dotfiles";
+                nx = "~/code/dotfiles/nix";
+              };
+            };
             simpalt = {
               symbol = "μ";
             };
