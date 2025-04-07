@@ -13,16 +13,9 @@ in
 {
   options = util.mkOptionsEnable path;
 
-  config = lib.mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = celo.programs.core.zsh.enable;
-        message = "Nali enabled with ZSH disabled";
-      }
-    ];
-
-    programs = {
-      zsh.interactiveShellInit = ''
+  config =
+    let
+      script = ''
         setopt auto_pushd
         setopt pushd_ignore_dups
         setopt pushdminus
@@ -109,15 +102,23 @@ in
 
         compdef _vd vd
       '';
-    };
+    in
+    lib.mkIf cfg.enable {
+      assertions = [
+        {
+          assertion = celo.programs.core.zsh.enable;
+          message = "Nali enabled with ZSH disabled";
+        }
+      ];
 
-    home-manager = util.withHome config {
       programs = {
-        zsh.initExtra = ''
-          compdef _bd bd
-          compdef _vd vd
-        '';
+        zsh.interactiveShellInit = script;
+      };
+
+      home-manager = util.withHome config {
+        programs = {
+          zsh.initExtra = util.extractCompdef script;
+        };
       };
     };
-  };
 }

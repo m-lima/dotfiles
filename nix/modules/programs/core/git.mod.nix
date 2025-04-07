@@ -29,11 +29,7 @@ in
       };
 
       programs = lib.mkIf celo.programs.core.zsh.enable {
-        zsh.initExtra = lib.concatStringsSep "\n" (
-          builtins.filter (lib.hasPrefix "compdef ") (
-            util.linesTrimmed (builtins.readFile ../../../../zsh/config/programs/git.zsh)
-          )
-        );
+        zsh.initExtra = util.extractCompdef (builtins.readFile ../../../../zsh/config/programs/git.zsh);
       };
     };
 

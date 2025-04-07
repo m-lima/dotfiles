@@ -128,10 +128,12 @@ let
     else
       builtins.warn "Ragenix is not yet initialized. Skipping ${secret}" [ ];
 
-  linesTrimmed =
+  extractCompdef =
     string:
-    builtins.filter (s: s != "") (
-      builtins.filter builtins.isString (builtins.split "[[:space:]]*\n[[:space:]]*" string)
+    lib.concatStringsSep "\n" (
+      builtins.filter (s: builtins.isString s && lib.hasPrefix "compdef " s) (
+        builtins.split "[[:space:]]*\n[[:space:]]*" string
+      )
     );
 
 in
@@ -149,6 +151,6 @@ in
     mkSecretPath
     xdg
     rageSecret
-    linesTrimmed
+    extractCompdef
     ;
 }
