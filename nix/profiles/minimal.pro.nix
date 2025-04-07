@@ -16,7 +16,13 @@
     core = {
       curl.enable = true;
       git.enable = true;
-      nali.enable = true;
+      nali = {
+        enable = true;
+        entries = {
+          cd = "~/code";
+          nx = "~/code/dotfiles/nix";
+        };
+      };
       neovim.enable = true;
       zsh.enable = true;
     };
