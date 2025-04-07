@@ -27,6 +27,14 @@ in
           ));
         "git/ignore".text = builtins.readFile ../../../../git/config/ignore;
       };
+
+      programs = lib.mkIf celo.programs.core.zsh.enable {
+        zsh.initExtra = lib.concatStringsSep "\n" (
+          builtins.filter (lib.hasPrefix "compdef ") (
+            util.linesTrimmed (builtins.readFile ../../../../zsh/config/programs/git.zsh)
+          )
+        );
+      };
     };
 
     programs = lib.mkIf celo.programs.core.zsh.enable {

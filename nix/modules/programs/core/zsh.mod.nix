@@ -18,6 +18,8 @@ in
         enable = true;
         enableLsColors = false;
         shellAliases = { };
+        # Will be loaded by our own scripts
+        enableCompletion = false;
         interactiveShellInit =
           with builtins;
           ''''

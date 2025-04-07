@@ -128,6 +128,12 @@ let
     else
       builtins.warn "Ragenix is not yet initialized. Skipping ${secret}" [ ];
 
+  linesTrimmed =
+    string:
+    builtins.filter (s: s != "") (
+      builtins.filter builtins.isString (builtins.split "[[:space:]]*\n[[:space:]]*" string)
+    );
+
 in
 {
   inherit
@@ -143,5 +149,6 @@ in
     mkSecretPath
     xdg
     rageSecret
+    linesTrimmed
     ;
 }
