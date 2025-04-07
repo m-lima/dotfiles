@@ -1,1 +1,1 @@
-echo -n "#[fg=colour239]#[fg=colour248,bg=colour239] $(date | cut -d':' -f1-2) "
+echo -n "#[fg=colour239]#[fg=colour248,bg=colour239] $(date '+%a %b %_d %H:%M') "
