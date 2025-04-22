@@ -39,6 +39,9 @@ fi
 if which -p fdfind &> /dev/null
 then
   alias ff='fdfind'
+elif which -p ffind &> /dev/null
+then
+  alias ff='ffind'
 fi
 
 ### Ripgrep
