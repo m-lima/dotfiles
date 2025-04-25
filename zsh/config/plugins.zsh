@@ -100,7 +100,7 @@ if which -p zoxide &> /dev/null; then
       return
     fi
 
-    local entries=$(zoxide query --list --exclude "${PWD}" "$@")
+    local entries=$(zoxide query --list --exclude "${PWD}" "$2")
 
     if [  -z "$entries" ]; then
       echo "No matches" >&2
@@ -125,10 +125,10 @@ if which -p zoxide &> /dev/null; then
       if [[ "$entries" =~ $'\n' ]]; then
         local result=$(fzf <<<"$entries")
         if [ -n "$result" ]; then
-          compadd -U -Q -- "$result"
+          compadd -U -r -- "$result"
         fi
       else
-        compadd -U -Q -- "$entries"
+        compadd -U -r -- "$entries"
       fi
     elif (( CURRENT == 3 )); then
       if [ -d "${words[2]}" ]; then
