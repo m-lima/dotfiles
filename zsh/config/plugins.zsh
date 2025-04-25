@@ -92,9 +92,9 @@ fi
 
 # ZOxide
 if which -p zoxide &> /dev/null; then
-  source <(zoxide init zsh)
+  source <(zoxide init --no-cmd zsh)
 
-  function zz {
+  function z {
     if [ "${#}" -eq 0 ]; then
       cd ~
       return
@@ -123,7 +123,7 @@ if which -p zoxide &> /dev/null; then
     fi
   }
 
-  function _zz {
+  function _z {
     if (( CURRENT == 2 )); then
       local entries=$(zoxide query --list --exclude "${PWD}" "${words[2]}")
 
