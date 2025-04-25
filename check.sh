@@ -9,9 +9,7 @@ function checkPath {
       echo -n "${1} is deprecated but still exists. Delete? [y/N] "
       read input
       case ${input} in
-        [Yy] )
-          rm -rf "${1}"
-          ;;
+        [Yy] ) rm -rf "${1}" ;;
       esac
   fi
 }
@@ -35,3 +33,17 @@ function checkVar {
 checkVar localPlugins local_plugins
 checkVar pluginManager local_pluginManager
 checkVar zshFramework local_zshFramework
+
+########################################
+# Move files
+
+if [ -d "${HOME}/.config/m-lima/fd" ]; then
+  echo "${HOME}/.config/m-lima/fd is no longer in use. Use "${HOME}/.config/m-lima/fd" instead"
+  if [ ! -d "${HOME}/.config/m-lima/td" ]; then
+    echo "Move? [y/N] "
+    read input
+    case ${input} in
+      [Yy] ) mv "${HOME}/.config/m-lima/fd" "${HOME}/.config/m-lima/td" ;;
+    esac
+  fi
+fi
