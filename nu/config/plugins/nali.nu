@@ -3,8 +3,8 @@ export-env {
     BD_HISTORY: []
     COMPLETERS: (
       $env.COMPLETERS | append {
-        name: fd
-        code: { |args| fd_completer $args }
+        name: td
+        code: { |args| td_completer $args }
       }
     )
     HOOKS: (
@@ -31,13 +31,13 @@ export-env {
 }
 
 # Navigates to a preconfigured location
-export def --env fd [base?: string@fd_cmp, path?: string] {
+export def --env td [base?: string@td_cmp, path?: string] {
   let span = (metadata $base).span
 
   let target = if $base == null {
     '~'
   } else {
-    let entry = (open ~/.config/m-lima/fd/config
+    let entry = (open ~/.config/m-lima/td/config
       | lines
       | parse '{cmd}:{base}'
       | where cmd == $base
@@ -65,13 +65,13 @@ export def --env fd [base?: string@fd_cmp, path?: string] {
   cd $target
 }
 
-def fd_cmp [] {
-  open ~/.config/m-lima/fd/config
+def td_cmp [] {
+  open ~/.config/m-lima/td/config
   | lines
   | parse '{value}:{description}'
 }
 
-def fd_completer [args] {
+def td_completer [args] {
     if ($args | length) > 2 {
       return
     }
@@ -84,7 +84,7 @@ def fd_completer [args] {
     }
 
     let entry = (try {
-      open ~/.config/m-lima/fd/config
+      open ~/.config/m-lima/td/config
       | lines
       | parse '{cmd}:{path}'
       | where cmd == $base

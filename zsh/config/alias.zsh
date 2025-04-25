@@ -38,10 +38,10 @@ fi
 ### Fd
 if which -p fdfind &> /dev/null
 then
-  alias ff='fdfind'
+  alias fd='fdfind'
 elif which -p ffind &> /dev/null
 then
-  alias ff='ffind'
+  alias fd='ffind'
 fi
 
 ### Ripgrep

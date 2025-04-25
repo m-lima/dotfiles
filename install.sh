@@ -813,9 +813,9 @@ then
     vi "${HOME}/.config/m-lima/zsh/final.zsh"
   fi
 
-  if installFile c config/fd/config .config/m-lima/fd
+  if installFile c config/td/config .config/m-lima/td
   then
-    vi "${HOME}/.config/m-lima/fd/config"
+    vi "${HOME}/.config/m-lima/td/config"
   fi
 else
   echo "[33mSkipping ZSH files[m"
