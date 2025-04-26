@@ -27,16 +27,17 @@
             };
           };
           services = {
+            keyring.enable = true;
             mdns.enable = true;
             ssh = {
               ports = [ 22 ] ++ (util.rageSecret config ./secrets/services/ssh/ports.age);
             };
           };
           programs = {
-            keyring.enable = true;
             simpalt = {
               symbol = "μ";
             };
+            skull.enable = true;
           };
         };
       };

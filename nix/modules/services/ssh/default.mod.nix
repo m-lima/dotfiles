@@ -2,8 +2,8 @@ path:
 {
   lib,
   config,
-  util,
   options,
+  util,
   ...
 }:
 let
