@@ -148,7 +148,7 @@ if which -p zoxide &> /dev/null; then
     fi
   }
 
-  compdef _zz zz
+  compdef _z z
 fi
 
 # Auto Suggestion config

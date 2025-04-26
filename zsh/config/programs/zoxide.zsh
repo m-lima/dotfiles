@@ -54,4 +54,4 @@ function _z {
   fi
 }
 
-compdef _zz zz
+compdef _z z
