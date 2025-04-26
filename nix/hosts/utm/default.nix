@@ -33,6 +33,7 @@
             };
           };
           programs = {
+            keyring.enable = true;
             simpalt = {
               symbol = "μ";
             };
