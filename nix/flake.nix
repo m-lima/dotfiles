@@ -170,8 +170,8 @@
         };
     in
     {
-      nixosConfigurations = mkHost nixosHost;
-      darwinConfigurations = mkHost darwinHost;
+      nixosConfigurations = mkHost "nixos" nixosHost;
+      # darwinConfigurations = mkHost darwinHost;
 
       agenix-rekey = agenix-rekey.configure {
         userFlake = self;

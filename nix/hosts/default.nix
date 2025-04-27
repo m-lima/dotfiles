@@ -1,10 +1,11 @@
+kind: mkHost:
 let
   # Load all hosts, with the filenames as ID
   # Excludes this file and loads the directories as hosts
-  listHosts = removeAttrs (builtins.readDir ./.) [ "default.nix" ];
+  listHosts = removeAttrs (builtins.readDir ./${kind}) [ "default.nix" ];
 
   # Imports the host and calls `mapHost` passing the ID as parameter
-  loadHost = id: mapHost (import ./${id}) id;
+  loadHost = id: mapHost (import ./${kind}/${id}) id;
 
   # Takes in the imported host, sets up the mandatory modules (more below),
   # And sets a config entry with the ID field.
@@ -28,7 +29,10 @@ let
         hostModule
         setupRagenix
         {
-          celo.host.id = id;
+          celo.host = {
+            inherit id kind;
+            secrets = ./${kind}/${id}/secrets;
+          };
           nixpkgs.hostPlatform = system;
         }
       ];
@@ -43,6 +47,17 @@ let
               type = lib.types.nonEmptyStr;
               description = "A unique identifier for this host";
             };
+            kind = lib.mkOption {
+              type = lib.types.enum [
+                "nixos"
+                "darwin"
+              ];
+              description = "The kind of host being built";
+            };
+            secrets = lib.mkOption {
+              type = lib.types.path;
+              description = "The path to the host secrets";
+            };
           };
         };
       };
@@ -53,6 +68,6 @@ let
       ragenix.key = lib.mkDefault (builtins.head config.age.identityPaths);
     };
 in
-# For each host directory, call the passed in `mkHost` with the
+# For each host directory within `kind`, call the passed in `mkHost` with the
 # enriched host definition (as defined above)
-mkHost: builtins.mapAttrs (id: _: mkHost (loadHost id)) listHosts
+builtins.mapAttrs (id: _: mkHost (loadHost id)) listHosts

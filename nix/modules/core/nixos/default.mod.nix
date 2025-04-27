@@ -9,6 +9,7 @@ path:
 let
   cfg = util.getOptions path config;
   host = config.celo.host.id;
+  secrets = config.celo.host.secrets;
 in
 {
   options = util.mkOptions path {
@@ -43,7 +44,7 @@ in
 
       settings =
         let
-          access-tokens = util.rageSecret config ../../../hosts/${host}/secrets/core/nixos/access_tokens.age;
+          access-tokens = util.rageSecret config /${secrets}/core/nixos/access_tokens.age;
         in
         {
           # Optimize storage
