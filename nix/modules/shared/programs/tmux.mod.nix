@@ -4,6 +4,7 @@ path:
   config,
   util,
   pkgs,
+  rootDir,
   ...
 }:
 let
@@ -18,17 +19,17 @@ in
       home.packages = with pkgs; [ tmux ];
 
       xdg.configFile = {
-        "tmux/tmux.conf".source = ../../../tmux/base.conf;
+        "tmux/tmux.conf".source = /${rootDir}/../tmux/base.conf;
         "tmux/script/edit.zsh" = lib.mkIf celo.programs.zsh.enable {
-          source = ../../../tmux/script/edit.zsh;
+          source = /${rootDir}/../tmux/script/edit.zsh;
           executable = true;
         };
         "tmux/script/clear_scratches.sh" = {
-          source = ../../../tmux/script/clear_scratches.sh;
+          source = /${rootDir}/../tmux/script/clear_scratches.sh;
           executable = true;
         };
         "tmux/script/condense_windows.sh" = {
-          source = ../../../tmux/script/condense_windows.sh;
+          source = /${rootDir}/../tmux/script/condense_windows.sh;
           executable = true;
         };
         "tmux/script/status_right.sh" = with builtins; {
@@ -36,10 +37,12 @@ in
             ''
               #!/usr/bin/env bash
             ''
-            + lib.optionalString celo.programs.simpalt.enable readFile ../../../tmux/script/status/simpalt.sh
+            +
+              lib.optionalString celo.programs.simpalt.enable readFile
+                /${rootDir}/../tmux/script/status/simpalt.sh
             # TODO
-            # + (lib.optionalString celo.programs.ui.spotify.enable (readFile ../../../tmux/script/status/spotify.sh))
-            + readFile ../../../tmux/script/status/time.sh;
+            # + (lib.optionalString celo.programs.ui.spotify.enable (readFile /${rootDir}/../tmux/script/status/spotify.sh))
+            + readFile /${rootDir}/../tmux/script/status/time.sh;
           executable = true;
         };
       };

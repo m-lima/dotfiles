@@ -4,6 +4,7 @@ path:
   config,
   util,
   pkgs,
+  rootDir,
   ...
 }:
 let
@@ -23,12 +24,12 @@ in
         interactiveShellInit =
           with builtins;
           ''''
-          + readFile ../../../zsh/config/base/colors.zsh
-          + readFile ../../../zsh/config/base/completion.zsh
-          + readFile ../../../zsh/config/base/history.zsh
-          + readFile ../../../zsh/config/base/keys.zsh
-          + readFile ../../../zsh/config/base/misc.zsh
-          + readFile ../../../zsh/config/programs/ls.zsh;
+          + readFile /${rootDir}/../zsh/config/base/colors.zsh
+          + readFile /${rootDir}/../zsh/config/base/completion.zsh
+          + readFile /${rootDir}/../zsh/config/base/history.zsh
+          + readFile /${rootDir}/../zsh/config/base/keys.zsh
+          + readFile /${rootDir}/../zsh/config/base/misc.zsh
+          + readFile /${rootDir}/../zsh/config/programs/ls.zsh;
       };
     };
 

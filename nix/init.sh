@@ -104,13 +104,13 @@ function mkpass {
 function mksshid {
   echo "[34mMaking SSH id[m"
 
-  if [ -f "${base}/modules/services/ssh/_secrets/${host}.age" ]; then
-    echo -n "[33mWARNING!![m There already exists an SSH key at '${base}/modules/services/ssh/_secrets/${host}.age'. Proceed? [y/N/a] "
+  if [ -f "${base}/modules/nixos/services/ssh/_secrets/${host}.age" ]; then
+    echo -n "[33mWARNING!![m There already exists an SSH key at '${base}/modules/nixos/services/ssh/_secrets/${host}.age'. Proceed? [y/N/a] "
     read input
     case "${input}" in
       [Yy])
-        rm "${base}/modules/services/ssh/_secrets/${host}.age"
-        rm "${base}/modules/services/ssh/_secrets/${host}.pub"
+        rm "${base}/modules/nixos/services/ssh/_secrets/${host}.age"
+        rm "${base}/modules/nixos/services/ssh/_secrets/${host}.pub"
         ;;
       [Aa]) exit ;;
       *) return ;;
@@ -120,13 +120,13 @@ function mksshid {
   temp="$(mktemp)" && \
   rm "${temp}" && \
   ssh-keygen -t ed25519 -C "${user}@${host}" -N '' -f "${temp}" && \
-  mv "${temp}.pub" "${base}/modules/services/ssh/_secrets/${host}.pub" && \
+  mv "${temp}.pub" "${base}/modules/nixos/services/ssh/_secrets/${host}.pub" && \
   cd "${base}" && \
-  nix run github:oddlama/agenix-rekey -- edit -i "${temp}" "./modules/services/ssh/_secrets/${host}.age" && \
+  nix run github:oddlama/agenix-rekey -- edit -i "${temp}" "./modules/nixos/services/ssh/_secrets/${host}.age" && \
   rm "${temp}"
 
-  git add "./modules/services/ssh/_secrets/${host}.age"
-  git add "./modules/services/ssh/_secrets/${host}.pub"
+  git add "./modules/nixos/services/ssh/_secrets/${host}.age"
+  git add "./modules/nixos/services/ssh/_secrets/${host}.pub"
 }
 
 function rekey {

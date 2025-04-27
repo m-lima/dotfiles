@@ -4,6 +4,7 @@ path:
   config,
   util,
   pkgs,
+  rootDir,
   ...
 }:
 let
@@ -15,11 +16,15 @@ in
 
   config = util.enforceHome path config cfg.enable {
     home-manager = {
-      home.packages = with pkgs; [ ripgrep ];
+      home.packages = with pkgs; [ zoxide ];
 
       programs = lib.mkIf celo.programs.zsh.enable {
-        zsh.initExtraFirst = builtins.readFile ../../../zsh/config/programs/rg.zsh;
+        zsh.initExtra = builtins.readFile /${rootDir}/../zsh/config/programs/zoxide.zsh;
       };
+    };
+
+    environment.persistence = util.withImpermanence config {
+      home.directories = [ ".local/share/zoxide" ];
     };
   };
 }

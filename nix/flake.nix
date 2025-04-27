@@ -127,13 +127,16 @@
 
           specialArgs = {
             inherit inputs util;
+            rootDir = ./.;
             # pkgs2405 = nixpkgs-2405.legacyPackages.${system};
             # pkgsUnstable = nixpkgs-unstable.legacyPackages.${system};
           };
 
           modules =
             hostModules
-            ++ util.loadModules ./modules
+            ++ util.loadModules ./modules/bla
+            ++ util.loadModules ./modules/shared
+            ++ util.loadModules ./modules/nixos
             ++ util.loadProfiles ./profiles
             ++ [
               agenix.nixosModules.default

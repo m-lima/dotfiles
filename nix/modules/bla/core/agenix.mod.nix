@@ -5,6 +5,7 @@ path:
   util,
   pkgs,
   inputs,
+  rootDir,
   ...
 }:
 let
@@ -18,7 +19,7 @@ in
       type = lib.types.coercedTo lib.types.path (
         x: if builtins.isPath x then builtins.readFile x else x
       ) lib.types.singleLineStr;
-      default = ../../secrets/pubkey/${host}/ssh.key.pub;
+      default = /${rootDir}/secrets/pubkey/${host}/ssh.key.pub;
       example = "ssh-rsa AAAAB3NzaC1yc2etc/etc/etcjwrsh8e596z6J0l7 example@host";
     };
   };
@@ -34,12 +35,12 @@ in
         hostPubkey = cfg.pubkey;
         masterIdentities = [
           {
-            identity = ../../secrets/key.age;
-            pubkey = builtins.readFile ../../secrets/key.pub;
+            identity = /${rootDir}/secrets/key.age;
+            pubkey = builtins.readFile /${rootDir}/secrets/key.pub;
           }
         ];
         storageMode = "local";
-        localStorageDir = ../../secrets/rekeyed/${host};
+        localStorageDir = /${rootDir}/secrets/rekeyed/${host};
       };
     };
   };

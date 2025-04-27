@@ -4,6 +4,7 @@ path:
   config,
   util,
   pkgs,
+  rootDir,
   ...
 }:
 let
@@ -23,7 +24,7 @@ in
         };
 
         zsh = lib.mkIf (celo.programs.zsh.enable && celo.programs.fd.enable) {
-          initExtraFirst = builtins.readFile ../../../zsh/config/programs/fzf_fd.zsh;
+          initExtraFirst = builtins.readFile /${rootDir}/../zsh/config/programs/fzf_fd.zsh;
         };
       };
     };

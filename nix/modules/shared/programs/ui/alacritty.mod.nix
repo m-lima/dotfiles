@@ -4,6 +4,7 @@ path:
   config,
   util,
   pkgs,
+  rootDir,
   ...
 }:
 let
@@ -32,9 +33,9 @@ in
 
       xdg.configFile."alacritty/alacritty.toml".text =
         ''''
-        + builtins.readFile ../../../../alacritty/config/colors.toml
-        + builtins.readFile ../../../../alacritty/config/options.toml
-        + (lib.optionalString hackCfg.enable (builtins.readFile ../../../../alacritty/config/font.toml))
+        + builtins.readFile /${rootDir}/../alacritty/config/colors.toml
+        + builtins.readFile /${rootDir}/../alacritty/config/options.toml
+        + (lib.optionalString hackCfg.enable (builtins.readFile /${rootDir}/../alacritty/config/font.toml))
         + (lib.optionalString cfg.tmuxStart ''
           [env]
           TERM = "alacritty-direct"

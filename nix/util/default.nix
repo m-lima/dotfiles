@@ -8,7 +8,7 @@ let
         (lib.mapAttrsToList (
           name: type:
           let
-            fullPath = /.${path}/${name};
+            fullPath = /${path}/${name};
           in
           if type == "directory" then
             findFiles mark fullPath (parents ++ [ name ])
@@ -123,7 +123,7 @@ let
     config: secret:
     if builtins.hasAttr "decrypt" builtins then
       [
-        (builtins.decrypt (/. + builtins.toPath config.ragenix.key) secret)
+        (builtins.decrypt /${builtins.toPath config.ragenix.key} secret)
       ]
     else
       builtins.warn "Ragenix is not yet initialized. Skipping ${secret}" [ ];

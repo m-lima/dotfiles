@@ -4,6 +4,7 @@ path:
   config,
   util,
   pkgs,
+  rootDir,
   ...
 }:
 let
@@ -15,10 +16,11 @@ in
 
   config = util.enforceHome path config cfg.enable {
     home-manager = {
-      home.packages = with pkgs; [ lazygit ];
+      home.packages = with pkgs; [ delta ];
 
-      programs = lib.mkIf celo.programs.zsh.enable {
-        zsh.initExtraFirst = builtins.readFile ../../../zsh/config/programs/lazygit.zsh;
+      xdg = lib.mkIf celo.programs.git.enable {
+        # TODO: Colors are off
+        configFile."git/config".text = builtins.readFile /${rootDir}/../git/config/delta;
       };
     };
   };
