@@ -134,7 +134,6 @@
 
           modules =
             hostModules
-            ++ util.loadModules ./modules/bla
             ++ util.loadModules ./modules/shared
             ++ util.loadModules ./modules/nixos
             ++ util.loadProfiles ./profiles
@@ -162,19 +161,20 @@
 
           modules =
             hostModules
-            ++ util.loadModules ./modules
+            ++ util.loadModules ./modules/shared
+            ++ util.loadModules ./modules/darwin
             ++ util.loadProfiles ./profiles
             ++ [
               agenix.nixosModules.default
               agenix-rekey.nixosModules.default
-              home-manager.nixosModules.home-manager
+              home-manager.darwinModules.home-manager
               ragenix.nixosModules.default
             ];
         };
     in
     {
       nixosConfigurations = mkHost "nixos" nixosHost;
-      # darwinConfigurations = mkHost darwinHost;
+      darwinConfigurations = mkHost "darwin" darwinHost;
 
       agenix-rekey = agenix-rekey.configure {
         userFlake = self;
