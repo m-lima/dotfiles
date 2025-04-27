@@ -8,7 +8,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-  secret = config.celo.host.id;
+  host = config.celo.host.id;
 in
 {
   options = util.mkOptions path {
@@ -31,8 +31,8 @@ in
 
   config = lib.mkIf cfg.enable {
     age.secrets = {
-      ${util.mkSecretPath path secret} = {
-        rekeyFile = ./secrets/${secret}.age;
+      ${util.mkSecretPath path host} = {
+        rekeyFile = ./_secrets/${host}/password.age;
       };
     };
 
@@ -41,7 +41,7 @@ in
         ${cfg.userName} = {
           isNormalUser = true;
           home = cfg.homeDirectory;
-          hashedPasswordFile = config.age.secrets.${util.mkSecretPath path secret}.path;
+          hashedPasswordFile = config.age.secrets.${util.mkSecretPath path host}.path;
           extraGroups = [ "wheel" ];
         };
       };
