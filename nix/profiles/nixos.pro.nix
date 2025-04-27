@@ -7,6 +7,7 @@
       enable = true;
       wipe.enable = true;
     };
+    nix.enable = true;
     nixos.enable = true;
     user = {
       enable = true;

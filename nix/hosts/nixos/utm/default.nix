@@ -24,6 +24,7 @@
             };
             nixos = {
               timeZone = "Europe/Amsterdam";
+              stateVersion = "24.05";
             };
           };
           services = {

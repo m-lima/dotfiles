@@ -9,7 +9,6 @@ path:
 let
   cfg = util.getOptions path config;
   host = config.celo.host.id;
-  secrets = config.celo.host.secrets;
 in
 {
   options = util.mkOptions path {
@@ -25,43 +24,16 @@ in
       default = null;
       type = lib.types.nullOr lib.types.nonEmptyStr;
     };
+    stateVersion = lib.mkOption {
+      description = "See https://mynixos.com/nixpkgs/option/system.stateVersion";
+      example = "24.11";
+      type = lib.types.nonEmptyStr;
+    };
   };
 
   config = lib.mkIf cfg.enable {
     # Enable all firmware, regardless of license
     hardware.enableAllFirmware = true;
-
-    # Allow all poackages, regardless of license
-    nixpkgs.config.allowUnfree = true;
-
-    nix = {
-      # Automatic garbage collection
-      gc = {
-        automatic = true;
-        dates = "weekly";
-        options = "--delete-older-than 1w";
-      };
-
-      # Optimize storage
-      optimise = {
-        automatic = true;
-      };
-
-      settings =
-        let
-          access-tokens = util.rageSecret config /${secrets}/core/nixos/access_tokens.age;
-        in
-        {
-          # Enable some experimental features
-          experimental-features = [
-            "nix-command"
-            "flakes"
-          ];
-        }
-        // lib.optionalAttrs (builtins.length access-tokens > 0) {
-          access-tokens = builtins.head access-tokens;
-        };
-    };
 
     boot = {
       # Use the latest linux packages
@@ -108,6 +80,6 @@ in
       };
     };
 
-    system.stateVersion = "24.05";
+    system.stateVersion = cfg.stateVersion;
   };
 }
