@@ -98,7 +98,7 @@ function mkpass {
   }
 
   mkUserPass root "${base}/modules/core/nixos/secrets/${host}.age"
-  mkUserPass "${user}" "${base}/modules/core/user/secrets/${user}-${host}.age"
+  mkUserPass "${user}" "${base}/modules/core/user/secrets/${host}.age"
 }
 
 function mksshid {
