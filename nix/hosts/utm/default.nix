@@ -11,7 +11,7 @@
 
       celo = {
         profiles = {
-          minimal.enable = true;
+          nixos.enable = true;
           base.enable = true;
           dev.enable = true;
         };

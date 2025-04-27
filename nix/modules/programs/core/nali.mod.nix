@@ -15,7 +15,10 @@ in
     entries = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;
       description = "Entries to navigate to with `td`";
-      default = { };
+      default = {
+        cd = "~/code";
+        nx = "~/code/dotfiles/nix";
+      };
       example = {
         cd = "~/code";
         df = "~/code/dotfiles";
