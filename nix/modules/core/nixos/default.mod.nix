@@ -67,7 +67,7 @@ in
 
     age.secrets = {
       ${util.mkSecretPath path host} = {
-        rekeyFile = ./secrets/${host}.age;
+        rekeyFile = ./_secrets/${host}/password.age;
       };
     };
 
