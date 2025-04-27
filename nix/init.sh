@@ -97,20 +97,20 @@ function mkpass {
     rm "${temp}"
   }
 
-  mkUserPass root "${base}/modules/core/nixos/secrets/${host}.age"
-  mkUserPass "${user}" "${base}/modules/core/user/secrets/${host}.age"
+  mkUserPass root "${base}/modules/core/nixos/_secrets/${host}/password.age"
+  mkUserPass "${user}" "${base}/modules/core/user/_secrets/${host}/password.age"
 }
 
 function mksshid {
   echo "[34mMaking SSH id[m"
 
-  if [ -f "${base}/modules/services/ssh/secrets/${user}-${host}.age" ]; then
-    echo -n "[33mWARNING!![m There already exists an SSH key at '${base}/modules/services/ssh/secrets/${user}-${host}.age'. Proceed? [y/N/a] "
+  if [ -f "${base}/modules/services/ssh/_secrets/${host}.age" ]; then
+    echo -n "[33mWARNING!![m There already exists an SSH key at '${base}/modules/services/ssh/_secrets/${host}.age'. Proceed? [y/N/a] "
     read input
     case "${input}" in
       [Yy])
-        rm "${base}/modules/services/ssh/secrets/${user}-${host}.age"
-        rm "${base}/modules/services/ssh/secrets/${user}-${host}.pub"
+        rm "${base}/modules/services/ssh/_secrets/${host}.age"
+        rm "${base}/modules/services/ssh/_secrets/${host}.pub"
         ;;
       [Aa]) exit ;;
       *) return ;;
@@ -120,13 +120,13 @@ function mksshid {
   temp="$(mktemp)" && \
   rm "${temp}" && \
   ssh-keygen -t ed25519 -C "${user}@${host}" -N '' -f "${temp}" && \
-  mv "${temp}.pub" "${base}/modules/services/ssh/secrets/${user}-${host}.pub" && \
+  mv "${temp}.pub" "${base}/modules/services/ssh/_secrets/${host}.pub" && \
   cd "${base}" && \
-  nix run github:oddlama/agenix-rekey -- edit -i "${temp}" "./modules/services/ssh/secrets/${user}-${host}.age" && \
+  nix run github:oddlama/agenix-rekey -- edit -i "${temp}" "./modules/services/ssh/_secrets/${host}.age" && \
   rm "${temp}"
 
-  git add "./modules/services/ssh/secrets/${user}-${host}.age"
-  git add "./modules/services/ssh/secrets/${user}-${host}.pub"
+  git add "./modules/services/ssh/_secrets/${host}.age"
+  git add "./modules/services/ssh/_secrets/${host}.pub"
 }
 
 function rekey {
