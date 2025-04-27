@@ -48,6 +48,12 @@
     impermanence = {
       url = "github:nix-community/impermanence";
     };
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/nix-darwin-24.11";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
       inputs = {
@@ -96,6 +102,7 @@
       nixpkgs,
       # nixpkgs-2405,
       # nixpkgs-unstable,
+      nix-darwin,
       agenix,
       agenix-rekey,
       disko,
@@ -109,8 +116,12 @@
     }@inputs:
     let
       util = import ./util { inherit (nixpkgs) lib; };
-      mkHost =
-        { system, hostModules }:
+      mkHost = import ./hosts;
+      nixosHost =
+        {
+          system,
+          hostModules,
+        }:
         nixpkgs.lib.nixosSystem {
           inherit system;
 
@@ -134,9 +145,33 @@
               sddm-sugar-candy-nix.nixosModules.default
             ];
         };
+      darwinHost =
+        {
+          system,
+          hostModules,
+        }:
+        nix-darwin.lib.darwinSystem {
+          inherit system;
+
+          specialArgs = {
+            inherit inputs util;
+          };
+
+          modules =
+            hostModules
+            ++ util.loadModules ./modules
+            ++ util.loadProfiles ./profiles
+            ++ [
+              agenix.nixosModules.default
+              agenix-rekey.nixosModules.default
+              home-manager.nixosModules.home-manager
+              ragenix.nixosModules.default
+            ];
+        };
     in
     {
-      nixosConfigurations = (import ./hosts) mkHost;
+      nixosConfigurations = mkHost nixosHost;
+      darwinConfigurations = mkHost darwinHost;
 
       agenix-rekey = agenix-rekey.configure {
         userFlake = self;
