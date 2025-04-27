@@ -7,7 +7,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-  secrets = config.celo.host.secrets;
+  host = config.celo.host.id;
 in
 {
   options = util.mkOptions path { description = "home manager"; };
@@ -30,7 +30,7 @@ in
 
       settings =
         let
-          access-tokens = util.rageSecret config /${secrets}/core/nixos/access_tokens.age;
+          access-tokens = util.rageSecret config ./_secrets/${host}/access_tokens.rage;
         in
         {
           # Enable some experimental features
