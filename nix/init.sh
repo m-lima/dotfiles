@@ -91,9 +91,9 @@ function mkpass {
       esac
     fi
 
-    temp="$(mktemp)" && \
-    get_password | mkpasswd -s >"${temp}" && \
-    nix run github:oddlama/agenix-rekey -- edit -i "${temp}" "${2}"
+    temp="$(mktemp)" &&
+      get_password | mkpasswd -s >"${temp}" &&
+      nix run github:oddlama/agenix-rekey -- edit -i "${temp}" "${2}"
     rm "${temp}"
   }
 
@@ -117,13 +117,13 @@ function mksshid {
     esac
   fi
 
-  temp="$(mktemp)" && \
-  rm "${temp}" && \
-  ssh-keygen -t ed25519 -C "${user}@${host}" -N '' -f "${temp}" && \
-  mv "${temp}.pub" "${base}/modules/nixos/services/ssh/_secrets/${host}.pub" && \
-  cd "${base}" && \
-  nix run github:oddlama/agenix-rekey -- edit -i "${temp}" "./modules/nixos/services/ssh/_secrets/${host}.age" && \
-  rm "${temp}"
+  temp="$(mktemp)" &&
+    rm "${temp}" &&
+    ssh-keygen -t ed25519 -C "${user}@${host}" -N '' -f "${temp}" &&
+    mv "${temp}.pub" "${base}/modules/nixos/services/ssh/_secrets/${host}.pub" &&
+    cd "${base}" &&
+    nix run github:oddlama/agenix-rekey -- edit -i "${temp}" "./modules/nixos/services/ssh/_secrets/${host}.age" &&
+    rm "${temp}"
 
   git add "./modules/nixos/services/ssh/_secrets/${host}.age"
   git add "./modules/nixos/services/ssh/_secrets/${host}.pub"

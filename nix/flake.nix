@@ -197,6 +197,7 @@
               };
               excludes = [
                 "*.age"
+                "*.rage"
                 "*.jpg"
                 "*.lock"
                 "*.pub"
