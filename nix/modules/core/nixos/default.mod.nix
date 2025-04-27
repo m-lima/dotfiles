@@ -42,13 +42,16 @@ in
         options = "--delete-older-than 1w";
       };
 
+      # Optimize storage
+      optimise = {
+        automatic = true;
+      };
+
       settings =
         let
           access-tokens = util.rageSecret config /${secrets}/core/nixos/access_tokens.age;
         in
         {
-          # Optimize storage
-          auto-optimise-store = true;
           # Enable some experimental features
           experimental-features = [
             "nix-command"
