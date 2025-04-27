@@ -8,6 +8,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  host = config.celo.host.id;
   user = config.celo.modules.core.user;
   kdeCfg = config.celo.modules.programs.ui.kde;
 in
@@ -43,7 +44,7 @@ in
 
     age.secrets = {
       ${util.mkSecretPath path "password"} = {
-        rekeyFile = ./secrets/password.age;
+        rekeyFile = ./_secrets/${host}/password.age;
         mode = "600";
         owner = user.userName;
         group = config.users.users.${user.userName}.group;
