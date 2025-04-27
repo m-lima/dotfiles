@@ -157,6 +157,7 @@
 
           specialArgs = {
             inherit inputs util;
+            rootDir = ./.;
           };
 
           modules =
