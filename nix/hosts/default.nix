@@ -27,7 +27,10 @@ let
         module
         hostModule
         setupRagenix
-        { celo.host.id = id; }
+        {
+          celo.host.id = id;
+          nixpkgs.hostPlatform = system;
+        }
       ];
     };
   hostModule =
