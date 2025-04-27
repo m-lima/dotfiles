@@ -26,7 +26,7 @@
             };
             dropbear = {
               enable = true;
-              port = builtins.head ((util.rageSecret config ./secrets/core/dropbear/port.age) ++ [ 22 ]);
+              port = builtins.head ((util.rageSecret config ./_secrets/core/dropbear/port.rage) ++ [ 22 ]);
             };
             nixos = {
               timeZone = "Europe/Amsterdam";
@@ -44,7 +44,7 @@
           };
           services = {
             ssh = {
-              ports = util.rageSecret config ./secrets/services/ssh/ports.age;
+              ports = util.rageSecret config ./_secrets/services/ssh/ports.rage;
             };
           };
           programs = {

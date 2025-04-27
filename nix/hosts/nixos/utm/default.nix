@@ -32,7 +32,7 @@
             keyring.enable = true;
             mdns.enable = true;
             ssh = {
-              ports = [ 22 ] ++ (util.rageSecret config ./secrets/services/ssh/ports.age);
+              ports = [ 22 ] ++ (util.rageSecret config ./_secrets/services/ssh/ports.rage);
             };
           };
           programs = {
