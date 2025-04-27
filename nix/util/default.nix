@@ -82,7 +82,7 @@ let
       // {
         assertions = [
           {
-            assertion = config.celo.modules.core.user.home.enable;
+            assertion = config.celo.modules.core.home.enable;
             message = "${lib.last path} enabled without home-manager";
           }
         ] ++ assertions;
@@ -94,9 +94,9 @@ let
   withHome =
     config: settings:
     let
-      user = config.celo.modules.core.user;
+      user = config.celo.modules.core.user.userName;
     in
-    lib.mkIf user.home.enable { users.${user.userName} = settings; };
+    lib.mkIf config.celo.modules.core.home.enable { users.${user} = settings; };
 
   withImpermanence =
     config:

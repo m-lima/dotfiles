@@ -8,7 +8,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-  home = config.celo.modules.core.user.home;
+  home = config.celo.modules.core.home;
   user = config.celo.modules.core.user;
   secret = "${user.userName}-${config.celo.host.id}";
 in

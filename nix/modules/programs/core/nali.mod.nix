@@ -123,7 +123,7 @@ in
           message = "nali enabled without zsh";
         }
         {
-          assertion = cfg.entries != { } -> celo.core.user.home.enable;
+          assertion = cfg.entries != { } -> celo.core.home.enable;
           message = "nali entries defined without home-manager";
         }
       ];
