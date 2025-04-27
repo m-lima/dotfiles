@@ -1,18 +1,16 @@
 {
   programs = {
-    core = {
-      neovim = {
-        enable = true;
-        plugins = [
-          "cpp"
-          "go"
-          "js"
-          "lua"
-          "nix"
-          "python"
-          "rust"
-        ];
-      };
+    neovim = {
+      enable = true;
+      plugins = [
+        "cpp"
+        "go"
+        "js"
+        "lua"
+        "nix"
+        "python"
+        "rust"
+      ];
     };
     direnv.enable = true;
   };

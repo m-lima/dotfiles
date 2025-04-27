@@ -17,7 +17,7 @@ in
     home-manager = {
       home.packages = with pkgs; [ bat ];
 
-      programs = lib.mkIf celo.programs.core.zsh.enable {
+      programs = lib.mkIf celo.programs.zsh.enable {
         zsh.initExtraFirst = builtins.readFile ../../../zsh/config/programs/bat.zsh;
       };
     };

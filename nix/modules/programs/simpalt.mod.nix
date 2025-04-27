@@ -28,7 +28,7 @@ in
     home-manager = {
       home.packages = [ simpalt.pkg ];
 
-      programs = lib.mkIf celo.programs.core.zsh.enable {
+      programs = lib.mkIf celo.programs.zsh.enable {
         # TODO: Make this a module in simpalt
         zsh.initExtra = simpalt.zsh {
           symbol = cfg.symbol;

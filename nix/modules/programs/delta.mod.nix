@@ -17,7 +17,7 @@ in
     home-manager = {
       home.packages = with pkgs; [ delta ];
 
-      xdg = lib.mkIf celo.programs.core.git.enable {
+      xdg = lib.mkIf celo.programs.git.enable {
         # TODO: Colors are off
         configFile."git/config".text = builtins.readFile ../../../git/config/delta;
       };

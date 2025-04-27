@@ -119,7 +119,7 @@ in
     lib.mkIf cfg.enable {
       assertions = [
         {
-          assertion = celo.programs.core.zsh.enable;
+          assertion = celo.programs.zsh.enable;
           message = "nali enabled without zsh";
         }
         {

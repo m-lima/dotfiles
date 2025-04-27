@@ -21,20 +21,20 @@ in
 
       xdg.configFile = {
         "git/config".text =
-          builtins.readFile ../../../../git/config/gitconfig
+          builtins.readFile ../../../git/config/gitconfig
           + (lib.optionalString config.celo.modules.services.ssh.enable (
-            builtins.readFile ../../../../git/config/sign
+            builtins.readFile ../../../git/config/sign
           ));
-        "git/ignore".text = builtins.readFile ../../../../git/config/ignore;
+        "git/ignore".text = builtins.readFile ../../../git/config/ignore;
       };
 
-      programs = lib.mkIf celo.programs.core.zsh.enable {
-        zsh.initExtra = util.extractCompdef (builtins.readFile ../../../../zsh/config/programs/git.zsh);
+      programs = lib.mkIf celo.programs.zsh.enable {
+        zsh.initExtra = util.extractCompdef (builtins.readFile ../../../zsh/config/programs/git.zsh);
       };
     };
 
-    programs = lib.mkIf celo.programs.core.zsh.enable {
-      zsh.interactiveShellInit = builtins.readFile ../../../../zsh/config/programs/git.zsh;
+    programs = lib.mkIf celo.programs.zsh.enable {
+      zsh.interactiveShellInit = builtins.readFile ../../../zsh/config/programs/git.zsh;
     };
   };
 }

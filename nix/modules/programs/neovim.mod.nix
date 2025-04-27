@@ -64,10 +64,10 @@ in
       "xdg/nvim/init.vim".text =
         with builtins;
         ''''
-        + readFile ../../../../vim/config/base/options.vim
-        + readFile ../../../../vim/config/nvim/options.vim
-        + readFile ../../../../vim/config/base/mapping.vim
-        + readFile ../../../../vim/config/nvim/mapping.vim;
+        + readFile ../../../vim/config/base/options.vim
+        + readFile ../../../vim/config/nvim/options.vim
+        + readFile ../../../vim/config/base/mapping.vim
+        + readFile ../../../vim/config/nvim/mapping.vim;
     };
 
     home-manager = util.withHome config {
@@ -123,10 +123,10 @@ in
         "nvim/init.vim".text =
           with builtins;
           ''''
-          + readFile ../../../../vim/config/base/options.vim
-          + readFile ../../../../vim/config/nvim/options.vim
-          + readFile ../../../../vim/config/base/mapping.vim
-          + readFile ../../../../vim/config/nvim/mapping.vim
+          + readFile ../../../vim/config/base/options.vim
+          + readFile ../../../vim/config/nvim/options.vim
+          + readFile ../../../vim/config/base/mapping.vim
+          + readFile ../../../vim/config/nvim/mapping.vim
           + ''
             lua <<EOF
             require('config.cmp')
@@ -154,13 +154,13 @@ in
           ''
           + (lib.strings.concatMapStringsSep "\n" (l: plugins.${l}.setup) cfg.plugins)
           + "\nEOF";
-        "nvim/colors/simpalt.vim".source = ../../../../vim/simpalt.vim;
-        "nvim/lua".source = ../../../../vim/config/nvim/lua;
+        "nvim/colors/simpalt.vim".source = ../../../vim/simpalt.vim;
+        "nvim/lua".source = ../../../vim/config/nvim/lua;
       };
     };
 
-    programs = lib.mkIf celo.programs.core.zsh.enable {
-      zsh.interactiveShellInit = builtins.readFile ../../../../zsh/config/programs/nvim.zsh;
+    programs = lib.mkIf celo.programs.zsh.enable {
+      zsh.interactiveShellInit = builtins.readFile ../../../zsh/config/programs/nvim.zsh;
     };
   };
 }

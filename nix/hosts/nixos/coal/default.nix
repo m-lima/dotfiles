@@ -7,6 +7,7 @@
       profiles = {
         nixos.enable = true;
         base.enable = true;
+        core.enable = true;
         creation.enable = true;
         dev.enable = true;
         nextcloud.enable = true;

@@ -13,6 +13,7 @@
         profiles = {
           nixos.enable = true;
           base.enable = true;
+          core.enable = true;
         };
 
         modules = {

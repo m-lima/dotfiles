@@ -19,7 +19,7 @@ in
 
       xdg.configFile = {
         "tmux/tmux.conf".source = ../../../tmux/base.conf;
-        "tmux/script/edit.zsh" = lib.mkIf celo.programs.core.zsh.enable {
+        "tmux/script/edit.zsh" = lib.mkIf celo.programs.zsh.enable {
           source = ../../../tmux/script/edit.zsh;
           executable = true;
         };

@@ -17,7 +17,7 @@ in
     home-manager = {
       home.packages = with pkgs; [ zoxide ];
 
-      programs = lib.mkIf celo.programs.core.zsh.enable {
+      programs = lib.mkIf celo.programs.zsh.enable {
         zsh.initExtra = builtins.readFile ../../../zsh/config/programs/zoxide.zsh;
       };
     };
