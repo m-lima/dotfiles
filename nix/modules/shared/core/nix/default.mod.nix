@@ -13,7 +13,7 @@ in
   options = util.mkOptions path { description = "home manager"; };
 
   config = lib.mkIf cfg.enable {
-    # Allow all poackages, regardless of license
+    # Allow all packages, regardless of license
     nixpkgs.config.allowUnfree = true;
 
     nix = {
