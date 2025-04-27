@@ -29,10 +29,7 @@ let
         hostModule
         setupRagenix
         {
-          celo.host = {
-            inherit id kind;
-            secrets = ./${kind}/${id}/secrets;
-          };
+          celo.host = { inherit id kind; };
           nixpkgs.hostPlatform = system;
         }
       ];
@@ -53,10 +50,6 @@ let
                 "darwin"
               ];
               description = "The kind of host being built";
-            };
-            secrets = lib.mkOption {
-              type = lib.types.path;
-              description = "The path to the host secrets";
             };
           };
         };
