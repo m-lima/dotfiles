@@ -8,7 +8,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-  secret = "${cfg.userName}-${config.celo.host.id}";
+  secret = config.celo.host.id;
 in
 {
   options = util.mkOptions path {
