@@ -10,7 +10,7 @@ let
   cfg = util.getOptions path config;
   home = config.celo.modules.core.home;
   user = config.celo.modules.core.user;
-  secret = "${user.userName}-${config.celo.host.id}";
+  secret = config.celo.host.id;
 in
 {
   options = util.mkOptions path {
@@ -53,8 +53,8 @@ in
           ++ (lib.optionals cfg.authorizeNixHosts (
             map builtins.readFile (
               lib.flatten (
-                lib.mapAttrsToList (k: v: lib.optional (v == "regular" && lib.hasSuffix ".pub" k) ./secrets/${k}) (
-                  builtins.readDir ./secrets
+                lib.mapAttrsToList (k: v: lib.optional (v == "regular" && lib.hasSuffix ".pub" k) ./_secrets/${k}) (
+                  builtins.readDir ./_secrets
                 )
               )
             )
@@ -79,7 +79,7 @@ in
     age.secrets = {
       # TODO: Move these to home-manager, for home-manager-only systems
       ${util.mkSecretPath path secret} = lib.mkIf home.enable {
-        rekeyFile = ./secrets/${secret}.age;
+        rekeyFile = ./_secrets/${secret}.age;
         path = "${user.homeDirectory}/.ssh/id_ed25519";
         mode = "600";
         owner = user.userName;
@@ -87,7 +87,7 @@ in
         symlink = false;
       };
       ${util.mkSecretPath path "hosts"} = lib.mkIf home.enable {
-        rekeyFile = ./secrets/hosts.age;
+        rekeyFile = ./_secrets/hosts.age;
         path = "${user.homeDirectory}/.ssh/config";
         mode = "644";
         owner = user.userName;
@@ -98,7 +98,7 @@ in
 
     home-manager = util.withHome config {
       home.file = {
-        ".ssh/id_ed25519.pub".source = ./secrets/${secret}.pub;
+        ".ssh/id_ed25519.pub".source = ./_secrets/${secret}.pub;
       };
     };
 
