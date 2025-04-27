@@ -8,7 +8,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-  secrets = config.celo.host.secrets;
+  host = config.celo.host.id;
 in
 {
   options = util.mkOptionsEnable path;
@@ -19,7 +19,7 @@ in
         url:
         (builtins.getFlake "${url}?ref=master&rev=cb3ab9eb59d18baa564850e4087feb7b2c4d147d")
         .outputs.packages.${pkgs.system}.default
-      ) (util.rageSecret config /${secrets}/programs/skull/url.age);
+      ) (util.rageSecret config ./_secrets/${host}/url.rage);
     };
 
     environment.persistence = util.withImpermanence config {
