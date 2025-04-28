@@ -23,8 +23,12 @@
           };
           programs = {
             simpalt = {
+              # TODO
+              enable = true;
               symbol = "⏾";
             };
+            # TODO
+            zsh.enable = true;
           };
         };
       };
