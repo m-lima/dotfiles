@@ -94,9 +94,9 @@ let
   withHome =
     config: settings:
     let
-      user = config.celo.modules.core.user.userName;
+      core = config.celo.modules.core;
     in
-    lib.mkIf config.celo.modules.core.home.enable { users.${user} = settings; };
+    lib.mkIf core.home.enable { users.${core.user.userName} = settings; };
 
   withImpermanence =
     config:
@@ -105,12 +105,11 @@ let
       home ? { },
     }:
     let
-      impermanence = config.celo.modules.core.impermanence;
-      user = config.celo.modules.core.user;
+      core = config.celo.modules.core;
     in
-    lib.mkIf impermanence.enable {
+    lib.mkIf core.impermanence.enable {
       "/persist" = global // {
-        users.${user.userName} = lib.mkIf user.enable home;
+        users.${core.user.userName} = lib.mkIf core.user.enable home;
       };
     };
 
