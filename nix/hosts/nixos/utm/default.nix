@@ -11,14 +11,18 @@
 
       celo = {
         profiles = {
-          nixos.enable = true;
+          system.enable = true;
           base.enable = true;
           core.enable = true;
           dev.enable = true;
+          disko.enable = true;
         };
 
         modules = {
           core = {
+            agenix = {
+              identityPath = "/persist/etc/ssh/ssh_host_ed25519_key";
+            };
             disko = {
               device = "/dev/vda";
               swap = "1G";
@@ -32,6 +36,7 @@
             keyring.enable = true;
             mdns.enable = true;
             ssh = {
+              enable = true;
               ports = [ 22 ] ++ (util.rageSecret config ./_secrets/services/ssh/ports.rage);
             };
           };

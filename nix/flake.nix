@@ -136,7 +136,8 @@
             hostModules
             ++ util.loadModules ./modules/shared
             ++ util.loadModules ./modules/nixos
-            ++ util.loadProfiles ./profiles
+            ++ util.loadProfiles ./profiles/shared
+            ++ util.loadProfiles ./profiles/nixos
             ++ [
               agenix.nixosModules.default
               agenix-rekey.nixosModules.default
@@ -164,7 +165,8 @@
             hostModules
             ++ util.loadModules ./modules/shared
             ++ util.loadModules ./modules/darwin
-            ++ util.loadProfiles ./profiles
+            ++ util.loadProfiles ./profiles/shared
+            ++ util.loadProfiles ./profiles/darwin
             ++ [
               agenix.nixosModules.default
               agenix-rekey.nixosModules.default

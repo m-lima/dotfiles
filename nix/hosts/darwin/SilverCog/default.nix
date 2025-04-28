@@ -8,11 +8,7 @@
     {
       celo = {
         profiles = {
-          darwin.enable = true;
-          base.enable = true;
-          core.enable = true;
-          # dev.enable = true;
-          # nextcloud.enable = true;
+          system.enable = true;
         };
 
         modules = {

@@ -5,17 +5,21 @@
 
     celo = {
       profiles = {
-        nixos.enable = true;
+        system.enable = true;
         base.enable = true;
         core.enable = true;
         creation.enable = true;
         dev.enable = true;
+        disko.enable = true;
         nextcloud.enable = true;
         ui.enable = true;
       };
 
       modules = {
         core = {
+          agenix = {
+            identityPath = "/persist/etc/ssh/ssh_host_ed25519_key";
+          };
           disko = {
             device = "/dev/nvme0n1";
             luks = true;
@@ -36,6 +40,7 @@
           wifi.enable = true;
         };
         services = {
+          ssh.enable = true;
           mdns.enable = true;
         };
         programs = {
