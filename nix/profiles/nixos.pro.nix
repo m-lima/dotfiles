@@ -12,9 +12,7 @@
     };
     nix.enable = true;
     nixos.enable = true;
-    user = {
-      enable = true;
-    };
+    user.enable = true;
   };
   services = {
     ssh.enable = true;
