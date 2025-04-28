@@ -18,7 +18,6 @@ in
       type = lib.types.listOf lib.types.singleLineStr;
       default = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJWz+qMP0BBpeBLzCCHxr4wLSNz8rGZpPvhoppP6zegF lima@silver"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIoQfGlWPRvuEcqapM3zOmvppowN9x+jF2LgfEl150hS celo@silvercog"
       ];
       description = ''
         A list of verbatim OpenSSH public keys that should be added to the
