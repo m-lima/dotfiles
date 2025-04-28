@@ -13,4 +13,3 @@ in
     nix.gc.dates = "weekly";
   };
 }
-

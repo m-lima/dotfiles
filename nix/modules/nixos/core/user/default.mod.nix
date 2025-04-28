@@ -20,17 +20,19 @@ in
       usersDirectory = "home";
     })
     // {
-      users = {
-        age.secrets = {
-          ${util.mkSecretPath path host} = {
-            rekeyFile = ./_secrets/${host}/password.age;
-          };
+      age.secrets = {
+        ${util.mkSecretPath path host} = {
+          rekeyFile = ./_secrets/${host}/password.age;
         };
+      };
 
-        ${cfg.userName} = {
-          isNormalUser = true;
-          hashedPasswordFile = config.age.secrets.${util.mkSecretPath path host}.path;
-          extraGroups = [ "wheel" ];
+      users = {
+        users = {
+          ${cfg.userName} = {
+            isNormalUser = true;
+            hashedPasswordFile = config.age.secrets.${util.mkSecretPath path host}.path;
+            extraGroups = [ "wheel" ];
+          };
         };
         motd = cfg.motd;
       };
