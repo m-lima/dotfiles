@@ -22,7 +22,7 @@
             swap = "8G";
           };
           dropbear.enable = true;
-          nixos = {
+          system = {
             timeZone = "Europe/Amsterdam";
             stateVersion = "24.05";
           };

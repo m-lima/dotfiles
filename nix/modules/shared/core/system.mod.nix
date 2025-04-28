@@ -24,11 +24,6 @@ in
       default = null;
       type = lib.types.nullOr lib.types.nonEmptyStr;
     };
-    stateVersion = lib.mkOption {
-      description = "See https://mynixos.com/nix-darwin/option/system.stateVersion";
-      example = 5;
-      type = lib.types.int;
-    };
   };
 
   config = lib.mkIf cfg.enable {

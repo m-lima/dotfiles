@@ -23,7 +23,7 @@
               device = "/dev/vda";
               swap = "1G";
             };
-            nixos = {
+            system = {
               timeZone = "Europe/Amsterdam";
               stateVersion = "24.05";
             };

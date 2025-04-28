@@ -97,8 +97,8 @@ function mkpass {
     rm "${temp}"
   }
 
-  mkUserPass root "${base}/modules/core/nixos/_secrets/${host}/password.age"
-  mkUserPass "${user}" "${base}/modules/core/user/_secrets/${host}/password.age"
+  mkUserPass root "${base}/modules/nixos/core/system/_secrets/${host}/password.age"
+  mkUserPass "${user}" "${base}/modules/shared/core/user/_secrets/${host}/password.age"
 }
 
 function mksshid {

@@ -18,13 +18,6 @@ in
       example = "celo";
       type = lib.types.nonEmptyStr;
     };
-
-    homeDirectory = lib.mkOption {
-      description = "Home directory path";
-      default = "/Users/${cfg.userName}";
-      example = "/Users/celo";
-      type = lib.types.nonEmptyStr;
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -40,10 +33,9 @@ in
           isNormalUser = true;
           home = cfg.homeDirectory;
           hashedPasswordFile = config.age.secrets.${util.mkSecretPath path host}.path;
-          extraGroups = [ "staff" ];
         };
       };
-      motd = cfg.motd;
     };
   };
 }
+

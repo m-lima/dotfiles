@@ -11,19 +11,7 @@ let
   host = config.celo.host.id;
 in
 {
-  options = util.mkOptions path {
-    hostName = lib.mkOption {
-      type = lib.types.nonEmptyStr;
-      description = "Host name";
-      default = host;
-      example = "coal";
-    };
-    timeZone = lib.mkOption {
-      description = "TimeZone to use";
-      example = "Europe/Amsterdam";
-      default = null;
-      type = lib.types.nullOr lib.types.nonEmptyStr;
-    };
+  options = util.mkRawOptions path {
     stateVersion = lib.mkOption {
       description = "See https://mynixos.com/nixpkgs/option/system.stateVersion";
       example = "24.11";
@@ -56,12 +44,6 @@ in
           };
     };
 
-    # Define the hostname
-    networking.hostName = cfg.hostName;
-
-    # Set the time zone.
-    time.timeZone = cfg.timeZone;
-
     # Select internationalization properties.
     i18n.defaultLocale = "en_US.UTF-8";
 
@@ -79,7 +61,5 @@ in
         };
       };
     };
-
-    system.stateVersion = cfg.stateVersion;
   };
 }

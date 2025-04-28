@@ -11,7 +11,7 @@
       wipe.enable = true;
     };
     nix.enable = true;
-    nixos.enable = true;
+    system.enable = true;
     user.enable = true;
   };
   services = {

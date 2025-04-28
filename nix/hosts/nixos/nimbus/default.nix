@@ -28,7 +28,7 @@
               enable = true;
               port = builtins.head ((util.rageSecret config ./_secrets/core/dropbear/port.rage) ++ [ 22 ]);
             };
-            nixos = {
+            system = {
               timeZone = "Europe/Amsterdam";
               stateVersion = "24.05";
             };
