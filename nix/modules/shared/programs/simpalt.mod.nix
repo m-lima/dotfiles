@@ -25,11 +25,17 @@ in
   };
 
   config = util.enforceHome path config cfg.enable {
+    assertions = [
+      {
+        assertion = celo.programs.zsh.enable;
+        message = "simpalt enabled without zsh";
+      }
+    ];
+
     home-manager = {
       home.packages = [ simpalt.pkg ];
 
-      programs = lib.mkIf celo.programs.zsh.enable {
-        # TODO: Make this a module in simpalt
+      programs = {
         zsh.initExtra = simpalt.zsh {
           symbol = cfg.symbol;
           toggleBinding = "^T";
