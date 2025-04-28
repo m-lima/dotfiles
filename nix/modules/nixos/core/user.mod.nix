@@ -10,25 +10,19 @@ let
   cfg = util.getOptions path config;
 in
 {
-  options = util.mkRawOptions path {
-    homeDirectory = lib.mkOption {
-      description = "Home directory path";
-      default = "/home/${cfg.userName}";
-      example = "/home/celo";
-      type = lib.types.nonEmptyStr;
-    };
-
+  options = util.mkPath path {
     motd = options.users.motd;
   };
 
-  config = lib.mkIf cfg.enable {
-    users = {
+  config = lib.mkIf cfg.enable (
+    (util.mkPath path {
+      usersDirectory = "home";
+      extraGroups = "wheel";
+    })
+    // {
       users = {
-        ${cfg.userName} = {
-          extraGroups = [ "wheel" ];
-        };
+        motd = cfg.motd;
       };
-      motd = cfg.motd;
-    };
-  };
+    }
+  );
 }

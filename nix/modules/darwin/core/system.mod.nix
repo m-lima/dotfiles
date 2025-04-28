@@ -7,7 +7,7 @@ path:
   ...
 }:
 {
-  options = util.mkRawOptions path {
+  options = util.mkPath path {
     stateVersion = lib.mkOption {
       description = "See https://mynixos.com/nix-darwin/option/system.stateVersion";
       example = 5;

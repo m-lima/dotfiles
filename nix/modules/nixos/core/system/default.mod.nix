@@ -11,7 +11,7 @@ let
   host = config.celo.host.id;
 in
 {
-  options = util.mkRawOptions path {
+  options = util.mkPath path {
     stateVersion = lib.mkOption {
       description = "See https://mynixos.com/nixpkgs/option/system.stateVersion";
       example = "24.11";

@@ -40,10 +40,8 @@ let
       ]
     );
 
-  mkRawOptions =
-    path:
-    options:
-    lib.setAttrByPath path options;
+  mkPath = path: base: lib.setAttrByPath path base;
+
   mkOptions =
     path:
     options@{
@@ -144,7 +142,7 @@ in
   inherit
     loadModules
     loadProfiles
-    mkRawOptions
+    mkPath
     mkOptions
     mkOptionsEnable
     getOptions
