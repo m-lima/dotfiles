@@ -354,19 +354,26 @@
           "flake-utils"
         ],
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-unstable"
+        ],
+        "rust-helper": [
+          "rust-helper"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
         ]
       },
       "locked": {
-        "lastModified": 1738068535,
-        "narHash": "sha256-E7DZflAAieWfLcEbcWHSbNhrBxoCNTLu0OE8vNxM83w=",
+        "lastModified": 1745866833,
+        "narHash": "sha256-Cs09qLpt3I1dkERLIZ6UnB+wviCwxtu4QF4gW5+P+nc=",
         "owner": "m-lima",
         "repo": "ragenix",
-        "rev": "17eb7124d0ba58be75f5011a54fb6e4dd7ce6906",
+        "rev": "8b33fa55c9cbc0389e9830272e4f76c718c88fd6",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
+        "ref": "v0.1.5",
         "repo": "ragenix",
         "type": "github"
       }
@@ -385,10 +392,26 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "plasma-manager": "plasma-manager",
         "ragenix": "ragenix",
+        "rust-helper": "rust-helper",
         "sddm-sugar-candy-nix": "sddm-sugar-candy-nix",
         "simpalt": "simpalt",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix"
+      }
+    },
+    "rust-helper": {
+      "locked": {
+        "lastModified": 1745665897,
+        "narHash": "sha256-6wjn0iMhBydBGpKf2TGJbuV0D9CvkczpDz+GXifkf94=",
+        "owner": "m-lima",
+        "repo": "nix-template",
+        "rev": "78d6c4b19154b254eecf012889e6247d3d8d0de3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "m-lima",
+        "repo": "nix-template",
+        "type": "github"
       }
     },
     "sddm-sugar-candy-nix": {
@@ -436,6 +459,7 @@
       },
       "original": {
         "owner": "m-lima",
+        "ref": "v0.3.6",
         "repo": "simpalt-rs",
         "type": "github"
       }

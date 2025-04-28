@@ -10,6 +10,7 @@
     # Transient dependencies
     crane.url = "github:ipetkov/crane";
     systems.url = "github:nix-systems/default";
+    rust-helper.url = "github:m-lima/nix-template";
 
     # Dependencies
     agenix = {
@@ -77,21 +78,24 @@
 
     # Local dependencies
     simpalt = {
-      url = "github:m-lima/simpalt-rs?tag=v0.3.6";
+      url = "github:m-lima/simpalt-rs?ref=v0.3.6";
       inputs = {
         # To use 2024 edition
         nixpkgs.follows = "nixpkgs-unstable";
-        flake-utils.follows = "flake-utils";
         crane.follows = "crane";
+        flake-utils.follows = "flake-utils";
         treefmt-nix.follows = "treefmt-nix";
       };
     };
     ragenix = {
-      url = "github:m-lima/ragenix?tag=v0.1.3";
+      url = "github:m-lima/ragenix?ref=v0.1.5";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
+        # To use 2024 edition
+        nixpkgs.follows = "nixpkgs-unstable";
         crane.follows = "crane";
+        flake-utils.follows = "flake-utils";
+        rust-helper.follows = "rust-helper";
+        treefmt-nix.follows = "treefmt-nix";
       };
     };
   };
