@@ -109,7 +109,7 @@ let
     let
       core = config.celo.modules.core;
     in
-    lib.mkIf core.impermanence.enable {
+    lib.mkIf (builtins.hasAttr "impermanence" core && core.impermanence.enable) {
       "/persist" = global // {
         users.${core.user.userName} = lib.mkIf core.user.enable home;
       };
