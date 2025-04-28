@@ -13,7 +13,6 @@ in
   config = lib.mkIf cfg.enable (
     util.mkPath path {
       usersDirectory = "Users";
-      extraGroups = "staff";
     }
   );
 }

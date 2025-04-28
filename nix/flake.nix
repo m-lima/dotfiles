@@ -166,7 +166,7 @@
             ++ util.loadModules ./modules/shared
             ++ util.loadModules ./modules/darwin
             ++ util.loadProfiles ./profiles/shared
-            ++ util.loadProfiles ./profiles/darwin
+            # ++ util.loadProfiles ./profiles/darwin
             ++ [
               agenix.nixosModules.default
               agenix-rekey.nixosModules.default
