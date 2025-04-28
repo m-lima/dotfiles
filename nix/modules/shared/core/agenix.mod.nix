@@ -22,15 +22,18 @@ in
       default = /${rootDir}/secrets/pubkey/${host}/ssh.key.pub;
       example = "ssh-rsa AAAAB3NzaC1yc2etc/etc/etcjwrsh8e596z6J0l7 example@host";
     };
+    identityPath = lib.mkOption {
+      type = lib.types.path;
+      description = "Path to a private SSH key to use as identity for decryption";
+      example = "/etc/ssh/ssh_host_ed25519_key";
+    };
   };
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [ agenix.default ];
 
     age = {
-      identityPaths = lib.mkIf config.celo.modules.core.impermanence.enable [
-        "/persist/etc/ssh/ssh_host_ed25519_key"
-      ];
+      identityPaths = [ cfg.identityPath ];
       rekey = {
         hostPubkey = cfg.pubkey;
         masterIdentities = [

@@ -58,7 +58,7 @@ let
   setupRagenix =
     { lib, config, ... }:
     {
-      ragenix.key = lib.mkDefault (builtins.head config.age.identityPaths);
+      ragenix.key = lib.mkDefault config.celo.modules.core.agenix.identityPath;
     };
 in
 # For each host directory within `kind`, call the passed in `mkHost` with the

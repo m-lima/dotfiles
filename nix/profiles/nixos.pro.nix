@@ -1,6 +1,9 @@
 {
   core = {
-    agenix.enable = true;
+    agenix = {
+      enable = true;
+      identityPath = "/persist/etc/ssh/ssh_host_ed25519_key";
+    };
     disko.enable = true;
     home.enable = true;
     impermanence = {
