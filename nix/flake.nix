@@ -185,7 +185,7 @@
 
       agenix-rekey = agenix-rekey.configure {
         userFlake = self;
-        nixosConfigurations = self.nixosConfigurations;
+        nixosConfigurations = self.nixosConfigurations // self.darwinConfigurations;
       };
 
       formatter = flake-utils.lib.eachDefaultSystemPassThrough (system: {

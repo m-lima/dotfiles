@@ -16,4 +16,3 @@ in
     environment.systemPackages = with pkgs; [ coreutils ];
   };
 }
-

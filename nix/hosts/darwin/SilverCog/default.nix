@@ -30,7 +30,16 @@
               symbol = "⏾";
             };
             # TODO
+            git.enable = true;
+            # TODO
             zsh.enable = true;
+          };
+          services = {
+            # TODO
+            ssh = {
+              enable = true;
+              listen = false;
+            };
           };
         };
       };

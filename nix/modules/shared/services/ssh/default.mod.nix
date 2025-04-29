@@ -14,6 +14,9 @@ let
 in
 {
   options = util.mkOptions path {
+    listen = lib.mkEnableOption "listen for SSH connections" // {
+      default = true;
+    };
     authorizedKeys = lib.mkOption {
       type = lib.types.listOf lib.types.singleLineStr;
       default = [
@@ -36,13 +39,11 @@ in
     authorizeNixHosts = lib.mkEnableOption "add known Nix hosts as authorized keys" // {
       default = true;
     };
-    ports = options.services.openssh.ports;
   };
 
   config = lib.mkIf cfg.enable {
-    services.openssh = {
+    services.openssh = lib.mkIf cfg.listen {
       enable = true;
-      ports = cfg.ports;
     };
 
     users =
@@ -76,13 +77,11 @@ in
       };
 
     age.secrets = {
-      # TODO: Move these to home-manager, for home-manager-only systems
       ${util.mkSecretPath path secret} = lib.mkIf home.enable {
         rekeyFile = ./_secrets/${secret}.age;
         path = "${user.homeDirectory}/.ssh/id_ed25519";
         mode = "600";
         owner = user.userName;
-        group = config.users.users.${user.userName}.group;
         symlink = false;
       };
       ${util.mkSecretPath path "hosts"} = lib.mkIf home.enable {
@@ -90,7 +89,6 @@ in
         path = "${user.homeDirectory}/.ssh/config";
         mode = "644";
         owner = user.userName;
-        group = config.users.users.${user.userName}.group;
         symlink = false;
       };
     };
@@ -99,17 +97,6 @@ in
       home.file = {
         ".ssh/id_ed25519.pub".source = ./_secrets/${secret}.pub;
       };
-    };
-
-    environment.persistence = util.withImpermanence config {
-      global.files = [
-        "/etc/ssh/ssh_host_rsa_key"
-        "/etc/ssh/ssh_host_rsa_key.pub"
-        "/etc/ssh/ssh_host_ed25519_key"
-        "/etc/ssh/ssh_host_ed25519_key.pub"
-      ];
-
-      home.files = [ ".ssh/known_hosts" ];
     };
   };
 }

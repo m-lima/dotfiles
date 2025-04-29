@@ -33,6 +33,8 @@ in
       };
     };
 
+    environment.shellAliases = lib.mkForce { };
+
     home-manager = util.withHome config {
       programs = {
         zsh = {

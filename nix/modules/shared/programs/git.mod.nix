@@ -8,8 +8,8 @@ path:
   ...
 }:
 let
-  celo = config.celo.modules;
   cfg = util.getOptions path config;
+  celo = config.celo.modules;
 in
 {
   options = util.mkOptionsEnable path;
