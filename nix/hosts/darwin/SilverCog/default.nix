@@ -36,6 +36,8 @@
             # TODO
             nali.enable = true;
             # TODO
+            neovim.enable = true;
+            # TODO
             curl.enable = true;
           };
           services = {
