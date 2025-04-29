@@ -39,6 +39,18 @@
             neovim.enable = true;
             # TODO
             curl.enable = true;
+            # TODO
+            bat.enable = true;
+            # TODO
+            jq.enable = true;
+            # TODO
+            lazygit.enable = true;
+            # TODO
+            rage.enable = true;
+            # TODO
+            rg.enable = true;
+            # TODO
+            xxd.enable = true;
           };
           services = {
             # TODO
