@@ -172,7 +172,7 @@
             ++ util.loadProfiles ./profiles/shared
             # ++ util.loadProfiles ./profiles/darwin
             ++ [
-              agenix.nixosModules.default
+              agenix.darwinModules.default
               agenix-rekey.nixosModules.default
               home-manager.darwinModules.home-manager
               ragenix.nixosModules.default
