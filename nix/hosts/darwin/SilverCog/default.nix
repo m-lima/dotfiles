@@ -22,6 +22,8 @@
             };
           };
           programs = {
+            # TODO
+            coreutils.enable = true;
             simpalt = {
               # TODO
               enable = true;
