@@ -33,6 +33,10 @@
             git.enable = true;
             # TODO
             zsh.enable = true;
+            # TODO
+            nali.enable = true;
+            # TODO
+            curl.enable = true;
           };
           services = {
             # TODO
