@@ -44,3 +44,9 @@
   - \[x\] Bat is being configured as part of ZSH
   - \[x\] Git is a bit of a mess.. A little here a little there
 - \[x\] BEMENU_OPTS not available for hyprland with UWSM
+
+# Darwin
+- \[ \] Currently playing on tmux
+- \[ \] zsh bind key mismatch
+- \[ \] Alacritty font / zoom
+- \[ \] ragenix plugin is not loading
