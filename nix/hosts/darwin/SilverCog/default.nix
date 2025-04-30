@@ -61,6 +61,8 @@
             zoxide.enable = true;
             # TODO
             direnv.enable = true;
+            # TODO
+            tmux.enable = true;
           };
           services = {
             # TODO
