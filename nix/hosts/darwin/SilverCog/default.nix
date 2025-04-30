@@ -51,6 +51,16 @@
             rg.enable = true;
             # TODO
             xxd.enable = true;
+            # TODO
+            delta.enable = true;
+            # TODO
+            fd.enable = true;
+            # TODO
+            fzf.enable = true;
+            # TODO
+            zoxide.enable = true;
+            # TODO
+            direnv.enable = true;
           };
           services = {
             # TODO
