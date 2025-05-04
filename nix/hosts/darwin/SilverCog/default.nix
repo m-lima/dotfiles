@@ -72,6 +72,8 @@
             };
             # TODO
             ui.fonts.hack.enable = true;
+            # TODO
+            pstree.enable = true;
           };
           services = {
             # TODO
