@@ -63,6 +63,8 @@
             direnv.enable = true;
             # TODO
             tmux.enable = true;
+            # TODO
+            skull.enable = true;
           };
           services = {
             # TODO
