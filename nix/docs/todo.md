@@ -46,7 +46,8 @@
 - \[x\] BEMENU_OPTS not available for hyprland with UWSM
 
 # Darwin
-- \[ \] Currently playing on tmux
+
 - \[ \] zsh bind key mismatch
+- \[ \] Currently playing on tmux
 - \[ \] Alacritty font / zoom
-- \[ \] ragenix plugin is not loading
+- \[x\] ragenix plugin is not loading
