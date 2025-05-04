@@ -65,6 +65,13 @@
             tmux.enable = true;
             # TODO
             skull.enable = true;
+            # TODO
+            ui.alacritty = {
+              enable = true;
+              tmuxStart = true;
+            };
+            # TODO
+            ui.fonts.hack.enable = true;
           };
           services = {
             # TODO

@@ -50,4 +50,6 @@
 - \[ \] zsh bind key mismatch
 - \[ \] Currently playing on tmux
 - \[ \] Alacritty font / zoom
+- \[ \] Alacritty home/end
+- \[ \] Alacritty keys for mac
 - \[x\] ragenix plugin is not loading
