@@ -72,8 +72,18 @@
             };
             # TODO
             ui.fonts.hack.enable = true;
-            # TODO
+
+            # NEW
             pstree.enable = true;
+            nmap.enable = true;
+            yq.enable = true;
+            k9s.enable = true;
+            gcloud.enable = true;
+            gh.enable = true;
+            az.enable = true;
+            aws.enable = true;
+            kubectl.enable = true;
+            kubelogin.enable = true;
           };
           services = {
             # TODO
