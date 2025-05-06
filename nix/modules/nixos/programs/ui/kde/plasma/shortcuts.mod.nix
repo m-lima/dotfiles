@@ -81,16 +81,6 @@ in
           };
         };
       };
-
-      xdg.configFile = lib.mkIf alacrittyCfg.enable {
-        "alacritty/alacritty.toml".text = ''
-          [keyboard]
-          bindings = [
-            { key = "C", mods = "Super", action = "Copy" },
-            { key = "V", mods = "Super", action = "Paste" },
-          ]
-        '';
-      };
     };
   };
 }
