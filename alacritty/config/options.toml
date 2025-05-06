@@ -1,4 +1,5 @@
 [window]
+decorations = "buttonless"
 dynamic_padding = true
 option_as_alt = "Both"
 dimensions = { columns = 200, lines = 60 }
