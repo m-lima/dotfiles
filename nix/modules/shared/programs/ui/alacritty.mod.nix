@@ -22,6 +22,11 @@ in
       type = lib.types.package;
       default = pkgs.alacritty;
     };
+    exec = lib.mkOption {
+      readOnly = true;
+      visible = false;
+      type = lib.types.str;
+    };
   };
 
   config = util.enforceHome path config cfg.enable {
@@ -82,7 +87,7 @@ in
             { key = "N",              mods = "Super",         action = "CreateNewWindow"  },
         ''
         + (lib.optionalString (cfg.tmuxStart && prg.zsh.enable) ''
-          { key = "N", mods = "Super|Shift", command = { program = "${cfg.pkg}/bin/alacritty", args = ["-e", "${pkgs.zsh}/bin/zsh"] } },
+          { key = "N", mods = "Super|Shift", command = { program = "${cfg.exec}", args = ["-e", "${pkgs.zsh}/bin/zsh"] } },
         '')
         + ''
           ]
