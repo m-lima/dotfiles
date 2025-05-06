@@ -16,7 +16,7 @@ in
     home-manager = {
       wayland.windowManager.hyprland = lib.mkIf hyprCfg.enable {
         settings = {
-          "$terminal" = "alacritty";
+          "$terminal" = "${cfg.pkg}/bin/alacritty";
         };
       };
     };

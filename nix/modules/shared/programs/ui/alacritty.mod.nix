@@ -15,6 +15,12 @@ in
 {
   options = util.mkOptions path {
     tmuxStart = lib.mkEnableOption "wrap the terminal in a tmux session by default";
+    pkg = lib.mkOption {
+      readOnly = true;
+      visible = false;
+      type = lib.types.package;
+      default = pkgs.alacritty;
+    };
   };
 
   config = util.enforceHome path config cfg.enable {
@@ -27,7 +33,7 @@ in
 
     home-manager = {
       home = {
-        packages = with pkgs; [ alacritty ];
+        packages = [ cfg.pkg ];
       };
 
       xdg.configFile."alacritty/alacritty.toml".text =
@@ -39,7 +45,7 @@ in
           [env]
           TERM = "alacritty-direct"
           [terminal]
-          shell = "tmux"
+          shell = "${tmuxCfg.pkg}/bin/tmux"
         '');
     };
   };

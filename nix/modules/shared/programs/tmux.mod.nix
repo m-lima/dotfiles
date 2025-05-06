@@ -12,11 +12,18 @@ let
   cfg = util.getOptions path config;
 in
 {
-  options = util.mkOptionsEnable path;
+  options = util.mkOptions path {
+    pkg = lib.mkOption {
+      readOnly = true;
+      visible = false;
+      type = lib.types.package;
+      default = pkgs.tmux;
+    };
+  };
 
   config = util.enforceHome path config cfg.enable {
     home-manager = {
-      home.packages = with pkgs; [ tmux ];
+      home.packages = [ cfg.pkg ];
 
       xdg.configFile = {
         "tmux/tmux.conf".source = /${rootDir}/../tmux/base.conf;
