@@ -1,9 +1,7 @@
 path:
 {
-  lib,
   config,
   util,
-  pkgs,
   ...
 }:
 let

@@ -3,7 +3,6 @@ path:
   lib,
   config,
   util,
-  options,
   ...
 }:
 let

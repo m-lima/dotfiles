@@ -3,8 +3,6 @@ path:
   lib,
   config,
   util,
-  pkgs,
-  rootDir,
   ...
 }:
 let
