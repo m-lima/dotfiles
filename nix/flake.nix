@@ -134,7 +134,7 @@
             inherit inputs util;
             rootDir = ./.;
             # pkgs2405 = nixpkgs-2405.legacyPackages.${system};
-            # pkgsUnstable = nixpkgs-unstable.legacyPackages.${system};
+            # pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
           };
 
           modules =
@@ -164,6 +164,7 @@
           specialArgs = {
             inherit inputs util;
             rootDir = ./.;
+            # pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
           };
 
           modules =
