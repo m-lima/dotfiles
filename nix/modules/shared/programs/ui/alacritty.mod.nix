@@ -45,7 +45,7 @@ in
           [env]
           TERM = "alacritty-direct"
           [terminal]
-          shell = "${tmuxCfg.pkg}/bin/tmux"
+          shell = { program = "${pkgs.bash}/bin/bash", args = ["-l", "-c", "${tmuxCfg.pkg}/bin/tmux"] }
         '');
     };
   };
