@@ -73,6 +73,12 @@ in
             { key = "NumpadSubtract", mods = "Super",         action = "DecreaseFontSize" },
             { key = "Return",         mods = "Super",         action = "ToggleFullscreen" },
 
+            { key = "Z",              mods = "Super",         action = "DecreaseFontSize" },
+            { key = "Z",              mods = "Super",         action = "DecreaseFontSize" },
+            { key = "Z",              mods = "Super",         action = "DecreaseFontSize" },
+            { key = "Z",              mods = "Super|Shift",   action = "IncreaseFontSize" },
+            { key = "Z",              mods = "Super|Shift",   action = "IncreaseFontSize" },
+            { key = "Z",              mods = "Super|Shift",   action = "IncreaseFontSize" },
             { key = "N",              mods = "Super",         action = "CreateNewWindow"  },
         ''
         + (lib.optionalString (cfg.tmuxStart && prg.zsh.enable) ''

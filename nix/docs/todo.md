@@ -47,9 +47,9 @@
 
 # Darwin
 
-- \[ \] zsh bind key mismatch
 - \[ \] Currently playing on tmux
-- \[ \] Alacritty font / zoom
-- \[ \] Alacritty home/end
-- \[ \] Alacritty keys for mac
+- \[o\] Alacritty home/end [Need to validate outside of tmux]
+- \[o\] zsh bind key mismatch [Need to validate that it is fully covered]
+- \[x\] Alacritty font / zoom [Using a triple bind instead]
+- \[x\] Alacritty keys for mac
 - \[x\] ragenix plugin is not loading
