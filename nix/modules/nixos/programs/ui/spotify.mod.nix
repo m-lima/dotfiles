@@ -3,7 +3,6 @@ path:
   lib,
   config,
   util,
-  pkgs,
   ...
 }:
 let
@@ -22,8 +21,6 @@ in
     ];
 
     home-manager = {
-      home.packages = with pkgs; [ spotify ];
-
       wayland.windowManager.hyprland = lib.mkIf hyprCfg.enable {
         settings = {
           "$player" = "spotify";

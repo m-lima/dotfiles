@@ -72,6 +72,8 @@
             };
             # TODO
             ui.fonts.hack.enable = true;
+            # TODO
+            ui.spotify.enable = true;
 
             # NEW
             pstree.enable = true;
