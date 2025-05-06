@@ -44,6 +44,7 @@
           mdns.enable = true;
         };
         programs = {
+          playerctl.enable = true;
           simpalt = {
             symbol = "₵";
           };

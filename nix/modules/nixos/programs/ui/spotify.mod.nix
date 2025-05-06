@@ -10,8 +10,6 @@ let
   hyprCfg = config.celo.modules.programs.ui.hyprland;
 in
 {
-  options = util.mkOptionsEnable path;
-
   config = util.enforceHome path config cfg.enable {
     assertions = [
       {

@@ -19,9 +19,9 @@ in
       type = lib.types.package;
       default = pkgs.tmux;
     };
-    statusRightExtra = lib.mkOption {
+    currentlyPlaying = lib.mkOption {
       type = lib.types.str;
-      description = "Script to run for the right-hand prompt of tmux";
+      description = "Script to the currently playing media";
       default = "";
     };
   };
@@ -45,15 +45,20 @@ in
           executable = true;
         };
         "tmux/script/status_right.sh" = {
-          text =
-            ''
-              #!${pkgs.bash}/bin/bash
-            ''
-            +
-              lib.optionalString celo.programs.simpalt.enable builtins.readFile
-                /${rootDir}/../tmux/script/status/simpalt.sh
-            + cfg.statusRightExtra
-            + builtins.readFile /${rootDir}/../tmux/script/status/time.sh;
+          text = builtins.concatStringsSep "\n" [
+            "#!${pkgs.bash}/bin/bash"
+            (lib.optionalString celo.programs.simpalt.enable builtins.readFile
+              /${rootDir}/../tmux/script/status/simpalt.sh
+            )
+            (lib.optionalString (cfg.currentlyPlaying != "") ''
+              playing=$(${cfg.currentlyPlaying})
+              if [ -n "$playing" ]
+              then
+                echo -n "#[fg=colour234]#[fg=colour37,bg=colour234] $playing "
+              fi
+            '')
+            (builtins.readFile /${rootDir}/../tmux/script/status/time.sh)
+          ];
           executable = true;
         };
       };
