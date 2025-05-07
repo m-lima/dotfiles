@@ -4,7 +4,7 @@
   inputs = {
     # NixOs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-    # nixpkgs-2405.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs-2405.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # Transient dependencies
@@ -133,7 +133,7 @@
           specialArgs = {
             inherit inputs util;
             rootDir = ./.;
-            # pkgs2405 = nixpkgs-2405.legacyPackages.${system};
+            # pkgs-2405 = nixpkgs-2405.legacyPackages.${system};
             # pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
           };
 
@@ -164,6 +164,7 @@
           specialArgs = {
             inherit inputs util;
             rootDir = ./.;
+            # pkgs-2405 = nixpkgs-2405.legacyPackages.${system};
             # pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
           };
 
