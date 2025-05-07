@@ -1,6 +1,6 @@
 [window]
 decorations = "buttonless"
 dynamic_padding = true
-option_as_alt = "Both"
+option_as_alt = "OnlyLeft"
 dimensions = { columns = 200, lines = 60 }
 padding = { x = 3, y = 3 }
