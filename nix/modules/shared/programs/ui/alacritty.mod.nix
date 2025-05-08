@@ -95,9 +95,9 @@ in
         + (lib.optionalString hackCfg.enable (builtins.readFile /${rootDir}/../alacritty/config/font.toml))
         + (lib.optionalString cfg.tmuxStart ''
           [env]
-          TERM = "alacritty-direct"
+          TERM = "alacritty"
           [terminal]
-          shell = { program = "${pkgs.bash}/bin/bash", args = ["-l", "-c", "${tmuxCfg.pkg}/bin/tmux"] }
+          shell = { program = "${pkgs.bash}/bin/bash", args = ["-l", "-c", "TERM=alacritty-direct ${tmuxCfg.pkg}/bin/tmux"] }
         '');
     };
   };
