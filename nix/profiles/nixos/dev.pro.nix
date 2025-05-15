@@ -2,7 +2,7 @@
   programs = {
     neovim = {
       enable = true;
-      plugins = [
+      lsps = [
         "cpp"
         "go"
         "js"

@@ -36,7 +36,20 @@
             # TODO
             nali.enable = true;
             # TODO
-            neovim.enable = true;
+            neovim = {
+              enable = true;
+              lsps = [
+                "cpp"
+                "go"
+                "js"
+                "lua"
+                "metals"
+                "nix"
+                "python"
+                "rust"
+              ];
+            };
+            # TODO
             # TODO
             curl.enable = true;
             # TODO

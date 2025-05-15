@@ -10,14 +10,16 @@ path:
 let
   celo = config.celo.modules;
   cfg = util.getOptions path config;
-  plugins = {
+  lsps = {
     cpp = {
       pkg = [ pkgs.clang-tools ];
       setup = "require('config.lspconfig.servers.cpp')";
+      dependencies = [ ];
     };
     go = {
       pkg = [ pkgs.gopls ];
       setup = "require('config.lspconfig.servers.go')";
+      dependencies = [ ];
     };
     js = {
       pkg = [
@@ -25,10 +27,19 @@ let
         pkgs.typescript-language-server
       ];
       setup = "require('config.lspconfig.servers.js').setup()";
+      dependencies = [ ];
     };
     lua = {
       pkg = [ pkgs.lua-language-server ];
       setup = "require('config.lspconfig.servers.lua')";
+      dependencies = [ ];
+    };
+    metals = {
+      pkg = [ pkgs.metals ];
+      setup = "require('config.metals')";
+      dependencies = [
+        pkgs.vimPlugins.nvim-metals
+      ];
     };
     nix = {
       pkg = [
@@ -36,23 +47,26 @@ let
         pkgs.nixfmt-rfc-style
       ];
       setup = "require('config.lspconfig.servers.nix')";
+      dependencies = [ ];
     };
     python = {
       pkg = [ pkgs.pyright ];
       setup = "require('config.lspconfig.servers.python')";
+      dependencies = [ ];
     };
     rust = {
       pkg = [ pkgs.rust-analyzer ];
       setup = "require('config.lspconfig.servers.rust')";
+      dependencies = [ ];
     };
   };
 in
 {
   options = util.mkOptions path {
-    plugins = lib.mkOption {
-      type = lib.types.listOf (lib.types.enum (lib.attrNames plugins));
+    lsps = lib.mkOption {
+      type = lib.types.listOf (lib.types.enum (lib.attrNames lsps));
       description = ''
-        A list of plugin names to install. Check the `pkgs` for available names.
+        A list of LSP names to install. Check the `pkgs` for available names.
       '';
       default = [ "nix" ];
     };
@@ -76,47 +90,50 @@ in
         neovim = {
           enable = true;
           package = pkgs.neovim-unwrapped;
-          plugins = with pkgs.vimPlugins; [
-            vim-repeat
-            plenary-nvim
-            nvim-web-devicons
-            nui-nvim
-            vim-surround
-            comment-nvim
-            ReplaceWithRegister
-            lightspeed-nvim
-            nvim-treesitter-textobjects
-            lualine-nvim
-            fugitive
-            gitsigns-nvim
-            telescope-nvim
-            neo-tree-nvim
-            project-nvim
-            telescope-fzf-native-nvim
-            telescope-ui-select-nvim
-            telescope-dap-nvim
-            nvim-treesitter.withAllGrammars
-            nvim-lspconfig
-            # mason stuff
-            # none-ls
-            nvim-dap
-            nvim-nio
-            nvim-dap-ui
-            nvim-cmp
-            cmp-nvim-lsp
-            cmp-nvim-lsp-signature-help
-            cmp-buffer
-            cmp-path
-            cmp-cmdline
-            cmp-tmux
-            luasnip
-            cmp_luasnip
-            # vim-todo-lists
-            # vsession
-            toggleterm-nvim
-            undotree
-          ];
-          extraPackages = lib.flatten (map (l: plugins.${l}.pkg) cfg.plugins);
+          plugins =
+            with pkgs.vimPlugins;
+            [
+              vim-repeat
+              plenary-nvim
+              nvim-web-devicons
+              nui-nvim
+              vim-surround
+              comment-nvim
+              ReplaceWithRegister
+              lightspeed-nvim
+              nvim-treesitter-textobjects
+              lualine-nvim
+              fugitive
+              gitsigns-nvim
+              telescope-nvim
+              neo-tree-nvim
+              project-nvim
+              telescope-fzf-native-nvim
+              telescope-ui-select-nvim
+              telescope-dap-nvim
+              nvim-treesitter.withAllGrammars
+              nvim-lspconfig
+              # mason stuff
+              # none-ls
+              nvim-dap
+              nvim-nio
+              nvim-dap-ui
+              nvim-cmp
+              cmp-nvim-lsp
+              cmp-nvim-lsp-signature-help
+              cmp-buffer
+              cmp-path
+              cmp-cmdline
+              cmp-tmux
+              luasnip
+              cmp_luasnip
+              # vim-todo-lists
+              # vsession
+              toggleterm-nvim
+              undotree
+            ]
+            ++ lib.flatten (map (l: lsps.${l}.dependencies) cfg.lsps);
+          extraPackages = lib.flatten (map (l: lsps.${l}.pkg) cfg.lsps);
         };
       };
 
@@ -153,7 +170,7 @@ in
             require('plugin.dupe_comment')
             require('plugin.overlength')
           ''
-          + (lib.strings.concatMapStringsSep "\n" (l: plugins.${l}.setup) cfg.plugins)
+          + (lib.strings.concatMapStringsSep "\n" (l: lsps.${l}.setup) cfg.lsps)
           + "\nEOF";
         "nvim/colors/simpalt.vim".source = /${rootDir}/../vim/simpalt.vim;
         "nvim/lua".source = /${rootDir}/../vim/config/nvim/lua;
