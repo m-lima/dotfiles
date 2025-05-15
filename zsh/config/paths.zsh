@@ -1,4 +1,4 @@
-if [[ $PATH != *"${HOME}/bin"* ]]
+if [[ $PATH != *"${HOME}/bin"* ]] || [[ $PATH_SRC_OVERRIDE == "yes" ]]
 then
   if [[ $PATH != *"/usr/local/bin"* ]]
   then
