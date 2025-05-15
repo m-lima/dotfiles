@@ -105,7 +105,7 @@
     {
       self,
       nixpkgs,
-      # nixpkgs-2405,
+      nixpkgs-2405,
       # nixpkgs-unstable,
       nix-darwin,
       agenix,
@@ -133,7 +133,7 @@
           specialArgs = {
             inherit inputs util;
             rootDir = ./.;
-            # pkgs-2405 = nixpkgs-2405.legacyPackages.${system};
+            pkgs-2405 = nixpkgs-2405.legacyPackages.${system};
             # pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
           };
 
@@ -164,7 +164,7 @@
           specialArgs = {
             inherit inputs util;
             rootDir = ./.;
-            # pkgs-2405 = nixpkgs-2405.legacyPackages.${system};
+            pkgs-2405 = nixpkgs-2405.legacyPackages.${system};
             # pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
           };
 
