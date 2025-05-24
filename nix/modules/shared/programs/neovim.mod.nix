@@ -131,6 +131,7 @@ in
               # vsession
               toggleterm-nvim
               undotree
+              render-markdown-nvim
             ]
             ++ lib.flatten (map (l: lsps.${l}.dependencies) cfg.lsps);
           extraPackages = lib.flatten (map (l: lsps.${l}.pkg) cfg.lsps);
@@ -163,6 +164,7 @@ in
             require('config.toggleterm')
             require('config.treesitter.none')
             require('config.undotree')
+            require('config.render_markdown')
 
             -- Personal
             require('plugin.breadcrumbs')
