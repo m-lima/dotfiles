@@ -12,7 +12,7 @@ let
 in
 {
   options = util.mkOptions path {
-    multi-account = lib.mkEnableOption "multi-account containers";
+    multiAccount = lib.mkEnableOption "multi-account containers";
   };
 
   config = util.enforceHome path config cfg.enable {
@@ -59,7 +59,7 @@ in
                   #   installation_mode = "force_installed";
                   # };
                 }
-                // (lib.optionalAttrs cfg.multi-account {
+                // (lib.optionalAttrs cfg.multiAccount {
                   "@testpilot-containers" = {
                     install_url = "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/latest.xpi";
                     installation_mode = "force_installed";

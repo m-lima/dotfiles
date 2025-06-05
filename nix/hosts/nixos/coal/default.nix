@@ -61,7 +61,7 @@
               tmuxStart = true;
             };
             firefox = {
-              multi-account = true;
+              multiAccount = true;
             };
             kde = {
               enable = true;
