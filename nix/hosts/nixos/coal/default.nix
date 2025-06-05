@@ -53,6 +53,9 @@
             alacritty = {
               tmuxStart = true;
             };
+            firefox = {
+              multi-account = true;
+            };
             kde = {
               enable = true;
               insomnia = true;
