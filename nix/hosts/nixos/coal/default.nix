@@ -44,6 +44,17 @@
           mdns.enable = true;
         };
         programs = {
+          git = {
+            overrides = {
+              "~/code/yo" = {
+                user = {
+                  email = "some@email.com";
+                  name = "somename";
+                  username = "some-user";
+                };
+              };
+            };
+          };
           nali = {
             entries = {
               cd = "~/code";
