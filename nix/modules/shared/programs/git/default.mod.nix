@@ -67,10 +67,11 @@ in
               };
             };
             createConfigs = overrides: lib.mapAttrs' intoXdgEntry (filterLiteral overrides);
+            ensureTrailingSlash = path: if lib.hasSuffix "/" path then path else path + "/";
             intoInclude =
               key: value:
               ''
-                [includeIf "gitdir:${key}"]
+                [includeIf "gitdir:${ensureTrailingSlash key}"]
                 	path = ''
               + (
                 if builtins.isAttrs value then
