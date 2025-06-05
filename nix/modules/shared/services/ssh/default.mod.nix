@@ -39,64 +39,95 @@ in
     authorizeNixHosts = lib.mkEnableOption "add known Nix hosts as authorized keys" // {
       default = true;
     };
+    extraKeys = lib.mkOption {
+      type = lib.types.listOf lib.types.path;
+      description = ''
+        List of additional keypairs.
+        The path will have '.age' appended and treated as the private side with agenix, and will have '.pub' appended for the public side.
+        It is important to use a name recognizable by OpenSSH'';
+      example = [ ./id_ed25519_key ];
+      default = [ ];
+    };
   };
 
-  config = lib.mkIf cfg.enable {
-    services.openssh = lib.mkIf cfg.listen {
-      enable = true;
-    };
+  config =
+    let
+      listToAttrs = mapper: list: builtins.listToAttrs (map mapper cfg.extraKeys);
+    in
+    lib.mkIf cfg.enable {
+      services.openssh = lib.mkIf cfg.listen {
+        enable = true;
+      };
 
-    users =
-      let
-        authorizedKeys =
-          cfg.authorizedKeys
-          ++ (lib.optionals cfg.authorizeNixHosts (
-            map builtins.readFile (
-              lib.flatten (
-                lib.mapAttrsToList (k: v: lib.optional (v == "regular" && lib.hasSuffix ".pub" k) ./_secrets/${k}) (
-                  builtins.readDir ./_secrets
+      users =
+        let
+          authorizedKeys =
+            cfg.authorizedKeys
+            ++ (lib.optionals cfg.authorizeNixHosts (
+              map builtins.readFile (
+                lib.flatten (
+                  lib.mapAttrsToList (k: v: lib.optional (v == "regular" && lib.hasSuffix ".pub" k) ./_secrets/${k}) (
+                    builtins.readDir ./_secrets
+                  )
                 )
               )
-            )
-          ));
-      in
-      lib.mkIf (authorizedKeys != [ ]) {
-        users =
-          if user.enable then
-            {
-              ${user.userName} = {
-                openssh.authorizedKeys.keys = authorizedKeys;
+            ));
+        in
+        lib.mkIf (authorizedKeys != [ ]) {
+          users =
+            if user.enable then
+              {
+                ${user.userName} = {
+                  openssh.authorizedKeys.keys = authorizedKeys;
+                };
+              }
+            else
+              {
+                root = {
+                  openssh.authorizedKeys.keys = authorizedKeys;
+                };
               };
-            }
-          else
-            {
-              root = {
-                openssh.authorizedKeys.keys = authorizedKeys;
-              };
+        };
+
+      age.secrets =
+        {
+          ${util.mkSecretPath path secret} = lib.mkIf home.enable {
+            rekeyFile = ./_secrets/${secret}.age;
+            path = "${user.homeDirectory}/.ssh/id_ed25519";
+            mode = "600";
+            owner = user.userName;
+            symlink = false;
+          };
+          ${util.mkSecretPath path "hosts"} = lib.mkIf home.enable {
+            rekeyFile = ./_secrets/hosts.age;
+            path = "${user.homeDirectory}/.ssh/config";
+            mode = "644";
+            owner = user.userName;
+            symlink = false;
+          };
+        }
+        // (listToAttrs (name: {
+          name = util.mkSecretPath path (builtins.baseNameOf name);
+          value = {
+            rekeyFile = name + ".age";
+            path = "${user.homeDirectory}/.ssh/${builtins.baseNameOf name}";
+            mode = "600";
+            owner = user.userName;
+            symlink = false;
+          };
+        }) cfg.extraKeys);
+
+      home-manager = util.withHome config {
+        home.file =
+          {
+            ".ssh/id_ed25519.pub".source = ./_secrets/${secret}.pub;
+          }
+          // (listToAttrs (name: {
+            name = ".ssh/${builtins.baseNameOf name}.pub";
+            value = {
+              source = name + ".pub";
             };
-      };
-
-    age.secrets = {
-      ${util.mkSecretPath path secret} = lib.mkIf home.enable {
-        rekeyFile = ./_secrets/${secret}.age;
-        path = "${user.homeDirectory}/.ssh/id_ed25519";
-        mode = "600";
-        owner = user.userName;
-        symlink = false;
-      };
-      ${util.mkSecretPath path "hosts"} = lib.mkIf home.enable {
-        rekeyFile = ./_secrets/hosts.age;
-        path = "${user.homeDirectory}/.ssh/config";
-        mode = "644";
-        owner = user.userName;
-        symlink = false;
+          }) cfg.extraKeys);
       };
     };
-
-    home-manager = util.withHome config {
-      home.file = {
-        ".ssh/id_ed25519.pub".source = ./_secrets/${secret}.pub;
-      };
-    };
-  };
 }
