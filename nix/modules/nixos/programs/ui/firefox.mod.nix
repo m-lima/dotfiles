@@ -11,7 +11,9 @@ let
   hyprCfg = config.celo.modules.programs.ui.hyprland;
 in
 {
-  options = util.mkOptionsEnable path;
+  options = util.mkOptions path {
+    multi-account = lib.mkEnableOption "multi-account containers";
+  };
 
   config = util.enforceHome path config cfg.enable {
     home-manager = {
@@ -46,16 +48,23 @@ in
                 "browser.tabs.warnOnClose" = lock true;
               };
 
-              ExtensionSettings = {
-                "uBlock0@raymondhill.net" = {
-                  install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-                  installation_mode = "force_installed";
-                };
-                # "{20fc2e06-e3e4-4b2b-812b-ab431220cada}" = {
-                #   install_url = "https://addons.mozilla.org/firefox/downloads/latest/startpage-private-search/latest.xpi";
-                #   installation_mode = "force_installed";
-                # };
-              };
+              ExtensionSettings =
+                {
+                  "uBlock0@raymondhill.net" = {
+                    install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+                    installation_mode = "force_installed";
+                  };
+                  # "{20fc2e06-e3e4-4b2b-812b-ab431220cada}" = {
+                  #   install_url = "https://addons.mozilla.org/firefox/downloads/latest/startpage-private-search/latest.xpi";
+                  #   installation_mode = "force_installed";
+                  # };
+                }
+                // (lib.optionalAttrs cfg.multi-account {
+                  "@testpilot-containers" = {
+                    install_url = "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/latest.xpi";
+                    installation_mode = "force_installed";
+                  };
+                });
 
               SearchEngines = {
                 Add = [
