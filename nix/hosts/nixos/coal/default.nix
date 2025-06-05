@@ -46,13 +46,7 @@
         programs = {
           git = {
             overrides = {
-              "~/code/yo" = {
-                user = {
-                  email = "some@email.com";
-                  name = "somename";
-                  username = "some-user";
-                };
-              };
+              "~/code/cog" = "cog.age";
             };
           };
           nali = {
