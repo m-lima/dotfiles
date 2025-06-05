@@ -201,6 +201,15 @@ local rust_analyzer = {
         maxLength = 100,
         renderColons = true,
       },
+      -- server = {
+      --   extraEnv = {
+      --     {
+      --       ["RA_LOG"] = "project_model=debug",
+      --     }
+      --   },
+      -- },
+      installCargo = false,
+      installRustc = false,
       checkOnSave = true,
       check = {
         command = 'clippy',
