@@ -44,6 +44,13 @@
           mdns.enable = true;
         };
         programs = {
+          nali = {
+            entries = {
+              cd = "~/code";
+              nx = "~/code/dotfiles/nix";
+              cg = "~/code/cog";
+            };
+          };
           playerctl.enable = true;
           simpalt = {
             symbol = "₵";
