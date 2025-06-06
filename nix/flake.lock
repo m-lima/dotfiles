@@ -288,6 +288,21 @@
         "type": "github"
       }
     },
+    "nix-template": {
+      "locked": {
+        "lastModified": 1749220493,
+        "narHash": "sha256-LsYufVuxVTQkwg2epg4c7ORt4scZxKNe+nfBmiZ5U/Y=",
+        "owner": "m-lima",
+        "repo": "nix-template",
+        "rev": "dbd47fe054a8f34b495c3c83333633ef7c10dfb6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "m-lima",
+        "repo": "nix-template",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1749086602,
@@ -394,7 +409,7 @@
           "flake-utils"
         ],
         "helper": [
-          "rust-helper"
+          "nix-template"
         ],
         "nixpkgs": [
           "nixpkgs"
@@ -429,12 +444,12 @@
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nix-darwin": "nix-darwin",
+        "nix-template": "nix-template",
         "nixpkgs": "nixpkgs",
         "nixpkgs-2405": "nixpkgs-2405",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "plasma-manager": "plasma-manager",
         "ragenix": "ragenix",
-        "rust-helper": "rust-helper",
         "sddm-sugar-candy-nix": "sddm-sugar-candy-nix",
         "simpalt": "simpalt",
         "systems": "systems",
@@ -455,21 +470,6 @@
         "owner": "rust-lang",
         "ref": "nightly",
         "repo": "rust-analyzer",
-        "type": "github"
-      }
-    },
-    "rust-helper": {
-      "locked": {
-        "lastModified": 1745665897,
-        "narHash": "sha256-6wjn0iMhBydBGpKf2TGJbuV0D9CvkczpDz+GXifkf94=",
-        "owner": "m-lima",
-        "repo": "nix-template",
-        "rev": "78d6c4b19154b254eecf012889e6247d3d8d0de3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "m-lima",
-        "repo": "nix-template",
         "type": "github"
       }
     },

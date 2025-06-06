@@ -10,7 +10,13 @@
     # Transient dependencies
     crane.url = "github:ipetkov/crane";
     systems.url = "github:nix-systems/default";
-    rust-helper.url = "github:m-lima/nix-template";
+    nix-template.url = "github:m-lima/nix-template";
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
 
     # Dependencies
     agenix = {
@@ -30,12 +36,6 @@
     };
     disko = {
       url = "github:nix-community/disko";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
-    fenix = {
-      url = "github:nix-community/fenix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -100,7 +100,7 @@
         crane.follows = "crane";
         fenix.follows = "fenix";
         flake-utils.follows = "flake-utils";
-        helper.follows = "rust-helper";
+        helper.follows = "nix-template";
         treefmt-nix.follows = "treefmt-nix";
       };
     };
