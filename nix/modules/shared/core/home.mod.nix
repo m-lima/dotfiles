@@ -30,8 +30,7 @@ in
         ${user.userName} = {
           programs.home-manager.enable = true;
           home = {
-            # Update this
-            stateVersion = "24.05";
+            stateVersion = cfg.stateVersion;
             username = "${user.userName}";
             homeDirectory = "${user.homeDirectory}";
             sessionPath = [ "${user.homeDirectory}/bin" ];
