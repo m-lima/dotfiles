@@ -72,6 +72,7 @@
               enable = true;
               insomnia = true;
             };
+            slack.enable = true;
           };
         };
       };
