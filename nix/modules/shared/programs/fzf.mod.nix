@@ -24,7 +24,7 @@ in
         };
 
         zsh = lib.mkIf (celo.programs.zsh.enable && celo.programs.fd.enable) {
-          initExtraFirst = builtins.readFile /${rootDir}/../zsh/config/programs/fzf_fd.zsh;
+          initContent = builtins.readFile /${rootDir}/../zsh/config/programs/fzf_fd.zsh;
         };
       };
     };

@@ -19,7 +19,7 @@ in
       home.packages = with pkgs; [ zoxide ];
 
       programs = lib.mkIf celo.programs.zsh.enable {
-        zsh.initExtra = builtins.readFile /${rootDir}/../zsh/config/programs/zoxide.zsh;
+        zsh.initContent = builtins.readFile /${rootDir}/../zsh/config/programs/zoxide.zsh;
       };
     };
   };

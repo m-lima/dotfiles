@@ -19,7 +19,7 @@ in
       home.packages = with pkgs; [ ripgrep ];
 
       programs = lib.mkIf celo.programs.zsh.enable {
-        zsh.initExtraFirst = builtins.readFile /${rootDir}/../zsh/config/programs/rg.zsh;
+        zsh.initContent = builtins.readFile /${rootDir}/../zsh/config/programs/rg.zsh;
       };
     };
   };

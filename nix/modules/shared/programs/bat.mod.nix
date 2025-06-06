@@ -19,7 +19,7 @@ in
       home.packages = with pkgs; [ bat ];
 
       programs = lib.mkIf celo.programs.zsh.enable {
-        zsh.initExtraFirst = builtins.readFile /${rootDir}/../zsh/config/programs/bat.zsh;
+        zsh.initContent = builtins.readFile /${rootDir}/../zsh/config/programs/bat.zsh;
       };
     };
   };

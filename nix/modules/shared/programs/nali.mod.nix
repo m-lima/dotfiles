@@ -173,7 +173,7 @@ in
         in
         util.withHome config {
           programs = {
-            zsh.initExtra = (util.extractCompdef script) + "\n${td}";
+            zsh.initContent = (util.extractCompdef script) + "\n${td}";
           };
         };
     };

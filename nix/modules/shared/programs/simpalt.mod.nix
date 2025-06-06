@@ -36,7 +36,7 @@ in
       home.packages = [ simpalt.pkg ];
 
       programs = {
-        zsh.initExtra = simpalt.zsh {
+        zsh.initContent = simpalt.zsh {
           symbol = cfg.symbol;
           toggleBinding = "^T";
         };

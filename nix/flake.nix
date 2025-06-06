@@ -3,7 +3,7 @@
 
   inputs = {
     # NixOs
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-2405.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -34,6 +34,12 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
     flake-utils = {
       url = "github:numtide/flake-utils";
       inputs = {
@@ -41,7 +47,7 @@
       };
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -88,14 +94,15 @@
       };
     };
     ragenix = {
-      url = "github:m-lima/ragenix?ref=v0.1.6";
+      url = "github:m-lima/ragenix?ref=v0.1.7";
       inputs = {
         # To use 2024 edition
         nixpkgs.follows = "nixpkgs-unstable";
         nixref.follows = "nixpkgs";
         crane.follows = "crane";
+        fenix.follows = "fenix";
         flake-utils.follows = "flake-utils";
-        rust-helper.follows = "rust-helper";
+        helper.follows = "rust-helper";
         treefmt-nix.follows = "treefmt-nix";
       };
     };

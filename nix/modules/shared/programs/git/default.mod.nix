@@ -93,7 +93,9 @@ in
           // (createConfigs cfg.overrides);
 
         programs = lib.mkIf celo.programs.zsh.enable {
-          zsh.initExtra = util.extractCompdef (builtins.readFile /${rootDir}/../zsh/config/programs/git.zsh);
+          zsh.initContent = util.extractCompdef (
+            builtins.readFile /${rootDir}/../zsh/config/programs/git.zsh
+          );
         };
       };
 

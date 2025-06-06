@@ -16,7 +16,7 @@ in
     home-manager = {
       fonts.fontconfig.enable = true;
 
-      home.packages = [ (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) ];
+      home.packages = [ pkgs.nerd-fonts.hack ];
     };
   };
 }

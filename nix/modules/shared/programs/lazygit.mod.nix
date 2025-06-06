@@ -19,7 +19,7 @@ in
       home.packages = with pkgs; [ lazygit ];
 
       programs = lib.mkIf celo.programs.zsh.enable {
-        zsh.initExtraFirst = builtins.readFile /${rootDir}/../zsh/config/programs/lazygit.zsh;
+        zsh.initContent = builtins.readFile /${rootDir}/../zsh/config/programs/lazygit.zsh;
       };
     };
   };
