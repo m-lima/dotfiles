@@ -123,9 +123,15 @@ let
   rageSecret =
     config: secret:
     if builtins.hasAttr "decrypt" builtins then
-      [
-        (builtins.decrypt /${builtins.toPath config.ragenix.key} secret)
-      ]
+      let
+        result = builtins.decrypt /${builtins.toPath config.ragenix.key} secret;
+      in
+      if builtins.hasAttr "ok" result then
+        [
+          result.ok
+        ]
+      else
+        builtins.warn "${result.err}. Skipping ${secret}" [ ]
     else
       builtins.warn "Ragenix is not yet initialized. Skipping ${secret}" [ ];
 

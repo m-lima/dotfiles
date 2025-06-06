@@ -397,9 +397,6 @@
           "rust-helper"
         ],
         "nixpkgs": [
-          "nixpkgs-unstable"
-        ],
-        "nixref": [
           "nixpkgs"
         ],
         "treefmt-nix": [
@@ -407,16 +404,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1749221979,
-        "narHash": "sha256-ThMxdSejfkTP/oLQdMdcrguAuQQ/uZG7MVYxTl2L710=",
+        "lastModified": 1749245015,
+        "narHash": "sha256-XU73MrMlkcCKSSBS4/y4F74+2SNze15bD/Z7erUsjBg=",
         "owner": "m-lima",
         "repo": "ragenix",
-        "rev": "bc10b61b9a03ec5ed054a6cc55efc181583edc83",
+        "rev": "63cb3262a4ae70baeccff616b5cc0c07a262fda5",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.1.7",
+        "ref": "v0.1.8",
         "repo": "ragenix",
         "type": "github"
       }

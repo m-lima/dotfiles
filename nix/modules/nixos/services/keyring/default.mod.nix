@@ -54,7 +54,7 @@ in
     home-manager =
       let
         gnome-keyring-daemon-start = pkgs.writeShellScriptBin "gnome-keyring-daemon-start" (
-          "exec ${pkgs.gnome.gnome-keyring}/bin/gnome-keyring-daemon --foreground --unlock"
+          "exec ${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --foreground --unlock"
           + lib.optionalString (cfg.components != [ ]) (
             " --components=" + lib.concatStringsSep "," cfg.components
           )
@@ -63,7 +63,7 @@ in
       in
       {
         home.packages = with pkgs; [
-          gnome.gnome-keyring
+          gnome-keyring
           gnome-keyring-daemon-start
         ];
 

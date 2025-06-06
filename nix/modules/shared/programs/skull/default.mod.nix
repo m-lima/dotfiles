@@ -17,7 +17,7 @@ in
     home-manager = {
       home.packages = map (
         url:
-        (builtins.getFlake "${url}?ref=master&rev=d3e713dcb3888966fbf86b24ef736b034c859442")
+        (builtins.getFlake "${url}?ref=master&rev=a9f510d5bb7686859ab5bdbafa1027a35d414ee4")
         .outputs.packages.${pkgs.system}.default
       ) (util.rageSecret config ./_secrets/${host}/url.rage);
     };

@@ -94,11 +94,9 @@
       };
     };
     ragenix = {
-      url = "github:m-lima/ragenix?ref=v0.1.7";
+      url = "github:m-lima/ragenix?ref=v0.1.8";
       inputs = {
-        # To use 2024 edition
-        nixpkgs.follows = "nixpkgs-unstable";
-        nixref.follows = "nixpkgs";
+        nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
         fenix.follows = "fenix";
         flake-utils.follows = "flake-utils";
