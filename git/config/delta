@@ -10,9 +10,17 @@
 	navigate = true
 	file-style = white bold
 	file-decoration-style = magenta bold ul
-	minus-style = syntax "#3f0001"
-	minus-non-emph-style = syntax "#3f0001"
-	minus-emph-style = syntax "#901011"
+	line-numbers = true
+	minus-style = syntax "#5f0000"
+	minus-emph-style = syntax "#a02020"
+	minus-non-emph-style = syntax "#3f0000"
+	minus-empty-line-marker-style = normal "#5f0000"
+	line-numbers-minus-style = "#a02020"
+	plus-style = syntax "#005f00"
+	plus-emph-style = syntax "#20a020"
+	plus-non-emph-style = syntax "#003f00"
+	plus-empty-line-marker-style = normal "#005f00"
+	line-numbers-plus-style = "#20a020"
 
 [merge]
-	conflictstyle = diff3
+	conflictStyle = zdiff3
