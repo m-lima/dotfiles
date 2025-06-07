@@ -21,6 +21,7 @@
 	plus-non-emph-style = syntax "#003f00"
 	plus-empty-line-marker-style = normal "#005f00"
 	line-numbers-plus-style = "#20a020"
+	map-styles = bold purple => syntax "#9f205f", bold cyan => syntax "#205f9f"
 
 [merge]
 	conflictStyle = zdiff3
