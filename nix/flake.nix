@@ -195,29 +195,38 @@
         userFlake = self;
         nixosConfigurations = self.nixosConfigurations // self.darwinConfigurations;
       };
+    }
+    // flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        treeFmtOpts = {
+          projectRootFile = "flake.nix";
+          programs = {
+            mdformat.enable = true;
+            nixfmt.enable = true;
+            shfmt.enable = true;
+          };
+          settings = {
+            formatter = {
+              shfmt.options = [ "-ci" ];
+            };
+            excludes = [
+              "*.age"
+              "*.rage"
+              "*.jpg"
+              "*.lock"
+              "*.pub"
+            ];
+          };
+        };
+        treeFmt = (treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${system} treeFmtOpts).config.build;
+      in
+      {
+        checks = {
+          formatting = treeFmt.check self;
+        };
+        formatter = treeFmt.wrapper;
+      }
+    );
 
-      formatter = flake-utils.lib.eachDefaultSystemPassThrough (system: {
-        ${system} =
-          (treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${system} {
-            projectRootFile = "flake.nix";
-            programs = {
-              mdformat.enable = true;
-              nixfmt.enable = true;
-              shfmt.enable = true;
-            };
-            settings = {
-              formatter = {
-                shfmt.options = [ "-ci" ];
-              };
-              excludes = [
-                "*.age"
-                "*.rage"
-                "*.jpg"
-                "*.lock"
-                "*.pub"
-              ];
-            };
-          }).config.build.wrapper;
-      });
-    };
 }
