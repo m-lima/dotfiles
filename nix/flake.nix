@@ -56,7 +56,7 @@
       url = "github:nix-community/impermanence";
     };
     nix-darwin = {
-      url = "github:nix-darwin/nix-darwin/nix-darwin-24.11";
+      url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };

@@ -16,6 +16,9 @@
             agenix = {
               identityPath = "${config.celo.modules.core.user.homeDirectory}/.ssh/id_ed25519";
             };
+            home = {
+              stateVersion = "24.11";
+            };
             system = {
               timeZone = "Europe/Amsterdam";
               stateVersion = 5;

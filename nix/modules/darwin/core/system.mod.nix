@@ -19,7 +19,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    system.activationScripts.postUserActivation.text =
+    system.activationScripts.text =
       let
         rsyncArgs = "--archive --checksum --chmod=-w --copy-unsafe-links --delete";
         source = "${config.system.build.applications}/Applications";
