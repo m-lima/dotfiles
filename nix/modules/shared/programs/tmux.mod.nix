@@ -48,9 +48,9 @@ in
         "tmux/script/status_right.sh" = {
           text = builtins.concatStringsSep "\n" [
             "#!${pkgs.bash}/bin/bash"
-            (lib.optionalString celo.programs.simpalt.enable builtins.readFile
-              /${rootDir}/../tmux/script/status/simpalt.sh
-            )
+            (lib.optionalString celo.programs.simpalt.enable (
+              builtins.readFile /${rootDir}/../tmux/script/status/simpalt.sh
+            ))
             (lib.optionalString (cfg.currentlyPlaying != "") ''
               playing=$(${cfg.currentlyPlaying})
               if [ -n "$playing" ]
