@@ -84,12 +84,13 @@
 
     # Local dependencies
     simpalt = {
-      url = "github:m-lima/simpalt-rs?ref=v0.3.6";
+      url = "github:m-lima/simpalt-rs?ref=v0.3.7";
       inputs = {
-        # To use 2024 edition
-        nixpkgs.follows = "nixpkgs-unstable";
+        nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
+        fenix.follows = "fenix";
         flake-utils.follows = "flake-utils";
+        helper.follows = "nix-template";
         treefmt-nix.follows = "treefmt-nix";
       };
     };

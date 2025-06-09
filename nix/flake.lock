@@ -498,27 +498,33 @@
         "crane": [
           "crane"
         ],
+        "fenix": [
+          "fenix"
+        ],
         "flake-utils": [
           "flake-utils"
         ],
+        "helper": [
+          "nix-template"
+        ],
         "nixpkgs": [
-          "nixpkgs-unstable"
+          "nixpkgs"
         ],
         "treefmt-nix": [
           "treefmt-nix"
         ]
       },
       "locked": {
-        "lastModified": 1742473499,
-        "narHash": "sha256-40WsPM4ecLbfxZxflYEECLKUpTFL4ZwjKu6EZRhkfrs=",
+        "lastModified": 1749476283,
+        "narHash": "sha256-FjXMZQLFn79WwiM0B0PompsdNk4Q/whtTJy5ZUevasM=",
         "owner": "m-lima",
         "repo": "simpalt-rs",
-        "rev": "8c04b7abb24189d3a0584ae0ebc243b8c0180379",
+        "rev": "c018cb01cac8b125fcc4f3202c3965d4eda905d4",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.3.6",
+        "ref": "v0.3.7",
         "repo": "simpalt-rs",
         "type": "github"
       }
