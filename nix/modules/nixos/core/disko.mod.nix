@@ -23,6 +23,17 @@ in
       description = "Size of the swap partition";
       example = "8G";
     };
+    mounts = lib.mkOption {
+      description = "Mounting points for btrfs subvolumes";
+      readOnly = true;
+      type = lib.types.attrs;
+      default = {
+        nix = "/nix";
+        persist = "/persist";
+        log = "/var/log";
+        snapshots = "/.btrfs/snapshots";
+      };
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -40,28 +51,28 @@ in
               ];
             };
             "@nix" = {
-              mountpoint = "/nix";
+              mountpoint = cfg.mounts.nix;
               mountOptions = [
                 "noatime"
                 "compress=zstd:3"
               ];
             };
             "@persist" = {
-              mountpoint = "/persist";
+              mountpoint = cfg.mounts.persist;
               mountOptions = [
                 "noatime"
                 "compress=zstd:3"
               ];
             };
             "@log" = {
-              mountpoint = "/var/log";
+              mountpoint = cfg.mounts.log;
               mountOptions = [
                 "noatime"
                 "compress=zstd:3"
               ];
             };
             "@snapshots" = {
-              mountpoint = "/.btrfs/snapshots";
+              mountpoint = cfg.mounts.snapshots;
               mountOptions = [
                 "noatime"
                 "compress=zstd:3"
