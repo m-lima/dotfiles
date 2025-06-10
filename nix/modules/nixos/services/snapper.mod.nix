@@ -26,15 +26,6 @@ in
     ];
 
     systemd = {
-      # timers.snapper = {
-      #   description = "Takes snapshots of the system's permanent subvolume";
-      #   wantedBy = [ "timers.target" ];
-      #   timerConfig = {
-      #     Unit = "snapper.service";
-      #     OnCalendar = "*-*-* *:01:00";
-      #   };
-      # };
-
       services.snapper = {
         description = "Takes snapshots of the system's permanent subvolume";
         serviceConfig = {
@@ -44,12 +35,12 @@ in
         startAt = "*-*-* *:01:00";
         wantedBy = [ "multi-user.target" ];
         script = ''
-          set -eu
-
           path="${diskoCfg.mounts.persist}"
-          snap="${diskoCfg.mounts.snapshots}/persist/auto"
           now="$(date '+%Y-%m-%dT%H:%M:%S')"
 
+          snap="${diskoCfg.mounts.snapshots}/persist"
+          [ -d "$snap" ] || mkdir "$snap"
+          snap="$snap/auto"
           [ -d "$snap" ] || mkdir "$snap"
 
           function trim {
@@ -60,7 +51,7 @@ in
             local deletable
 
             for deletable in ''${deletables[@]}; do
-              sudo btrfs subvolume delete "$target/$deletable"
+              btrfs subvolume delete "$target/$deletable"
             done
           }
 
@@ -71,7 +62,7 @@ in
 
             [ -d "$target" ] || mkdir "$target"
 
-            sudo btrfs subvolume snapshot -r "$path" "$target/$now"
+            btrfs subvolume snapshot -r "$path" "$target/$now"
             trim "$target" "$limit"
           }
 
