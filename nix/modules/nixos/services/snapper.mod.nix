@@ -3,6 +3,7 @@ path:
   lib,
   config,
   util,
+  pkgs,
   ...
 }:
 let
@@ -51,7 +52,7 @@ in
             local deletable
 
             for deletable in ''${deletables[@]}; do
-              btrfs subvolume delete "$target/$deletable"
+              ${pkgs.btrfs-progs}/bin/btrfs subvolume delete "$target/$deletable"
             done
           }
 
@@ -62,7 +63,7 @@ in
 
             [ -d "$target" ] || mkdir "$target"
 
-            btrfs subvolume snapshot -r "$path" "$target/$now"
+            ${pkgs.btrfs-progs}/bin/btrfs subvolume snapshot -r "$path" "$target/$now"
             trim "$target" "$limit"
           }
 
