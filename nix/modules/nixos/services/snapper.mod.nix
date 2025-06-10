@@ -12,7 +12,30 @@ let
   diskoCfg = celo.core.disko;
 in
 {
-  options = util.mkOptionsEnable path;
+  options = util.mkOptions path {
+    retention = {
+      hourly = lib.mkOption {
+        description = "Hours to retain";
+        type = lib.types.ints.u16;
+        default = 48;
+      };
+      daily = lib.mkOption {
+        description = "Days to retain";
+        type = lib.types.ints.u16;
+        default = 15;
+      };
+      weekly = lib.mkOption {
+        description = "Weeks to retain";
+        type = lib.types.ints.u16;
+        default = 8;
+      };
+      monthly = lib.mkOption {
+        description = "Months to retain";
+        type = lib.types.ints.u16;
+        default = 24;
+      };
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     assertions = [
@@ -86,19 +109,19 @@ in
             }
 
             if check "hourly" "+%H"; then
-              create "hourly" 48
+              create "hourly" ${toString cfg.retention.hourly}
             fi
 
             if check "daily" "+%j"; then
-              create "daily" 15
+              create "daily" ${toString cfg.retention.daily}
             fi
 
             if check "weekly" "+%V"; then
-              create "weekly" 8
+              create "weekly" ${toString cfg.retention.weekly}
             fi
 
             if check "monthly" "+%m"; then
-              create "monthly" 24
+              create "monthly" ${toString cfg.retention.monthly}
             fi
           }
 
