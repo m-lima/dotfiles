@@ -6,4 +6,7 @@
       wipe.enable = true;
     };
   };
+  services = {
+    snapper.enable = true;
+  };
 }
