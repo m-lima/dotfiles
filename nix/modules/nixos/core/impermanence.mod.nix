@@ -33,13 +33,17 @@ in
         ''
           mkdir /btrfs
           mount -o noatime,compress=zstd:3 ${cfg.wipe.device} /btrfs
+
+          delete_subvolume_recursively() {
+              IFS=$'\n'
+              for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+                  delete_subvolume_recursively "/btrfs/$i"
+              done
+              btrfs subvolume delete "$1"
+          }
         ''
         + (
           if cfg.wipe.retainRoot > 0 then
-            ''
-              btrfs subvolume delete /btrfs/@
-            ''
-          else
             ''
               if [[ -e /btrfs/@ ]]; then
                   mkdir -p /btrfs/old
@@ -47,17 +51,13 @@ in
                   mv /btrfs/@ "/btrfs/old/$timestamp"
               fi
 
-              delete_subvolume_recursively() {
-                  IFS=$'\n'
-                  for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
-                      delete_subvolume_recursively "/btrfs/$i"
-                  done
-                  btrfs subvolume delete "$1"
-              }
-
               for i in $(find /btrfs/old/ -maxdepth 1 -mtime +${toString cfg.wipe.retainRoot}); do
                   delete_subvolume_recursively "$i"
               done
+            ''
+          else
+            ''
+              delete_subvolume_recursively /btrfs/@
             ''
         )
         + ''
