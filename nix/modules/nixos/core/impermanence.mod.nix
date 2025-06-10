@@ -19,35 +19,52 @@ in
         default = config.fileSystems."/.btrfs/volume".device;
         type = lib.types.str;
       };
+      retainRoot = lib.mkOption {
+        description = "Days to retain of old roots";
+        type = lib.types.ints.u16;
+        default = if cfg.wipe.enable then 30 else 0;
+      };
     };
   };
 
   config = lib.mkIf cfg.enable {
     boot.initrd.postDeviceCommands = lib.mkIf cfg.wipe.enable (
-      lib.mkAfter ''
-        mkdir /btrfs
-        mount -o noatime,compress=zstd:3 ${cfg.wipe.device} /btrfs
-        if [[ -e /btrfs/@ ]]; then
-            mkdir -p /btrfs/old
-            timestamp=$(date --date="@$(stat -c %Y /btrfs/@)" "+%Y-%m-%-d_%H:%M:%S")
-            mv /btrfs/@ "/btrfs/old/$timestamp"
-        fi
+      lib.mkAfter (
+        ''
+          mkdir /btrfs
+          mount -o noatime,compress=zstd:3 ${cfg.wipe.device} /btrfs
+        ''
+        + (
+          if cfg.wipe.retainRoot > 0 then
+            ''
+              btrfs subvolume delete /btrfs/@
+            ''
+          else
+            ''
+              if [[ -e /btrfs/@ ]]; then
+                  mkdir -p /btrfs/old
+                  timestamp=$(date --date="@$(stat -c %Y /btrfs/@)" "+%Y-%m-%-d_%H:%M:%S")
+                  mv /btrfs/@ "/btrfs/old/$timestamp"
+              fi
 
-        delete_subvolume_recursively() {
-            IFS=$'\n'
-            for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
-                delete_subvolume_recursively "/btrfs/$i"
-            done
-            btrfs subvolume delete "$1"
-        }
+              delete_subvolume_recursively() {
+                  IFS=$'\n'
+                  for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+                      delete_subvolume_recursively "/btrfs/$i"
+                  done
+                  btrfs subvolume delete "$1"
+              }
 
-        for i in $(find /btrfs/old/ -maxdepth 1 -mtime +30); do
-            delete_subvolume_recursively "$i"
-        done
-
-        btrfs subvolume create /btrfs/@
-        umount /btrfs
-      ''
+              for i in $(find /btrfs/old/ -maxdepth 1 -mtime +${toString cfg.wipe.retainRoot}); do
+                  delete_subvolume_recursively "$i"
+              done
+            ''
+        )
+        + ''
+          btrfs subvolume create /btrfs/@
+          umount /btrfs
+        ''
+      )
     );
 
     # Make persistent fileSystems available at boot

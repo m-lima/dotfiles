@@ -28,6 +28,7 @@ in
       readOnly = true;
       type = lib.types.attrs;
       default = {
+        root = "/";
         nix = "/nix";
         persist = "/persist";
         log = "/var/log";
@@ -44,7 +45,7 @@ in
           extraArgs = [ "-f" ];
           subvolumes = {
             "@" = {
-              mountpoint = "/";
+              mountpoint = cfg.mounts.root;
               mountOptions = [
                 "noatime"
                 "compress=zstd:3"
