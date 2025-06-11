@@ -25,6 +25,36 @@ in
         default = if cfg.wipe.enable then 30 else 0;
       };
     };
+    retain = {
+      system = {
+        directories = lib.mkOption {
+          type = lib.types.listOf lib.types.singleLineStr;
+          description = "Directories to keep permanent";
+          default = [
+          ];
+        };
+        files = lib.mkOption {
+          type = lib.types.listOf lib.types.singleLineStr;
+          description = "Files to keep permanent";
+          default = [ ];
+        };
+      };
+      user = {
+        directories = lib.mkOption {
+          type = lib.types.listOf lib.types.singleLineStr;
+          description = "Directories to keep permanent";
+          default = [
+            "code"
+            "bin"
+          ];
+        };
+        files = lib.mkOption {
+          type = lib.types.listOf lib.types.singleLineStr;
+          description = "Files to keep permanent";
+          default = [ ".gnupg/pubring.kbx" ];
+        };
+      };
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -77,18 +107,14 @@ in
       directories = [
         "/etc/nixos"
         "/var/lib/nixos"
-      ];
+      ] ++ cfg.retain.system.directories;
 
-      files = [ "/etc/machine-id" ];
+      files = [ "/etc/machine-id" ] ++ cfg.retain.system.files;
 
       users = lib.mkIf user.enable {
         ${user.userName} = {
-          directories = [
-            "code"
-            "bin"
-          ];
-
-          files = [ ".gnupg/pubring.kbx" ];
+          directories = cfg.retain.user.directories;
+          files = cfg.retain.user.files;
         };
       };
     };

@@ -2,6 +2,7 @@
   system = "x86_64-linux";
   module =
     {
+      lib,
       config,
       util,
       ...
@@ -31,6 +32,13 @@
             dropbear = {
               enable = true;
               port = builtins.head ((util.rageSecret config ./_secrets/core/dropbear/port.rage) ++ [ 22 ]);
+            };
+            impermanence = {
+              retain.user.directories = [
+                "code"
+                "bin"
+                "git"
+              ];
             };
             system = {
               timeZone = "Europe/Amsterdam";
