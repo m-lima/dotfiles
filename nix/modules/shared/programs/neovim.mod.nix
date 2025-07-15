@@ -173,6 +173,7 @@ in
             require('plugin.overlength')
           ''
           + (lib.strings.concatMapStringsSep "\n" (l: lsps.${l}.setup) cfg.lsps)
+          + readFile /${rootDir}/../vim/config/nvim/filetypes.lua
           + "\nEOF";
         "nvim/colors/simpalt.vim".source = /${rootDir}/../vim/simpalt.vim;
         "nvim/lua".source = /${rootDir}/../vim/config/nvim/lua;
