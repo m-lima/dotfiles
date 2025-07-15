@@ -132,6 +132,7 @@ in
               toggleterm-nvim
               undotree
               render-markdown-nvim
+              iron-nvim
             ]
             ++ lib.flatten (map (l: lsps.${l}.dependencies) cfg.lsps);
           extraPackages = lib.flatten (map (l: lsps.${l}.pkg) cfg.lsps);
@@ -154,6 +155,7 @@ in
             require('config.dap.ui')
             require('config.fugitive')
             require('config.gitsigns')
+            require('config.iron')
             require('config.lightspeed')
             require('config.lspconfig')
             require('config.lua_out')

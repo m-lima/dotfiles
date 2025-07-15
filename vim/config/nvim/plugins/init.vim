@@ -73,6 +73,7 @@ Plug 'aserebryakov/vim-todo-lists' " TODO md file helper
 Plug 'skanehira/vsession'          " Save/load sessions TODO: Configure. I think now it keeps saving the session
 Plug 'akinsho/toggleterm.nvim'     " More usable terminal
 Plug 'mbbill/undotree'             " A local changes tracker TODO: configure (colors)
+Plug 'Vigemus/iron.nvim'           " Repl runner
 
 if filereadable(expand("~/.config/m-lima/vim/nvim/plugins/testing.vim"))
   source ~/.config/m-lima/vim/nvim/plugins/testing.vim
@@ -105,6 +106,7 @@ require('config.toggleterm')
 require('config.treesitter.all')
 require('config.undotree')
 require('config.vsession')
+require('config.iron')
 
 -- Personal
 require('plugin.breadcrumbs')
