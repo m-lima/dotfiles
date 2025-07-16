@@ -39,7 +39,7 @@ iron.setup({
     cr = '<leader>i<cr>',
     interrupt = '<leader>i<leader>',
     exit = '<leader>iq',
-    clear = '<leader>ix',
+    clear = '<leader>ic',
   },
   highlight = {
     italic = true
