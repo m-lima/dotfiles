@@ -47,6 +47,8 @@ in
     # Select internationalization properties.
     i18n.defaultLocale = "en_US.UTF-8";
 
+    environment.enableAllTerminfo = true;
+
     age.secrets = {
       ${util.mkSecretPath path host} = {
         rekeyFile = ./_secrets/${host}/password.age;
