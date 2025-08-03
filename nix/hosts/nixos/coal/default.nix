@@ -80,6 +80,7 @@
                 insomnia = true;
               };
               slack.enable = true;
+              steam.enable = true;
             };
           };
         };
