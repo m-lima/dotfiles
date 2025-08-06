@@ -84,7 +84,7 @@
 
     # Local dependencies
     simpalt = {
-      url = "github:m-lima/simpalt-rs?ref=v0.3.7";
+      url = "github:m-lima/simpalt-rs?ref=v0.3.8";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
