@@ -51,6 +51,7 @@
             mdns.enable = true;
           };
           programs = {
+            flakerpl.enable = true;
             git = {
               overrides = {
                 "~/code/cog" = "cog.age";
