@@ -515,11 +515,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1754478581,
-        "narHash": "sha256-hau5bZLs6jSb9GRmKCrMnKmtLxgDiu3tAcEV+yLAj2Q=",
+        "lastModified": 1754488650,
+        "narHash": "sha256-I6MiGJZZm/WcwkiOwPaVMi3SuIZBA/4MMKpyJaVQu0s=",
         "owner": "m-lima",
         "repo": "simpalt-rs",
-        "rev": "1780255cd389ca3ed902bf8663cc335ff596cc22",
+        "rev": "90bf93d4e7fbbd99aeeb1df3fc65be24ce3b3c33",
         "type": "github"
       },
       "original": {
