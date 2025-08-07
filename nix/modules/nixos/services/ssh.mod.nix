@@ -15,19 +15,29 @@ in
 {
   options = util.mkPath path {
     ports = options.services.openssh.ports;
-    disablePassword = lib.mkEnableOption "deny password login";
-    enableGuard = lib.mkEnableOption "enable SSH Guard";
+    security = lib.mkOption {
+      type = lib.types.enum [
+        "none"
+        "nopassword"
+        "sshguard"
+        "both"
+      ];
+      default = "nopassword";
+      description = ''
+        What method of security to use: block password logins, enable sshguard, both, or none
+      '';
+    };
   };
 
   config = lib.mkIf cfg.enable {
     services = {
       openssh = lib.mkIf cfg.listen {
         ports = cfg.ports;
-        settings = lib.mkIf cfg.disablePassword {
+        settings = lib.mkIf (cfg.security == "nopassword" || cfg.security == "both") {
           PasswordAuthentication = false;
         };
       };
-      sshguard = lib.mkIf cfg.enableGuard {
+      sshguard = lib.mkIf (cfg.security == "sshguard" || cfg.security == "both") {
         enable = true;
       };
     };
