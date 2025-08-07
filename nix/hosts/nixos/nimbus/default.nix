@@ -58,6 +58,7 @@
             ssh = {
               enable = true;
               ports = util.rageSecret config ./_secrets/services/ssh/ports.rage;
+              security = "sshguard";
             };
           };
           programs = {
