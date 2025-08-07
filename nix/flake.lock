@@ -267,6 +267,41 @@
         "type": "github"
       }
     },
+    "ipifier": {
+      "inputs": {
+        "crane": [
+          "crane"
+        ],
+        "fenix": [
+          "fenix"
+        ],
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "helper": [
+          "nix-template"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1754597167,
+        "narHash": "sha256-Oh++1RyWpuFp3KkBErC5sw9THDTOCmnS3IX8m6y9rdc=",
+        "owner": "m-lima",
+        "repo": "ipifier",
+        "rev": "7d95526951909c8efcb1d2da02dbfe0dbd643a40",
+        "type": "github"
+      },
+      "original": {
+        "owner": "m-lima",
+        "repo": "ipifier",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -290,11 +325,11 @@
     },
     "nix-template": {
       "locked": {
-        "lastModified": 1749220493,
-        "narHash": "sha256-LsYufVuxVTQkwg2epg4c7ORt4scZxKNe+nfBmiZ5U/Y=",
+        "lastModified": 1754507467,
+        "narHash": "sha256-JqkMOEd6mWj1NExdvkxuzmzAS4cPOoxQWW+ID9tG+ss=",
         "owner": "m-lima",
         "repo": "nix-template",
-        "rev": "dbd47fe054a8f34b495c3c83333633ef7c10dfb6",
+        "rev": "3a48fa0034babbdc226afd5fc0e5987194f72c69",
         "type": "github"
       },
       "original": {
@@ -419,16 +454,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1749245015,
-        "narHash": "sha256-XU73MrMlkcCKSSBS4/y4F74+2SNze15bD/Z7erUsjBg=",
+        "lastModified": 1754597601,
+        "narHash": "sha256-V6vXYLN0oLJ1y5dKciL8bvBShyK4V75F78AJLR+kgho=",
         "owner": "m-lima",
         "repo": "ragenix",
-        "rev": "63cb3262a4ae70baeccff616b5cc0c07a262fda5",
+        "rev": "dfd562ec0a02a8eca65abc0b6ed4a01cfae600c0",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.1.8",
+        "ref": "v0.1.9",
         "repo": "ragenix",
         "type": "github"
       }
@@ -443,6 +478,7 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
+        "ipifier": "ipifier",
         "nix-darwin": "nix-darwin",
         "nix-template": "nix-template",
         "nixpkgs": "nixpkgs",
@@ -515,11 +551,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1754488650,
-        "narHash": "sha256-I6MiGJZZm/WcwkiOwPaVMi3SuIZBA/4MMKpyJaVQu0s=",
+        "lastModified": 1754508005,
+        "narHash": "sha256-ycOxvg/D28AKYeGrJ+zDm6UfICJa5A9/z5Tj33/0mu8=",
         "owner": "m-lima",
         "repo": "simpalt-rs",
-        "rev": "90bf93d4e7fbbd99aeeb1df3fc65be24ce3b3c33",
+        "rev": "ad9ae9a9021288e58e2e765f0bc44fccd21ccd0a",
         "type": "github"
       },
       "original": {

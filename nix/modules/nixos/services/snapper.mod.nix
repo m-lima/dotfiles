@@ -51,7 +51,7 @@ in
 
     systemd = {
       services.snapper = {
-        description = "Takes snapshots of the system's permanent subvolume";
+        description = "snapper";
         serviceConfig = {
           Type = "oneshot";
           User = "root";

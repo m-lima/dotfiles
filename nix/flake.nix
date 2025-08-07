@@ -83,6 +83,17 @@
     };
 
     # Local dependencies
+    ipifier = {
+      url = "github:m-lima/ipifier";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        crane.follows = "crane";
+        fenix.follows = "fenix";
+        flake-utils.follows = "flake-utils";
+        helper.follows = "nix-template";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
     simpalt = {
       url = "github:m-lima/simpalt-rs?ref=v0.3.8";
       inputs = {
@@ -95,7 +106,7 @@
       };
     };
     ragenix = {
-      url = "github:m-lima/ragenix?ref=v0.1.8";
+      url = "github:m-lima/ragenix?ref=v0.1.9";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
@@ -120,6 +131,7 @@
       flake-utils,
       home-manager,
       impermanence,
+      ipifier,
       ragenix,
       sddm-sugar-candy-nix,
       treefmt-nix,
