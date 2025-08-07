@@ -27,21 +27,14 @@ in
         automatic = true;
       };
 
-      settings =
-        let
-          access-tokens = util.rageSecret config ./_secrets/${host}/access_tokens.rage;
-        in
-        {
-          # Enable some experimental features
-          experimental-features = [
-            "nix-command"
-            "flakes"
-          ];
-        }
-        // lib.optionalAttrs (builtins.length access-tokens > 0) {
-          # Use access token with nix
-          access-tokens = builtins.head access-tokens;
-        };
+      settings = {
+        # Enable some experimental features
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+        access-tokens = util.rageSecretOptional config ./_secrets/${host}/access_tokens.rage;
+      };
     };
   };
 }

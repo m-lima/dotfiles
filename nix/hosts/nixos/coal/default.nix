@@ -103,9 +103,7 @@
         };
         defaultGateway = "10.0.0.1";
         nameservers = [ "10.0.0.1" ];
-        firewall.allowedTCPPorts = builtins.head (
-          (util.rageSecret config ./_secrets/core/networking/firewall.rage) ++ [ ]
-        );
+        firewall.allowedTCPPorts = util.rageSecretOptional config ./_secrets/core/networking/firewall.rage;
       };
     };
 }

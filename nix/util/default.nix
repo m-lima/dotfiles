@@ -135,6 +135,13 @@ let
     else
       builtins.warn "Ragenix is not yet initialized. Skipping ${secret}" [ ];
 
+  rageSecretOptional =
+    config: secret:
+    let
+      maybeSecret = rageSecret config secret;
+    in
+    lib.mkIf (builtins.length maybeSecret > 0) (builtins.head maybeSecret);
+
   extractCompdef =
     string:
     lib.concatStringsSep "\n" (
@@ -159,6 +166,7 @@ in
     mkSecretPath
     xdg
     rageSecret
+    rageSecretOptional
     extractCompdef
     ;
 }
