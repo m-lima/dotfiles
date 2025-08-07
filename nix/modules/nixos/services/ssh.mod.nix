@@ -15,11 +15,21 @@ in
 {
   options = util.mkPath path {
     ports = options.services.openssh.ports;
+    disablePassword = lib.mkEnableOption "deny password login";
+    enableGuard = lib.mkEnableOption "enable SSH Guard";
   };
 
   config = lib.mkIf cfg.enable {
-    services.openssh = lib.mkIf cfg.listen {
-      ports = cfg.ports;
+    services = {
+      openssh = lib.mkIf cfg.listen {
+        ports = cfg.ports;
+        settings = lib.mkIf cfg.disablePassword {
+          PasswordAuthentication = false;
+        };
+      };
+      sshguard = lib.mkIf cfg.enableGuard {
+        enable = true;
+      };
     };
 
     environment.persistence = util.withImpermanence config {
