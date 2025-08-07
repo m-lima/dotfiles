@@ -39,6 +39,7 @@ in
       };
       sshguard = lib.mkIf (cfg.security == "sshguard" || cfg.security == "both") {
         enable = true;
+        services = lib.mkAfter [ "sshd-session" ];
       };
     };
 
