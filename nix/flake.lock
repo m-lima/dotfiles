@@ -289,11 +289,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1754597167,
-        "narHash": "sha256-Oh++1RyWpuFp3KkBErC5sw9THDTOCmnS3IX8m6y9rdc=",
+        "lastModified": 1754667003,
+        "narHash": "sha256-6KueWQ/RoAsax7t7w4tydQlLZv5rGQWKxDPjVBZi5FI=",
         "owner": "m-lima",
         "repo": "ipifier",
-        "rev": "7d95526951909c8efcb1d2da02dbfe0dbd643a40",
+        "rev": "7293aae641327a80cebc19663c9e9a2611b3f72e",
         "type": "github"
       },
       "original": {
@@ -325,11 +325,11 @@
     },
     "nix-template": {
       "locked": {
-        "lastModified": 1754507467,
-        "narHash": "sha256-JqkMOEd6mWj1NExdvkxuzmzAS4cPOoxQWW+ID9tG+ss=",
+        "lastModified": 1754666953,
+        "narHash": "sha256-FmCMhhh1ziRuW3z2QCYO72+mJQZ3wTDN0Z9XZCSsYZc=",
         "owner": "m-lima",
         "repo": "nix-template",
-        "rev": "3a48fa0034babbdc226afd5fc0e5987194f72c69",
+        "rev": "06ae36dad604050d42f52753ce1a7eb7353ca1fb",
         "type": "github"
       },
       "original": {

@@ -9,7 +9,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-  ipifier = inputs.ipifier.packages.${pkgs.system}.default;
+  ipifier = inputs.ipifier.packages.${pkgs.system}.noTimestamp;
   secret = util.mkSecretPath path "config";
 in
 {
