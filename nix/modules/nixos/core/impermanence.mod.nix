@@ -30,8 +30,7 @@ in
         directories = lib.mkOption {
           type = lib.types.listOf lib.types.singleLineStr;
           description = "Directories to keep permanent";
-          default = [
-          ];
+          default = [ ];
         };
         files = lib.mkOption {
           type = lib.types.listOf lib.types.singleLineStr;
@@ -51,7 +50,8 @@ in
         files = lib.mkOption {
           type = lib.types.listOf lib.types.singleLineStr;
           description = "Files to keep permanent";
-          default = [ ".gnupg/pubring.kbx" ];
+          default = [ ];
+          example = [ ".gnupg/pubring.kbx" ];
         };
       };
     };
@@ -107,7 +107,8 @@ in
       directories = [
         "/etc/nixos"
         "/var/lib/nixos"
-      ] ++ cfg.retain.system.directories;
+      ]
+      ++ cfg.retain.system.directories;
 
       files = [ "/etc/machine-id" ] ++ cfg.retain.system.files;
 

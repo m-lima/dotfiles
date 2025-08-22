@@ -51,7 +51,7 @@ in
         "/etc/ssh/ssh_host_ed25519_key.pub"
       ];
 
-      home.files = [ ".ssh/known_hosts" ];
+      home.directories = [ ".local/share/ssh" ];
     };
 
     age.secrets = {

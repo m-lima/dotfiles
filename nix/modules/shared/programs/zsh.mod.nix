@@ -50,6 +50,7 @@ in
             ignoreAllDups = true;
             expireDuplicatesFirst = true;
             extended = true;
+            path = "$HOME/.local/share/zsh/history";
           };
         };
       };

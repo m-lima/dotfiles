@@ -9,6 +9,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  home = config.celo.modules.core.home;
 in
 {
   config = lib.mkIf cfg.enable {
@@ -21,6 +22,13 @@ in
 
     users.defaultUserShell = pkgs.zsh;
 
-    environment.persistence = util.withImpermanence config { home.files = [ ".zsh_history" ]; };
+    environment.persistence = util.withImpermanence config {
+      # Only home-manager sets this path
+      home = lib.mkIf home.enable {
+        directories = [
+          ".local/share/zsh"
+        ];
+      };
+    };
   };
 }
