@@ -10,7 +10,9 @@ let
   cfg = util.getOptions path config;
   home = config.celo.modules.core.home;
   user = config.celo.modules.core.user;
+  userGroup = config.users.users.${user.userName}.group;
   secret = config.celo.host.id;
+  impermanence = config.celo.modules.core.impermanence;
 in
 {
   options = util.mkPath path {
@@ -52,6 +54,12 @@ in
       ];
 
       home.directories = [ ".local/share/ssh" ];
+    };
+
+    systemd = lib.mkIf impermanence.enable {
+      tmpfiles.rules = [
+        "d ${user.homeDirectory}/.ssh 0755 ${user.userName} ${userGroup}"
+      ];
     };
 
     age.secrets = {
