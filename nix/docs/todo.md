@@ -1,11 +1,11 @@
 # TODO
 
-- [ ] Snapshots for btrfs
 - [ ] Caps to ESC
-- [ ] `zsh: can't rename /home/<user>/.zsh_history.new to $HISTFILE` upon finishing a ZSH session
-- [ ] On finishing SSH operations
-  - [ ] `hostfile_replace_entries: link /home/celo/.ssh/known_hosts to /home/celo/.ssh/known_hosts.old: Invalid cross-device link`
-  - [ ] `update_known_hosts: hostfile_replace_entries failed for /home/celo/.ssh/known_hosts: Invalid cross-device link`
+- [x] Snapshots for btrfs
+- [x] `zsh: can't rename /home/<user>/.zsh_history.new to $HISTFILE` upon finishing a ZSH session
+- [x] On finishing SSH operations
+  - [x] `hostfile_replace_entries: link /home/celo/.ssh/known_hosts to /home/celo/.ssh/known_hosts.old: Invalid cross-device link`
+  - [x] `update_known_hosts: hostfile_replace_entries failed for /home/celo/.ssh/known_hosts: Invalid cross-device link`
 - [x] Abort configuration if `/persist/secrets/<file>` does not exist
 - [x] Firefox is not persistent
 - [x] Cursor for firefox
@@ -24,7 +24,7 @@
 - [x] Password for user and for WiFi
 - [x] Make user immutable (investigate if really want this)
 - [x] Global stateVersion
-  - [!] Specify the nixpkgs url as well
+  - [x] Specify the nixpkgs url as well
 - [x] https://github.com/NixOS/nixpkgs/pull/273384/files
   - [x] /boot
   - [x] /nix
@@ -47,9 +47,9 @@
 
 # Darwin
 
-- [ ] Currently playing on tmux
-- [o] Alacritty home/end [Need to validate outside of tmux]
-- [o] zsh bind key mismatch [Need to validate that it is fully covered]
+- [x] Currently playing on tmux
+- [x] Alacritty home/end [Need to validate outside of tmux]
+- [x] zsh bind key mismatch [Need to validate that it is fully covered]
 - [x] Alacritty font / zoom [Using a triple bind instead]
 - [x] Alacritty keys for mac
 - [x] ragenix plugin is not loading
