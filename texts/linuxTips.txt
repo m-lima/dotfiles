@@ -315,3 +315,10 @@ kubectl get pods \
   --sort-by '.metadata.creationTimestamp' \
   --output json \
   | jq -r '[.items[] | { name: .metadata.name, created: .metadata.creationTimestamp }] | sort_by(.created) | last | .name'
+
+##################################################
+# Networking
+##################################################
+
+# Restart the wifi
+wpa_cli reconfigure
