@@ -14,9 +14,5 @@ setopt interactivecomments
 export PAGER='less'
 export LESS='-F -i -M -R -S -w -z-4'
 
-# Language options
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-
 # Be very pedantic on word boundaries
 export WORDCHARS=''

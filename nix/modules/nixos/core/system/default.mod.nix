@@ -45,7 +45,15 @@ in
     };
 
     # Select internationalization properties.
-    i18n.defaultLocale = "en_US.UTF-8";
+    i18n = {
+      defaultLocale = "en_US.UTF-8";
+      extraLocaleSettings = {
+        LC_ADDRESS = "C.UTF-8";
+        LC_MEASUREMENT = "C.UTF-8";
+        LC_PAPER = "C.UTF-8";
+        LC_TIME = "en_IE.UTF-8";
+      };
+    };
 
     environment.enableAllTerminfo = true;
 
