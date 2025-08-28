@@ -1,6 +1,7 @@
 # TODO
 
 - [ ] Caps to ESC
+- [ ] Make a locale that's solid. Missing ICU configuration for en_XX
 - [x] Snapshots for btrfs
 - [x] `zsh: can't rename /home/<user>/.zsh_history.new to $HISTFILE` upon finishing a ZSH session
 - [x] On finishing SSH operations
