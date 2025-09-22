@@ -1,5 +1,6 @@
 # TODO
 
+- [ ] Wifi keeps crashing in coal
 - [ ] Caps to ESC
 - [ ] Make a locale that's solid. Missing ICU configuration for en_XX
 - [x] Snapshots for btrfs
