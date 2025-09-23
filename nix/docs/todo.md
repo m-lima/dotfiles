@@ -2,6 +2,7 @@
 
 - [ ] Wifi keeps crashing in coal
 - [ ] cpwd/ppwd on linux (OSC 52 ??)
+- [ ] Zoom on Alacritty is conflicting with zoom on KDE
 - [ ] Caps to ESC
 - [ ] Make a locale that's solid. Missing ICU configuration for en_XX
 - [x] Snapshots for btrfs
