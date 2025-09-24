@@ -37,7 +37,17 @@
             # TODO
             zsh.enable = true;
             # TODO
-            nali.enable = true;
+            nali = {
+              enable = true;
+              entries = {
+                cd = "~/code";
+                nx = "~/code/dotfiles/nix";
+                cg = "~/code/cog";
+                mc = "~/Misc";
+                dw = "~/Downloads";
+                cc = "~/CeloCloud";
+              };
+            };
             # TODO
             neovim = {
               enable = true;

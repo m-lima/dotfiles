@@ -1,6 +1,7 @@
 # TODO
 
 - [ ] Wifi keeps crashing in coal
+- [ ] Disable sleep in coal
 - [ ] cpwd/ppwd on linux (OSC 52 ??)
 - [ ] Zoom on Alacritty is conflicting with zoom on KDE
 - [ ] Caps to ESC
