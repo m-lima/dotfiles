@@ -25,6 +25,7 @@
             };
           };
           programs = {
+            flakerpl.enable = true;
             # TODO
             coreutils.enable = true;
             simpalt = {

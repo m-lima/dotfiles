@@ -62,6 +62,7 @@
             };
           };
           programs = {
+            flakerpl.enable = true;
             simpalt = {
               symbol = "ɳ";
             };
