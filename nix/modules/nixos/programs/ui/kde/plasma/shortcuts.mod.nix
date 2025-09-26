@@ -54,6 +54,9 @@ in
             "Window One Desktop to the Right" = "Meta+Shift+Right";
             "Window to Next Screen" = "";
             "Window to Previous Screen" = "";
+            "view_actual_size" = "Meta+)";
+            "view_zoom_in" = "Meta++";
+            "view_zoom_out" = "Meta+_";
           };
           plasmashell = {
             "show-on-mouse-pos" = "Meta+Shift+V";

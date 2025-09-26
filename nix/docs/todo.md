@@ -3,9 +3,9 @@
 - [ ] Wifi keeps crashing in coal
 - [ ] Disable sleep in coal
 - [ ] cpwd/ppwd on linux (OSC 52 ??)
-- [ ] Zoom on Alacritty is conflicting with zoom on KDE
 - [ ] Caps to ESC
 - [ ] Make a locale that's solid. Missing ICU configuration for en_XX
+- [x] Zoom on Alacritty is conflicting with zoom on KDE
 - [x] Snapshots for btrfs
 - [x] `zsh: can't rename /home/<user>/.zsh_history.new to $HISTFILE` upon finishing a ZSH session
 - [x] On finishing SSH operations
@@ -52,6 +52,7 @@
 
 # Darwin
 
+- [ ] Fix the profiles (or have just a couple of them for the most basic stuff)
 - [x] Currently playing on tmux
 - [x] Alacritty home/end [Need to validate outside of tmux]
 - [x] zsh bind key mismatch [Need to validate that it is fully covered]
