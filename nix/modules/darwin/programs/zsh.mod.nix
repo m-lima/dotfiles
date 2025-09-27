@@ -12,9 +12,13 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    programs.zsh.interactiveShellInit = lib.mkAfter ''
-      alias cpwd='echo -n "$PWD" | pbcopy'
-      alias ppwd='cd $(pbpaste)'
-    '';
+    programs = {
+      zsh = {
+        shellAliases = {
+          cpwd = ''echo -n "$PWD" | pbcopy'';
+          ppwd = ''cd $(pbpaste)'';
+        };
+      };
+    };
   };
 }

@@ -2,9 +2,9 @@
 
 - [ ] Wifi keeps crashing in coal
 - [ ] Disable sleep in coal
-- [ ] cpwd/ppwd on linux (OSC 52 ??)
 - [ ] Caps to ESC
 - [ ] Make a locale that's solid. Missing ICU configuration for en_XX
+- [x] cpwd/ppwd on linux (OSC 52 ??)
 - [x] Zoom on Alacritty is conflicting with zoom on KDE
 - [x] Snapshots for btrfs
 - [x] `zsh: can't rename /home/<user>/.zsh_history.new to $HISTFILE` upon finishing a ZSH session
