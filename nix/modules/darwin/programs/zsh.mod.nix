@@ -12,11 +12,13 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    programs = {
-      zsh = {
-        shellAliases = {
-          cpwd = ''echo -n "$PWD" | pbcopy'';
-          ppwd = ''cd $(pbpaste)'';
+    home-manager = util.withHome config {
+      programs = {
+        zsh = {
+          shellAliases = {
+            cpwd = ''echo -n "$PWD" | pbcopy'';
+            ppwd = ''cd $(pbpaste)'';
+          };
         };
       };
     };
