@@ -77,7 +77,7 @@ in
             ''
               if [[ -e /btrfs/@ ]]; then
                   mkdir -p /btrfs/old
-                  timestamp=$(date --date="@$(stat -c %Y /btrfs/@)" "+%Y-%m-%-d_%H:%M:%S")
+                  timestamp=$(date --date="@$(stat -c %Y /btrfs/@)" "+%Y-%m-%d_%H:%M:%S")
                   mv /btrfs/@ "/btrfs/old/$timestamp"
               fi
 
