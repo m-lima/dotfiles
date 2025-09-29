@@ -1,17 +1,6 @@
 {
   programs = {
-    neovim = {
-      enable = true;
-      lsps = [
-        "cpp"
-        "go"
-        "js"
-        "lua"
-        "nix"
-        "python"
-        "rust"
-      ];
-    };
+    neovim.enable = true;
     direnv.enable = true;
   };
 }

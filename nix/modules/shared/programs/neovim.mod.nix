@@ -68,7 +68,15 @@ in
       description = ''
         A list of LSP names to install. Check the `pkgs` for available names.
       '';
-      default = [ "nix" ];
+      default = [
+        "cpp"
+        "go"
+        "js"
+        "lua"
+        "nix"
+        "python"
+        "rust"
+      ];
     };
   };
 

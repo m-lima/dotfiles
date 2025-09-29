@@ -3,10 +3,7 @@
     disko.enable = true;
     impermanence = {
       enable = true;
-      wipe = {
-        enable = true;
-        retainRoot = 0;
-      };
+      wipe.enable = true;
     };
   };
   services = {

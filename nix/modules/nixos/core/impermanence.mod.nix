@@ -22,7 +22,7 @@ in
       retainRoot = lib.mkOption {
         description = "Days to retain of old roots";
         type = lib.types.ints.u16;
-        default = if cfg.wipe.enable then 30 else 0;
+        default = if cfg.wipe.enable && !config.celo.modules.services.snapper.enable then 30 else 0;
       };
     };
     retain = {
