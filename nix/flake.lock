@@ -289,15 +289,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1754667003,
-        "narHash": "sha256-6KueWQ/RoAsax7t7w4tydQlLZv5rGQWKxDPjVBZi5FI=",
+        "lastModified": 1759574647,
+        "narHash": "sha256-MNFUvPJMy4leFrR0ul6tRdyd5So4sAtHV1mr6Cx8OaA=",
         "owner": "m-lima",
         "repo": "ipifier",
-        "rev": "7293aae641327a80cebc19663c9e9a2611b3f72e",
+        "rev": "b7594ad81dd723df5d713f95bc2dc811beebcbfc",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
+        "ref": "v0.1.1",
         "repo": "ipifier",
         "type": "github"
       }
@@ -551,16 +552,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1754508005,
-        "narHash": "sha256-ycOxvg/D28AKYeGrJ+zDm6UfICJa5A9/z5Tj33/0mu8=",
+        "lastModified": 1759574200,
+        "narHash": "sha256-VgPP0usmmSqvJdDhew7U+xCzo3pIwklmlKQHGUWnoEU=",
         "owner": "m-lima",
         "repo": "simpalt-rs",
-        "rev": "ad9ae9a9021288e58e2e765f0bc44fccd21ccd0a",
+        "rev": "1cd880b1db165172a87c58ad6a21dacfa2dbcc83",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.3.8",
+        "ref": "v0.3.9",
         "repo": "simpalt-rs",
         "type": "github"
       }

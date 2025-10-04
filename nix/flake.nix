@@ -84,7 +84,7 @@
 
     # Local dependencies
     ipifier = {
-      url = "github:m-lima/ipifier";
+      url = "github:m-lima/ipifier?ref=v0.1.1";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
@@ -95,7 +95,7 @@
       };
     };
     simpalt = {
-      url = "github:m-lima/simpalt-rs?ref=v0.3.8";
+      url = "github:m-lima/simpalt-rs?ref=v0.3.9";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
