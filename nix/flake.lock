@@ -454,16 +454,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1754597601,
-        "narHash": "sha256-V6vXYLN0oLJ1y5dKciL8bvBShyK4V75F78AJLR+kgho=",
+        "lastModified": 1759573642,
+        "narHash": "sha256-TguIehrRykfEGeFl5rBKPFCQJvxMTrzrvWynQ6/qd/Y=",
         "owner": "m-lima",
         "repo": "ragenix",
-        "rev": "dfd562ec0a02a8eca65abc0b6ed4a01cfae600c0",
+        "rev": "3169ad61b2fa9949b497b02c7b192e68438a7d20",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.1.9",
+        "ref": "v0.1.10",
         "repo": "ragenix",
         "type": "github"
       }
