@@ -3,16 +3,15 @@
 function usage {
   binary="$(basename "${0}")"
   cat <<EOF
-Usage: ${binary} <ACTION> [IDENTITY]"
+Usage: ${binary} <ACTION> [IDENTITY]
 
 ACTION:
   e|encrypt <INPUT> <OUTPUT>
     Encrypt INPUT into OUTPUT using IDENTITY, where OUPUT is a path, INPUT is a
     literal value
 
-  d|decrypt <INPUT> [OUTPUT]
+  d|decrypt <INPUT>
     Decrypt INPUT into OUTPUT using IDENTITY, where all parameters are paths
-    If OUTPUT is unspecified or '-', stdout will be used instead
 
 IDENTITY:
   Defaults to /etc/ssh/ssh_host_ed25519_key for decryption,
