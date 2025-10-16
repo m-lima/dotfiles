@@ -54,6 +54,7 @@
             jellyfin = {
               enable = true;
               hostName = util.rageSecretOptional config ./_secrets/services/jellyfin/hostName.rage;
+              hardwareAcceleration = "intel-modern";
             };
             nginx.enable = true;
             ssh.enable = true;

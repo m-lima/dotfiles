@@ -23,6 +23,15 @@ in
       type = lib.types.nullOr lib.types.singleLineStr;
       description = "FQDN for jellyfin";
     };
+
+    hardwareAcceleration = lib.mkOption {
+      type = lib.types.enum [
+        "none"
+        "intel-modern"
+      ];
+      default = "none";
+      description = "Enable hardware acceleration";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -36,6 +45,19 @@ in
         message = "Need to enable nginx to have TLS termination";
       }
     ];
+
+    hardware = lib.mkIf (cfg.hardwareAcceleration == "intel-modern") {
+      graphics = {
+        enable = true;
+
+        extraPackages = with pkgs; [
+          intel-ocl
+          intel-media-driver
+          intel-compute-runtime
+          vpl-gpu-rt
+        ];
+      };
+    };
 
     environment.systemPackages = [
       pkgs.jellyfin
