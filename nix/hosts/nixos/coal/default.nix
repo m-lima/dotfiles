@@ -51,12 +51,13 @@
               enable = true;
               configuration = ./_secrets/services/ipifier/config.age;
             };
-            ssh.enable = true;
-            mdns.enable = true;
             jellyfin = {
               enable = true;
               hostName = util.rageSecretOptional config ./_secrets/services/jellyfin/hostName.rage;
             };
+            nginx.enable = true;
+            ssh.enable = true;
+            mdns.enable = true;
           };
           programs = {
             flakerpl.enable = true;
