@@ -53,6 +53,10 @@
             };
             ssh.enable = true;
             mdns.enable = true;
+            jellyfin = {
+              enable = true;
+              hostName = util.rageSecretOptional config ./_secrets/services/jellyfin/hostName.rage;
+            };
           };
           programs = {
             flakerpl.enable = true;
