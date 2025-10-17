@@ -87,7 +87,8 @@ let
             assertion = config.celo.modules.core.home.enable;
             message = "${lib.last path} enabled without home-manager";
           }
-        ] ++ assertions;
+        ]
+        ++ assertions;
 
         home-manager = withHome config home-manager;
       }
@@ -142,6 +143,13 @@ let
     in
     lib.mkIf (builtins.length maybeSecret > 0) (builtins.head maybeSecret);
 
+  rageSecretOr =
+    config: secret: default:
+    let
+      maybeSecret = rageSecret config secret;
+    in
+    if builtins.length maybeSecret > 0 then builtins.head maybeSecret else default;
+
   extractCompdef =
     string:
     lib.concatStringsSep "\n" (
@@ -167,6 +175,7 @@ in
     xdg
     rageSecret
     rageSecretOptional
+    rageSecretOr
     extractCompdef
     ;
 }

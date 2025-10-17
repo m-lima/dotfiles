@@ -31,7 +31,7 @@
             };
             dropbear = {
               enable = true;
-              port = builtins.head ((util.rageSecret config ./_secrets/core/dropbear/port.rage) ++ [ 22 ]);
+              port = util.rageSecretOr config ./_secrets/core/dropbear/port.rage 22;
             };
             impermanence = {
               retain.user.directories = [
