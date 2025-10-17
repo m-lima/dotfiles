@@ -76,7 +76,7 @@ in
       };
 
       nginx = lib.mkIf (cfg.hostName != null) {
-        virtualHosts.${cfg.hostName} = {
+        virtualHosts."${cfg.hostName}.${config.celo.modules.services.nginx.baseHost}" = {
           forceSSL = cfg.tls;
           enableACME = cfg.tls;
 
