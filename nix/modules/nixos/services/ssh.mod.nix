@@ -63,10 +63,10 @@ in
     };
 
     age.secrets = {
-      ${util.mkSecretPath path secret} = lib.mkIf home.enable {
+      ${util.secret.mkPath path secret} = lib.mkIf home.enable {
         group = config.users.users.${user.userName}.group;
       };
-      ${util.mkSecretPath path "hosts"} = lib.mkIf home.enable {
+      ${util.secret.mkPath path "hosts"} = lib.mkIf home.enable {
         group = config.users.users.${user.userName}.group;
       };
     };

@@ -43,7 +43,7 @@ in
     };
 
     age.secrets = {
-      ${util.mkSecretPath path "password"} = {
+      ${util.secret.mkPath path "password"} = {
         rekeyFile = ./_secrets/${host}/password.age;
         mode = "600";
         owner = user.userName;
@@ -58,7 +58,7 @@ in
           + lib.optionalString (cfg.components != [ ]) (
             " --components=" + lib.concatStringsSep "," cfg.components
           )
-          + " < ${config.age.secrets.${util.mkSecretPath path "password"}.path}"
+          + " < ${config.age.secrets.${util.secret.mkPath path "password"}.path}"
         );
       in
       {

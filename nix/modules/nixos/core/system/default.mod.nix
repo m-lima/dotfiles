@@ -58,7 +58,7 @@ in
     environment.enableAllTerminfo = true;
 
     age.secrets = {
-      ${util.mkSecretPath path host} = {
+      ${util.secret.mkPath path host} = {
         rekeyFile = ./_secrets/${host}/password.age;
       };
     };
@@ -67,7 +67,7 @@ in
       mutableUsers = false;
       users = {
         root = {
-          hashedPasswordFile = config.age.secrets.${util.mkSecretPath path host}.path;
+          hashedPasswordFile = config.age.secrets.${util.secret.mkPath path host}.path;
         };
       };
     };

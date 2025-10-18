@@ -59,9 +59,9 @@
             };
             nginx = {
               enable = true;
-              baseHost = util.rageSecretOptional config ./_secrets/services/nginx/baseHost.rage;
+              baseHost = util.secret.rageOptional config ./_secrets/services/nginx/baseHost.rage;
               tls = true;
-              acmeEmail = util.rageSecretOptional config ./_secrets/services/nginx/acmeEmail.rage;
+              acmeEmail = util.secret.rageOptional config ./_secrets/services/nginx/acmeEmail.rage;
             };
             ssh.enable = true;
             mdns.enable = true;
@@ -115,7 +115,7 @@
         };
         defaultGateway = "10.0.0.1";
         nameservers = [ "10.0.0.1" ];
-        firewall.allowedTCPPorts = util.rageSecretOptional config ./_secrets/core/networking/firewall.rage;
+        firewall.allowedTCPPorts = util.secret.rageOptional config ./_secrets/core/networking/firewall.rage;
       };
     };
 }

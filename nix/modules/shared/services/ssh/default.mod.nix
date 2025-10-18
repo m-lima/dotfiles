@@ -90,45 +90,43 @@ in
               };
         };
 
-      age.secrets =
-        {
-          ${util.mkSecretPath path secret} = lib.mkIf home.enable {
-            rekeyFile = ./_secrets/${secret}.age;
-            path = "${user.homeDirectory}/.ssh/id_ed25519";
-            mode = "600";
-            owner = user.userName;
-            symlink = false;
-          };
-          ${util.mkSecretPath path "hosts"} = lib.mkIf home.enable {
-            rekeyFile = ./_secrets/hosts.age;
-            path = "${user.homeDirectory}/.ssh/config";
-            mode = "644";
-            owner = user.userName;
-            symlink = false;
-          };
-        }
-        // (listToAttrs (name: {
-          name = util.mkSecretPath path (builtins.baseNameOf name);
-          value = {
-            rekeyFile = name + ".age";
-            path = "${user.homeDirectory}/.ssh/${builtins.baseNameOf name}";
-            mode = "600";
-            owner = user.userName;
-            symlink = false;
-          };
-        }) cfg.extraKeys);
+      age.secrets = {
+        ${util.secret.mkPath path secret} = lib.mkIf home.enable {
+          rekeyFile = ./_secrets/${secret}.age;
+          path = "${user.homeDirectory}/.ssh/id_ed25519";
+          mode = "600";
+          owner = user.userName;
+          symlink = false;
+        };
+        ${util.secret.mkPath path "hosts"} = lib.mkIf home.enable {
+          rekeyFile = ./_secrets/hosts.age;
+          path = "${user.homeDirectory}/.ssh/config";
+          mode = "644";
+          owner = user.userName;
+          symlink = false;
+        };
+      }
+      // (listToAttrs (name: {
+        name = util.secret.mkPath path (builtins.baseNameOf name);
+        value = {
+          rekeyFile = name + ".age";
+          path = "${user.homeDirectory}/.ssh/${builtins.baseNameOf name}";
+          mode = "600";
+          owner = user.userName;
+          symlink = false;
+        };
+      }) cfg.extraKeys);
 
       home-manager = util.withHome config {
-        home.file =
-          {
-            ".ssh/id_ed25519.pub".source = ./_secrets/${secret}.pub;
-          }
-          // (listToAttrs (name: {
-            name = ".ssh/${builtins.baseNameOf name}.pub";
-            value = {
-              source = name + ".pub";
-            };
-          }) cfg.extraKeys);
+        home.file = {
+          ".ssh/id_ed25519.pub".source = ./_secrets/${secret}.pub;
+        }
+        // (listToAttrs (name: {
+          name = ".ssh/${builtins.baseNameOf name}.pub";
+          value = {
+            source = name + ".pub";
+          };
+        }) cfg.extraKeys);
       };
     };
 }

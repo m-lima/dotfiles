@@ -33,7 +33,7 @@ in
           "nix-command"
           "flakes"
         ];
-        access-tokens = util.rageSecretOptional config ./_secrets/${host}/access_tokens.rage;
+        access-tokens = util.secret.rageOptional config ./_secrets/${host}/access_tokens.rage;
       };
     };
   };

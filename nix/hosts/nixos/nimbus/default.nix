@@ -31,7 +31,7 @@
             };
             dropbear = {
               enable = true;
-              port = util.rageSecretOr config ./_secrets/core/dropbear/port.rage 22;
+              port = util.secret.rageOr config ./_secrets/core/dropbear/port.rage 22;
             };
             impermanence = {
               retain.user.directories = [
@@ -57,7 +57,7 @@
           services = {
             ssh = {
               enable = true;
-              ports = util.rageSecret config ./_secrets/services/ssh/ports.rage;
+              ports = util.secret.rage config ./_secrets/services/ssh/ports.rage;
               security = "sshguard";
             };
           };

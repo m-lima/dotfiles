@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, ... }@input:
 let
   findFiles =
     mark: path: parents:
@@ -116,39 +116,7 @@ let
       };
     };
 
-  mkSecretPath =
-    path: name: lib.strings.concatStringsSep "." (builtins.tail (builtins.tail path)) + ".${name}";
-
   xdg = config: config.home-manager.users.${config.celo.modules.core.user.userName}.xdg;
-
-  rageSecret =
-    config: secret:
-    if builtins.hasAttr "decrypt" builtins then
-      let
-        result = builtins.decrypt /${builtins.toPath config.ragenix.key} secret;
-      in
-      if builtins.hasAttr "ok" result then
-        [
-          result.ok
-        ]
-      else
-        builtins.warn "${result.err}. Skipping ${secret}" [ ]
-    else
-      builtins.warn "Ragenix is not yet initialized. Skipping ${secret}" [ ];
-
-  rageSecretOptional =
-    config: secret:
-    let
-      maybeSecret = rageSecret config secret;
-    in
-    lib.mkIf (builtins.length maybeSecret > 0) (builtins.head maybeSecret);
-
-  rageSecretOr =
-    config: secret: default:
-    let
-      maybeSecret = rageSecret config secret;
-    in
-    if builtins.length maybeSecret > 0 then builtins.head maybeSecret else default;
 
   extractCompdef =
     string:
@@ -171,11 +139,8 @@ in
     withHome
     enforceHome
     withImpermanence
-    mkSecretPath
     xdg
-    rageSecret
-    rageSecretOptional
-    rageSecretOr
     extractCompdef
     ;
+  secret = (import ./secret.nix) input;
 }

@@ -21,7 +21,7 @@ in
     })
     // {
       age.secrets = {
-        ${util.mkSecretPath path host} = {
+        ${util.secret.mkPath path host} = {
           rekeyFile = ./_secrets/${host}/password.age;
         };
       };
@@ -30,7 +30,7 @@ in
         users = {
           ${cfg.userName} = {
             isNormalUser = true;
-            hashedPasswordFile = config.age.secrets.${util.mkSecretPath path host}.path;
+            hashedPasswordFile = config.age.secrets.${util.secret.mkPath path host}.path;
             extraGroups = [ "wheel" ];
           };
         };

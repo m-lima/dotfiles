@@ -77,7 +77,7 @@ in
                 if builtins.isAttrs value then
                   "${config.home-manager.users.${userName}.xdg.configHome}/${toConfigFile key}"
                 else
-                  "${config.age.secrets.${util.mkSecretPath path (md5 key)}.path}"
+                  "${config.age.secrets.${util.secret.mkPath path (md5 key)}.path}"
               );
             includeOverrides = mapAttrsToLines intoInclude;
           in
@@ -104,7 +104,7 @@ in
       };
 
       age.secrets = lib.mapAttrs' (key: value: {
-        name = util.mkSecretPath path (md5 key);
+        name = util.secret.mkPath path (md5 key);
         value = {
           rekeyFile = value;
           owner = userName;

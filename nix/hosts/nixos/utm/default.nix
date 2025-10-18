@@ -37,7 +37,7 @@
             mdns.enable = true;
             ssh = {
               enable = true;
-              ports = [ 22 ] ++ (util.rageSecret config ./_secrets/services/ssh/ports.rage);
+              ports = [ 22 ] ++ (util.secret.rage config ./_secrets/services/ssh/ports.rage);
             };
           };
           programs = {
