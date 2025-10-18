@@ -1,45 +1,5 @@
 { lib, ... }@input:
 let
-  findFiles =
-    mark: path: parents:
-    let
-      innerFindModules = lib.pipe path [
-        builtins.readDir
-        (lib.mapAttrsToList (
-          name: type:
-          let
-            fullPath = /${path}/${name};
-          in
-          if type == "directory" then
-            findFiles mark fullPath (parents ++ [ name ])
-          else
-            lib.optional (lib.hasSuffix ".${mark}.nix" name) {
-              file = fullPath;
-              path =
-                parents
-                ++ (lib.optional (name != "default.${mark}.nix") (lib.strings.removeSuffix ".${mark}.nix" name));
-            }
-        ))
-      ];
-    in
-    lib.flatten innerFindModules;
-  loadModules =
-    root:
-    map ({ file, path }: (import file) path) (
-      findFiles "mod" root [
-        "celo"
-        "modules"
-      ]
-    );
-  loadProfiles =
-    root:
-    map ({ file, path }: { config, ... }: mkProfile path config (import file)) (
-      findFiles "pro" root [
-        "celo"
-        "profiles"
-      ]
-    );
-
   mkPath = path: base: lib.setAttrByPath path base;
 
   mkOptions =
@@ -54,11 +14,6 @@ let
   mkOptionsEnable = path: mkOptions path { };
 
   getOptions = path: config: lib.getAttrFromPath path config;
-
-  mkProfile = path: config: profile: {
-    options = mkOptions path { description = "${lib.last path} profile"; };
-    config.celo.modules = lib.mkIf (getOptions path config).enable profile;
-  };
 
   mkColorOption =
     name: default:
@@ -129,8 +84,6 @@ let
 in
 {
   inherit
-    loadModules
-    loadProfiles
     mkPath
     mkOptions
     mkOptionsEnable
@@ -142,5 +95,6 @@ in
     xdg
     extractCompdef
     ;
-  secret = (import ./secret.nix) input;
+  load = (import ./load.nix) { inherit lib mkOptions getOptions; };
+  secret = (import ./secret.nix) { inherit lib; };
 }

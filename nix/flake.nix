@@ -157,10 +157,10 @@
 
           modules =
             hostModules
-            ++ util.loadModules ./modules/shared
-            ++ util.loadModules ./modules/nixos
-            ++ util.loadProfiles ./profiles/shared
-            ++ util.loadProfiles ./profiles/nixos
+            ++ util.load.modules ./modules/shared
+            ++ util.load.modules ./modules/nixos
+            ++ util.load.profiles ./profiles/shared
+            ++ util.load.profiles ./profiles/nixos
             ++ [
               agenix.nixosModules.default
               agenix-rekey.nixosModules.default
@@ -188,10 +188,10 @@
 
           modules =
             hostModules
-            ++ util.loadModules ./modules/shared
-            ++ util.loadModules ./modules/darwin
-            ++ util.loadProfiles ./profiles/shared
-            # ++ util.loadProfiles ./profiles/darwin
+            ++ util.load.modules ./modules/shared
+            ++ util.load.modules ./modules/darwin
+            ++ util.load.profiles ./profiles/shared
+            # ++ util.load.profiles ./profiles/darwin
             ++ [
               agenix.darwinModules.default
               agenix-rekey.nixosModules.default

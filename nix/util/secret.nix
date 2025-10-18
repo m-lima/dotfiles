@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib }:
 let
   mkPath =
     path: name: lib.strings.concatStringsSep "." (builtins.tail (builtins.tail path)) + ".${name}";
