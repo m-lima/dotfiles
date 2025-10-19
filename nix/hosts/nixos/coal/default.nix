@@ -55,13 +55,19 @@
               enable = true;
               hostName = "jelly";
               hardwareAcceleration = "intel-modern";
-              tls = true;
             };
             nginx = {
               enable = true;
               baseHost = util.secret.rageOptional config ./_secrets/services/nginx/baseHost.rage;
               tls = true;
               acmeEmail = util.secret.rageOptional config ./_secrets/services/nginx/acmeEmail.rage;
+            };
+            rtor = {
+              enable = true;
+              flood = {
+                enable = true;
+                hostName = "flood";
+              };
             };
             ssh.enable = true;
             mdns.enable = true;
