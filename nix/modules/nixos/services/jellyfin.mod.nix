@@ -8,20 +8,16 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  cfgNgx = config.celo.modules.services.nginx;
 in
 {
+  imports = util.nginx.expose 8096 path config;
+
   options = util.mkOptions path {
     home = lib.mkOption {
       type = lib.types.singleLineStr;
       default = "/srv/jellyfin";
       description = "Base path for Jellyfin";
-    };
-
-    tls = lib.mkEnableOption "TLS through nginx reverse proxy";
-
-    hostName = lib.mkOption {
-      type = lib.types.nullOr lib.types.singleLineStr;
-      description = "FQDN for jellyfin";
     };
 
     hardwareAcceleration = lib.mkOption {
@@ -35,17 +31,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = cfg.tls -> cfg.hostName != null;
-        message = "Need to specify a hostName to have TLS termination";
-      }
-      {
-        assertion = cfg.tls -> config.services.nginx.enable;
-        message = "Need to enable nginx to have TLS termination";
-      }
-    ];
-
     hardware = lib.mkIf (cfg.hardwareAcceleration == "intel-modern") {
       graphics = {
         enable = true;
@@ -76,10 +61,7 @@ in
       };
 
       nginx = lib.mkIf (cfg.hostName != null) {
-        virtualHosts."${cfg.hostName}.${config.celo.modules.services.nginx.baseHost}" = {
-          forceSSL = cfg.tls;
-          enableACME = cfg.tls;
-
+        virtualHosts."${cfg.hostName}.${cfgNgx.baseHost}" = {
           extraConfig = builtins.concatStringsSep "\n" [
             # The default `client_max_body_size` is 1M, this might not be enough for some posters, etc.
             ''client_max_body_size 20M;''
@@ -93,10 +75,9 @@ in
 
           locations = {
             "/" = {
-              proxyPass = "http://127.0.0.1:8096";
-              recommendedProxySettings = true;
               extraConfig = "proxy_buffering off;";
             };
+
             "/socket" = {
               proxyPass = "http://127.0.0.1:8096";
               recommendedProxySettings = true;

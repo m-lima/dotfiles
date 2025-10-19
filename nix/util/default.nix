@@ -1,16 +1,20 @@
-{ lib, ... }@input:
+{ lib }:
 let
   mkPath = path: base: lib.setAttrByPath path base;
 
   mkOptions =
     path:
-    options@{
+    {
       description ? (lib.last path),
       ...
-    }:
-    lib.setAttrByPath path (
-      { enable = lib.mkEnableOption description; } // (removeAttrs options [ "description" ])
+    }@options:
+    mkPath path (
+      {
+        enable = lib.mkEnableOption description;
+      }
+      // (removeAttrs options [ "description" ])
     );
+
   mkOptionsEnable = path: mkOptions path { };
 
   getOptions = path: config: lib.getAttrFromPath path config;
@@ -97,4 +101,12 @@ in
     ;
   load = (import ./load.nix) { inherit lib mkOptions getOptions; };
   secret = (import ./secret.nix) { inherit lib; };
+  nginx = (import ./nginx.nix) {
+    inherit
+      lib
+      mkPath
+      mkOptions
+      getOptions
+      ;
+  };
 }
