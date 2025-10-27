@@ -22,6 +22,7 @@ in
       default = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJWz+qMP0BBpeBLzCCHxr4wLSNz8rGZpPvhoppP6zegF lima@silver"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHbQEGzU+WY8GwNy5Xwyx9BbyQvUhZ5yC4RNngB/pJeX celo@silverPhone"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFXt8VCmaSB/ZAnZkld/yy59UcQOCV14nHCwOmLyIKE1 lima@BlackDiamond"
       ];
       description = ''
         A list of verbatim OpenSSH public keys that should be added to the
