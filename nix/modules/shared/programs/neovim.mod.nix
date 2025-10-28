@@ -23,8 +23,8 @@ let
     };
     js = {
       pkg = [
-        pkgs.eslint
         pkgs.typescript-language-server
+        pkgs.vscode-langservers-extracted
       ];
       setup = "require('config.lspconfig.servers.js').setup()";
       dependencies = [ ];
