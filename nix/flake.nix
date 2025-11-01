@@ -94,6 +94,17 @@
         treefmt-nix.follows = "treefmt-nix";
       };
     };
+    passer = {
+      url = "github:m-lima/passer?ref=v0.7.1";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        crane.follows = "crane";
+        fenix.follows = "fenix";
+        flake-utils.follows = "flake-utils";
+        helper.follows = "nix-template";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
     simpalt = {
       url = "github:m-lima/simpalt-rs?ref=v0.3.9";
       inputs = {

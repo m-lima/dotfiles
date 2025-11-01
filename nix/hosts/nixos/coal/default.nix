@@ -53,13 +53,12 @@
             };
             jellyfin = {
               enable = true;
-              hostName = "jelly";
               hardwareAcceleration = "intel-modern";
             };
             nginx = {
               enable = true;
-              baseHost = util.secret.rageOptional config ./_secrets/services/nginx/baseHost.rage;
               tls = true;
+              baseHost = util.secret.rageOptional config ./_secrets/services/nginx/baseHost.rage;
               acmeEmail = util.secret.rageOptional config ./_secrets/services/nginx/acmeEmail.rage;
             };
             ssh.enable = true;

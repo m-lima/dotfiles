@@ -11,7 +11,10 @@ let
   cfgNgx = config.celo.modules.services.nginx;
 in
 {
-  imports = util.nginx.expose 8096 path config;
+  imports = util.nginx path config "expose" {
+    name = "jelly";
+    port = 8096;
+  };
 
   options = util.mkOptions path {
     home = lib.mkOption {
