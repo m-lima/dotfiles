@@ -55,6 +55,13 @@
             };
           };
           services = {
+            nginx = {
+              enable = true;
+              tls = true;
+              baseHost = util.secret.rageOptional config ./_secrets/services/nginx/baseHost.rage;
+              acmeEmail = util.secret.rageOptional config ./_secrets/services/nginx/acmeEmail.rage;
+            };
+            passer.enable = true;
             ssh = {
               enable = true;
               ports = util.secret.rage config ./_secrets/services/ssh/ports.rage;
