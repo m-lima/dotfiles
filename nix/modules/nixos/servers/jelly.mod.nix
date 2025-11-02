@@ -19,8 +19,8 @@ in
   options = util.mkOptions path {
     home = lib.mkOption {
       type = lib.types.singleLineStr;
-      default = "/srv/jellyfin";
-      description = "Base path for Jellyfin";
+      default = "/srv/jelly";
+      description = "Base path for Jelly";
     };
 
     hardwareAcceleration = lib.mkOption {

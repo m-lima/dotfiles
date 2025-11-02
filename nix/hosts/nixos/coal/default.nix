@@ -53,7 +53,7 @@
               baseHost = util.secret.rageOptional config ./_secrets/servers/nginx/baseHost.rage;
               acmeEmail = util.secret.rageOptional config ./_secrets/servers/nginx/acmeEmail.rage;
             };
-            jellyfin = {
+            jelly = {
               enable = true;
               hardwareAcceleration = "intel-modern";
             };
