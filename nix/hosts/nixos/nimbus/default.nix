@@ -61,6 +61,7 @@
               baseHost = util.secret.rageOptional config ./_secrets/servers/nginx/baseHost.rage;
               acmeEmail = util.secret.rageOptional config ./_secrets/servers/nginx/acmeEmail.rage;
             };
+            ipe.enable = true;
             passer.enable = true;
           };
           services = {
