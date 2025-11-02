@@ -3,12 +3,29 @@
   module =
     {
       lib,
+      pkgs,
       config,
       util,
       ...
     }:
     {
       imports = [ ./hardware-configuration.nix ];
+
+      services.nextcloud = {
+        enable = true;
+        package = pkgs.nextcloud31;
+        hostName = "cloud";
+        https = true;
+        configureRedis = true;
+
+        database.createLocally = true;
+        config = {
+          dbtype = "pgsql";
+          adminpassFile = "/path/to/admin-pass-file";
+        };
+
+        settings = util.secret.rageOr config ./_secrets/services/nextcloud/smtpSettings.rage { };
+      };
 
       celo = {
         profiles = {
