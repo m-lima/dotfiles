@@ -9,7 +9,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-  cfgNgx = config.celo.modules.services.nginx;
+  cfgNgx = config.celo.modules.servers.nginx;
   passer = inputs.passer.packages.${pkgs.system};
 in
 {

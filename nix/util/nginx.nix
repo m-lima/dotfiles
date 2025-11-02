@@ -7,7 +7,7 @@
 path: config: mode:
 let
   cfg = getOptions path config;
-  cfgNgx = config.celo.modules.services.nginx;
+  cfgNgx = config.celo.modules.servers.nginx;
   defaultServer =
     locations:
     lib.mkIf cfg.enable {

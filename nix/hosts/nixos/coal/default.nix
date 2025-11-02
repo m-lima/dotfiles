@@ -46,11 +46,7 @@
             };
             wifi.enable = true;
           };
-          services = {
-            ipifier = {
-              enable = true;
-              configuration = ./_secrets/services/ipifier/config.age;
-            };
+          servers = {
             jellyfin = {
               enable = true;
               hardwareAcceleration = "intel-modern";
@@ -58,8 +54,14 @@
             nginx = {
               enable = true;
               tls = true;
-              baseHost = util.secret.rageOptional config ./_secrets/services/nginx/baseHost.rage;
-              acmeEmail = util.secret.rageOptional config ./_secrets/services/nginx/acmeEmail.rage;
+              baseHost = util.secret.rageOptional config ./_secrets/servers/nginx/baseHost.rage;
+              acmeEmail = util.secret.rageOptional config ./_secrets/servers/nginx/acmeEmail.rage;
+            };
+          };
+          services = {
+            ipifier = {
+              enable = true;
+              configuration = ./_secrets/services/ipifier/config.age;
             };
             ssh.enable = true;
             mdns.enable = true;
