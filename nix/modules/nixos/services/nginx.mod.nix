@@ -74,6 +74,11 @@ in
         };
       };
 
+      networking.firewall.allowedTCPPorts = [
+        80
+      ]
+      ++ (lib.optional cfg.tls 443);
+
       security = lib.mkIf shouldAcme {
         acme = {
           acceptTerms = true;
