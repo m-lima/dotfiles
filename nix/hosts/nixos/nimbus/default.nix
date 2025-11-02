@@ -63,6 +63,7 @@
             };
             ipe.enable = true;
             passer.enable = true;
+            static.enable = true;
           };
           services = {
             ssh = {
