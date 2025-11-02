@@ -57,6 +57,7 @@
               enable = true;
               hardwareAcceleration = "intel-modern";
             };
+            static.enable = true;
           };
           services = {
             ipifier = {
