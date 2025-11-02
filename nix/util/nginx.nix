@@ -80,7 +80,7 @@ in
 if mode == "minimal" then
   {
     name,
-    locations,
+    locations ? { },
   }:
   [
     (base name)
