@@ -77,7 +77,16 @@ let
     };
   };
 in
-if mode == "expose" then
+if mode == "minimal" then
+  {
+    name,
+    locations,
+  }:
+  [
+    (base name)
+    { config = defaultServer locations; }
+  ]
+else if mode == "expose" then
   {
     name,
     port,

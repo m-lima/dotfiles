@@ -47,15 +47,15 @@
             wifi.enable = true;
           };
           servers = {
-            jellyfin = {
-              enable = true;
-              hardwareAcceleration = "intel-modern";
-            };
             nginx = {
               enable = true;
               tls = true;
               baseHost = util.secret.rageOptional config ./_secrets/servers/nginx/baseHost.rage;
               acmeEmail = util.secret.rageOptional config ./_secrets/servers/nginx/acmeEmail.rage;
+            };
+            jellyfin = {
+              enable = true;
+              hardwareAcceleration = "intel-modern";
             };
           };
           services = {
