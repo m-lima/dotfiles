@@ -22,7 +22,7 @@ in
 
   options = util.mkOptionsEnable path;
 
-  config = {
+  config = lib.mkIf cfg.enable {
     assertions = [
       {
         assertion = config.services.nginx.enable;
