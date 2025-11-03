@@ -7,7 +7,6 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-  host = config.celo.host.id;
 in
 {
   options = util.mkOptions path { description = "home manager"; };
@@ -33,7 +32,7 @@ in
           "nix-command"
           "flakes"
         ];
-        access-tokens = util.secret.rageOptional config ./_secrets/${host}/access_tokens.rage;
+        access-tokens = util.secret.rageOptional config ./_secrets/access_tokens.rage;
       };
     };
   };

@@ -38,16 +38,27 @@ function encrypt {
     exit 1
   fi
 
-  if [ -n "${3}" ]; then
-    identity="${3}"
+  if [[ "${3}" == "all" ]]; then
+    identity=()
+    for r in "$(realpath $(dirname "${0}"))"/secrets/pubkey/*/*.pub; do
+      identity+="-R"
+      identity+="${r}"
+    done
+    echo "'${identity}'"
+  else
+    if [ -n "${3}" ]; then
+      identity="${3}"
+    fi
+
+    if ! [ -f "${identity}" ]; then
+      echo "File ${identity} does not exist" >&2
+      exit 1
+    fi
+
+    identity=("-R" "${identity}")
   fi
 
-  if ! [ -f "${identity}" ]; then
-    echo "File ${identity} does not exist" >&2
-    exit 1
-  fi
-
-  rage -e -R "${identity}" -o "${output}" <<<"${input}"
+  rage -e ${identity[@]} -o "${output}" <<<"${input}"
 }
 
 function decrypt {

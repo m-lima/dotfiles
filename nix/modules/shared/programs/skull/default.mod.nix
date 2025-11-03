@@ -8,7 +8,6 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-  host = config.celo.host.id;
 in
 {
   options = util.mkOptionsEnable path;
@@ -19,7 +18,7 @@ in
         url:
         (builtins.getFlake "${url}?ref=master&rev=04eefab73cc82bcb60d922225f1d46f959222e29")
         .outputs.packages.${pkgs.system}.default
-      ) (util.secret.rage config ./_secrets/${host}/url.rage);
+      ) (util.secret.rage config ./_secrets/url.rage);
     };
   };
 }
