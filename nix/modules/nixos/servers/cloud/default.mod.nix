@@ -22,6 +22,10 @@ in
       default = "/srv/cloud";
       description = "Base path for Cloud";
     };
+
+    subvolume = lib.mkEnableOption "submodule for the home directory" // {
+      default = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -55,6 +59,25 @@ in
       };
 
       secretFile = config.age.secrets.${secret "config"}.path;
+    };
+
+    celo.modules = {
+      core.disko = lib.mkIf cfg.subvolume {
+        extraMounts = {
+          cloud = {
+            name = "@cloud";
+            mountpoint = cfg.home;
+          };
+        };
+      };
+
+      services.snapper.mounts = lib.mkAfter [ "cloud" ];
+    };
+
+    environment = lib.mkIf (!cfg.subvolume) {
+      persistence = util.withImpermanence config {
+        global.directories = [ cfg.home ];
+      };
     };
   };
 }

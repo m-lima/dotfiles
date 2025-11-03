@@ -35,6 +35,12 @@ in
         default = 24;
       };
     };
+
+    mounts = lib.mkOption {
+      description = "Which disko mounts to take snapshots from. Needs mkForce to override";
+      type = lib.types.listOf lib.types.singleLineStr;
+      default = [ "root" ];
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -45,11 +51,15 @@ in
       }
     ];
 
-    celo.modules.core.disko.mounts = lib.mkAfter {
-      snapshots = {
-        name = "@snapshots";
-        mountpoint = "/.btrfs/snapshots";
+    celo.modules = {
+      core.disko.extraMounts = {
+        snapshots = {
+          name = "@snapshots";
+          mountpoint = "/.btrfs/snapshots";
+        };
       };
+
+      services.snapper.mounts = [ "root" ];
     };
 
     systemd = {
@@ -128,8 +138,9 @@ in
             fi
           }
 
-          take_snapshot "root" "${cfgDisko.mounts.root.mountpoint}"
-          ${lib.optionalString celo.core.impermanence.enable ''take_snapshot "persist" "${cfgDisko.mounts.persist.mountpoint}"''}
+          ${builtins.concatStringsSep "\n" (
+            map (m: ''take_snapshot "${m}" "${cfgDisko.mounts.${m}.mountpoint}"'') cfg.mounts
+          )}
         '';
       };
     };

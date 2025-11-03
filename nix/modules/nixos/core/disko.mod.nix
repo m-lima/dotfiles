@@ -37,16 +37,20 @@ in
       description = "Size of the swap partition";
       example = "8G";
     };
+    extraMounts = lib.mkOption {
+      description = "Extra mounting points";
+      type = lib.types.attrs;
+      default = { };
+    };
     mounts = lib.mkOption {
       description = "Mounting points for btrfs subvolumes";
+      readOnly = true;
       type = lib.types.attrs;
-      default = defaultMounts;
+      default = defaultMounts // cfg.extraMounts;
     };
   };
 
   config = lib.mkIf cfg.enable {
-    celo.modules.core.disko.mounts = lib.mkBefore defaultMounts;
-
     disko.devices =
       let
         mountOptions = [

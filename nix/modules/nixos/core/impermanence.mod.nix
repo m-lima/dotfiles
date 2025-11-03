@@ -60,11 +60,15 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    celo.modules.core.disko.mounts = lib.mkAfter {
-      persist = {
-        name = "@persist";
-        mountpoint = "/persist";
+    celo.modules = {
+      core.disko.extraMounts = {
+        persist = {
+          name = "@persist";
+          mountpoint = "/persist";
+        };
       };
+
+      services.snapper.mounts = lib.mkAfter [ "persist" ];
     };
 
     boot.initrd.postDeviceCommands = lib.mkIf cfg.wipe.enable (
