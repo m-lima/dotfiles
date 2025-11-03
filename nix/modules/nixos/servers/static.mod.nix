@@ -34,7 +34,7 @@ in
     };
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     assertions = [
       {
         assertion = config.services.nginx.enable;
