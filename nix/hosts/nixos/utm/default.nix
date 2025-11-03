@@ -20,9 +20,6 @@
 
         modules = {
           core = {
-            agenix = {
-              identityPath = "/persist/etc/ssh/ssh_host_ed25519_key";
-            };
             disko = {
               device = "/dev/vda";
               swap = "1G";

@@ -16,7 +16,7 @@ in
       enable = true;
       userControlled.enable = true;
       # TDOO: Don't assume impermanence
-      secretsFile = "/persist/secrets/wifi.env";
+      secretsFile = "${config.celo.modules.core.disko.mounts.persist.mountpoint}/secrets/wifi.env";
       # TODO: Use ragenix
       networks = {
         "CIA Surveillance Van" = {

@@ -26,6 +26,7 @@ in
       type = lib.types.path;
       description = "Path to a private SSH key to use as identity for decryption";
       example = "/etc/ssh/ssh_host_ed25519_key";
+      default = "${config.celo.modules.core.disko.mounts.persist.mountpoint}/etc/ssh/ssh_host_ed25519_key";
     };
   };
 

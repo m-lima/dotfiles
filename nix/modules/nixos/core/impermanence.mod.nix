@@ -7,7 +7,9 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-  user = config.celo.modules.core.user;
+  celo = config.celo.modules;
+  user = celo.core.user;
+  cfgDisko = celo.core.disko;
 in
 {
   options = util.mkOptions path {
@@ -22,7 +24,7 @@ in
       retainRoot = lib.mkOption {
         description = "Days to retain of old roots";
         type = lib.types.ints.u16;
-        default = if cfg.wipe.enable && !config.celo.modules.services.snapper.enable then 30 else 0;
+        default = if cfg.wipe.enable && !celo.services.snapper.enable then 30 else 0;
       };
     };
     retain = {
@@ -58,6 +60,13 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    celo.modules.core.disko.mounts = lib.mkAfter {
+      persist = {
+        name = "@persist";
+        mountpoint = "/persist";
+      };
+    };
+
     boot.initrd.postDeviceCommands = lib.mkIf cfg.wipe.enable (
       lib.mkAfter (
         ''
@@ -75,10 +84,10 @@ in
         + (
           if cfg.wipe.retainRoot > 0 then
             ''
-              if [[ -e /btrfs/@ ]]; then
+              if [[ -e /btrfs/${cfgDisko.mounts.root.name} ]]; then
                   mkdir -p /btrfs/old
                   timestamp=$(date --date="@$(stat -c %Y /btrfs/@)" "+%Y-%m-%d_%H:%M:%S")
-                  mv /btrfs/@ "/btrfs/old/$timestamp"
+                  mv /btrfs/${cfgDisko.mounts.root.name} "/btrfs/old/$timestamp"
               fi
 
               for i in $(find /btrfs/old/ -maxdepth 1 -mtime +${toString cfg.wipe.retainRoot}); do
@@ -87,11 +96,11 @@ in
             ''
           else
             ''
-              delete_subvolume_recursively /btrfs/@
+              delete_subvolume_recursively /btrfs/${cfgDisko.mounts.root.name}
             ''
         )
         + ''
-          btrfs subvolume create /btrfs/@
+          btrfs subvolume create /btrfs/${cfgDisko.mounts.root.name}
           umount /btrfs
         ''
       )
@@ -99,11 +108,11 @@ in
 
     # Make persistent fileSystems available at boot
     fileSystems = {
-      "/persist".neededForBoot = true;
-      "/var/log".neededForBoot = true;
+      ${cfgDisko.mounts.persist.mountpoint}.neededForBoot = true;
+      ${cfgDisko.mounts.log.mountpoint}.neededForBoot = true;
     };
 
-    environment.persistence."/persist" = {
+    environment.persistence.${cfgDisko.mounts.persist.mountpoint} = {
       directories = [
         "/etc/nixos"
         "/var/lib/nixos"

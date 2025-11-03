@@ -70,7 +70,7 @@ let
       core = config.celo.modules.core;
     in
     lib.mkIf (builtins.hasAttr "impermanence" core && core.impermanence.enable) {
-      "/persist" = global // {
+      ${config.celo.modules.core.disko.mounts.persist.mountpoint} = global // {
         users.${core.user.userName} = lib.mkIf core.user.enable home;
       };
     };
@@ -85,6 +85,7 @@ let
       )
     );
 
+  concatAttrs = builtins.foldl' (acc: curr: acc // curr) { };
 in
 {
   inherit
@@ -98,6 +99,7 @@ in
     withImpermanence
     xdg
     extractCompdef
+    concatAttrs
     ;
   load = (import ./load.nix) { inherit lib mkOptions getOptions; };
   secret = (import ./secret.nix) { inherit lib; };

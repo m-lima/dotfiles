@@ -43,9 +43,7 @@ in
     ];
 
     users = lib.mkIf (builtins.length cfg.users > 0) {
-      users = builtins.foldl' (acc: curr: acc // curr) { } (
-        map (u: { ${u}.extraGroups = lib.mkAfter [ group ]; }) cfg.users
-      );
+      users = util.concatAttrs (map (u: { ${u}.extraGroups = lib.mkAfter [ group ]; }) cfg.users);
       groups.${group} = { };
     };
 

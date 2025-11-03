@@ -9,7 +9,7 @@ path:
 let
   cfg = util.getOptions path config;
   celo = config.celo.modules;
-  diskoCfg = celo.core.disko;
+  cfgDisko = celo.core.disko;
 in
 {
   options = util.mkOptions path {
@@ -40,14 +40,17 @@ in
   config = lib.mkIf cfg.enable {
     assertions = [
       {
-        assertion = diskoCfg.enable;
+        assertion = cfgDisko.enable;
         message = "snapper enabled without disko setup";
       }
-      {
-        assertion = celo.core.impermanence.enable;
-        message = "snapper enabled without impermanence";
-      }
     ];
+
+    celo.modules.core.disko.mounts = lib.mkAfter {
+      snapshots = {
+        name = "@snapshots";
+        mountpoint = "/.btrfs/snapshots";
+      };
+    };
 
     systemd = {
       services.snapper = {
@@ -64,7 +67,7 @@ in
             path="$2"
             now="$(date '+%Y-%m-%dT%H:%M:%S')"
 
-            snap="${diskoCfg.mounts.snapshots}/$name"
+            snap="${cfgDisko.mounts.snapshots.mountpoint}/$name"
             [ -d "$snap" ] || mkdir "$snap"
             snap="$snap/auto"
             [ -d "$snap" ] || mkdir "$snap"
@@ -125,8 +128,8 @@ in
             fi
           }
 
-          take_snapshot "root" "${diskoCfg.mounts.root}"
-          take_snapshot "persist" "${diskoCfg.mounts.persist}"
+          take_snapshot "root" "${cfgDisko.mounts.root.mountpoint}"
+          ${lib.optionalStrig celo.core.impermanence.enable ''take_snapshot "persist" "${cfgDisko.mounts.persist.mountpoint}"''}
         '';
       };
     };

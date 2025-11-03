@@ -7,6 +7,20 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  defaultMounts = {
+    root = {
+      name = "@";
+      mountpoint = "/";
+    };
+    nix = {
+      name = "@nix";
+      mountpoint = "/nix";
+    };
+    log = {
+      name = "@log";
+      mountpoint = "/var/log";
+    };
+  };
 in
 {
   options = util.mkOptions path {
@@ -25,66 +39,34 @@ in
     };
     mounts = lib.mkOption {
       description = "Mounting points for btrfs subvolumes";
-      readOnly = true;
       type = lib.types.attrs;
-      default = {
-        root = "/";
-        nix = "/nix";
-        persist = "/persist";
-        log = "/var/log";
-        snapshots = "/.btrfs/snapshots";
-      };
+      default = defaultMounts;
     };
   };
 
   config = lib.mkIf cfg.enable {
+    celo.modules.core.disko.mounts = lib.mkBefore defaultMounts;
+
     disko.devices =
       let
+        mountOptions = [
+          "noatime"
+          "compress=zstd:3"
+        ];
+        renderedMounts = util.concatAttrs (
+          map (v: {
+            ${v.name} = {
+              inherit (v) mountpoint;
+              inherit mountOptions;
+            };
+          }) (builtins.attrValues cfg.mounts)
+        );
         btrfs = {
           type = "btrfs";
           extraArgs = [ "-f" ];
-          subvolumes = {
-            "@" = {
-              mountpoint = cfg.mounts.root;
-              mountOptions = [
-                "noatime"
-                "compress=zstd:3"
-              ];
-            };
-            "@nix" = {
-              mountpoint = cfg.mounts.nix;
-              mountOptions = [
-                "noatime"
-                "compress=zstd:3"
-              ];
-            };
-            "@persist" = {
-              mountpoint = cfg.mounts.persist;
-              mountOptions = [
-                "noatime"
-                "compress=zstd:3"
-              ];
-            };
-            "@log" = {
-              mountpoint = cfg.mounts.log;
-              mountOptions = [
-                "noatime"
-                "compress=zstd:3"
-              ];
-            };
-            "@snapshots" = {
-              mountpoint = cfg.mounts.snapshots;
-              mountOptions = [
-                "noatime"
-                "compress=zstd:3"
-              ];
-            };
-          };
+          subvolumes = renderedMounts;
           mountpoint = "/.btrfs/volume";
-          mountOptions = [
-            "noatime"
-            "compress=zstd:3"
-          ];
+          inherit mountOptions;
         };
       in
       {
