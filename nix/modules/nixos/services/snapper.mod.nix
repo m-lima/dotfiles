@@ -129,7 +129,7 @@ in
           }
 
           take_snapshot "root" "${cfgDisko.mounts.root.mountpoint}"
-          ${lib.optionalStrig celo.core.impermanence.enable ''take_snapshot "persist" "${cfgDisko.mounts.persist.mountpoint}"''}
+          ${lib.optionalString celo.core.impermanence.enable ''take_snapshot "persist" "${cfgDisko.mounts.persist.mountpoint}"''}
         '';
       };
     };
