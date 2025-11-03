@@ -21,6 +21,7 @@ in
     acmeEmail = lib.mkOption {
       type = lib.types.nullOr lib.types.singleLineStr;
       description = "Email to use for ACME registration";
+      default = util.secret.rageOptional config ./_secrets/acmeEmail.rage;
     };
   };
 
