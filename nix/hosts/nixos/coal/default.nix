@@ -53,6 +53,10 @@
               enable = true;
               hardwareAcceleration = "intel-modern";
             };
+            cloud = {
+              enable = true;
+              subvolume = false;
+            };
             static.enable = true;
           };
           services = {

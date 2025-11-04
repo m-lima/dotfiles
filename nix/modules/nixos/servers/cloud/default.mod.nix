@@ -23,18 +23,35 @@ in
       description = "Base path for Cloud";
     };
 
-    subvolume = lib.mkEnableOption "submodule for the home directory" // {
+    user = lib.mkOption {
+      type = lib.types.singleLineStr;
+      description = "Admin user name";
+      default = config.celo.modules.core.user.userName;
+    };
+
+    subvolume = lib.mkEnableOption "btrfs subvolume for the home directory" // {
       default = true;
+    };
+
+    snap = lib.mkEnableOption "snapshots of the home directory" // {
+      default = cfg.subvolume;
     };
   };
 
   config = lib.mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = cfg.snap -> cfg.subvolume;
+        message = "To take snapshots, Cloud needs its own subvolume";
+      }
+    ];
+
     age.secrets = {
       ${secret "config"} = {
         rekeyFile = ./_secrets/config.age;
       };
-      ${secret "admin"} = {
-        rekeyFile = ./_secrets/admin.age;
+      ${secret "adminPass"} = {
+        rekeyFile = ./_secrets/adminPass.age;
       };
     };
 
@@ -50,8 +67,8 @@ in
       database.createLocally = true;
       config = {
         dbtype = "pgsql";
-        adminuser = "mestre";
-        adminpassFile = config.age.secrets.${secret "admin"}.path;
+        adminuser = cfg.user;
+        adminpassFile = config.age.secrets.${secret "adminPass"}.path;
       };
 
       settings = {
@@ -61,22 +78,27 @@ in
       secretFile = config.age.secrets.${secret "config"}.path;
     };
 
-    celo.modules = {
-      core.disko = lib.mkIf cfg.subvolume {
-        extraMounts = {
-          cloud = {
-            name = "@cloud";
-            mountpoint = cfg.home;
-          };
+    celo.modules = lib.mkIf cfg.subvolume {
+      core.disko.extraMounts = {
+        cloud = {
+          name = "@cloud";
+          mountpoint = cfg.home;
         };
       };
 
-      services.snapper.mounts = lib.mkAfter [ "cloud" ];
+      services.snapper.mounts = lib.mkIf cfg.snap (lib.mkAfter [ "cloud" ]);
     };
 
     environment = lib.mkIf (!cfg.subvolume) {
       persistence = util.withImpermanence config {
-        global.directories = [ cfg.home ];
+        global.directories = [
+          {
+            directory = cfg.home;
+            group = "nextcloud";
+            user = "nextcloud";
+            mode = "0775";
+          }
+        ];
       };
     };
   };

@@ -23,14 +23,14 @@ in
   options = util.mkOptions path {
     home = lib.mkOption {
       type = lib.types.singleLineStr;
-      default = "/srv/static";
       description = "Drop place for static files";
+      default = "/srv/static";
     };
 
     users = lib.mkOption {
       type = lib.types.listOf lib.types.singleLineStr;
-      default = [ config.celo.modules.core.user.userName ];
       description = "Users that can modify the contents of static";
+      default = [ config.celo.modules.core.user.userName ];
     };
   };
 
