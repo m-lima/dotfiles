@@ -59,6 +59,11 @@ let
       setup = "require('config.lspconfig.servers.rust')";
       dependencies = [ ];
     };
+    zig = {
+      pkg = [ pkgs.zls ];
+      setup = "require('config.lspconfig.servers.zig')";
+      dependencies = [ ];
+    };
   };
 in
 {
@@ -76,6 +81,7 @@ in
         "nix"
         "python"
         "rust"
+        "zig"
       ];
     };
   };
