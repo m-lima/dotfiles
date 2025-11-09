@@ -86,7 +86,13 @@ in
     };
 
     environment.persistence = util.withImpermanence config {
-      global.directories = [ cfg.home ];
+      global.directories = [
+        {
+          directory = cfg.home;
+          group = config.services.jellyfin.user;
+          user = config.services.jellyfin.group;
+        }
+      ];
     };
   };
 }
