@@ -66,6 +66,10 @@
             };
             ssh.enable = true;
             mdns.enable = true;
+            postgres = {
+              enable = true;
+              subvolume = false;
+            };
           };
           programs = {
             flakerpl.enable = true;

@@ -44,38 +44,38 @@ in
         assertion = cfg.snap -> cfg.subvolume;
         message = "To take snapshots, Cloud needs its own subvolume";
       }
+      {
+        assertion = config.celo.modules.services.postgres.enable;
+        message = "Nextcloud requires Postgres";
+      }
     ];
 
     age.secrets = {
-      ${secret "config"} = {
-        rekeyFile = ./_secrets/config.age;
-      };
       ${secret "adminPass"} = {
         rekeyFile = ./_secrets/adminPass.age;
       };
     };
 
-    services.nextcloud = {
-      enable = true;
-      package = pkgs.nextcloud32;
-      hostName = "${cfg.hostName}.${cfgNgx.baseHost}";
-      https = cfg.tls;
-      home = cfg.home;
+    services = {
+      nextcloud = {
+        enable = true;
+        package = pkgs.nextcloud32;
+        hostName = "${cfg.hostName}.${cfgNgx.baseHost}";
+        https = cfg.tls;
+        home = cfg.home;
 
-      configureRedis = true;
-      caching.redis = true;
-      database.createLocally = true;
-      config = {
-        dbtype = "pgsql";
-        adminuser = cfg.user;
-        adminpassFile = config.age.secrets.${secret "adminPass"}.path;
+        configureRedis = true;
+        database.createLocally = true;
+        config = {
+          dbtype = "pgsql";
+          adminuser = cfg.user;
+          adminpassFile = config.age.secrets.${secret "adminPass"}.path;
+        };
+
+        settings = {
+          overwriteprotocol = lib.mkIf cfg.tls "https";
+        };
       };
-
-      settings = {
-        overwriteprotocol = lib.mkIf cfg.tls "https";
-      };
-
-      secretFile = config.age.secrets.${secret "config"}.path;
     };
 
     celo.modules = lib.mkIf cfg.subvolume {
@@ -93,12 +93,18 @@ in
       persistence = util.withImpermanence config {
         global.directories = [
           {
-            directory = cfg.home;
+            directory = config.services.redis.servers.nextcloud.settings.dir;
             group = "nextcloud";
             user = "nextcloud";
-            mode = "0775";
+            mode = "0755";
           }
-        ];
+        ]
+        ++ lib.optional (!cfg.subvolume) {
+          directory = cfg.home;
+          group = "nextcloud";
+          user = "nextcloud";
+          mode = "0755";
+        };
       };
     };
   };

@@ -1,7 +1,6 @@
 {
   lib,
   mkPath,
-  mkOptions,
   getOptions,
 }:
 path: config: mode:
