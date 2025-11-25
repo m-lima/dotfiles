@@ -63,9 +63,6 @@ in
         virtualHosts = {
           ${cfg.baseHost} = {
             default = true;
-            addSSL = cfg.tls;
-            enableACME = shouldAcme;
-
             locations = {
               "/" = {
                 return = 444;
