@@ -10,9 +10,5 @@ setopt long_list_jobs
 # Recognize comments
 setopt interactivecomments
 
-# Pager options
-export PAGER='less'
-export LESS='-F -i -M -R -S -w -z-4'
-
 # Be very pedantic on word boundaries
 export WORDCHARS=''

@@ -71,6 +71,8 @@
             # TODO
             jq.enable = true;
             # TODO
+            less.enable = true;
+            # TODO
             lazygit.enable = true;
             # TODO
             rage.enable = true;

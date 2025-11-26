@@ -13,10 +13,17 @@ in
 
   config = util.enforceHome path config cfg.enable {
     home-manager = {
-      programs.direnv = {
+      programs.less = {
         enable = true;
-        enableZshIntegration = true;
-        nix-direnv.enable = true;
+        keys = ''
+          #command
+          l right-scroll
+          h left-scroll
+          j forw-line-force 4
+          k back-line-force 4
+          #env
+          LESS = -F -i -M -R -S -w -z-4
+        '';
       };
     };
   };
