@@ -56,7 +56,7 @@
       url = "github:nix-community/impermanence";
     };
     nix-darwin = {
-      url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
+      url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -153,18 +153,13 @@
       util = import ./util { inherit (nixpkgs) lib; };
       mkHost = import ./hosts;
       nixosHost =
-        {
-          system,
-          hostModules,
-        }:
+        hostModules:
         nixpkgs.lib.nixosSystem {
-          inherit system;
-
           specialArgs = {
             inherit inputs util;
             rootDir = ./.;
-            pkgs-2405 = nixpkgs-2405.legacyPackages.${system};
-            # pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+            pkgs-2405 = nixpkgs-2405;
+            # pkgs-unstable = nixpkgs-unstable;
           };
 
           modules =
@@ -184,18 +179,13 @@
             ];
         };
       darwinHost =
-        {
-          system,
-          hostModules,
-        }:
+        hostModules:
         nix-darwin.lib.darwinSystem {
-          inherit system;
-
           specialArgs = {
             inherit inputs util;
             rootDir = ./.;
-            pkgs-2405 = nixpkgs-2405.legacyPackages.${system};
-            # pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+            pkgs-2405 = nixpkgs-2405;
+            # pkgs-unstable = nixpkgs-unstable;
           };
 
           modules =
