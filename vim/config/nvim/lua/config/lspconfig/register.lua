@@ -1,4 +1,3 @@
-local lspconfig = require('lspconfig')
 local cmp_capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local run_one_shot = function(server, one_shot)
@@ -235,6 +234,7 @@ return {
     else
       run_one_shot(server, opts.one_shot)
     end
-    lspconfig[server].setup(opts)
+    vim.lsp.config(server, opts)
+    vim.lsp.enable(server)
   end,
 }

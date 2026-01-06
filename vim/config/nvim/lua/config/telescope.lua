@@ -92,9 +92,7 @@ telescope.setup({
 })
 
 telescope.load_extension('fzf')
-telescope.load_extension('projects')
 telescope.load_extension('ui-select')
-telescope.load_extension('dap')
 
 local builtin = require('telescope.builtin')
 
@@ -178,9 +176,6 @@ map('n', '<leader>b',     builtin.buffers)
 map('n', '<leader><c-o>', builtin.jumplist)
 map('n', '<leader>m',     builtin.marks)
 map('n', '<leader>gt',    builtin.git_status)
-
----- Projects
-map('n', '<leader><leader>p', telescope.extensions.projects.projects)
 
 ---- LSP
 map('n', 'gd',        builtin.lsp_definitions)

@@ -121,7 +121,7 @@ in
               gitsigns-nvim
               telescope-nvim
               neo-tree-nvim
-              project-nvim
+              # project-nvim
               telescope-fzf-native-nvim
               telescope-ui-select-nvim
               telescope-dap-nvim
@@ -175,7 +175,6 @@ in
             require('config.lua_out')
             require('config.lualine')
             require('config.neo_tree')
-            require('config.project')
             require('config.telescope')
             require('config.toggleterm')
             require('config.treesitter.none')
