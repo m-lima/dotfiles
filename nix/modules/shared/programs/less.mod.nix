@@ -15,7 +15,7 @@ in
     home-manager = {
       programs.less = {
         enable = true;
-        keys = ''
+        config = ''
           #command
           l right-scroll
           h left-scroll

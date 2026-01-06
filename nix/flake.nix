@@ -3,7 +3,7 @@
 
   inputs = {
     # NixOs
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-2405.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -47,7 +47,7 @@
       };
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -117,7 +117,7 @@
       };
     };
     ragenix = {
-      url = "github:m-lima/ragenix?ref=v0.1.11";
+      url = "github:m-lima/ragenix?ref=v0.2.0";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
