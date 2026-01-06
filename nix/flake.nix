@@ -84,7 +84,7 @@
 
     # Local dependencies
     ipifier = {
-      url = "github:m-lima/ipifier?ref=v0.1.1";
+      url = "github:m-lima/ipifier?ref=v0.1.2";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
@@ -106,7 +106,7 @@
       };
     };
     simpalt = {
-      url = "github:m-lima/simpalt-rs?ref=v0.3.9";
+      url = "github:m-lima/simpalt-rs?ref=v0.3.10";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
@@ -117,7 +117,7 @@
       };
     };
     ragenix = {
-      url = "github:m-lima/ragenix?ref=v0.1.10";
+      url = "github:m-lima/ragenix?ref=v0.1.11";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
@@ -127,6 +127,7 @@
         treefmt-nix.follows = "treefmt-nix";
       };
     };
+    # Skull at ./modules/shared/programs/skull/default.mod.nix
   };
 
   outputs =
