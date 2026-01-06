@@ -10,30 +10,20 @@ let
   # Takes in the imported host, sets up the mandatory modules (more below),
   # And sets a config entry with the ID field.
   #
-  # Returns the following:
-  # {
-  #   system = <The system type>
-  #   hostModules = <Configuration for the host>
-  # }
+  # Returns the configuration for the host
   #
   # Modules:
   # module - What comes from the imported host file
   # hostModule - From below, essentially adds the ID option
   # setupRagenix - Prepares ragenix
-  mapHost =
-    { system, module }:
-    id: {
-      inherit system;
-      hostModules = [
-        module
-        hostModule
-        setupRagenix
-        {
-          celo.host = { inherit id kind; };
-          nixpkgs.hostPlatform = system;
-        }
-      ];
-    };
+  mapHost = module: id: [
+    module
+    hostModule
+    setupRagenix
+    {
+      celo.host = { inherit id kind; };
+    }
+  ];
   hostModule =
     { lib, ... }:
     {

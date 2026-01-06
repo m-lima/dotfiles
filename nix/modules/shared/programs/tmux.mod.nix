@@ -18,7 +18,7 @@ in
       readOnly = true;
       visible = false;
       type = lib.types.package;
-      default = pkgs-2405.tmux;
+      default = pkgs-2405.legacyPackages.${pkgs.stdenv.hostPlatform.system}.tmux;
     };
     currentlyPlaying = lib.mkOption {
       type = lib.types.str;

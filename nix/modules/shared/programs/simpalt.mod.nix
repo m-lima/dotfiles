@@ -11,7 +11,7 @@ let
   celo = config.celo.modules;
   cfg = util.getOptions path config;
   simpalt = {
-    pkg = inputs.simpalt.packages.${pkgs.system}.default;
+    pkg = inputs.simpalt.packages.${pkgs.stdenv.hostPlatform.system}.default;
     zsh = inputs.simpalt.lib.zsh;
   };
 in

@@ -11,7 +11,7 @@ path:
 let
   cfg = util.getOptions path config;
   host = config.celo.host.id;
-  agenix = inputs.agenix-rekey.packages.${pkgs.system};
+  agenix = inputs.agenix-rekey.packages.${pkgs.stdenv.hostPlatform.system};
 in
 {
   options = util.mkOptions path {

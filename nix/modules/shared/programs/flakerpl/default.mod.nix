@@ -23,7 +23,7 @@ in
         nix repl --expr '
         let
           flake = builtins.getFlake "'$PWD'";
-          pkgs = flake.inputs.'$nixpkgs'.legacyPackages.${pkgs.system};
+          pkgs = flake.inputs.'$nixpkgs'.legacyPackages.${pkgs.stdenv.hostPlatform.system};
           lib = pkgs.lib;
         in
         { inherit flake pkgs lib; }'

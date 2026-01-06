@@ -17,7 +17,7 @@ in
       home.packages = map (
         url:
         (builtins.getFlake "${url}?ref=master&rev=04eefab73cc82bcb60d922225f1d46f959222e29")
-        .outputs.packages.${pkgs.system}.default
+        .outputs.packages.${pkgs.stdenv.hostPlatform.system}.default
       ) (util.secret.rage config ./_secrets/url.rage);
     };
   };
