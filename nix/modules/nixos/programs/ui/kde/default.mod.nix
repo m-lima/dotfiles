@@ -1,3 +1,5 @@
+# TODO: Persist the power options
+# TODO: The restart button is not working
 path:
 {
   lib,
