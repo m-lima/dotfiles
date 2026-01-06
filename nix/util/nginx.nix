@@ -30,7 +30,7 @@ let
       };
 
       tls = lib.mkEnableOption "TLS through nginx reverse proxy" // {
-        default = cfgNgx.tls;
+        default = cfgNgx.enableAcme;
       };
     };
 
