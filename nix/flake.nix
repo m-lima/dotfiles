@@ -143,7 +143,6 @@
       flake-utils,
       home-manager,
       impermanence,
-      ipifier,
       ragenix,
       sddm-sugar-candy-nix,
       treefmt-nix,
@@ -151,16 +150,16 @@
     }@inputs:
     let
       util = import ./util { inherit (nixpkgs) lib; };
-      mkHost = import ./hosts;
+      hosts = import ./hosts;
+      specialArgs = {
+        inherit inputs util;
+        rootDir = ./.;
+        pkgs-2405 = nixpkgs-2405;
+      };
       nixosHost =
-        hostModules:
+        _: hostModules:
         nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs util;
-            rootDir = ./.;
-            pkgs-2405 = nixpkgs-2405;
-            # pkgs-unstable = nixpkgs-unstable;
-          };
+          inherit specialArgs;
 
           modules =
             hostModules
@@ -179,20 +178,16 @@
             ];
         };
       darwinHost =
-        hostModules:
+        _: hostModules:
         nix-darwin.lib.darwinSystem {
-          specialArgs = {
-            inherit inputs util;
-            rootDir = ./.;
-            pkgs-2405 = nixpkgs-2405;
-            # pkgs-unstable = nixpkgs-unstable;
-          };
+          inherit specialArgs;
 
           modules =
             hostModules
             ++ util.load.modules ./modules/shared
             ++ util.load.modules ./modules/darwin
             ++ util.load.profiles ./profiles/shared
+            # TODO: Address this
             # ++ util.load.profiles ./profiles/darwin
             ++ [
               agenix.darwinModules.default
@@ -203,8 +198,8 @@
         };
     in
     {
-      nixosConfigurations = mkHost "nixos" nixosHost;
-      darwinConfigurations = mkHost "darwin" darwinHost;
+      nixosConfigurations = builtins.mapAttrs nixosHost (hosts.for "nixos");
+      darwinConfigurations = builtins.mapAttrs darwinHost (hosts.for "darwin");
 
       agenix-rekey = agenix-rekey.configure {
         userFlake = self;
