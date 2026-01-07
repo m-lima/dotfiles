@@ -13,7 +13,7 @@ let
       services.nginx = lib.mkIf (cfg.hostName != null) {
         virtualHosts."${cfg.hostName}.${cfgNgx.baseHost}" = {
           forceSSL = cfg.tls;
-          enableACME = cfg.tls;
+          enableACME = cfgNgx.enableAcme;
           http2 = true;
           http3 = true;
 
@@ -30,7 +30,7 @@ let
       };
 
       tls = lib.mkEnableOption "TLS through nginx reverse proxy" // {
-        default = cfgNgx.enableAcme;
+        default = cfgNgx.tls;
       };
     };
 
