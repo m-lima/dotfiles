@@ -66,6 +66,7 @@ in
       virtualHosts = {
         ${cfg.baseHost} = {
           default = true;
+          rejectSSL = true;
           locations = {
             "/" = {
               return = 444;
