@@ -17,6 +17,14 @@ in
         extraConfig = "autoindex on;";
         root = cfg.home;
       };
+
+      "/private" = {
+        extraConfig = ''
+          autoindex on;
+          endgame on;
+        '';
+        root = cfg.home;
+      };
     };
   };
 

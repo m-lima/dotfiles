@@ -45,6 +45,13 @@
           tls = true;
           baseHost = util.secret.rageOptional config ./_secrets/servers/nginx/baseHost.rage;
         };
+        endgame = {
+          enable = true;
+          bin = true;
+          key = ./_secrets/servers/endgame/key.age;
+          clientId = util.secret.rageOr config ./_secrets/servers/endgame/client_id.rage "id";
+          clientSecret = util.secret.rageOr config ./_secrets/servers/endgame/client_secret.rage "secret";
+        };
         jelly = {
           enable = true;
           hardwareAcceleration = "intel-modern";
