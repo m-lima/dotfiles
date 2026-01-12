@@ -105,21 +105,6 @@ in
             return = 444;
           };
 
-          "= /info" = {
-            extraConfig = ''
-              endgame on;
-
-              try_files /none @info;
-            '';
-          };
-
-          "@info" = {
-            extraConfig = ''
-              default_type application/json;
-              return 200 '{"email":"$http_x_email"}';
-            '';
-          };
-
           "= /logout" = {
             extraConfig = ''
               add_header Set-Cookie 'endgame=;Path=/;Domain=${cfgNgx.baseHost};Max-Age=0;Secure;HttpOnly;SameSite=lax';
