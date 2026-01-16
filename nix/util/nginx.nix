@@ -8,7 +8,7 @@ let
   cfg = getOptions path config;
   cfgNgx = config.celo.modules.servers.nginx;
   defaultServer =
-    locations:
+    extraConfig: locations:
     lib.mkIf cfg.enable {
       services.nginx = lib.mkIf (cfg.hostName != null) {
         virtualHosts."${cfg.hostName}.${cfgNgx.baseHost}" = {
@@ -16,6 +16,8 @@ let
           enableACME = cfgNgx.enableAcme;
           http2 = true;
           http3 = true;
+
+          extraConfig = lib.mkIf (!builtins.isNull extraConfig) extraConfig;
 
           inherit locations;
         };
@@ -80,21 +82,23 @@ if mode == "minimal" then
   {
     name,
     locations ? { },
+    extraConfig ? null,
   }:
   [
     (base name)
-    { config = defaultServer locations; }
+    { config = defaultServer extraConfig locations; }
   ]
 else if mode == "expose" then
   {
     name,
     port,
+    extraConfig ? null,
   }:
   [
     (base name)
     (optionPort port)
     {
-      config = defaultServer {
+      config = defaultServer extraConfig {
         "/" = {
           proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}";
           recommendedProxySettings = true;
@@ -106,12 +110,13 @@ else if mode == "serve" then
   {
     root,
     name,
+    extraConfig ? null,
   }:
   [
     (base name)
     (optionServe root)
     {
-      config = defaultServer {
+      config = defaultServer extraConfig {
         "/" = {
           root = cfg.root;
           index = cfg.index;
@@ -126,6 +131,7 @@ else if mode == "api" then
     root,
     port,
     api ? "~ ^/api/(.*)$",
+    extraConfig ? null,
   }:
   [
     (base name)
@@ -140,7 +146,7 @@ else if mode == "api" then
         };
       };
 
-      config = defaultServer {
+      config = defaultServer extraConfig {
         ${cfg.api} = {
           proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}/$1$is_args$args";
           recommendedProxySettings = true;
