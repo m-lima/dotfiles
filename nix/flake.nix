@@ -95,7 +95,7 @@
       };
     };
     passer = {
-      url = "github:m-lima/passer?ref=v0.7.1";
+      url = "github:m-lima/passer?ref=v0.7.3";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
