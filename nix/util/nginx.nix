@@ -67,7 +67,7 @@ let
       root = lib.mkOption {
         type = lib.types.singleLineStr;
         default = root;
-        description = "Base path for the service";
+        description = "Base path for statically serving the service";
       };
 
       index = lib.mkOption {
@@ -75,6 +75,56 @@ let
         default = "index.html";
         description = "Index file to serve";
       };
+    };
+  };
+  configServe = {
+    "/" = {
+      root = cfg.root;
+      index = cfg.index;
+      tryFiles = "$uri /${cfg.index}";
+    };
+  };
+  optionApi = api: apiPass: {
+    options = mkPath path {
+      api = lib.mkOption {
+        type = lib.types.singleLineStr;
+        default = api;
+        description = "Path to serve the api from";
+      };
+
+      apiPass = lib.mkOption {
+        type = lib.types.singleLineStr;
+        default = apiPass;
+        description = "Path to proxy pass the api";
+      };
+    };
+  };
+  optionWs = ws: wsPass: {
+    options = mkPath path {
+      ws = lib.mkOption {
+        type = lib.types.singleLineStr;
+        default = ws;
+        description = "Path to serve the websocket from";
+      };
+
+      wsPass = lib.mkOption {
+        type = lib.types.singleLineStr;
+        default = wsPass;
+        description = "Path to proxy pass to websockets";
+      };
+    };
+  };
+  configProxy = location: pass: {
+    ${location} = {
+      proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}/${pass}";
+      recommendedProxySettings = true;
+    };
+  };
+  configApi = configProxy cfg.api cfg.apiPass;
+  configWs = {
+    ${cfg.ws} = {
+      proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}/${cfg.wsPass}";
+      proxyWebsockets = true;
     };
   };
 in
@@ -97,6 +147,7 @@ else if mode == "expose" then
   [
     (base name)
     (optionPort port)
+    { config = defaultServer extraConfig (configProxy "/" ""); }
     {
       config = defaultServer extraConfig {
         "/" = {
@@ -115,15 +166,7 @@ else if mode == "serve" then
   [
     (base name)
     (optionServe root)
-    {
-      config = defaultServer extraConfig {
-        "/" = {
-          root = cfg.root;
-          index = cfg.index;
-          tryFiles = "$uri /${cfg.index}";
-        };
-      };
-    }
+    { config = defaultServer extraConfig configServe; }
   ]
 else if mode == "api" then
   {
@@ -131,35 +174,34 @@ else if mode == "api" then
     root,
     port,
     api ? "~ ^/api/(.*)$",
+    apiPass ? "$1$is_args$args",
     extraConfig ? null,
   }:
   [
     (base name)
     (optionPort port)
     (optionServe root)
-    {
-      options = mkPath path {
-        api = lib.mkOption {
-          type = lib.types.singleLineStr;
-          default = api;
-          description = "Path to serve the api from";
-        };
-      };
-
-      config = defaultServer extraConfig {
-        ${cfg.api} = {
-          proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}/$1$is_args$args";
-          recommendedProxySettings = true;
-        };
-
-        "/" = {
-          root = cfg.root;
-          index = cfg.index;
-          tryFiles = "$uri /${cfg.index}";
-        };
-
-      };
-    }
+    (optionApi api apiPass)
+    { config = defaultServer extraConfig (configServe // configApi); }
+  ]
+else if mode == "apiWithWS" then
+  {
+    name,
+    root,
+    port,
+    api ? "~ ^/api/(.*)$",
+    apiPass ? "$1$is_args$args",
+    ws ? "~ ^/ws/(.*)$",
+    wsPass ? "$1$is_args$args",
+    extraConfig ? null,
+  }:
+  [
+    (base name)
+    (optionPort port)
+    (optionServe root)
+    (optionApi api apiPass)
+    (optionWs ws wsPass)
+    { config = defaultServer extraConfig (configServe // configApi // configWs); }
   ]
 else
   builtins.abort "Unknown mode: ${mode}"
