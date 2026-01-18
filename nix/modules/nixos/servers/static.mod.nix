@@ -7,6 +7,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  cfgEndgame = config.celo.modules.servers.endgame;
   group = "server_static";
 in
 {
@@ -18,7 +19,7 @@ in
         root = cfg.home;
       };
 
-      "/private" = {
+      "/private" = lib.mkIf cfg.private {
         extraConfig = ''
           autoindex on;
           endgame on;
@@ -40,13 +41,21 @@ in
       description = "Users that can modify the contents of static";
       default = [ config.celo.modules.core.user.userName ];
     };
+
+    private = lib.mkEnableOption "private route behind Endgame" // {
+      default = cfgEndgame.enable;
+    };
   };
 
   config = lib.mkIf cfg.enable {
     assertions = [
       {
         assertion = config.services.nginx.enable;
-        message = "Nginx needs to be enabled to server static files";
+        message = "Nginx needs to be enabled to serve static files";
+      }
+      {
+        assertion = cfg.private -> cfgEndgame.enable;
+        message = "Endgame needs to be enabled to serve the private route";
       }
     ];
 
