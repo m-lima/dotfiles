@@ -1,6 +1,7 @@
 {
   config,
   util,
+  rootDir,
   ...
 }:
 {
@@ -49,8 +50,12 @@
           enable = true;
           bin = true;
           key = ./_secrets/servers/endgame/key.age;
-          clientId = util.secret.rageOr config ./_secrets/servers/endgame/client_id.rage "id";
-          clientSecret = util.secret.rageOr config ./_secrets/servers/endgame/client_secret.rage "secret";
+          clientId =
+            util.secret.rageOr config /${rootDir}/modules/nixos/servers/endgame/_secrets/client_id.rage
+              "id";
+          clientSecret =
+            util.secret.rageOr config /${rootDir}/modules/nixos/servers/endgame/_secrets/client_secret.rage
+              "secret";
         };
         jelly = {
           enable = true;
