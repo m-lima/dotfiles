@@ -9,7 +9,6 @@
         LockPersonality = true;
         RemoveIPC = true;
         MemoryDenyWriteExecute = true;
-        IPAddressDeny = "any";
         ProcSubset = "pid";
         DevicePolicy = "closed";
 
@@ -68,5 +67,6 @@
     in
     base
     // (lib.optionalAttrs (!builtins.hasAttr "IPAddressAllow" opts) { IPAddressDeny = "any"; })
+    // (lib.optionalAttrs (!builtins.hasAttr "User" opts) { DynamicUser = true; })
     // opts;
 }

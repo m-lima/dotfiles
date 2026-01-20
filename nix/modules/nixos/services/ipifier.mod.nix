@@ -39,12 +39,17 @@ in
     systemd = {
       services.ipifier = {
         description = "Ipifier";
-        serviceConfig = {
+        serviceConfig = util.systemd.harden {
           Type = "oneshot";
+
+          LoadCredential = "CONFIG:${config.age.secrets.${secret}.path}";
+          RestrictAddressFamilies = "AF_INET";
+          PrivateNetwork = false;
+          IPAddressAllow = "any";
         };
 
         wantedBy = [ "multi-user.target" ];
-        script = "${ipifier}/bin/ipifier ${config.age.secrets.${secret}.path}";
+        script = "${ipifier}/bin/ipifier $CREDENTIALS_DIRECTORY/CONFIG";
       };
 
       timers.ipifier = {
