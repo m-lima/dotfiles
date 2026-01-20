@@ -148,14 +148,6 @@ else if mode == "expose" then
     (base name)
     (optionPort port)
     { config = defaultServer extraConfig (configProxy "/" ""); }
-    {
-      config = defaultServer extraConfig {
-        "/" = {
-          proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}";
-          recommendedProxySettings = true;
-        };
-      };
-    }
   ]
 else if mode == "serve" then
   {
