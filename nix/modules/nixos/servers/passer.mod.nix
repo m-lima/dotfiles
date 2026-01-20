@@ -58,52 +58,20 @@ in
         wantedBy = [ "multi-user.target" ];
 
         description = "Passer";
-        serviceConfig = {
+        serviceConfig = util.systemd.harden {
           Type = "simple";
-          User = "passer";
-          Group = "passer";
-          UMask = "0077";
-          WorkingDirectory = cfg.home;
           ExecStart = "${passer.server}/bin/passer --port ${builtins.toString cfg.port} --store-path ${cfg.home}";
           Restart = "on-failure";
           TimeoutSec = 15;
+          WorkingDirectory = cfg.home;
 
-          NoNewPrivileges = true;
-          SystemCallArchitectures = "native";
-          RestrictAddressFamilies = [ "AF_INET" ];
-          RestrictNamespaces = !config.boot.isContainer;
-          RestrictRealtime = true;
-          RestrictSUIDSGID = true;
-          ProtectControlGroups = !config.boot.isContainer;
-          ProtectHostname = true;
-          ProtectKernelLogs = !config.boot.isContainer;
-          ProtectKernelModules = !config.boot.isContainer;
-          ProtectKernelTunables = !config.boot.isContainer;
-          LockPersonality = true;
-          PrivateTmp = !config.boot.isContainer;
-          # needed for hardware acceleration
-          PrivateDevices = false;
-          PrivateUsers = true;
-          RemoveIPC = true;
+          User = "passer";
+          Group = "passer";
 
-          SystemCallFilter = [
-            "~@clock"
-            "~@aio"
-            "~@chown"
-            "~@cpu-emulation"
-            "~@debug"
-            "~@keyring"
-            "~@memlock"
-            "~@module"
-            "~@mount"
-            "~@obsolete"
-            "~@privileged"
-            "~@raw-io"
-            "~@reboot"
-            "~@setuid"
-            "~@swap"
-          ];
-          SystemCallErrorNumber = "EPERM";
+          IPAddressAllow = "localhost";
+          RestrictAddressFamilies = "AF_INET";
+          PrivateNetwork = false;
+          ReadWritePaths = cfg.home;
         };
       };
     };
