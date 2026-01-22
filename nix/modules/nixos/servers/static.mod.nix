@@ -9,6 +9,7 @@ let
   cfg = util.getOptions path config;
   cfgEndgame = config.celo.modules.servers.endgame;
   group = "server_static";
+  hasPrivate = if builtins.isBool cfg.private then cfg.private else true;
 in
 {
   imports = util.nginx path config "minimal" {
@@ -19,11 +20,14 @@ in
         root = cfg.home;
       };
 
-      "/private" = lib.mkIf cfg.private {
+      "/private" = lib.mkIf hasPrivate {
         extraConfig = ''
           autoindex on;
           endgame on;
-        '';
+        ''
+        + (lib.optionalString (
+          !builtins.isBool cfg.private
+        ) "endgame_whitelist ${builtins.concatStringsSep " " cfg.private};");
         root = cfg.home;
       };
     };
@@ -42,8 +46,11 @@ in
       default = [ config.celo.modules.core.user.userName ];
     };
 
-    private = lib.mkEnableOption "private route behind Endgame" // {
-      default = cfgEndgame.enable;
+    private = lib.mkOption {
+      type = lib.types.either lib.types.bool (lib.types.listOf lib.types.singleLineStr);
+      description = "Create a private location behind Endgame. If strings are passed, they are interpreted as whitelisted emails with access to the location";
+      default = util.secret.rageOr config ./endgame/_secrets/email.rage cfgEndgame.enable;
+      example = [ "email@domain.com" ];
     };
   };
 
@@ -54,7 +61,7 @@ in
         message = "Nginx needs to be enabled to serve static files";
       }
       {
-        assertion = cfg.private -> cfgEndgame.enable;
+        assertion = hasPrivate -> cfgEndgame.enable;
         message = "Endgame needs to be enabled to serve the private route";
       }
     ];
