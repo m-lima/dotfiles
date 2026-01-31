@@ -100,6 +100,7 @@ in
         forceSSL = true;
         enableACME = cfgNgx.enableAcme;
 
+        # TODO: Consider prettier global error pages
         locations = {
           "/" = {
             return = 444;
@@ -117,6 +118,25 @@ in
               return 200 'Logged Out';
             '';
 
+          };
+
+          "= /login" = {
+            extraConfig = ''
+              endgame on;
+              endgame_auto_login on;
+              try_files /nonexistent @finalize;
+            '';
+          };
+
+          "@finalize" = {
+            extraConfig = ''
+              if ($arg_redirect ~ .+) {
+                return 302 $arg_redirect;
+              }
+
+              default_type text/plain;
+              return 200 'Logged In';
+            '';
           };
 
           "= /callback" = {
