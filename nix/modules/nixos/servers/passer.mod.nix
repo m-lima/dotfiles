@@ -11,6 +11,8 @@ let
   cfg = util.getOptions path config;
   cfgNgx = config.celo.modules.servers.nginx;
   passer = inputs.passer.packages.${pkgs.stdenv.hostPlatform.system};
+  user = "passer";
+  group = user;
 in
 {
   imports = util.nginx path config "api" {
@@ -38,16 +40,16 @@ in
 
     users = {
       users = {
-        passer = {
+        ${user} = {
           home = cfg.home;
-          group = "passer";
+          group = group;
           createHome = true;
           isSystemUser = true;
         };
       };
 
       groups = {
-        passer = { };
+        ${group} = { };
       };
     };
 
@@ -65,8 +67,8 @@ in
           TimeoutSec = 15;
           WorkingDirectory = cfg.home;
 
-          User = "passer";
-          Group = "passer";
+          User = user;
+          Group = group;
 
           IPAddressAllow = "localhost";
           RestrictAddressFamilies = "AF_INET";
@@ -77,7 +79,14 @@ in
     };
 
     environment.persistence = util.withImpermanence config {
-      global.directories = [ cfg.home ];
+      global.directories = [
+        {
+          directory = cfg.home;
+          mode = "0700";
+          user = user;
+          group = group;
+        }
+      ];
     };
   };
 }
