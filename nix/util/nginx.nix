@@ -48,6 +48,10 @@ let
     config = lib.mkIf cfg.enable {
       assertions = [
         {
+          assertion = config.services.nginx.enable;
+          message = "Nginx needs to be enabled to serve ${name}";
+        }
+        {
           assertion = cfg.tls -> cfg.hostName != null;
           message = "Need to specify a hostName to have TLS termination";
         }
@@ -114,6 +118,7 @@ in
         mode ? "proxy", # [ "api" "ws" "proxy" ]
         endgame ? false,
         autoLogin ? false,
+        extraConfig ? null,
       }:
       let
         modeAbort = builtins.abort "expected one of [ 'proxy' 'api' 'ws' ]";
@@ -136,6 +141,9 @@ in
             "proxyWebsockets"
           else
             modeAbort;
+        actualExtraConfig =
+          (if builtins.isNull extraConfig then "" else extraConfig)
+          + (lib.optionalString endgame (endgameExtraConfig autoLogin));
       in
       {
         options = mkPath path {
@@ -151,8 +159,8 @@ in
             proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}${proxyPath}";
             ${optimizedSettings} = true;
           }
-          // (lib.optionalAttrs endgame {
-            extraConfig = lib.mkAfter (endgameExtraConfig autoLogin);
+          // (lib.optionalAttrs (builtins.stringLength actualExtraConfig > 0) {
+            extraConfig = lib.mkAfter actualExtraConfig;
           });
         };
       };
@@ -162,7 +170,13 @@ in
         location ? "/",
         endgame ? false,
         autoLogin ? true,
+        extraConfig ? null,
       }:
+      let
+        actualExtraConfig =
+          (if builtins.isNull extraConfig then "" else extraConfig)
+          + (lib.optionalString endgame (endgameExtraConfig autoLogin));
+      in
       {
         options = mkPath path {
           root = lib.mkOption {
@@ -184,8 +198,8 @@ in
             index = cfg.index;
             tryFiles = "$uri /${cfg.index}";
           }
-          // (lib.optionalAttrs endgame {
-            extraConfig = lib.mkAfter (endgameExtraConfig autoLogin);
+          // (lib.optionalAttrs (builtins.stringLength actualExtraConfig > 0) {
+            extraConfig = lib.mkAfter actualExtraConfig;
           });
         };
       };

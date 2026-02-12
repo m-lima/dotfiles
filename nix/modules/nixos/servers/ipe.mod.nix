@@ -23,13 +23,6 @@ in
   options = util.mkOptionsEnable path;
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = config.services.nginx.enable;
-        message = "Nginx needs to be enabled for ipe";
-      }
-    ];
-
     services.nginx.virtualHosts."${cfg.hostName}.${cfgNgx.baseHost}" = {
       forceSSL = lib.mkForce false;
       addSSL = cfg.tls;
