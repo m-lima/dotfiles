@@ -9,25 +9,20 @@ let
   cfg = util.getOptions path config;
   cfgEndgame = config.celo.modules.servers.endgame;
   group = "server_static";
-  hasPrivate = if builtins.isBool cfg.private then cfg.private else true;
+  nginx = util.nginx path config;
 in
 {
-  imports = util.nginx path config "minimal" {
+  imports = nginx.server {
     name = "static";
+    endgame = true;
     locations = {
       "/" = {
         extraConfig = "autoindex on;";
         root = cfg.home;
       };
 
-      "/private" = lib.mkIf hasPrivate {
-        extraConfig = ''
-          autoindex on;
-          endgame on;
-        ''
-        + (lib.optionalString (
-          !builtins.isBool cfg.private
-        ) "endgame_whitelist ${builtins.concatStringsSep " " cfg.private};");
+      "/private" = lib.mkIf nginx.endgame.isActive {
+        extraConfig = "autoindex on;" + (nginx.endgame.extraConfig true);
         root = cfg.home;
       };
     };
@@ -59,10 +54,6 @@ in
       {
         assertion = config.services.nginx.enable;
         message = "Nginx needs to be enabled to serve static files";
-      }
-      {
-        assertion = hasPrivate -> cfgEndgame.enable;
-        message = "Endgame needs to be enabled to serve the private route";
       }
     ];
 

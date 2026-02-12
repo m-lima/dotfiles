@@ -9,11 +9,14 @@ path:
 let
   cfg = util.getOptions path config;
   cfgNgx = config.celo.modules.servers.nginx;
+  nginx = util.nginx path config;
 in
 {
-  imports = util.nginx path config "expose" {
+  imports = nginx.server {
     name = "jelly";
-    port = 8096;
+    extras = [
+      (nginx.extras.proxy { port = 8096; })
+    ];
   };
 
   options = util.mkOptions path {
@@ -61,7 +64,7 @@ in
         virtualHosts."${cfg.hostName}.${cfgNgx.baseHost}" = {
           extraConfig = builtins.concatStringsSep "\n" [
             # The default `client_max_body_size` is 1M, this might not be enough for some posters, etc.
-            ''client_max_body_size 20M;''
+            "client_max_body_size 20M;"
             # Content Security Policy
             # See: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
             # Enforces https content and restricts JS/CSS to origin

@@ -3,38 +3,47 @@
   mkPath,
   getOptions,
 }:
-path: config: mode:
+path: config:
 let
   cfg = getOptions path config;
   cfgNgx = config.celo.modules.servers.nginx;
-  defaultServer =
-    extraConfig: locations:
-    lib.mkIf cfg.enable {
-      services.nginx = lib.mkIf (cfg.hostName != null) {
-        virtualHosts."${cfg.hostName}.${cfgNgx.baseHost}" = {
-          forceSSL = cfg.tls;
-          enableACME = cfgNgx.enableAcme;
-          http2 = true;
-          http3 = true;
+  endgameIsActive = if builtins.isBool cfg.endgame then cfg.endgame else true;
+  endgameExtraConfig =
+    autoLogin:
+    let
+      endgameFlag = if endgameIsActive then "on" else "off";
+      autoLoginFlag = if autoLogin then "on" else "off";
+    in
+    ''
+      endgame ${endgameFlag};
+      endgame_auto_login ${autoLoginFlag};
+    ''
+    + (lib.optionalString (
+      builtins.isList cfg.endgame && builtins.length cfg.endgame > 0
+    ) "endgame_whitelist ${builtins.concatStringsSep " " cfg.endgame};");
 
-          extraConfig = lib.mkIf (!builtins.isNull extraConfig) extraConfig;
-
-          inherit locations;
+  baseServer = name: endgame: extraConfig: locations: {
+    options = mkPath path (
+      {
+        hostName = lib.mkOption {
+          type = lib.types.nullOr lib.types.singleLineStr;
+          default = name;
+          description = "Hostname to expose this service through nginx";
         };
-      };
-    };
-  base = name: {
-    options = mkPath path {
-      hostName = lib.mkOption {
-        type = lib.types.nullOr lib.types.singleLineStr;
-        default = name;
-        description = "Hostname to expose this service through nginx";
-      };
 
-      tls = lib.mkEnableOption "TLS through nginx reverse proxy" // {
-        default = cfgNgx.tls;
-      };
-    };
+        tls = lib.mkEnableOption "TLS through nginx reverse proxy" // {
+          default = cfgNgx.tls;
+        };
+      }
+      // lib.optionalAttrs (!builtins.isNull endgame) {
+        endgame = lib.mkOption {
+          type = lib.types.either lib.types.bool (lib.types.listOf lib.types.singleLineStr);
+          description = "Whether to restrict access with endgame. If strings are passed, they are interpreted as whitelisted emails with access.";
+          default = endgame;
+          example = [ "email@domain.com" ];
+        };
+      }
+    );
 
     config = lib.mkIf cfg.enable {
       assertions = [
@@ -50,150 +59,134 @@ let
           assertion = cfg.tls -> cfgNgx.tls;
           message = "Need to enable TLS in nginx to have TLS termination";
         }
-      ];
-    };
-  };
-  optionPort = port: {
-    options = mkPath path {
-      port = lib.mkOption {
-        type = lib.types.port;
-        description = "Port to serve from";
-        default = port;
-      };
-    };
-  };
-  optionServe = root: {
-    options = mkPath path {
-      root = lib.mkOption {
-        type = lib.types.singleLineStr;
-        default = root;
-        description = "Base path for statically serving the service";
-      };
+      ]
+      ++ (lib.optional (!builtins.isNull endgame) {
+        assertion = endgameIsActive -> config.celo.modules.servers.endgame.enable;
+        message = "Endgame needs to be enabled to serve a private location";
+      });
 
-      index = lib.mkOption {
-        type = lib.types.singleLineStr;
-        default = "index.html";
-        description = "Index file to serve";
-      };
-    };
-  };
-  configServe = {
-    "/" = {
-      root = cfg.root;
-      index = cfg.index;
-      tryFiles = "$uri /${cfg.index}";
-    };
-  };
-  optionApi = api: apiPass: {
-    options = mkPath path {
-      api = lib.mkOption {
-        type = lib.types.singleLineStr;
-        default = api;
-        description = "Path to serve the api from";
-      };
+      services.nginx = lib.mkIf (cfg.hostName != null) {
+        virtualHosts."${cfg.hostName}.${cfgNgx.baseHost}" = {
+          forceSSL = cfg.tls;
+          enableACME = cfgNgx.enableAcme;
+          http2 = true;
+          http3 = true;
 
-      apiPass = lib.mkOption {
-        type = lib.types.singleLineStr;
-        default = apiPass;
-        description = "Path to proxy pass the api";
+          locations = lib.mkAfter locations;
+        }
+        // lib.optionalAttrs (!builtins.isNull extraConfig) {
+          extraConfig = lib.mkAfter extraConfig;
+        };
       };
-    };
-  };
-  optionWs = ws: wsPass: {
-    options = mkPath path {
-      ws = lib.mkOption {
-        type = lib.types.singleLineStr;
-        default = ws;
-        description = "Path to serve the websocket from";
-      };
-
-      wsPass = lib.mkOption {
-        type = lib.types.singleLineStr;
-        default = wsPass;
-        description = "Path to proxy pass to websockets";
-      };
-    };
-  };
-  configProxy = location: pass: {
-    ${location} = {
-      proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}/${pass}";
-      recommendedProxySettings = true;
-    };
-  };
-  configApi = configProxy cfg.api cfg.apiPass;
-  configWs = {
-    ${cfg.ws} = {
-      proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}/${cfg.wsPass}";
-      proxyWebsockets = true;
     };
   };
 in
-if mode == "minimal" then
-  {
-    name,
-    locations ? { },
-    extraConfig ? null,
-  }:
-  [
-    (base name)
-    { config = defaultServer extraConfig locations; }
-  ]
-else if mode == "expose" then
-  {
-    name,
-    port,
-    extraConfig ? null,
-  }:
-  [
-    (base name)
-    (optionPort port)
-    { config = defaultServer extraConfig (configProxy "/" ""); }
-  ]
-else if mode == "serve" then
-  {
-    root,
-    name,
-    extraConfig ? null,
-  }:
-  [
-    (base name)
-    (optionServe root)
-    { config = defaultServer extraConfig configServe; }
-  ]
-else if mode == "api" then
-  {
-    name,
-    root,
-    port,
-    api ? "~ ^/api/(.*)$",
-    apiPass ? "$1$is_args$args",
-    extraConfig ? null,
-  }:
-  [
-    (base name)
-    (optionPort port)
-    (optionServe root)
-    (optionApi api apiPass)
-    { config = defaultServer extraConfig (configServe // configApi); }
-  ]
-else if mode == "apiWithWS" then
-  {
-    name,
-    root,
-    port,
-    api ? "~ ^/api/(.*)$",
-    apiPass ? "$1$is_args$args",
-    ws ? "~ ^/ws/(.*)$",
-    wsPass ? "$1$is_args$args",
-    extraConfig ? null,
-  }:
-  [
-    (base name)
-    (optionPort port)
-    (optionServe root)
-    (optionApi api apiPass)
-    (optionWs ws wsPass)
-    { config = defaultServer extraConfig (configServe // configApi // configWs); }
-  ]
-else
-  builtins.abort "Unknown mode: ${mode}"
+{
+  endgame = {
+    isActive = endgameIsActive;
+    extraConfig = endgameExtraConfig;
+  };
+  server =
+    {
+      name,
+      extras ? [ ],
+      locations ? { },
+      endgame ? null,
+      extraConfig ? null,
+    }:
+    let
+      extraOptions = map (e: { inherit (e) options; }) (
+        builtins.filter (builtins.hasAttr "options") extras
+      );
+      extraLocations = lib.mergeAttrsList (
+        map (e: e.locations) (builtins.filter (builtins.hasAttr "locations") extras)
+      );
+      actualLocations =
+        if builtins.isFunction locations then locations extraLocations else extraLocations // locations;
+    in
+    [ (baseServer name endgame extraConfig actualLocations) ] ++ extraOptions;
+  extras = {
+    proxy =
+      {
+        port,
+        location ? null,
+        mode ? "proxy", # [ "api" "ws" "proxy" ]
+        endgame ? false,
+        autoLogin ? false,
+      }:
+      let
+        modeAbort = builtins.abort "expected one of [ 'proxy' 'api' 'ws' ]";
+        actualLocation =
+          if builtins.isNull location then
+            if mode == "proxy" then
+              "/"
+            else if mode == "api" then
+              "/api/"
+            else if mode == "ws" then
+              "/ws/"
+            else
+              modeAbort
+          else
+            location;
+        optimizedSettings =
+          if mode == "proxy" || mode == "api" then
+            "recommendedProxySettings"
+          else if mode == "ws" then
+            "proxyWebsockets"
+          else
+            modeAbort;
+      in
+      {
+        options = mkPath path {
+          port = lib.mkOption {
+            type = lib.types.port;
+            description = "Port to serve from";
+            default = port;
+          };
+        };
+
+        locations = {
+          ${actualLocation} = {
+            proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}/";
+            ${optimizedSettings} = true;
+          }
+          // (lib.optionalAttrs endgame {
+            extraConfig = lib.mkAfter (endgameExtraConfig autoLogin);
+          });
+        };
+      };
+    serve =
+      {
+        root,
+        location ? "/",
+        endgame ? false,
+        autoLogin ? true,
+      }:
+      {
+        options = mkPath path {
+          root = lib.mkOption {
+            type = lib.types.singleLineStr;
+            default = root;
+            description = "Base path for statically serving the service";
+          };
+
+          index = lib.mkOption {
+            type = lib.types.singleLineStr;
+            default = "index.html";
+            description = "Index file to serve";
+          };
+        };
+
+        locations = {
+          ${location} = {
+            root = cfg.root;
+            index = cfg.index;
+            tryFiles = "$uri /${cfg.index}";
+          }
+          // (lib.optionalAttrs endgame {
+            extraConfig = lib.mkAfter (endgameExtraConfig autoLogin);
+          });
+        };
+      };
+  };
+}

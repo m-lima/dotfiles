@@ -10,7 +10,7 @@ let
   cfgNgx = config.celo.modules.servers.nginx;
 in
 {
-  imports = util.nginx path config "minimal" {
+  imports = (util.nginx path config).server {
     name = "ipe";
     locations = {
       "/" = {

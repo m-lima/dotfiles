@@ -10,15 +10,23 @@ path:
 let
   cfg = util.getOptions path config;
   cfgNgx = config.celo.modules.servers.nginx;
+  nginx = util.nginx path config;
   passer = inputs.passer.packages.${pkgs.stdenv.hostPlatform.system};
   user = "passer";
   group = user;
 in
 {
-  imports = util.nginx path config "api" {
+  imports = nginx.server {
     name = "passer";
-    root = "${passer.web}";
-    port = 2356;
+    extras = [
+      (nginx.extras.serve {
+        root = "${passer.web}";
+      })
+      (nginx.extras.proxy {
+        port = 2356;
+        mode = "api";
+      })
+    ];
   };
 
   options = util.mkOptions path {
