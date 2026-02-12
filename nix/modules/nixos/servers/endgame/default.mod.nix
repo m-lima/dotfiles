@@ -93,7 +93,12 @@ in
       '';
 
       package = pkgs.nginx.override (prev: {
-        modules = prev.modules ++ [ endgame.module ];
+        modules = prev.modules ++ [
+          endgame.module
+          # Needed for the redirect `set_unescape_uri`
+          pkgs.nginxModules.develkit
+          pkgs.nginxModules.set-misc
+        ];
       });
 
       virtualHosts."${cfg.hostName}.${cfgNgx.baseHost}" = {
@@ -111,7 +116,8 @@ in
               add_header Set-Cookie 'endgame=;Path=/;Domain=${cfgNgx.baseHost};Max-Age=0;Secure;HttpOnly;SameSite=lax';
 
               if ($arg_redirect ~ .+) {
-                return 302 $arg_redirect;
+                set_unescape_uri $decoded_url $arg_redirect;
+                return 302 $decoded_url;
               }
 
               default_type text/plain;
@@ -131,7 +137,8 @@ in
           "@finalize" = {
             extraConfig = ''
               if ($arg_redirect ~ .+) {
-                return 302 $arg_redirect;
+                set_unescape_uri $decoded_url $arg_redirect;
+                return 302 $decoded_url;
               }
 
               default_type text/plain;
