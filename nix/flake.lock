@@ -131,6 +131,42 @@
         "type": "github"
       }
     },
+    "elo": {
+      "inputs": {
+        "crane": [
+          "crane"
+        ],
+        "fenix": [
+          "fenix"
+        ],
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "helper": [
+          "nix-template"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1770919935,
+        "narHash": "sha256-CAKL6U5ovLTkr4nLpgZmOPJLhlBb6cL8iH0PKAOczQA=",
+        "owner": "m-lima",
+        "repo": "elo",
+        "rev": "f5fa77bf226b608e17aff4f3f72282d28024744e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "m-lima",
+        "ref": "v0.1.5",
+        "repo": "elo",
+        "type": "github"
+      }
+    },
     "endgame": {
       "inputs": {
         "crane": [
@@ -620,6 +656,7 @@
         "agenix-rekey": "agenix-rekey",
         "crane": "crane",
         "disko": "disko",
+        "elo": "elo",
         "endgame": "endgame",
         "fenix": "fenix",
         "flake-utils": "flake-utils",

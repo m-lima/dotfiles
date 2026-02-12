@@ -83,6 +83,17 @@
     };
 
     # Local dependencies
+    elo = {
+      url = "github:m-lima/elo?ref=v0.1.5";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        crane.follows = "crane";
+        fenix.follows = "fenix";
+        flake-utils.follows = "flake-utils";
+        helper.follows = "nix-template";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
     endgame = {
       url = "github:m-lima/endgame?ref=v0.1.0";
       inputs = {

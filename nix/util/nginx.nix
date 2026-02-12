@@ -109,6 +109,7 @@ in
     proxy =
       {
         port,
+        proxyPath ? "/",
         location ? null,
         mode ? "proxy", # [ "api" "ws" "proxy" ]
         endgame ? false,
@@ -147,7 +148,7 @@ in
 
         locations = {
           ${actualLocation} = {
-            proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}/";
+            proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}${proxyPath}";
             ${optimizedSettings} = true;
           }
           // (lib.optionalAttrs endgame {
