@@ -114,37 +114,13 @@ in
       {
         port,
         proxyPath ? "/",
-        location ? null,
-        mode ? "proxy", # [ "api" "ws" "proxy" ]
+        location ? "/",
+        proxySettings ? true,
+        ws ? false,
         endgame ? false,
         autoLogin ? false,
         extraConfig ? null,
       }:
-      let
-        modeAbort = builtins.abort "expected one of [ 'proxy' 'api' 'ws' ]";
-        actualLocation =
-          if builtins.isNull location then
-            if mode == "proxy" then
-              "/"
-            else if mode == "api" then
-              "/api/"
-            else if mode == "ws" then
-              "/ws/"
-            else
-              modeAbort
-          else
-            location;
-        optimizedSettings =
-          if mode == "proxy" || mode == "api" then
-            "recommendedProxySettings"
-          else if mode == "ws" then
-            "proxyWebsockets"
-          else
-            modeAbort;
-        actualExtraConfig =
-          (if builtins.isNull extraConfig then "" else extraConfig)
-          + (lib.optionalString endgame (endgameExtraConfig autoLogin));
-      in
       {
         options = mkPath path {
           port = lib.mkOption {
@@ -155,13 +131,14 @@ in
         };
 
         locations = {
-          ${actualLocation} = {
-            proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}${proxyPath}";
-            ${optimizedSettings} = true;
-          }
-          // (lib.optionalAttrs (builtins.stringLength actualExtraConfig > 0) {
-            extraConfig = lib.mkAfter actualExtraConfig;
-          });
+          ${location} = {
+            proxyPass = "http://127.0.0.1:${toString cfg.port}${proxyPath}";
+            recommendedProxySettings = proxySettings;
+            proxyWebsockets = ws;
+            extraConfig =
+              (if builtins.isNull extraConfig then "" else extraConfig)
+              + (lib.optionalString endgame (endgameExtraConfig autoLogin));
+          };
         };
       };
     serve =
@@ -172,11 +149,6 @@ in
         autoLogin ? true,
         extraConfig ? null,
       }:
-      let
-        actualExtraConfig =
-          (if builtins.isNull extraConfig then "" else extraConfig)
-          + (lib.optionalString endgame (endgameExtraConfig autoLogin));
-      in
       {
         options = mkPath path {
           root = lib.mkOption {
@@ -197,10 +169,10 @@ in
             root = cfg.root;
             index = cfg.index;
             tryFiles = "$uri /${cfg.index}";
-          }
-          // (lib.optionalAttrs (builtins.stringLength actualExtraConfig > 0) {
-            extraConfig = lib.mkAfter actualExtraConfig;
-          });
+            extraConfig =
+              (if builtins.isNull extraConfig then "" else extraConfig)
+              + (lib.optionalString endgame (endgameExtraConfig autoLogin));
+          };
         };
       };
   };

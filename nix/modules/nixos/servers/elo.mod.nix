@@ -30,7 +30,8 @@ in
       })
       (nginx.extras.proxy {
         port = 2357;
-        mode = "ws";
+        ws = true;
+        location = "/ws/";
         proxyPath = "/ws/";
         endgame = true;
       })
@@ -78,7 +79,7 @@ in
             "--from 'PongElo <noreply-pongelo@${cfgNgx.baseHost}>'"
             "--smtp 'smtp://smtp-relay.gmail.com:587?tls=required'"
             "--db ${cfg.home}/elo.sqlite"
-            "--port ${builtins.toString cfg.port}"
+            "--port ${toString cfg.port}"
             "-vvv"
           ];
           Restart = "on-failure";

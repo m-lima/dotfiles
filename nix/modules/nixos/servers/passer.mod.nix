@@ -24,7 +24,7 @@ in
       })
       (nginx.extras.proxy {
         port = 2356;
-        mode = "api";
+        location = "/api/";
       })
     ];
   };
@@ -70,7 +70,7 @@ in
         description = "Passer";
         serviceConfig = util.systemd.harden {
           Type = "simple";
-          ExecStart = "${passer.server}/bin/passer --port ${builtins.toString cfg.port} --store-path ${cfg.home}";
+          ExecStart = "${passer.server}/bin/passer --port ${toString cfg.port} --store-path ${cfg.home}";
           Restart = "on-failure";
           TimeoutSec = 15;
           WorkingDirectory = cfg.home;
