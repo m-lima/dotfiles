@@ -25,6 +25,16 @@ let
   baseServer = name: endgame: extraConfig: locations: {
     options = mkPath path (
       {
+        domains = lib.mkOption {
+          type = lib.types.nonEmptyListOf lib.types.singleLineStr;
+          description = "Domain to next this service behinc on nginx";
+          default = [ cfgNgx.baseHost ];
+          example = [
+            "bla.com"
+            "foo.bar"
+          ];
+        };
+
         hostName = lib.mkOption {
           type = lib.types.nullOr lib.types.singleLineStr;
           default = name;
@@ -70,17 +80,30 @@ let
       });
 
       services.nginx = lib.mkIf (cfg.hostName != null) {
-        virtualHosts."${cfg.hostName}.${cfgNgx.baseHost}" = {
-          forceSSL = cfg.tls;
-          enableACME = cfgNgx.enableAcme;
-          http2 = true;
-          http3 = true;
+        virtualHosts = lib.mergeAttrsList (
+          map (d: {
+            ${d} = {
+              default = true;
+              rejectSSL = true;
+              locations = {
+                "/" = {
+                  return = 444;
+                };
+              };
+            };
+            "${cfg.hostName}.${d}" = {
+              forceSSL = cfg.tls;
+              enableACME = cfgNgx.enableAcme;
+              http2 = true;
+              http3 = true;
 
-          locations = lib.mkAfter locations;
-        }
-        // lib.optionalAttrs (!builtins.isNull extraConfig) {
-          extraConfig = lib.mkAfter extraConfig;
-        };
+              locations = lib.mkAfter locations;
+            }
+            // lib.optionalAttrs (!builtins.isNull extraConfig) {
+              extraConfig = lib.mkAfter extraConfig;
+            };
+          }) cfg.domains
+        );
       };
     };
   };
