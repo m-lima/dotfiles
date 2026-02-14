@@ -66,7 +66,10 @@
               "secret";
         };
         ipe.enable = true;
-        passer.enable = true;
+        passer = {
+          enable = true;
+          domains = util.secret.rageOptional config ./_secrets/servers/passer/domains.rage;
+        };
         static.enable = true;
       };
       services = {
