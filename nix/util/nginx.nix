@@ -27,7 +27,7 @@ let
       {
         domains = lib.mkOption {
           type = lib.types.nonEmptyListOf lib.types.singleLineStr;
-          description = "Domain to next this service behinc on nginx";
+          description = "Domain to nest this service behind on nginx";
           default = [ cfgNgx.baseHost ];
           example = [
             "bla.com"
@@ -83,7 +83,7 @@ let
         virtualHosts = lib.mergeAttrsList (
           map (d: {
             ${d} = {
-              default = true;
+              default = d == cfgNgx.baseHost;
               rejectSSL = true;
               locations = {
                 "/" = {
