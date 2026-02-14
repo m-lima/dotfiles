@@ -54,7 +54,10 @@
           tls = true;
           baseHost = util.secret.rageOptional config ./_secrets/servers/nginx/baseHost.rage;
         };
-        elo.enable = true;
+        elo = {
+          enable = true;
+          domains = util.secret.rageOptional config ./_secrets/servers/nginx/transitionDomains.rage;
+        };
         endgame = {
           enable = true;
           key = ./_secrets/servers/endgame/key.age;
