@@ -75,5 +75,18 @@ in
         defaults.email = cfg.acmeEmail;
       };
     };
+
+    environment = lib.mkIf cfg.enableAcme {
+      persistence = util.withImpermanence config {
+        global.directories = [
+          {
+            directory = "/var/lib/acme";
+            mode = "0755";
+            user = "acme";
+            group = "acme";
+          }
+        ];
+      };
+    };
   };
 }
