@@ -47,12 +47,6 @@ in
       description = "How long should the session last for (see https://nginx.org/en/docs/syntax.html)";
       default = "1w";
     };
-
-    hostName = lib.mkOption {
-      type = lib.types.singleLineStr;
-      description = "Hostname to expose endgame locations";
-      default = "auth";
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -100,57 +94,56 @@ in
           pkgs.nginxModules.set-misc
         ];
       });
+    };
+  };
 
-      virtualHosts."${cfg.hostName}.${cfgNgx.baseHost}" = {
-        forceSSL = true;
-        enableACME = cfgNgx.enableAcme;
+  imports = (util.nginx path config).server {
+    name = "auth";
+    # TODO: Consider prettier global error pages
+    locations = {
+      "/" = {
+        return = 444;
+      };
 
-        # TODO: Consider prettier global error pages
-        locations = {
-          "/" = {
-            return = 444;
-          };
+      "= /logout" = {
+        extraConfig = ''
+          add_header Set-Cookie 'endgame=;Path=/;Domain=${cfgNgx.baseHost};Max-Age=0;Secure;HttpOnly;SameSite=lax';
 
-          "= /logout" = {
-            extraConfig = ''
-              add_header Set-Cookie 'endgame=;Path=/;Domain=${cfgNgx.baseHost};Max-Age=0;Secure;HttpOnly;SameSite=lax';
+          if ($arg_redirect ~ .+) {
+            set_unescape_uri $decoded_url $arg_redirect;
+            return 302 $decoded_url;
+          }
 
-              if ($arg_redirect ~ .+) {
-                set_unescape_uri $decoded_url $arg_redirect;
-                return 302 $decoded_url;
-              }
+          default_type text/plain;
+          return 200 'Logged Out';
+        '';
 
-              default_type text/plain;
-              return 200 'Logged Out';
-            '';
+      };
 
-          };
+      "= /login" = {
+        extraConfig = ''
+          endgame on;
+          endgame_auto_login on;
+          try_files /nonexistent @finalize;
+        '';
+      };
 
-          "= /login" = {
-            extraConfig = ''
-              endgame on;
-              endgame_auto_login on;
-              try_files /nonexistent @finalize;
-            '';
-          };
+      "@finalize" = {
+        extraConfig = ''
+          if ($arg_redirect ~ .+) {
+            set_unescape_uri $decoded_url $arg_redirect;
+            return 302 $decoded_url;
+          }
 
-          "@finalize" = {
-            extraConfig = ''
-              if ($arg_redirect ~ .+) {
-                set_unescape_uri $decoded_url $arg_redirect;
-                return 302 $decoded_url;
-              }
+          default_type text/plain;
+          return 200 'Logged In';
+        '';
+      };
 
-              default_type text/plain;
-              return 200 'Logged In';
-            '';
-          };
-
-          "= /callback" = {
-            extraConfig = "endgame callback;";
-          };
-        };
+      "= /callback" = {
+        extraConfig = "endgame callback;";
       };
     };
   };
+
 }
