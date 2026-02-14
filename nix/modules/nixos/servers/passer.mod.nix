@@ -9,7 +9,6 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-  cfgNgx = config.celo.modules.servers.nginx;
   nginx = util.nginx path config;
   passer = inputs.passer.packages.${pkgs.stdenv.hostPlatform.system};
   user = "passer";
@@ -39,13 +38,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    services.nginx = lib.mkIf (cfg.hostName != null) {
-      virtualHosts."${cfg.hostName}.${cfgNgx.baseHost}".locations = {
-        "~ ^/api/(.*)$" = {
-        };
-      };
-    };
-
     users = {
       users = {
         ${user} = {
