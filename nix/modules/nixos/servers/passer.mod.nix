@@ -25,6 +25,7 @@ in
       (nginx.extras.proxy {
         port = 2356;
         location = "/api/";
+        extraConfig = "client_max_body_size 110M;";
       })
     ];
   };
@@ -41,7 +42,6 @@ in
     services.nginx = lib.mkIf (cfg.hostName != null) {
       virtualHosts."${cfg.hostName}.${cfgNgx.baseHost}".locations = {
         "~ ^/api/(.*)$" = {
-          extraConfig = "client_max_body_size 110M;";
         };
       };
     };
