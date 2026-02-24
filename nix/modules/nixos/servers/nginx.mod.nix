@@ -3,6 +3,7 @@ path:
   lib,
   config,
   util,
+  rootDir,
   ...
 }:
 let
@@ -21,7 +22,7 @@ in
     acmeEmail = lib.mkOption {
       type = lib.types.nullOr lib.types.singleLineStr;
       description = "Email to use for ACME registration";
-      default = util.secret.rageOr config ./_secrets/acmeEmail.rage null;
+      default = util.secret.rageOr config /${rootDir}/secrets/general/email.rage null;
     };
 
     enableAcme = lib.mkOption {
