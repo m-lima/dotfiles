@@ -18,7 +18,6 @@ in
 {
   imports = nginx.server {
     name = "elo";
-    endgame = true;
     extras = [
       (nginx.extras.serve {
         root = "${elo.front.overrideAttrs (prev: {
@@ -44,7 +43,6 @@ in
       default = "/srv/elo";
       description = "Base path for Elo";
     };
-
   };
 
   config = lib.mkIf cfg.enable {

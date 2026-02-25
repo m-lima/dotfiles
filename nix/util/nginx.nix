@@ -122,6 +122,7 @@ in
       extraConfig ? null,
     }:
     let
+      shouldEndgame = if builtins.any (x: x.endgame) extras then true else endgame;
       extraOptions = map (e: { inherit (e) options; }) (
         builtins.filter (builtins.hasAttr "options") extras
       );
@@ -131,7 +132,7 @@ in
       actualLocations =
         if builtins.isFunction locations then locations extraLocations else extraLocations // locations;
     in
-    [ (baseServer name endgame extraConfig actualLocations) ] ++ extraOptions;
+    [ (baseServer name shouldEndgame extraConfig actualLocations) ] ++ extraOptions;
   extras = {
     proxy =
       {
@@ -145,6 +146,8 @@ in
         extraConfig ? null,
       }:
       {
+        inherit endgame;
+
         options = mkPath path {
           port = lib.mkOption {
             type = lib.types.port;
@@ -173,6 +176,8 @@ in
         extraConfig ? null,
       }:
       {
+        inherit endgame;
+
         options = mkPath path {
           root = lib.mkOption {
             type = lib.types.singleLineStr;
