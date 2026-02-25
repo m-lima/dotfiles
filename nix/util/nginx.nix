@@ -82,25 +82,13 @@ let
       services.nginx = lib.mkIf (cfg.hostName != null) {
         virtualHosts = lib.mergeAttrsList (
           map (d: {
-            ${d} = {
-              default = d == cfgNgx.baseHost;
-              rejectSSL = true;
-              locations = {
-                "/" = {
-                  return = 444;
-                };
-              };
-            };
             "${cfg.hostName}.${d}" = {
               forceSSL = cfg.tls;
               enableACME = cfgNgx.enableAcme;
               http2 = true;
               http3 = true;
-
               locations = lib.mkAfter locations;
-            }
-            // lib.optionalAttrs (!builtins.isNull extraConfig) {
-              extraConfig = lib.mkAfter extraConfig;
+              extraConfig = lib.mkAfter ("try_files /nonexistent =444;" + extraConfig);
             };
           }) cfg.domains
         );
@@ -119,7 +107,7 @@ in
       extras ? [ ],
       locations ? { },
       endgame ? null,
-      extraConfig ? null,
+      extraConfig ? "",
     }:
     let
       shouldEndgame = if builtins.any (x: x.endgame) extras then true else endgame;

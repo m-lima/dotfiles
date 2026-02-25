@@ -101,10 +101,6 @@ in
     name = "auth";
     # TODO: Consider prettier global error pages
     locations = {
-      "/" = {
-        return = 444;
-      };
-
       "= /logout" = {
         extraConfig = ''
           add_header Set-Cookie 'endgame=;Path=/;Domain=${cfgNgx.baseHost};Max-Age=0;Secure;HttpOnly;SameSite=lax';

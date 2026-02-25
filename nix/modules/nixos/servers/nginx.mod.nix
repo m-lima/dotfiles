@@ -63,6 +63,12 @@ in
         access_log syslog:server=unix:/dev/log main;
         more_clear_headers Server;
       '';
+
+      virtualHosts.${cfg.baseHost} = {
+        default = true;
+        rejectSSL = true;
+        extraConfig = "return 444;";
+      };
     };
 
     networking.firewall.allowedTCPPorts = [
