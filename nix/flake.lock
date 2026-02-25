@@ -673,6 +673,7 @@
         "ragenix": "ragenix",
         "sddm-sugar-candy-nix": "sddm-sugar-candy-nix",
         "simpalt": "simpalt",
+        "skull": "skull",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix"
       }
@@ -748,6 +749,42 @@
         "owner": "m-lima",
         "ref": "v0.3.10",
         "repo": "simpalt-rs",
+        "type": "github"
+      }
+    },
+    "skull": {
+      "inputs": {
+        "crane": [
+          "crane"
+        ],
+        "fenix": [
+          "fenix"
+        ],
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "helper": [
+          "nix-template"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1772017387,
+        "narHash": "sha256-xYAlluk5sbs50Mxd4PMRGCaFe4QASbozaoaAq2hsh8w=",
+        "owner": "m-lima",
+        "repo": "skull-back-rs",
+        "rev": "3ef7ce6cbe75b99e977afa131ae00d70f3509e88",
+        "type": "github"
+      },
+      "original": {
+        "owner": "m-lima",
+        "ref": "v0.10.1",
+        "repo": "skull-back-rs",
         "type": "github"
       }
     },

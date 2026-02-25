@@ -149,6 +149,17 @@
         treefmt-nix.follows = "treefmt-nix";
       };
     };
+    skull = {
+      url = "github:m-lima/skull-back-rs?ref=v0.10.1";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        crane.follows = "crane";
+        fenix.follows = "fenix";
+        flake-utils.follows = "flake-utils";
+        helper.follows = "nix-template";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
     # Skull at ./modules/shared/programs/skull/default.mod.nix
   };
 
