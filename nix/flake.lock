@@ -777,14 +777,14 @@
         "lastModified": 1772100278,
         "narHash": "sha256-tbM8+vU1T/nj9CU03A9hnQYKWXMURVVTJEDhIPzsNUY=",
         "owner": "m-lima",
-        "repo": "skull-back-rs",
+        "repo": "skull",
         "rev": "232046a21e0f72604643918dd118beeb680a184e",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
         "ref": "v0.11.1",
-        "repo": "skull-back-rs",
+        "repo": "skull",
         "type": "github"
       }
     },
