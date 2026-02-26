@@ -189,16 +189,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1768219659,
-        "narHash": "sha256-L5I+mlCwxESWGg9+n+5YInuW8OWgSFvrBTT+yCZM6Sk=",
+        "lastModified": 1772054208,
+        "narHash": "sha256-hzgaIjdEhEsW7TLJToCWntanknbxIa2LL2kNZEiPYYc=",
         "owner": "m-lima",
         "repo": "endgame",
-        "rev": "7b906649855ce0ae9d4b7cb31c8984c22ec5b144",
+        "rev": "8920d5ddada84129e5e3f42da4cc75e15d848b15",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.1.0",
+        "ref": "v0.2.1",
         "repo": "endgame",
         "type": "github"
       }
@@ -774,16 +774,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1772017387,
-        "narHash": "sha256-xYAlluk5sbs50Mxd4PMRGCaFe4QASbozaoaAq2hsh8w=",
+        "lastModified": 1772100278,
+        "narHash": "sha256-tbM8+vU1T/nj9CU03A9hnQYKWXMURVVTJEDhIPzsNUY=",
         "owner": "m-lima",
         "repo": "skull-back-rs",
-        "rev": "3ef7ce6cbe75b99e977afa131ae00d70f3509e88",
+        "rev": "232046a21e0f72604643918dd118beeb680a184e",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.10.1",
+        "ref": "v0.11.1",
         "repo": "skull-back-rs",
         "type": "github"
       }

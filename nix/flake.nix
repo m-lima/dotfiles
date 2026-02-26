@@ -95,7 +95,7 @@
       };
     };
     endgame = {
-      url = "github:m-lima/endgame?ref=v0.1.0";
+      url = "github:m-lima/endgame?ref=v0.2.1";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
@@ -150,7 +150,7 @@
       };
     };
     skull = {
-      url = "github:m-lima/skull-back-rs?ref=v0.10.1";
+      url = "github:m-lima/skull-back-rs?ref=v0.11.1";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
@@ -160,7 +160,6 @@
         treefmt-nix.follows = "treefmt-nix";
       };
     };
-    # Skull at ./modules/shared/programs/skull/default.mod.nix
   };
 
   outputs =

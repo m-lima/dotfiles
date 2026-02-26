@@ -67,7 +67,7 @@ in
         description = "Skull";
         serviceConfig = util.systemd.harden {
           Type = "simple";
-          ExecStart = "${skull.server}/bin/server --port ${toString cfg.port} --users ${pkgs.writeText "users" (lib.concatStringsSep "\n" cfg.users)} --create -vv ${cfg.home}";
+          ExecStart = "${skull.server}/bin/skull-server --port ${toString cfg.port} --users ${pkgs.writeText "users" (lib.concatStringsSep "\n" cfg.users)} --create -vv ${cfg.home}";
           Restart = "on-failure";
           TimeoutSec = 15;
           WorkingDirectory = cfg.home;
