@@ -122,6 +122,7 @@ in
     in
     [ (baseServer name shouldEndgame extraConfig actualLocations) ] ++ extraOptions;
   extras = {
+    # TODO: Create a virtual network for each proxied service
     proxy =
       {
         port,

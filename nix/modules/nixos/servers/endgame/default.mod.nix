@@ -31,6 +31,7 @@ in
       description = "OIDC client ID";
     };
 
+    # TODO: Allow passing in a file to use with agenix
     clientSecret = lib.mkOption {
       type = lib.types.singleLineStr;
       description = "OIDC client secret";
