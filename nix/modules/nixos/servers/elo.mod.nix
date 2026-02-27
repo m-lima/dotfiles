@@ -90,8 +90,13 @@ in
           User = user;
           Group = group;
 
+          IPAddressAllow = "any";
           PrivateNetwork = false;
-          RestrictAddressFamilies = "AF_INET AF_UNIX";
+          RestrictAddressFamilies = [
+            "AF_INET"
+            "AF_INET6"
+            "AF_UNIX"
+          ];
           RuntimeDirectory = "elo";
           RuntimeDirectoryMode = "0750";
           ReadWritePaths = cfg.home;
