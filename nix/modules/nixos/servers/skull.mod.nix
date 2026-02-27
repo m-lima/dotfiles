@@ -18,12 +18,26 @@ in
 {
   imports = nginx.server {
     name = "skull";
+    locations = {
+      "/" = {
+        proxyPass = "http://127.0.0.1:3000";
+        recommendedProxySettings = true;
+      };
+    };
     extras = [
       (nginx.extras.proxy {
-        port = 2358;
+        socket = "unix:/run/skull/socket";
         location = "/api/";
         endgame = true;
         autoLogin = true;
+      })
+      (nginx.extras.proxy {
+        socket = "unix:/run/skull/socket";
+        location = "/ws/";
+        proxyPath = "ws/";
+        ws = true;
+        endgame = true;
+        autoLogin = false;
       })
     ];
   };
@@ -51,6 +65,8 @@ in
           createHome = true;
           isSystemUser = true;
         };
+
+        ${config.services.nginx.user}.extraGroups = lib.mkAfter [ group ];
       };
 
       groups = {
@@ -67,17 +83,25 @@ in
         description = "Skull";
         serviceConfig = util.systemd.harden {
           Type = "simple";
-          ExecStart = "${skull.server}/bin/skull-server --port ${toString cfg.port} --users ${pkgs.writeText "users" (lib.concatStringsSep "\n" cfg.users)} --create -vv ${cfg.home}";
+          ExecStart = builtins.concatStringsSep " " [
+            "${skull.server}/bin/skull-server"
+            "--socket ${toString cfg.socket}"
+            "--users ${pkgs.writeText "users" (lib.concatStringsSep "\n" cfg.users)}"
+            "--create"
+            "-vv"
+            "${cfg.home}"
+          ];
           Restart = "on-failure";
           TimeoutSec = 15;
           WorkingDirectory = cfg.home;
 
+          UMask = "0007";
           User = user;
           Group = group;
 
-          IPAddressAllow = "localhost";
-          RestrictAddressFamilies = "AF_INET";
-          PrivateNetwork = false;
+          RestrictAddressFamilies = "AF_UNIX";
+          RuntimeDirectory = "skull";
+          RuntimeDirectoryMode = "0750";
           ReadWritePaths = cfg.home;
         };
       };

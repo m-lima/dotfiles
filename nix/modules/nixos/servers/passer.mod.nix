@@ -22,7 +22,7 @@ in
         root = "${passer.web}";
       })
       (nginx.extras.proxy {
-        port = 2356;
+        socket = 2356;
         location = "/api/";
         extraConfig = "client_max_body_size 110M;";
       })

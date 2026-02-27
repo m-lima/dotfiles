@@ -25,7 +25,7 @@ in
     ];
     extras = [
       (nginx.extras.proxy {
-        port = 8096;
+        socket = 8096;
         ws = cfg.websockets;
         extraConfig = "proxy_buffering off;";
       })

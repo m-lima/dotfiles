@@ -125,11 +125,10 @@ in
       { inherit options; }
     ];
   extras = {
-    # TODO: Create a virtual network for each proxied service
     proxy =
       {
-        port,
-        proxyPath ? "/",
+        socket,
+        proxyPath ? "",
         location ? "/",
         proxySettings ? true,
         ws ? false,
@@ -141,16 +140,20 @@ in
         inherit endgame;
 
         options = mkPath path {
-          port = lib.mkOption {
-            type = lib.types.port;
-            description = "Port to serve from";
-            default = port;
+          socket = lib.mkOption {
+            type = lib.types.either lib.types.port lib.types.singleLineStr;
+            description = "Port to serve from or path to unix socket";
+            default = socket;
           };
         };
 
         locations = {
           ${location} = {
-            proxyPass = "http://127.0.0.1:${toString cfg.port}${proxyPath}";
+            proxyPass =
+              if builtins.isString cfg.socket then
+                "http://${cfg.socket}:/${proxyPath}"
+              else
+                "http://127.0.0.1:${toString cfg.socket}/${proxyPath}";
             recommendedProxySettings = proxySettings;
             proxyWebsockets = ws;
             extraConfig =

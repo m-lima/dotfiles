@@ -15,7 +15,11 @@ in
 {
   imports = nginx.server {
     name = "static";
-    endgame = util.secret.rageOr config /${rootDir}/secrets/general/email.rage cfgEndgame.enable;
+    endgame =
+      let
+        rage = util.secret.rage config /${rootDir}/secrets/general/email.rage;
+      in
+      if builtins.length rage > 0 then rage else cfgEndgame.enable;
     locations = {
       "/" = {
         extraConfig = "autoindex on;";

@@ -28,10 +28,10 @@ in
         })}";
       })
       (nginx.extras.proxy {
-        port = 2357;
+        socket = 2357;
         ws = true;
         location = "/ws/";
-        proxyPath = "/ws/";
+        proxyPath = "ws/";
         endgame = true;
       })
     ];
