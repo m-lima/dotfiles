@@ -3,6 +3,7 @@ path:
   lib,
   config,
   util,
+  rootDir,
   ...
 }:
 let
@@ -14,7 +15,7 @@ in
 {
   imports = nginx.server {
     name = "static";
-    endgame = util.secret.rageOr config ./endgame/_secrets/email.rage cfgEndgame.enable;
+    endgame = util.secret.rageOr config /${rootDir}/secrets/general/email.rage cfgEndgame.enable;
     locations = {
       "/" = {
         extraConfig = "autoindex on;";
