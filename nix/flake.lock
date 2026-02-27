@@ -741,14 +741,14 @@
         "lastModified": 1772132146,
         "narHash": "sha256-qpy7ENMjiDu71J/OnjbjhP9/W7pKEOeKUjfWjjLb9Ic=",
         "owner": "m-lima",
-        "repo": "simpalt-rs",
+        "repo": "simpalt",
         "rev": "97e4de1f12ee76bc94362fb97bc4267a92c3152d",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
         "ref": "v0.3.10",
-        "repo": "simpalt-rs",
+        "repo": "simpalt",
         "type": "github"
       }
     },
