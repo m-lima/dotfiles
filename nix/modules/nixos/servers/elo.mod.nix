@@ -28,7 +28,7 @@ in
         })}";
       })
       (nginx.extras.proxy {
-        socket = 2357;
+        socket = "unix:/run/elo/socket";
         ws = true;
         location = "/ws/";
         proxyPath = "ws/";
@@ -54,6 +54,8 @@ in
           createHome = true;
           isSystemUser = true;
         };
+
+        ${config.services.nginx.user}.extraGroups = lib.mkAfter [ group ];
       };
 
       groups = {
@@ -77,19 +79,21 @@ in
             "--from 'PongElo <noreply-pongelo@${cfgNgx.baseHost}>'"
             "--smtp 'smtp://smtp-relay.gmail.com:587?tls=required'"
             "--db ${cfg.home}/elo.sqlite"
-            "--port ${toString cfg.port}"
+            "--socket ${toString cfg.socket}"
             "-vvv"
           ];
           Restart = "on-failure";
           TimeoutSec = 15;
           WorkingDirectory = cfg.home;
 
+          UMask = "0007";
           User = user;
           Group = group;
 
-          IPAddressAllow = "localhost";
-          RestrictAddressFamilies = "AF_INET";
           PrivateNetwork = false;
+          RestrictAddressFamilies = "AF_INET AF_UNIX";
+          RuntimeDirectory = "elo";
+          RuntimeDirectoryMode = "0750";
           ReadWritePaths = cfg.home;
         };
       };

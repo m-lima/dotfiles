@@ -36,12 +36,6 @@
         AmbientCapabilities = "";
         CapabilityBoundingSet = "";
 
-        # RootDirectory = cfg.home;
-        # InaccessiblePaths = [ "-+${cfg.home}" ];
-        # BindReadOnlyPaths = [
-        #   builtins.storeDir
-        # ];
-
         SystemCallArchitectures = "native";
         SystemCallErrorNumber = "EPERM";
         SystemCallFilter = [

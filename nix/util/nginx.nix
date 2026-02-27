@@ -122,7 +122,7 @@ in
     in
     [
       (baseServer name shouldEndgame extraConfig actualLocations)
-      { inherit options; }
+      { options = mkPath path options; }
     ];
   extras = {
     proxy =
@@ -139,7 +139,7 @@ in
       {
         inherit endgame;
 
-        options = mkPath path {
+        options = {
           socket = lib.mkOption {
             type = lib.types.either lib.types.port lib.types.singleLineStr;
             description = "Port to serve from or path to unix socket";
@@ -173,7 +173,7 @@ in
       {
         inherit endgame;
 
-        options = mkPath path {
+        options = {
           root = lib.mkOption {
             type = lib.types.singleLineStr;
             default = root;

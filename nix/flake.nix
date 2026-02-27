@@ -84,7 +84,7 @@
 
     # Local dependencies
     elo = {
-      url = "github:m-lima/elo?ref=v0.1.5";
+      url = "github:m-lima/elo?ref=v0.2.0";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
