@@ -111,8 +111,8 @@ in
     }:
     let
       shouldEndgame = if builtins.any (x: x.endgame) extras then true else endgame;
-      extraOptions = map (e: { inherit (e) options; }) (
-        builtins.filter (builtins.hasAttr "options") extras
+      options = lib.mergeAttrsList (
+        map (e: e.options) (builtins.filter (builtins.hasAttr "options") extras)
       );
       extraLocations = lib.mergeAttrsList (
         map (e: e.locations) (builtins.filter (builtins.hasAttr "locations") extras)
@@ -120,7 +120,10 @@ in
       actualLocations =
         if builtins.isFunction locations then locations extraLocations else extraLocations // locations;
     in
-    [ (baseServer name shouldEndgame extraConfig actualLocations) ] ++ extraOptions;
+    [
+      (baseServer name shouldEndgame extraConfig actualLocations)
+      { inherit options; }
+    ];
   extras = {
     # TODO: Create a virtual network for each proxied service
     proxy =
