@@ -153,11 +153,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1772217601,
-        "narHash": "sha256-M6Ftl5sUUwfHkl00hGbmHbyTkdPHHD0eeQGs/tjorl8=",
+        "lastModified": 1772233943,
+        "narHash": "sha256-NSHIkMY6fMIE3577c5w/bTYmKf/d50NceTqu0FQNyJk=",
         "owner": "m-lima",
         "repo": "elo",
-        "rev": "4446f1c655b56fb3032c3152c1e570cc50bb27d2",
+        "rev": "3872e669e4071fc369e6818c3a3bb6acbb3e8f7e",
         "type": "github"
       },
       "original": {
@@ -774,11 +774,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1772295335,
-        "narHash": "sha256-gG60cCjdjB56ksw+gu2boO98LU1H3BQzIhAQ8ocOaac=",
+        "lastModified": 1772296620,
+        "narHash": "sha256-CT4eH6q5ag27FlaGbphLW7nHJ/zs1SyLjY8nlCBEC6U=",
         "owner": "m-lima",
         "repo": "skull",
-        "rev": "3982e0febe5cd9fb4a00d57540ec2f69c7b1f86f",
+        "rev": "603ece7e7263329baf9cfe56c51631f5c0dbf7ef",
         "type": "github"
       },
       "original": {
