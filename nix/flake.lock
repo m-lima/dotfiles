@@ -440,11 +440,11 @@
     },
     "nix-template": {
       "locked": {
-        "lastModified": 1768737788,
-        "narHash": "sha256-N7SYr/hK5UVLio3CQ61ejDkzPU1vpHWUuJ+srYZOXbU=",
+        "lastModified": 1772310418,
+        "narHash": "sha256-UIxsrXBb2W7AhelClsupjs9aHC1OZo/VGCCyglU8Jco=",
         "owner": "m-lima",
         "repo": "nix-template",
-        "rev": "f67ee9c44bdcf7cdfcffcd1eac5a17d9d461f84e",
+        "rev": "8e1b1bd120a61e6193df4dc0efb7b56846583cf8",
         "type": "github"
       },
       "original": {
@@ -774,16 +774,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1772296620,
-        "narHash": "sha256-CT4eH6q5ag27FlaGbphLW7nHJ/zs1SyLjY8nlCBEC6U=",
+        "lastModified": 1772311622,
+        "narHash": "sha256-Bdq2CLTdE7HTxASSXqXK4K9fnAITH99cScSAkbkjv70=",
         "owner": "m-lima",
         "repo": "skull",
-        "rev": "603ece7e7263329baf9cfe56c51631f5c0dbf7ef",
+        "rev": "eeeaf7d0a72ba1c97f5e9caf64d8c171127d70ac",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.11.3",
+        "ref": "v0.11.4",
         "repo": "skull",
         "type": "github"
       }
