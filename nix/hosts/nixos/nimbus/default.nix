@@ -70,6 +70,7 @@
           enable = true;
           domains = util.secret.rageOptional config ./_secrets/servers/passer/domains.rage;
         };
+        skull.enable = true;
         static.enable = true;
       };
       services = {

@@ -774,11 +774,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1772283467,
-        "narHash": "sha256-TA8zJMBU4oFNKZ+iOT2gFhC40TV+WVd27YfhONP33OA=",
+        "lastModified": 1772295335,
+        "narHash": "sha256-gG60cCjdjB56ksw+gu2boO98LU1H3BQzIhAQ8ocOaac=",
         "owner": "m-lima",
         "repo": "skull",
-        "rev": "9bdba4758120854767fded894acaf00f9bd5090a",
+        "rev": "3982e0febe5cd9fb4a00d57540ec2f69c7b1f86f",
         "type": "github"
       },
       "original": {

@@ -22,11 +22,16 @@ in
     extras = [
       (nginx.extras.serve {
         root = "${skull.web.overrideAttrs (prev: {
-          env = (prev.env or { }) // {
-            REACT_APP_URL_TLS = "true";
-            REACT_APP_URL_HOST = "${cfg.hostName}.${cfgNgx.baseHost}";
-            REACT_APP_URL_AUTH = "${config.celo.modules.servers.endgame.hostName}.${cfgNgx.baseHost}";
-          };
+          env =
+            (prev.env or { })
+            // {
+              REACT_APP_URL_TLS = "true";
+              REACT_APP_URL_HOST = "${cfg.hostName}.${cfgNgx.baseHost}";
+              REACT_APP_URL_AUTH = "${config.celo.modules.servers.endgame.hostName}.${cfgNgx.baseHost}";
+            }
+            // lib.optionalAttrs (builtins.stringLength cfg.chart > 0) {
+              REACT_APP_PATH_CHART = cfg.chart;
+            };
         })}";
       })
       (nginx.extras.proxy {
@@ -57,6 +62,12 @@ in
       type = lib.types.nonEmptyListOf lib.types.singleLineStr;
       default = util.secret.rage config /${rootDir}/secrets/general/email.rage;
       description = "Users with access to Skull";
+    };
+
+    chart = lib.mkOption {
+      type = lib.types.singleLineStr;
+      default = "";
+      description = "Link to charts";
     };
   };
 
