@@ -10,6 +10,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  cfgNgx = config.celo.modules.servers.nginx;
   nginx = util.nginx path config;
   skull = inputs.skull.packages.${pkgs.stdenv.hostPlatform.system};
   user = "skull";
@@ -18,13 +19,16 @@ in
 {
   imports = nginx.server {
     name = "skull";
-    locations = {
-      "/" = {
-        proxyPass = "http://127.0.0.1:3000";
-        recommendedProxySettings = true;
-      };
-    };
     extras = [
+      (nginx.extras.serve {
+        root = "${skull.web.overrideAttrs (prev: {
+          env = (prev.env or { }) // {
+            REACT_APP_URL_TLS = "true";
+            REACT_APP_URL_HOST = "${cfg.hostName}.${cfgNgx.baseHost}";
+            REACT_APP_URL_AUTH = "${config.celo.modules.servers.endgame.hostName}.${cfgNgx.baseHost}";
+          };
+        })}";
+      })
       (nginx.extras.proxy {
         socket = "unix:/run/skull/socket";
         location = "/api/";
