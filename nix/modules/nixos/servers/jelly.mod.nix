@@ -20,7 +20,7 @@ in
       # See: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
       # Enforces https content and restricts JS/CSS to origin
       # External Javascript (such as cast_sender.js for Chromecast) must be whitelisted.
-      ''add_header Content-Security-Policy "default-src https: data: blob: ; img-src 'self' https://* ; style-src 'sel' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://www.youtube.com blob:; worker-src 'self' blob:; connect-src 'self'; object-src 'none'; font-src 'self'";''
+      ''add_header Content-Security-Policy "default-src https: data: blob: ; img-src 'self' https://* ; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://www.youtube.com blob:; worker-src 'self' blob:; connect-src 'self'; object-src 'none'; font-src 'self'";''
 
     ];
     extras = [
