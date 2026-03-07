@@ -18,6 +18,20 @@ in
           lookAndFeel = "org.kde.breezedark.desktop";
         };
 
+        input = {
+          keyboard = {
+            layouts = [
+              {
+                layout = "us";
+                variant = "mac";
+              }
+            ];
+            # This is changing the actual CAPS,
+            # so in the split it would also become an escape
+            # options = [ "caps:escape" ];
+          };
+        };
+
         kwin = {
           virtualDesktops = {
             number = 4;
