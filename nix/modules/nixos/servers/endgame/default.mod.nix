@@ -121,7 +121,15 @@ in
         extraConfig = ''
           endgame on;
           endgame_auto_login on;
+          endgame_redirect here redirect;
           try_files /nonexistent @finalize;
+        '';
+      };
+
+      "= /reset" = {
+        extraConfig = ''
+          endgame reset;
+          endgame_redirect https://${cfg.hostName}.${cfgNgx.baseHost}/login redirect;
         '';
       };
 
