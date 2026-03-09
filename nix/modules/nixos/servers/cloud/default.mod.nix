@@ -4,6 +4,7 @@ path:
   config,
   util,
   pkgs,
+  options,
   ...
 }:
 let
@@ -36,6 +37,10 @@ in
     snap = lib.mkEnableOption "snapshots of the home directory" // {
       default = cfg.subvolume;
     };
+
+    package = options.services.nextcloud.package // {
+      default = pkgs.nextcloud32;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -59,7 +64,7 @@ in
     services = {
       nextcloud = {
         enable = true;
-        package = pkgs.nextcloud32;
+        package = cfg.package;
         hostName = "${cfg.hostName}.${cfgNgx.baseHost}";
         https = cfg.tls;
         home = cfg.home;

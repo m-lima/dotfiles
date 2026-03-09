@@ -54,7 +54,6 @@
           tls = true;
           baseHost = util.secret.rageOptional config ./_secrets/servers/nginx/baseHost.rage;
         };
-        elo.enable = true;
         endgame = {
           enable = true;
           key = ./_secrets/servers/endgame/key.age;
@@ -65,6 +64,8 @@
             util.secret.rageOr config /${rootDir}/modules/nixos/servers/endgame/_secrets/client_secret.rage
               "secret";
         };
+        cloud.enable = true;
+        elo.enable = true;
         ipe.enable = true;
         passer = {
           enable = true;
@@ -74,6 +75,10 @@
         static.enable = true;
       };
       services = {
+        postgres = {
+          enable = true;
+          subvolume = false;
+        };
         ssh = {
           enable = true;
           ports = util.secret.rage config ./_secrets/services/ssh/ports.rage;
