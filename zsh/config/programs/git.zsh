@@ -20,7 +20,13 @@ alias gfa='git fetch --all --prune --jobs=10'
 alias gl='git pull'
 alias gp='git push'
 alias gpf='git push --force-with-lease'
-alias gpp='git push --set-upstream origin ${$(git symbolic-ref HEAD)/refs\/heads\//}' # Git push with upstream
+function gpp {
+  if [ -z "${1}" ]; then
+    git push --set-upstream origin "${$(git symbolic-ref HEAD)/refs\/heads\//}"
+  else
+    git push --set-upstream origin $@
+  fi
+}
 
 # Stash
 alias gs='git stash'
