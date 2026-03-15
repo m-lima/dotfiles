@@ -43,7 +43,7 @@ in
       };
 
       xdg.configFile."alacritty/alacritty.toml".text =
-        ''''
+        ""
         + builtins.readFile /${rootDir}/../alacritty/config/colors.toml
         + builtins.readFile /${rootDir}/../alacritty/config/options.toml
         + ''

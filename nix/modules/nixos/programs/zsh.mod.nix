@@ -17,6 +17,12 @@ in
       zsh = {
         # This is overriden in the default configuration
         enableLsColors = false;
+        shellAliases = {
+          cpwd = ''${pkgs.oscclip}/bin/osc-copy "$PWD"'';
+          ppwd = ''cd "$(${pkgs.oscclip}/bin/osc-paste)"'';
+          cbcopy = "${pkgs.oscclip}/bin/osc-copy";
+          cbpaste = "${pkgs.oscclip}/bin/osc-paste";
+        };
       };
     };
 
