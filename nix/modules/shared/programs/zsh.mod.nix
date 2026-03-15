@@ -22,7 +22,7 @@ in
         interactiveShellInit =
           with builtins;
           lib.mkBefore (
-            ''''
+            ""
             + readFile /${rootDir}/../zsh/config/base/colors.zsh
             + readFile /${rootDir}/../zsh/config/base/completion.zsh
             + readFile /${rootDir}/../zsh/config/base/history.zsh
@@ -30,6 +30,13 @@ in
             + readFile /${rootDir}/../zsh/config/base/misc.zsh
             + readFile /${rootDir}/../zsh/config/programs/ls.zsh
           );
+
+        shellAliases = {
+          cpwd = ''${pkgs.oscclip}/bin/osc-copy "$PWD"'';
+          ppwd = ''cd "$(${pkgs.oscclip}/bin/osc-paste)"'';
+          cbcopy = "${pkgs.oscclip}/bin/osc-copy";
+          cbpaste = "${pkgs.oscclip}/bin/osc-paste";
+        };
       };
     };
 
