@@ -17,7 +17,9 @@ in
         zsh = {
           shellAliases = {
             cpwd = ''echo -n "$PWD" | pbcopy'';
-            ppwd = ''cd $(pbpaste)'';
+            ppwd = ''cd "$(pbpaste)"'';
+            cbcp = "pbcopy";
+            cbpt = "pbpaste";
           };
         };
       };
