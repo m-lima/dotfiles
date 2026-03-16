@@ -153,16 +153,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1772314889,
-        "narHash": "sha256-/4lHB4YvgvvH36zk6NZmcCQDVQgpYxhYpVae0HccX68=",
+        "lastModified": 1773684774,
+        "narHash": "sha256-MeCNOOG7+ikOngrwHg30qjwGZM+q0MtVhx4jGhN/wrA=",
         "owner": "m-lima",
         "repo": "elo",
-        "rev": "102633d862542fa2eba596d7ec647155d6c75f26",
+        "rev": "1038ddd547bf4a9800d75832e63831884db9f4fd",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.2.0",
+        "ref": "v0.2.1",
         "repo": "elo",
         "type": "github"
       }
