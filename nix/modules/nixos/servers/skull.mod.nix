@@ -22,16 +22,11 @@ in
     extras = [
       (nginx.extras.serve {
         root = "${skull.web.overrideAttrs (prev: {
-          env =
-            (prev.env or { })
-            // {
-              REACT_APP_URL_TLS = "true";
-              REACT_APP_URL_HOST = "${cfg.hostName}.${cfgNgx.baseHost}";
-              REACT_APP_URL_AUTH = "${config.celo.modules.servers.endgame.hostName}.${cfgNgx.baseHost}";
-            }
-            // lib.optionalAttrs (builtins.stringLength cfg.chart > 0) {
-              REACT_APP_PATH_CHART = cfg.chart;
-            };
+          env = (prev.env or { }) // {
+            VITE_URL_TLS = "true";
+            VITE_URL_HOST = "${cfg.hostName}.${cfgNgx.baseHost}";
+            VITE_URL_AUTH = "${config.celo.modules.servers.endgame.hostName}.${cfgNgx.baseHost}";
+          };
         })}";
       })
       (nginx.extras.proxy {

@@ -150,7 +150,7 @@
       };
     };
     skull = {
-      url = "github:m-lima/skull?ref=v0.11.6";
+      url = "github:m-lima/skull?ref=v0.12.0";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
