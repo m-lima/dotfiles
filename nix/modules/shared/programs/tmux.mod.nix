@@ -55,7 +55,7 @@ in
               playing=$(${cfg.currentlyPlaying})
               if [ -n "$playing" ]
               then
-                echo -n "#[fg=colour234]#[fg=colour37,bg=colour234] $playing "
+                echo -n "#[fg=colour234]#[fg=colour37,bg=colour234] ''${playing:0:64} "
               fi
             '')
             (builtins.readFile /${rootDir}/../tmux/script/status/time.sh)
