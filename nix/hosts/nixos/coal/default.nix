@@ -78,6 +78,10 @@
           enable = true;
           subvolume = false;
         };
+        wifidog = {
+          enable = true;
+          target = "10.0.0.1";
+        };
       };
       programs = {
         flakerpl.enable = true;

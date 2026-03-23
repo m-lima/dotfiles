@@ -320,6 +320,31 @@
         "type": "github"
       }
     },
+    "gomod2nix": {
+      "inputs": {
+        "flake-utils": [
+          "wifidog",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "wifidog",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1770585520,
+        "narHash": "sha256-yBz9Ozd5Wb56i3e3cHZ8WcbzCQ9RlVaiW18qDYA/AzA=",
+        "owner": "nix-community",
+        "repo": "gomod2nix",
+        "rev": "1201ddd1279c35497754f016ef33d5e060f3da8d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "gomod2nix",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -675,7 +700,8 @@
         "simpalt": "simpalt",
         "skull": "skull",
         "systems": "systems",
-        "treefmt-nix": "treefmt-nix"
+        "treefmt-nix": "treefmt-nix",
+        "wifidog": "wifidog"
       }
     },
     "rust-analyzer-src": {
@@ -820,6 +846,34 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "wifidog": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "gomod2nix": "gomod2nix",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1774300684,
+        "narHash": "sha256-NDTEhmPpXhBTd0NAHNzv6d7cmjagPAS3jg2B4KrN638=",
+        "owner": "m-lima",
+        "repo": "wifidog",
+        "rev": "cc29ef5cfb42c400d4e5ed61a20814820c11025c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "m-lima",
+        "ref": "v0.0.1",
+        "repo": "wifidog",
         "type": "github"
       }
     }
