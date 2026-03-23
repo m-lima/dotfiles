@@ -17,7 +17,12 @@ let
       dependencies = [ ];
     };
     go = {
-      pkg = [ pkgs.gopls ];
+      pkg = [
+        pkgs.gopls
+        pkgs.gofumpt
+        pkgs.golangci-lint
+        pkgs.golangci-lint-langserver
+      ];
       setup = "require('config.lspconfig.servers.go')";
       dependencies = [ ];
     };
@@ -92,7 +97,7 @@ in
     environment.etc = {
       "xdg/nvim/init.vim".text =
         with builtins;
-        ''''
+        ""
         + readFile /${rootDir}/../vim/config/base/options.vim
         + readFile /${rootDir}/../vim/config/nvim/options.vim
         + readFile /${rootDir}/../vim/config/base/mapping.vim
@@ -156,7 +161,7 @@ in
       xdg.configFile = {
         "nvim/init.vim".text =
           with builtins;
-          ''''
+          ""
           + readFile /${rootDir}/../vim/config/base/options.vim
           + readFile /${rootDir}/../vim/config/nvim/options.vim
           + readFile /${rootDir}/../vim/config/base/mapping.vim
