@@ -189,16 +189,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1773079418,
-        "narHash": "sha256-7QQCCvh3zsvcEdEnS+NW1iJpUJFR6k5esasvzDvy8oM=",
+        "lastModified": 1774297932,
+        "narHash": "sha256-hRVFlSMaqU1pJhbhcwBPCnVXUk3q+xNNWx6LTXioHoQ=",
         "owner": "m-lima",
         "repo": "endgame",
-        "rev": "149d0f778e5b62500a90072ddf70fd82d133c0b8",
+        "rev": "fd4e1c99d0017fdf2eeb5fb5a8a274706adab924",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.2.2",
+        "ref": "v0.2.3",
         "repo": "endgame",
         "type": "github"
       }
