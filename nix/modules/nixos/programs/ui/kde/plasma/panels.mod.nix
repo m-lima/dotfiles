@@ -1,11 +1,13 @@
 path:
 {
   config,
+  lib,
   util,
   ...
 }:
 let
   cfg = config.celo.modules.programs.ui.kde;
+  uiCfg = config.celo.modules.programs.ui;
 in
 {
   config = util.enforceHome path config cfg.enable {
@@ -25,7 +27,16 @@ in
                 iconTasks = {
                   launchers = [
                     "preferred://browser"
-                    "applications:Alacritty.desktop"
+                  ]
+                  ++ (
+                    if uiCfg.ghostty.enable then
+                      [ "applications:com.mitchellh.ghostty.desktop" ]
+                    else if uiCfg.alacritty.enable then
+                      [ "applications:Alacritty.desktop" ]
+                    else
+                      [ ]
+                  )
+                  ++ [
                     "applications:spotify.desktop"
                     "preferred://filemanager"
                     "applications:systemsettings.desktop"

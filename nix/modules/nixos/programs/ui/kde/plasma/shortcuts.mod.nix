@@ -7,17 +7,17 @@ path:
 }:
 let
   cfg = config.celo.modules.programs.ui.kde;
-  alacrittyCfg = config.celo.modules.programs.ui.alacritty;
+  uiCfg = config.celo.modules.programs.ui;
 in
 {
   config = util.enforceHome path config cfg.enable {
     home-manager = {
       programs.plasma = {
-        hotkeys.commands = lib.mkIf alacrittyCfg.enable {
+        hotkeys.commands = lib.mkIf (uiCfg.ghostty.enable || uiCfg.alacritty.enable) {
           "launch-terminal" = {
             name = "Lauch terminal";
             key = "Meta+T";
-            command = "alacritty";
+            command = if uiCfg.ghostty.enable then "ghostty" else "alacritty";
           };
         };
 
