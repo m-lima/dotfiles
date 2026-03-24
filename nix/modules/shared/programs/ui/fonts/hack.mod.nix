@@ -16,7 +16,11 @@ in
     home-manager = {
       fonts.fontconfig.enable = true;
 
-      home.packages = [ pkgs.nerd-fonts.hack ];
+      home.packages =
+        if config.celo.modules.programs.ui.alacritty.enable then
+          [ pkgs.nerd-fonts.hack ]
+        else
+          [ pkgs.hack-font ];
     };
   };
 }
