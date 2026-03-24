@@ -15,7 +15,9 @@ let
 in
 {
   options = util.mkOptions path {
-    tmuxStart = lib.mkEnableOption "wrap the terminal in a tmux session by default";
+    tmuxStart = lib.mkEnableOption "wrap the terminal in a tmux session by default" // {
+      default = tmuxCfg.enable;
+    };
     pkg = lib.mkOption {
       readOnly = true;
       visible = false;

@@ -94,10 +94,7 @@
         # TODO
         skull.enable = true;
         # TODO
-        ui.alacritty = {
-          enable = true;
-          tmuxStart = true;
-        };
+        ui.ghostty.enable = true;
         # TODO
         ui.fonts.hack.enable = true;
         # TODO

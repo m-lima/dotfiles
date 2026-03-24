@@ -103,9 +103,6 @@
         };
         skull.enable = true;
         ui = {
-          alacritty = {
-            tmuxStart = true;
-          };
           firefox = {
             multiAccount = true;
           };
