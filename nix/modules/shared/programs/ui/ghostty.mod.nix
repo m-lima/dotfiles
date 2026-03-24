@@ -22,7 +22,8 @@ in
       readOnly = true;
       visible = false;
       type = lib.types.package;
-      default = pkgs.ghostty;
+      # TODO: Check that ghostty is available for darwin
+      default = if pkgs.stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
     };
     exec = lib.mkOption {
       readOnly = true;
@@ -42,6 +43,7 @@ in
     home-manager = {
       programs = {
         ghostty = {
+          package = cfg.pkg;
           enable = true;
           enableZshIntegration = prg.zsh.enable;
           settings = {
