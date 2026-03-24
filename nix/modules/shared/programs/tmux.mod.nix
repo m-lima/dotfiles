@@ -4,7 +4,6 @@ path:
   config,
   util,
   pkgs,
-  pkgs-2405,
   rootDir,
   ...
 }:
@@ -18,7 +17,7 @@ in
       readOnly = true;
       visible = false;
       type = lib.types.package;
-      default = pkgs-2405.legacyPackages.${pkgs.stdenv.hostPlatform.system}.tmux;
+      default = pkgs.tmux;
     };
     currentlyPlaying = lib.mkOption {
       type = lib.types.str;

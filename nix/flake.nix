@@ -4,7 +4,6 @@
   inputs = {
     # NixOs
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-    nixpkgs-2405.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # Transient dependencies
@@ -174,8 +173,6 @@
     {
       self,
       nixpkgs,
-      nixpkgs-2405,
-      # nixpkgs-unstable,
       nix-darwin,
       agenix,
       agenix-rekey,
@@ -194,7 +191,6 @@
       specialArgs = {
         inherit inputs util;
         rootDir = ./.;
-        pkgs-2405 = nixpkgs-2405;
       };
       nixosHost =
         _: hostModules:
