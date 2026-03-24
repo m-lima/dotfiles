@@ -164,10 +164,9 @@ in
               "super+arrow_up=jump_to_prompt:-1"
 
               # Search
-              # "super+f=start_search"
-              # "escape=end_search"
-              # "ctrl+shift+n=navigate_search:next"
-              # "ctrl+shift+p=navigate_search:previous"
+              "super+f=start_search"
+              "ctrl+shift+n=navigate_search:next"
+              "ctrl+shift+p=navigate_search:previous"
 
               # Undo
               "super+z=undo"
@@ -181,8 +180,8 @@ in
               "super+j=scroll_to_selection"
 
               # Screen
-              ("super+shift+ctrl+c=write_screen_file:copy" + (lib.optionalString pkgs.stdenv.isDarwin ",plain"))
-              ("super+shift+ctrl+v=write_screen_file:paste" + (lib.optionalString pkgs.stdenv.isDarwin ",plain"))
+              "super+shift+ctrl+c=write_screen_file:copy,plain"
+              "super+shift+ctrl+v=write_screen_file:paste,plain"
             ];
           };
         };
