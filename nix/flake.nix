@@ -83,7 +83,7 @@
 
     # Local dependencies
     elo = {
-      url = "github:m-lima/elo?ref=v0.2.1";
+      url = "github:m-lima/elo?ref=nix-001";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
@@ -94,7 +94,7 @@
       };
     };
     endgame = {
-      url = "github:m-lima/endgame?ref=v0.2.3";
+      url = "github:m-lima/endgame?ref=nix-001";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
@@ -105,7 +105,7 @@
       };
     };
     ipifier = {
-      url = "github:m-lima/ipifier?ref=v0.1.2";
+      url = "github:m-lima/ipifier?ref=nix-001";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
@@ -116,7 +116,7 @@
       };
     };
     passer = {
-      url = "github:m-lima/passer?ref=v0.7.3";
+      url = "github:m-lima/passer?ref=nix-001";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
@@ -127,7 +127,7 @@
       };
     };
     ragenix = {
-      url = "github:m-lima/ragenix?ref=v0.2.0";
+      url = "github:m-lima/ragenix?ref=nix-001";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
@@ -138,7 +138,7 @@
       };
     };
     simpalt = {
-      url = "github:m-lima/simpalt?ref=v0.3.11";
+      url = "github:m-lima/simpalt?ref=nix-001";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
@@ -149,7 +149,7 @@
       };
     };
     skull = {
-      url = "github:m-lima/skull?ref=v0.12.1";
+      url = "github:m-lima/skull?ref=nix-001";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";

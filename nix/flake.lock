@@ -162,7 +162,7 @@
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.2.1",
+        "ref": "nix-001",
         "repo": "elo",
         "type": "github"
       }
@@ -198,7 +198,7 @@
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.2.3",
+        "ref": "nix-001",
         "repo": "endgame",
         "type": "github"
       }
@@ -437,7 +437,7 @@
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.1.2",
+        "ref": "nix-001",
         "repo": "ipifier",
         "type": "github"
       }
@@ -572,7 +572,7 @@
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.7.3",
+        "ref": "nix-001",
         "repo": "passer",
         "type": "github"
       }
@@ -645,16 +645,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1772132722,
-        "narHash": "sha256-uzuigqZ/FbtgEsHB04e4DCLkDBq8EVqgowPjPEwL+v8=",
+        "lastModified": 1773506122,
+        "narHash": "sha256-FlN/gYKCYQQ55A5WpwuVB7q+FjR7rD7dKjX5wmQBgYA=",
         "owner": "m-lima",
         "repo": "ragenix",
-        "rev": "21ddd748e7c0e2aef7d5deb859ff3b3de15ef11f",
+        "rev": "b477b4d438a6f1c741ae8243f662f15e50c9e301",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.2.0",
+        "ref": "nix-001",
         "repo": "ragenix",
         "type": "github"
       }
@@ -747,16 +747,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1773487239,
-        "narHash": "sha256-FrRVcHor9Rg2+pl/P4/ZVdzjbeanyZ0YY/nMVl6rKvs=",
+        "lastModified": 1773513845,
+        "narHash": "sha256-ZubGmvr+Br/zgFyKsx74pWrzYEBP+tP/XcmPzoaa09U=",
         "owner": "m-lima",
         "repo": "simpalt",
-        "rev": "2f7fd1e103e1d9e991d5c43a3f2b0e034fdd92cf",
+        "rev": "e4bbed48b2393e627d9bcd8e35d84ce3cd56ee38",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.3.11",
+        "ref": "nix-001",
         "repo": "simpalt",
         "type": "github"
       }
@@ -792,7 +792,7 @@
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.12.1",
+        "ref": "nix-001",
         "repo": "skull",
         "type": "github"
       }
