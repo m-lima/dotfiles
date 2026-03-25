@@ -49,7 +49,10 @@ in
           settings = {
             initial-command = lib.mkIf cfg.tmuxStart "direct:${tmuxCfg.pkg}/bin/tmux new -A";
 
-            font-family = lib.mkIf hackCfg.enable "Hack";
+            font-family = lib.mkIf hackCfg.enable [
+              "Hack"
+              "Hack Nerd Font Mono"
+            ];
             font-size = 11;
 
             quit-after-last-window-closed = true;
