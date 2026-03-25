@@ -130,10 +130,10 @@ in
               "ctrl+escape>h=goto_split:left"
               "ctrl+escape>l=goto_split:right"
               "super+shift+enter=toggle_split_zoom"
-              "ctrl+escape>shift+k=resize_split:up,10"
-              "ctrl+escape>shift+j=resize_split:down,10"
-              "ctrl+escape>shift+h=resize_split:left,10"
-              "ctrl+escape>shift+l=resize_split:right,10"
+              "ctrl+escape>ctrl+k=resize_split:up,10"
+              "ctrl+escape>ctrl+j=resize_split:down,10"
+              "ctrl+escape>ctrl+h=resize_split:left,10"
+              "ctrl+escape>ctrl+l=resize_split:right,10"
 
               # Tabs
               "ctrl+escape>1=goto_tab:1"
