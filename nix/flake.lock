@@ -211,11 +211,11 @@
         "rust-analyzer-src": "rust-analyzer-src"
       },
       "locked": {
-        "lastModified": 1774336807,
-        "narHash": "sha256-9Wu6fqKbjHBh//Rlx0p/jFVobZwgvBlBov2W2H1kfAI=",
+        "lastModified": 1774423251,
+        "narHash": "sha256-g/PP8G9WcP4vtZVOBNYwfGxLnwLQoTERHnef8irAMeQ=",
         "owner": "nix-community",
         "repo": "fenix",
-        "rev": "2b5c85b86be24ff24e9586a56101e22f90ead9d4",
+        "rev": "b70d7535088cd8a9e4322c372a475f66ffa18adf",
         "type": "github"
       },
       "original": {
@@ -465,11 +465,11 @@
     },
     "nix-template": {
       "locked": {
-        "lastModified": 1773505810,
-        "narHash": "sha256-FUclok8KkNETWaT5HH7ZC2bzsBuBQ1CQViT7NdilAiY=",
+        "lastModified": 1774443798,
+        "narHash": "sha256-v53zcf77JRXYR4Bni4xLy4RiYgVcolXgcLMQ5RN7Cqg=",
         "owner": "m-lima",
         "repo": "nix-template",
-        "rev": "0f1c8f18619588461c49f279fcdacff308a704cf",
+        "rev": "187e5295f204eb4d15793a9144f905c2a4b941f7",
         "type": "github"
       },
       "original": {
@@ -690,11 +690,11 @@
     "rust-analyzer-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1774276450,
-        "narHash": "sha256-B+2C4/9l+ggImtYBwbzEDY3v9DFcDS7hNGDUI+E460o=",
+        "lastModified": 1774376228,
+        "narHash": "sha256-7oA0u4aghFjjIcIDKZ26NUpXH7hVXGPC0sI1OfK7NUk=",
         "owner": "rust-lang",
         "repo": "rust-analyzer",
-        "rev": "da2fe7fed8960a4e351818d52bf444d7c9569da7",
+        "rev": "eabb84b771420b8396ab4bb4747694302d9be277",
         "type": "github"
       },
       "original": {
@@ -838,6 +838,9 @@
           "flake-utils"
         ],
         "gomod2nix": "gomod2nix",
+        "helper": [
+          "nix-template"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -846,16 +849,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1774300684,
-        "narHash": "sha256-NDTEhmPpXhBTd0NAHNzv6d7cmjagPAS3jg2B4KrN638=",
+        "lastModified": 1774442270,
+        "narHash": "sha256-EHHvGiKZ8yWN/LfUzMSP+qHpipIgo493e6jMojIIG68=",
         "owner": "m-lima",
         "repo": "wifidog",
-        "rev": "cc29ef5cfb42c400d4e5ed61a20814820c11025c",
+        "rev": "d224095f1645c37d8f03694f49fd3b69295dfa21",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "v0.0.1",
+        "ref": "nix-001",
         "repo": "wifidog",
         "type": "github"
       }
