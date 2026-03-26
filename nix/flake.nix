@@ -16,6 +16,7 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+    flake-compat.url = "github:edolstra/flake-compat";
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     # Dependencies
@@ -33,6 +34,7 @@
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";
         treefmt-nix.follows = "treefmt-nix";
+        pre-commit-hooks.inputs.flake-compat.follows = "flake-compat";
       };
     };
     disko = {
@@ -167,12 +169,12 @@
       };
     };
     wifidog = {
-      url = "github:m-lima/wifidog?ref=nix-001";
+      url = "github:m-lima/wifidog?ref=nix-002";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
         treefmt-nix.follows = "treefmt-nix";
-        helper.follows = "nix-template";
+        zig.inputs.flake-compat.follows = "flake-compat";
       };
     };
   };

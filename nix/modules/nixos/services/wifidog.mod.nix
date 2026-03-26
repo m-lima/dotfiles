@@ -10,6 +10,7 @@ path:
 let
   cfg = util.getOptions path config;
   wifidog = inputs.wifidog.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  user = "wifidog";
 in
 {
   options = util.mkOptions path {
@@ -23,13 +24,24 @@ in
       type = lib.types.nonEmptyListOf lib.types.nonEmptyStr;
       description = "Command and arguments to use for reassociation";
       default = [
-        "wpa_cli"
+        "${pkgs.wpa_supplicant}/bin/wpa_cli"
         "reassociate"
       ];
     };
   };
 
   config = lib.mkIf cfg.enable {
+    users = {
+      groups.${user} = { };
+      users = {
+        ${user} = {
+          group = user;
+          createHome = false;
+          isSystemUser = true;
+        };
+      };
+    };
+
     systemd = {
       services.wifidog = {
         after = [ "network-online.target" ];
@@ -43,7 +55,14 @@ in
             builtins.concatStringsSep " " (map (x: ''"${x}"'') cfg.reassociator)
           }'';
 
-          RestrictAddressFamilies = "AF_INET";
+          User = user;
+          SupplementaryGroups = "wheel";
+          ProtectSystem = "full";
+          PrivateTmp = false;
+          RestrictAddressFamilies = [
+            "AF_INET"
+            "AF_UNIX"
+          ];
           PrivateNetwork = false;
           IPAddressAllow = "any";
         };
