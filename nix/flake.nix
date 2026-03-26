@@ -16,6 +16,7 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+    flake-parts.url = "github:hercules-ci/flake-parts";
 
     # Dependencies
     agenix = {
@@ -30,6 +31,7 @@
       url = "github:oddlama/agenix-rekey";
       inputs = {
         nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
         treefmt-nix.follows = "treefmt-nix";
       };
     };
@@ -53,6 +55,10 @@
     };
     impermanence = {
       url = "github:nix-community/impermanence";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
     };
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
@@ -71,6 +77,7 @@
       url = "gitlab:Zhaith-Izaliel/sddm-sugar-candy-nix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
       };
     };
     treefmt-nix = {
@@ -174,6 +181,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       nix-darwin,
       agenix,
       agenix-rekey,
@@ -192,6 +200,7 @@
       specialArgs = {
         inherit inputs util;
         rootDir = ./.;
+        pkgs-unstable = nixpkgs-unstable;
       };
       nixosHost =
         _: hostModules:
