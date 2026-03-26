@@ -775,11 +775,11 @@
         "zig": "zig"
       },
       "locked": {
-        "lastModified": 1774543779,
-        "narHash": "sha256-fA6gOGV7iBFN78ybpAoWyYuxCuBH59/NLp2v9BoWJlU=",
+        "lastModified": 1774555040,
+        "narHash": "sha256-zS6vZlJmRmjvRxnVkdPLMP2tHJx3XlRpQWc4vwzLfok=",
         "owner": "m-lima",
         "repo": "wifidog",
-        "rev": "fb5c055b25711718493551bc32a1e907b5eb2ccd",
+        "rev": "479a4f8e526e292cbcee7d8bbf6e81a0054960e0",
         "type": "github"
       },
       "original": {
