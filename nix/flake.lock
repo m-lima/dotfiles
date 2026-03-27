@@ -301,6 +301,31 @@
         "type": "github"
       }
     },
+    "gomod2nix": {
+      "inputs": {
+        "flake-utils": [
+          "wifidog",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "wifidog",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1770585520,
+        "narHash": "sha256-yBz9Ozd5Wb56i3e3cHZ8WcbzCQ9RlVaiW18qDYA/AzA=",
+        "owner": "nix-community",
+        "repo": "gomod2nix",
+        "rev": "1201ddd1279c35497754f016ef33d5e060f3da8d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "gomod2nix",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -404,11 +429,11 @@
     },
     "nix-template": {
       "locked": {
-        "lastModified": 1774443798,
-        "narHash": "sha256-v53zcf77JRXYR4Bni4xLy4RiYgVcolXgcLMQ5RN7Cqg=",
+        "lastModified": 1774569207,
+        "narHash": "sha256-7G7n1KF6/mVyI50YZWY2R9EhlXV3oZcIPH73K6FgCdg=",
         "owner": "m-lima",
         "repo": "nix-template",
-        "rev": "187e5295f204eb4d15793a9144f905c2a4b941f7",
+        "rev": "ecc41d727eec5fc0e5f8c73db64fc8b1e91db336",
         "type": "github"
       },
       "original": {
@@ -766,6 +791,10 @@
         "flake-utils": [
           "flake-utils"
         ],
+        "gomod2nix": "gomod2nix",
+        "helper": [
+          "nix-template"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -775,16 +804,16 @@
         "zig": "zig"
       },
       "locked": {
-        "lastModified": 1774555040,
-        "narHash": "sha256-zS6vZlJmRmjvRxnVkdPLMP2tHJx3XlRpQWc4vwzLfok=",
+        "lastModified": 1774631607,
+        "narHash": "sha256-lsoj9nZpbCuJ+7p8yuGCJNC+nstdBsIp5qlsvKuGKWM=",
         "owner": "m-lima",
         "repo": "wifidog",
-        "rev": "479a4f8e526e292cbcee7d8bbf6e81a0054960e0",
+        "rev": "537d3a7bae474d97af8c39ed20c0d7780462f31a",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "nix-002",
+        "ref": "nix-003",
         "repo": "wifidog",
         "type": "github"
       }
