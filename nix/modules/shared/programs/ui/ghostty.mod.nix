@@ -134,6 +134,7 @@ in
               "ctrl+escape>ctrl+j=resize_split:down,10"
               "ctrl+escape>ctrl+h=resize_split:left,10"
               "ctrl+escape>ctrl+l=resize_split:right,10"
+              "ctrl+escape>equal=equalize_splits"
 
               # Tabs
               "ctrl+escape>1=goto_tab:1"
