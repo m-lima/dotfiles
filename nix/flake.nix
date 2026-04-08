@@ -240,7 +240,7 @@
             # ++ util.load.profiles ./profiles/darwin
             ++ [
               agenix.darwinModules.default
-              agenix-rekey.nixosModules.default
+              agenix-rekey.darwinModules.default
               home-manager.darwinModules.home-manager
               ragenix.nixosModules.default
             ];
