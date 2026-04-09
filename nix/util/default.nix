@@ -101,8 +101,8 @@ in
     extractCompdef
     concatAttrs
     ;
-  load = (import ./load.nix) { inherit lib mkOptions getOptions; };
-  secret = (import ./secret.nix) { inherit lib; };
-  nginx = (import ./nginx.nix) { inherit lib mkPath getOptions; };
-  systemd = (import ./systemd.nix) { inherit lib; };
+  load = import ./load.nix { inherit lib mkOptions getOptions; };
+  secret = import ./secret.nix { inherit lib; };
+  nginx = import ./nginx.nix { inherit lib mkPath getOptions; };
+  systemd = import ./systemd.nix { inherit lib; };
 }
