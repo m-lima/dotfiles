@@ -101,10 +101,14 @@ in
   imports = (util.nginx path config).server {
     name = "auth";
     # TODO: Consider prettier global error pages
+    extraConfig = domain: ''
+      endgame_session_domain ${domain};
+      endgame_client_callback_url https://${cfg.hostName}.${domain}/callback;
+    '';
     locations = {
-      "= /logout" = {
+      "= /logout" = domain: {
         extraConfig = ''
-          add_header Set-Cookie 'endgame=;Path=/;Domain=${cfgNgx.baseHost};Max-Age=0;Secure;HttpOnly;SameSite=lax';
+          add_header Set-Cookie 'endgame=;Path=/;Domain=${domain};Max-Age=0;Secure;HttpOnly;SameSite=lax';
 
           if ($arg_redirect ~ .+) {
             set_unescape_uri $decoded_url $arg_redirect;
@@ -126,10 +130,10 @@ in
         '';
       };
 
-      "= /reset" = {
+      "= /reset" = domain: {
         extraConfig = ''
           endgame reset;
-          endgame_redirect https://${cfg.hostName}.${cfgNgx.baseHost}/login redirect;
+          endgame_redirect https://${cfg.hostName}.${domain}/login redirect;
         '';
       };
 

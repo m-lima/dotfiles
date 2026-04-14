@@ -87,8 +87,13 @@ let
               enableACME = cfgNgx.enableAcme;
               http2 = true;
               http3 = true;
-              locations = lib.mkAfter locations;
-              extraConfig = lib.mkAfter ("try_files /nonexistent =444;" + extraConfig);
+              locations = lib.mkAfter (
+                builtins.mapAttrs (_: v: if builtins.isFunction v then v d else v) locations
+              );
+              extraConfig = lib.mkAfter (
+                "try_files /nonexistent =444;"
+                + (if builtins.isFunction extraConfig then extraConfig d else extraConfig)
+              );
             };
           }) cfg.domains
         );
