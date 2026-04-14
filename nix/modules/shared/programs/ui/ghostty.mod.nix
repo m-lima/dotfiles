@@ -47,7 +47,10 @@ in
           enable = true;
           enableZshIntegration = prg.zsh.enable;
           settings = {
-            initial-command = lib.mkIf cfg.tmuxStart "direct:${tmuxCfg.pkg}/bin/tmux new -A";
+            initial-command = lib.mkIf cfg.tmuxStart "direct:${pkgs.writeScript "start-tmux" ''
+              #!${pkgs.bash}/bin/bash -l
+              exec tmux new -A
+            ''}";
 
             font-family = lib.mkIf hackCfg.enable [
               "Hack"
