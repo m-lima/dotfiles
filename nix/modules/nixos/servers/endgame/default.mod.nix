@@ -15,7 +15,9 @@ let
     bin = inputs.endgame.packages.${pkgs.stdenv.hostPlatform.system}.default;
     module = inputs.endgame.module.${pkgs.stdenv.hostPlatform.system};
   };
-  secret = util.secret.mkPath path "key";
+  secretKey = util.secret.mkPath path "key";
+  secretClientId = util.secret.mkPath path "clientId";
+  secretClientSecret = util.secret.mkPath path "clientSecret";
 in
 {
   options = util.mkOptions path {
@@ -27,13 +29,13 @@ in
     };
 
     clientId = lib.mkOption {
-      type = lib.types.singleLineStr;
+      type = lib.types.either lib.types.path lib.types.singleLineStr;
       description = "OIDC client ID";
     };
 
     # TODO: Allow passing in a file to use with agenix
     clientSecret = lib.mkOption {
-      type = lib.types.singleLineStr;
+      type = lib.types.either lib.types.path lib.types.singleLineStr;
       description = "OIDC client secret";
     };
 
@@ -62,9 +64,19 @@ in
       }
     ];
 
-    age.secrets = lib.mkIf (builtins.isPath cfg.key) {
-      ${secret} = {
+    age.secrets = {
+      ${secretKey} = lib.mkIf (builtins.isPath cfg.key) {
         rekeyFile = cfg.key;
+        owner = cfgSysNgx.user;
+        group = cfgSysNgx.group;
+      };
+      ${secretClientId} = lib.mkIf (builtins.isPath cfg.clientId) {
+        rekeyFile = cfg.clientId;
+        owner = cfgSysNgx.user;
+        group = cfgSysNgx.group;
+      };
+      ${secretClientSecret} = lib.mkIf (builtins.isPath cfg.clientSecret) {
+        rekeyFile = cfg.clientSecret;
         owner = cfgSysNgx.user;
         group = cfgSysNgx.group;
       };
@@ -77,10 +89,20 @@ in
     services.nginx = {
       commonHttpConfig = lib.mkAfter ''
         endgame_key ${
-          if builtins.isPath cfg.key then "file ${config.age.secrets.${secret}.path}" else "raw ${cfg.key}"
+          if builtins.isPath cfg.key then "file ${config.age.secrets.${secretKey}.path}" else "raw ${cfg.key}"
         };
-        endgame_client_id ${cfg.clientId};
-        endgame_client_secret ${cfg.clientSecret};
+        endgame_client_id ${
+          if builtins.isPath cfg.clientId then
+            "file ${config.age.secrets.${secretClientId}.path}"
+          else
+            "raw ${cfg.clientId}"
+        };
+        endgame_client_secret ${
+          if builtins.isPath cfg.clientSecret then
+            "file ${config.age.secrets.${secretClientSecret}.path}"
+          else
+            "raw ${cfg.clientSecret}"
+        };
         endgame_discovery_url ${cfg.discoveryUrl};
         endgame_session_domain ${cfgNgx.baseHost};
         endgame_session_ttl ${cfg.sessionTtl};

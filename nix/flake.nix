@@ -103,7 +103,7 @@
       };
     };
     endgame = {
-      url = "github:m-lima/endgame?ref=nix-001";
+      url = "github:m-lima/endgame?ref=nix-002";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
