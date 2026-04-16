@@ -31,12 +31,14 @@ in
     clientId = lib.mkOption {
       type = lib.types.either lib.types.path lib.types.singleLineStr;
       description = "OIDC client ID";
+      default = ./_secrets/client_id.age;
     };
 
     # TODO: Allow passing in a file to use with agenix
     clientSecret = lib.mkOption {
       type = lib.types.either lib.types.path lib.types.singleLineStr;
       description = "OIDC client secret";
+      default = ./_secrets/client_secret.age;
     };
 
     discoveryUrl = lib.mkOption {

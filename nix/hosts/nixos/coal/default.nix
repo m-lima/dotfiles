@@ -50,8 +50,6 @@
           enable = true;
           bin = true;
           key = ./_secrets/servers/endgame/key.age;
-          clientId = /${rootDir}/modules/nixos/servers/endgame/_secrets/client_id.age;
-          clientSecret = /${rootDir}/modules/nixos/servers/endgame/_secrets/client_secret.age;
         };
         jelly = {
           enable = true;
