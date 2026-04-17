@@ -10,7 +10,7 @@ let
         result = builtins.decrypt /${builtins.toPath config.ragenix.key} secret;
       in
       if builtins.hasAttr "ok" result then
-        [
+        builtins.trace "ragenix: Decrypted ${secret}" [
           result.ok
         ]
       else
