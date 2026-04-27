@@ -50,6 +50,7 @@ in
       example = [ ./id_ed25519_key ];
       default = [ ];
     };
+    extraHosts = (options.home-manager.users.type.getSubOptions [ ]).programs.ssh.matchBlocks;
   };
 
   config =
@@ -57,6 +58,13 @@ in
       listToAttrs = mapper: list: builtins.listToAttrs (map mapper cfg.extraKeys);
     in
     lib.mkIf cfg.enable {
+      assertions = [
+        {
+          assertion = builtins.hasAttr "*" cfg.extraHosts == false;
+          message = "Cannot use '*' as an extra host";
+        }
+      ];
+
       services.openssh = lib.mkIf cfg.listen {
         enable = true;
       };
@@ -101,10 +109,8 @@ in
         };
         ${util.secret.mkPath path "hosts"} = lib.mkIf home.enable {
           rekeyFile = ./_secrets/hosts.age;
-          path = "${user.homeDirectory}/.ssh/config";
           mode = "644";
           owner = user.userName;
-          symlink = false;
         };
       }
       // (listToAttrs (name: {
@@ -128,6 +134,17 @@ in
             source = name + ".pub";
           };
         }) cfg.extraKeys);
+
+        programs.ssh = {
+          enable = true;
+          enableDefaultConfig = false;
+          includes = [ config.age.secrets.${util.secret.mkPath path "hosts"}.path ];
+          matchBlocks = cfg.extraHosts // {
+            "*" = {
+              userKnownHostsFile = "~/.local/share/ssh/known_hosts";
+            };
+          };
+        };
       };
     };
 }
