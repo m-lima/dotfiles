@@ -117,6 +117,20 @@
         ssh = {
           enable = true;
           listen = false;
+          extraHosts = {
+            "coall" = {
+              hostname = "10.0.0.10";
+              user = "celo";
+            };
+            "coallt" = {
+              hostname = "10.0.0.10";
+              user = "celo";
+              extraOptions = {
+                RequestTTY = "yes";
+                RemoteCommand = "tmux new -A";
+              };
+            };
+          };
         };
       };
     };
