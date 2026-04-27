@@ -55,10 +55,13 @@ in
 
       statusPage = true;
       commonHttpConfig = ''
-        log_format main '$host '
-                        '- $remote_addr $request_method $request_uri ''${request_length}b '
-                        '- $status ''${bytes_sent}b ''${request_time}s '
-                        '- $http_user_agent';
+        log_format main '{'
+                          'dst:$host '
+                          'src:$remote_addr '
+                          'req:[$request_method $request_uri ''${request_length}b] '
+                          'res:[$status ''${bytes_sent}b ''${request_time}s] '
+                          'usr:[$endgame_email $endgame_given_name $endgame_family_name $http_user_agent]'
+                        '}';
 
         access_log syslog:server=unix:/dev/log main;
         more_clear_headers Server;
