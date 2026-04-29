@@ -150,13 +150,15 @@ in
             net = [ { } ];
             system = [ { } ];
 
-            nginx = lib.optional cfg.scrapers.nginx { urls = [ "http://127.0.0.1/nginx_status" ]; };
+            nginx = lib.mkIf cfg.scrapers.nginx [ { urls = [ "http://127.0.0.1/nginx_status" ]; } ];
 
-            socket_listener = lib.optional cfg.scrapers.wifidog {
-              service_address = "unixgram:///var/run/telegraf/telegraf.sock";
-              socket_mode = "0660";
-              data_format = "influx";
-            };
+            socket_listener = lib.mkIf cfg.scrapers.wifidog [
+              {
+                service_address = "unixgram:///var/run/telegraf/telegraf.sock";
+                socket_mode = "0660";
+                data_format = "influx";
+              }
+            ];
           };
         };
       };
