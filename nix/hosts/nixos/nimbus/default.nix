@@ -60,6 +60,7 @@
         };
         cloud.enable = true;
         elo.enable = true;
+        grafo.enable = true;
         ipe.enable = true;
         passer = {
           enable = true;
