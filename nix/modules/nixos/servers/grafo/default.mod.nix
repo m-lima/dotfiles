@@ -107,6 +107,17 @@ in
               };
             }
           ];
+
+          dashboards.settings.providers = [
+            {
+              name = "overview";
+              disableDeletion = true;
+              options = {
+                path = "/etc/grafana-dashboards";
+                foldersFromFilesStructure = true;
+              };
+            }
+          ];
         };
       };
 
@@ -245,6 +256,8 @@ in
             }
           ];
       };
+
+      etc."grafana-dashboards/overview.json".source = ./overview.json;
     };
   };
 }
