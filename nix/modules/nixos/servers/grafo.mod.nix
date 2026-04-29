@@ -154,13 +154,16 @@ in
     systemd.services = {
       influxdb-setup = {
         description = "Setup InfluxDB Databases and Retention";
+
         wantedBy = [ "multi-user.target" ];
         requires = [ "influxdb.service" ];
         after = [ "influxdb.service" ];
+
         serviceConfig = {
           Type = "oneshot";
           RemainAfterExit = true;
         };
+
         script =
           let
             influx = "${pkgs.influxdb}/bin/influx -execute";
@@ -182,7 +185,50 @@ in
             } DEFAULT'
           '';
       };
+
+      influx-nixos-rebuild = {
+        description = "Push NixOS rebuild actions to InfluxDB";
+
+        after = [
+          "influxdb.service"
+          "network.target"
+        ];
+        requires = [ "influxdb.service" ];
+        wantedBy = [ "multi-user.target" ];
+
+        serviceConfig = {
+          Type = "oneshot";
+        };
+
+        script = ''
+          if [ -f /run/nixos-rebuild/action ]; then
+            REBUILD="$(< /run/nixos-rebuild/action)"
+
+            if [ -f /run/nixos-rebuild/action-old ] && [[ "$REBUILD" == "$(< /run/nixos-rebuild/action-old)" ]]; then
+              echo "No changes detected"
+              exit 0
+            fi
+
+            ACTION="''${REBUILD%	*}"
+            STORE="''${REBUILD#*	}"
+          fi
+
+          [ -z "$ACTION" ] && ACTION="boot"
+          [ -z "$STORE" ] && STORE="unknown"
+
+          ${pkgs.curl}/bin/curl -sS -XPOST "http://127.0.0.1:8086/write?db=telegraf" \
+            --data-binary "nixos_rebuild,action=$ACTION store=\"$STORE\",rev=\"${toString util.gitRev}\",value=1"
+        '';
+      };
     };
+
+    system.activationScripts.saveNixosAction.text = ''
+      if [[ "$NIXOS_ACTION" != "dry-activate" ]]; then
+        mkdir -p /run/nixos-rebuild
+        mv /run/nixos-rebuild/action /run/nixos-rebuild/action-old &> /dev/null || true
+        echo "''${NIXOS_ACTION:-boot}	$systemConfig" > /run/nixos-rebuild/action
+      fi
+    '';
 
     environment = {
       persistence = util.withImpermanence config {

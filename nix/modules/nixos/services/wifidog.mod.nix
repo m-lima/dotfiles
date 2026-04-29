@@ -91,8 +91,7 @@ in
           Type = "simple";
           ExecStart =
             let
-              # TODO: This location is shared across all that want to log to file
-              argMetrics = lib.optionalString cfg.metrics " -m telegraf:/var/run/telegraf/telegraf.sock";
+              argMetrics = lib.optionalString cfg.metrics " -m telegraf:/run/telegraf/telegraf.sock";
               argAttempts = lib.optionalString (builtins.isInt cfg.attempts) " -a ${toString cfg.attempts}";
               argInterval = lib.optionalString (builtins.isInt cfg.interval) " -i ${toString cfg.interval}";
               argBackoffSuccess = lib.optionalString (builtins.isInt cfg.backoffSuccess) " -s ${toString cfg.backoffSuccess}";
@@ -103,7 +102,7 @@ in
               builtins.concatStringsSep " " (map (x: ''"${x}"'') cfg.reconnector)
             }'';
 
-          BindPaths = lib.mkIf cfg.metrics "/var/run/telegraf/telegraf.sock";
+          BindPaths = lib.mkIf cfg.metrics "-/run/telegraf/";
 
           User = name;
           SupplementaryGroups = [

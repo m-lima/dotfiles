@@ -1,4 +1,4 @@
-{ lib }:
+{ lib, flake }:
 let
   mkPath = path: base: lib.setAttrByPath path base;
 
@@ -86,6 +86,8 @@ let
     );
 
   concatAttrs = builtins.foldl' (acc: curr: acc // curr) { };
+
+  gitRev = flake.shortRev or flake.dirtyShortRev or flake.lastModified or "unknown";
 in
 {
   inherit
@@ -100,6 +102,7 @@ in
     xdg
     extractCompdef
     concatAttrs
+    gitRev
     ;
   load = import ./load.nix { inherit lib mkOptions getOptions; };
   secret = import ./secret.nix { inherit lib; };

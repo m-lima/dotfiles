@@ -198,7 +198,10 @@
       ...
     }@inputs:
     let
-      util = import ./util { inherit (nixpkgs) lib; };
+      util = import ./util {
+        inherit (nixpkgs) lib;
+        flake = self;
+      };
       hosts = import ./hosts;
       specialArgs = {
         inherit inputs util;
