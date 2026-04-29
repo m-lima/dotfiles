@@ -59,6 +59,7 @@
           enable = true;
           subvolume = false;
         };
+        grafo.enable = true;
         static.enable = true;
       };
       services = {

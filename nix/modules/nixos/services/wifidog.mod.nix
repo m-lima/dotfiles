@@ -20,16 +20,12 @@ in
       example = "10.0.0.1";
     };
 
-    metrics = lib.mkEnableOption "prometheus metrics" // {
-      # TODO: When this becomes proper, we should get the location of it
+    metrics = lib.mkEnableOption "wifidog metrics" // {
       default =
         let
-          prometheus = config.services.prometheus;
-          node = prometheus.exporters.node;
+          grafo = config.celo.modules.servers.grafo;
         in
-        prometheus.enable
-        && node.enable
-        && lib.any (flag: lib.hasPrefix "--collector.textfile.directory=" flag) node.extraFlags;
+        grafo.enable && grafo.scrapers.wifidog;
     };
 
     attempts = lib.mkOption {
@@ -96,7 +92,7 @@ in
           ExecStart =
             let
               # TODO: This location is shared across all that want to log to file
-              argMetrics = lib.optionalString cfg.metrics " -m /run/${name}/metrics.prom";
+              argMetrics = lib.optionalString cfg.metrics " -m telegraf:/var/run/telegraf/telegraf.sock";
               argAttempts = lib.optionalString (builtins.isInt cfg.attempts) " -a ${toString cfg.attempts}";
               argInterval = lib.optionalString (builtins.isInt cfg.interval) " -i ${toString cfg.interval}";
               argBackoffSuccess = lib.optionalString (builtins.isInt cfg.backoffSuccess) " -s ${toString cfg.backoffSuccess}";
@@ -107,11 +103,13 @@ in
               builtins.concatStringsSep " " (map (x: ''"${x}"'') cfg.reconnector)
             }'';
 
-          RuntimeDirectory = lib.mkIf cfg.metrics name;
-          UMask = lib.mkIf cfg.metrics "0022";
+          BindPaths = lib.mkIf cfg.metrics "/var/run/telegraf/telegraf.sock";
 
           User = name;
-          SupplementaryGroups = "wheel";
+          SupplementaryGroups = [
+            "wheel"
+            "telegraf"
+          ];
           ProtectSystem = "full";
           PrivateTmp = false;
           RestrictAddressFamilies = [

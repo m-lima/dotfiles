@@ -804,16 +804,16 @@
         "zig": "zig"
       },
       "locked": {
-        "lastModified": 1774638665,
-        "narHash": "sha256-ZoigZYcl8uRIiyqHEPuCS85tvenIjoduoHuE2LJL5zA=",
+        "lastModified": 1777403522,
+        "narHash": "sha256-OQ4DDzy18OQ6wljcZN5/eRoy0C2idvIR67yEF6kKIvw=",
         "owner": "m-lima",
         "repo": "wifidog",
-        "rev": "165c1c380265b8d80c17f8dede2a6eea072caddc",
+        "rev": "bdc55572e165ed1db421860bab6be498b56a6c6b",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "nix-003",
+        "ref": "nix-004",
         "repo": "wifidog",
         "type": "github"
       }
