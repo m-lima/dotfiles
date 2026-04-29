@@ -257,7 +257,8 @@ in
           ];
       };
 
-      etc."grafana-dashboards/overview.json".source = ./overview.json;
+      etc."grafana-dashboards/overview.json".source =
+        if cfg.scrapers.wifidog then ./overview-wifidog.json else ./overview.json;
     };
   };
 }
