@@ -259,8 +259,19 @@ in
           ];
       };
 
-      etc."grafana-dashboards/overview.json".source =
-        if cfg.scrapers.wifidog then ./overview-wifidog.json else ./overview.json;
+      etc."grafana-dashboards/overview.json" =
+        if cfg.scrapers.wifidog then
+          {
+            source = ./overview.json;
+          }
+        else
+          {
+            text = builtins.toJSON (
+              builtins.mapAttrs (k: v: if k == "panels" then builtins.filter (p: p.id != 5) v else v) (
+                builtins.fromJSON (builtins.readFile ./overview.json)
+              )
+            );
+          };
     };
   };
 }
