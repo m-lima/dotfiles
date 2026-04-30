@@ -74,7 +74,7 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "graphTooltip": 0,
+  "graphTooltip": 1,
   "id": 0,
   "links": [],
   "panels": [
@@ -179,7 +179,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "custom": {
             "axisBorderShow": false,
@@ -190,8 +190,8 @@
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
+            "fillOpacity": 40,
+            "gradientMode": "scheme",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
@@ -202,7 +202,7 @@
             "lineStyle": {
               "fill": "solid"
             },
-            "lineWidth": 1,
+            "lineWidth": 0,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
@@ -244,18 +244,26 @@
           {
             "matcher": {
               "id": "byFrameRefID",
-              "options": "B"
+              "options": "Cores"
             },
             "properties": [
               {
-                "id": "custom.lineWidth",
-                "value": 2
-              },
-              {
                 "id": "color",
                 "value": {
-                  "mode": "thresholds"
+                  "mode": "palette-classic"
                 }
+              },
+              {
+                "id": "custom.gradientMode",
+                "value": "none"
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 1
               }
             ]
           }
@@ -287,6 +295,7 @@
       "pluginVersion": "12.3.6",
       "targets": [
         {
+          "alias": "total",
           "datasource": {
             "type": "influxdb",
             "uid": "P951FEA4DE68E13C5"
@@ -300,7 +309,7 @@
             },
             {
               "params": [
-                "null"
+                "linear"
               ],
               "type": "fill"
             }
@@ -309,7 +318,7 @@
           "measurement": "cpu",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "Max",
+          "refId": "Total",
           "resultFormat": "time_series",
           "select": [
             [
@@ -354,7 +363,7 @@
             },
             {
               "params": [
-                "null"
+                "linear"
               ],
               "type": "fill"
             }
@@ -381,7 +390,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "cpu::tag",
+              "operator": "!=",
+              "value": "cpu-total"
+            }
+          ]
         }
       ],
       "title": "CPU",
