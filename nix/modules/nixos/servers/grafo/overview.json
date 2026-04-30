@@ -163,7 +163,7 @@
             "mode": "fixed"
           },
           "custom": {
-            "axisPlacement": "auto",
+            "axisPlacement": "hidden",
             "fillOpacity": 70,
             "hideFrom": {
               "legend": false,
@@ -245,7 +245,7 @@
             },
             {
               "params": [
-                "none"
+                "null"
               ],
               "type": "fill"
             }
