@@ -178,14 +178,24 @@
             {
               "options": {
                 "0": {
-                  "color": "red",
-                  "index": 1,
-                  "text": "Fail"
-                },
-                "1": {
                   "color": "green",
                   "index": 0,
                   "text": "Ok"
+                },
+                "1": {
+                  "color": "yellow",
+                  "index": 1,
+                  "text": "Fail"
+                },
+                "2": {
+                  "color": "red",
+                  "index": 2,
+                  "text": "Recover"
+                },
+                "3": {
+                  "color": "purple",
+                  "index": 3,
+                  "text": "Critical"
                 }
               },
               "type": "value"
@@ -204,7 +214,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
+        "h": 2,
         "w": 24,
         "x": 0,
         "y": 3
@@ -239,13 +249,7 @@
             },
             {
               "params": [
-                "operation::tag"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
+                "none"
               ],
               "type": "fill"
             }
@@ -259,7 +263,7 @@
             [
               {
                 "params": [
-                  "status"
+                  "state"
                 ],
                 "type": "field"
               },
@@ -378,7 +382,7 @@
         "h": 6,
         "w": 14,
         "x": 0,
-        "y": 6
+        "y": 5
       },
       "id": 2,
       "options": {
@@ -580,7 +584,7 @@
         "h": 6,
         "w": 10,
         "x": 14,
-        "y": 6
+        "y": 5
       },
       "id": 3,
       "options": {
@@ -710,7 +714,7 @@
         "h": 6,
         "w": 14,
         "x": 0,
-        "y": 12
+        "y": 11
       },
       "id": 4,
       "options": {
@@ -819,7 +823,7 @@
         "h": 6,
         "w": 10,
         "x": 14,
-        "y": 12
+        "y": 11
       },
       "id": 6,
       "options": {

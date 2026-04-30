@@ -804,11 +804,11 @@
         "zig": "zig"
       },
       "locked": {
-        "lastModified": 1777497356,
-        "narHash": "sha256-iAEiLKqxX2TDUKvdv88QksmP7O2B6K28jsojwQZwwEU=",
+        "lastModified": 1777558399,
+        "narHash": "sha256-UzoVA86emKowcN04veora/nrkWckYRo1nmsAl3NVAbI=",
         "owner": "m-lima",
         "repo": "wifidog",
-        "rev": "315e0dbaf52aaa3191c2ba48f7d571002e4fe100",
+        "rev": "4d60b3797473b2c1c938a73c622dcb2b75be3538",
         "type": "github"
       },
       "original": {
