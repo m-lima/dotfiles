@@ -20,34 +20,15 @@
         },
         "enable": true,
         "hide": false,
-        "iconColor": "green",
-        "name": "NixOS test",
-        "target": {
-          "fromAnnotations": true,
-          "query": "select rev, store from \"nixos_rebuild\" where $timeFilter and action = 'test'",
-          "rawQuery": true,
-          "refId": "Anno",
-          "tagsColumn": "rev, store",
-          "textColumn": "Test",
-          "textEditor": true
-        }
-      },
-      {
-        "datasource": {
-          "type": "influxdb",
-          "uid": "P951FEA4DE68E13C5"
-        },
-        "enable": true,
-        "hide": false,
         "iconColor": "yellow",
-        "name": "NixOS switch",
+        "name": "NixOS activation",
         "target": {
           "fromAnnotations": true,
-          "query": "select rev, store from \"nixos_rebuild\" where $timeFilter and action = 'switch'",
+          "query": "select action, rev, store from \"nixos_rebuild\" where $timeFilter and action != 'boot'",
           "rawQuery": true,
           "refId": "Anno",
-          "tagsColumn": "rev, store",
-          "textColumn": "Switch",
+          "tagsColumn": "action",
+          "textColumn": "store",
           "textEditor": true
         }
       },
@@ -62,11 +43,11 @@
         "name": "NixOS boot",
         "target": {
           "fromAnnotations": true,
-          "query": "select rev, store from \"nixos_rebuild\" where $timeFilter and action = 'boot'",
+          "query": "select action, rev, store from \"nixos_rebuild\" where $timeFilter and action = 'boot'",
           "rawQuery": true,
           "refId": "Anno",
-          "tagsColumn": "rev, store",
-          "textColumn": "Boot",
+          "tagsColumn": "action",
+          "textColumn": "store",
           "textEditor": true
         }
       }
