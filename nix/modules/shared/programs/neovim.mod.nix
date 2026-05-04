@@ -17,7 +17,12 @@ let
       dependencies = [ ];
     };
     go = {
-      pkg = [ ];
+      pkg = [
+        pkgs.gopls
+        pkgs.gofumpt
+        pkgs.golangci-lint
+        pkgs.golangci-lint-langserver
+      ];
       setup = "require('config.lspconfig.servers.go')";
       dependencies = [ ];
     };
@@ -35,7 +40,7 @@ let
       dependencies = [ ];
     };
     metals = {
-      pkg = [ ];
+      pkg = [ pkgs.metals ];
       setup = "require('config.metals')";
       dependencies = [
         pkgs.vimPlugins.nvim-metals
@@ -55,7 +60,7 @@ let
       dependencies = [ ];
     };
     rust = {
-      pkg = [ ];
+      pkg = [ pkgs.rust-analyzer ];
       setup = "require('config.lspconfig.servers.rust')";
       dependencies = [ ];
     };
