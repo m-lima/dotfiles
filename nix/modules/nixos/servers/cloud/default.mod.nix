@@ -94,7 +94,7 @@ in
       services.snapper.mounts = lib.mkIf cfg.snap (lib.mkAfter [ "cloud" ]);
     };
 
-    environment = lib.mkIf (!cfg.subvolume) {
+    environment = {
       persistence = util.withImpermanence config {
         global.directories = [
           {

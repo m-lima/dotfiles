@@ -1,9 +1,9 @@
 # TODO
 
-- [ ] Grafana (https://grafana.com/docs/grafana/latest/setup-grafana/configure-access/configure-authentication/auth-proxy/)
-- [ ] Wifi keeps crashing in coal
 - [ ] Caps to ESC
 - [ ] Make a locale that's solid. Missing ICU configuration for en_XX
+- [x] Grafana (https://grafana.com/docs/grafana/latest/setup-grafana/configure-access/configure-authentication/auth-proxy/)
+- [-] Wifi keeps crashing in coal
 - [x] Disable sleep in coal
 - [x] cpwd/ppwd on linux (OSC 52 ??)
 - [x] Zoom on Alacritty is conflicting with zoom on KDE

@@ -54,10 +54,6 @@
           enable = true;
           hardwareAcceleration = "intel-modern";
         };
-        cloud = {
-          enable = true;
-          subvolume = false;
-        };
         grafo.enable = true;
         static.enable = true;
       };
@@ -68,10 +64,6 @@
         };
         ssh.enable = true;
         mdns.enable = true;
-        postgres = {
-          enable = true;
-          subvolume = false;
-        };
         wifidog = {
           enable = true;
           target = "10.0.0.1";
