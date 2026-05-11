@@ -35,8 +35,11 @@ in
       }
     ];
 
-    services = lib.mkIf (cfg.dataDir != null) {
-      postgresql.dataDir = cfg.dataDir;
+    services.postgresql = {
+      enable = true;
+      dataDir = lib.mkIf (cfg.dataDir != null) {
+        dataDir = cfg.dataDir;
+      };
     };
 
     celo.modules = lib.mkIf cfg.subvolume {
