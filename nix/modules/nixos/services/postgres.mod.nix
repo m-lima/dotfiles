@@ -4,6 +4,7 @@ path:
   config,
   util,
   pkgs,
+  options,
   ...
 }:
 let
@@ -25,6 +26,10 @@ in
     snap = lib.mkEnableOption "snapshots of the data directory" // {
       default = cfg.subvolume;
     };
+
+    package = options.services.postgresql.package // {
+      default = pkgs.postgresql_18;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -37,6 +42,7 @@ in
 
     services.postgresql = {
       enable = true;
+      package = cfg.package;
       dataDir = lib.mkIf (cfg.dataDir != null) {
         dataDir = cfg.dataDir;
       };

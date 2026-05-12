@@ -10,7 +10,7 @@ path:
 let
   cfg = util.getOptions path config;
   secret = util.secret.mkPath path;
-  cfgNgx = config.celo.modules.servers.nginx;
+  user = "nextcloud";
 in
 {
   imports = (util.nginx path config).server {
@@ -30,6 +30,14 @@ in
       default = config.celo.modules.core.user.userName;
     };
 
+    mail = lib.mkEnableOption "email support through gmail" // {
+      default = true;
+    };
+
+    sharedDir = lib.mkEnableOption "shared directory for all users" // {
+      default = true;
+    };
+
     subvolume = lib.mkEnableOption "btrfs subvolume for the home directory" // {
       default = true;
     };
@@ -39,7 +47,7 @@ in
     };
 
     package = options.services.nextcloud.package // {
-      default = pkgs.nextcloud32;
+      default = pkgs.nextcloud33;
     };
   };
 
@@ -58,6 +66,8 @@ in
     age.secrets = {
       ${secret "adminPass"} = {
         rekeyFile = ./_secrets/adminPass.age;
+        owner = user;
+        group = user;
       };
     };
 
@@ -65,7 +75,7 @@ in
       nextcloud = {
         enable = true;
         package = cfg.package;
-        hostName = "${cfg.hostName}.${cfgNgx.baseHost}";
+        hostName = "${cfg.hostName}.${builtins.head cfg.domains}";
         https = cfg.tls;
         home = cfg.home;
 
@@ -77,10 +87,26 @@ in
           adminpassFile = config.age.secrets.${secret "adminPass"}.path;
         };
 
+        extraApps = lib.mkIf cfg.sharedDir {
+          groupfolders = cfg.package.packages.apps.groupfolders;
+        };
+
         settings = {
           overwriteprotocol = lib.mkIf cfg.tls "https";
+        }
+        // lib.optionalAttrs cfg.mail {
+          mail_smtpmode = "smtp";
+          mail_sendmailmode = "smtp";
+          mail_from_address = cfg.hostName;
+          mail_domain = builtins.head cfg.domains;
+          mail_smtphost = "smtp-relay.gmail.com";
+          mail_smtpport = 587;
         };
       };
+    };
+
+    systemd.services.nextcloud-setup = {
+      postStart = lib.mkAfter "nextcloud-occ app:enable twofactor_totp";
     };
 
     celo.modules = lib.mkIf cfg.subvolume {
@@ -99,15 +125,15 @@ in
         global.directories = [
           {
             directory = config.services.redis.servers.nextcloud.settings.dir;
-            group = "nextcloud";
-            user = "nextcloud";
+            group = user;
+            user = user;
             mode = "0755";
           }
         ]
         ++ lib.optional (!cfg.subvolume) {
           directory = cfg.home;
-          group = "nextcloud";
-          user = "nextcloud";
+          group = user;
+          user = user;
           mode = "0755";
         };
       };

@@ -10,6 +10,8 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  cfgCloud = config.celo.modules.servers.cloud;
+  secret = util.secret.mkPath path;
   nginx = util.nginx path config;
   socket = "/run/grafana/socket";
 in
@@ -38,6 +40,10 @@ in
     };
 
     scrapers = {
+      cloud = lib.mkOption {
+        type = lib.types.bool;
+        default = cfgCloud.enable;
+      };
       nginx = lib.mkOption {
         type = lib.types.bool;
         default = config.celo.modules.servers.nginx.enable;
@@ -56,6 +62,12 @@ in
         "nginx"
       ];
       ${config.services.nginx.user}.extraGroups = [ "grafana" ];
+    };
+
+    age.secrets = {
+      ${secret "cloudToken"} = lib.mkIf cfg.scrapers.cloud {
+        rekeyFile = ./_secrets/cloudToken.age;
+      };
     };
 
     services = {
@@ -125,6 +137,9 @@ in
 
       telegraf = {
         enable = true;
+
+        environmentFiles = lib.mkIf cfg.scrapers.cloud [ config.age.secrets.${secret "cloudToken"}.path ];
+
         extraConfig = {
           outputs = {
             influxdb = [
@@ -157,6 +172,22 @@ in
                 service_address = "unixgram:///var/run/telegraf/telegraf.sock";
                 socket_mode = "0660";
                 data_format = "influx";
+              }
+            ];
+
+            http = lib.mkIf cfg.scrapers.cloud [
+              {
+                urls = [
+                  "https://${cfgCloud.hostName}.${builtins.head cfgCloud.domains}/ocs/v2.php/apps/serverinfo/api/v1/info?format=json"
+                ];
+                method = "GET";
+                headers = {
+                  NC-Token = "$TELEGRAF_TOKEN";
+                };
+                data_format = "json";
+                json_query = "ocs.data";
+                name_prefix = "nextcloud_";
+                success_status_codes = [ 200 ];
               }
             ];
           };
@@ -231,6 +262,13 @@ in
 
           ${pkgs.curl}/bin/curl -sS -XPOST "http://127.0.0.1:8086/write?db=telegraf" \
             --data-binary "nixos_rebuild,action=$ACTION store=\"$STORE\",rev=\"${toString util.gitRev}\",value=1"
+        '';
+      };
+
+      nextcloud-setup = lib.mkIf cfg.scrapers.cloud {
+        serviceConfig.EnvironmentFile = lib.mkAfter [ config.age.secrets.${secret "cloudToken"}.path ];
+        postStart = lib.mkAfter ''
+          nextcloud-occ config:app:set serverinfo token --value="$TELEGRAF_TOKEN"
         '';
       };
     };
