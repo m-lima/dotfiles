@@ -75,7 +75,7 @@ in
       nextcloud = {
         enable = true;
         package = cfg.package;
-        hostName = "${cfg.hostName}.${builtins.head cfg.domains}";
+        hostName = "${cfg.hostName}.${cfg.domain}";
         https = cfg.tls;
         home = cfg.home;
 
@@ -98,7 +98,7 @@ in
           mail_smtpmode = "smtp";
           mail_sendmailmode = "smtp";
           mail_from_address = cfg.hostName;
-          mail_domain = builtins.head cfg.domains;
+          mail_domain = cfg.domain;
           mail_smtphost = "smtp-relay.gmail.com";
           mail_smtpport = 587;
         };

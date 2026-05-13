@@ -178,7 +178,7 @@ in
             http = lib.mkIf cfg.scrapers.cloud [
               {
                 urls = [
-                  "https://${cfgCloud.hostName}.${builtins.head cfgCloud.domains}/ocs/v2.php/apps/serverinfo/api/v1/info?format=json"
+                  "https://${cfgCloud.hostName}.${cfgCloud.domain}/ocs/v2.php/apps/serverinfo/api/v1/info?format=json"
                 ];
                 method = "GET";
                 headers = {

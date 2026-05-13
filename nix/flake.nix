@@ -178,6 +178,15 @@
         zig.inputs.flake-compat.follows = "flake-compat";
       };
     };
+    criscelo = {
+      url = "git+file:///home/kinto/code/web/criscelo";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
+
   };
 
   outputs =

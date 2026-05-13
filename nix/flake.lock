@@ -70,6 +70,32 @@
         "type": "github"
       }
     },
+    "criscelo": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1776504719,
+        "narHash": "sha256-t5SJa3yMMYdfSrUE42xHy16Up1PBYrvY6pBUmEvUiBI=",
+        "ref": "refs/heads/master",
+        "rev": "6278323bfd229f23a9926d9571efd2772d52d188",
+        "revCount": 25,
+        "type": "git",
+        "url": "file:///home/kinto/code/web/criscelo"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:///home/kinto/code/web/criscelo"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -614,6 +640,7 @@
         "agenix": "agenix",
         "agenix-rekey": "agenix-rekey",
         "crane": "crane",
+        "criscelo": "criscelo",
         "disko": "disko",
         "elo": "elo",
         "endgame": "endgame",

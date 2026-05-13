@@ -63,10 +63,14 @@
         ipe.enable = true;
         passer = {
           enable = true;
-          domains = util.secret.rageOptional config ./_secrets/servers/passer/domains.rage;
+          extraDomains = util.secret.rageOptional config ./_secrets/servers/passer/domains.rage;
         };
         skull.enable = true;
         static.enable = true;
+        criscelo = {
+          enable = true;
+          domain = util.secret.rageOr config ./_secrets/servers/criscelo/domain.rage "invalid.host";
+        };
       };
       services = {
         postgres = {

@@ -25,10 +25,17 @@ let
   baseServer = name: endgame: extraConfig: locations: {
     options = mkPath path (
       {
-        domains = lib.mkOption {
-          type = lib.types.nonEmptyListOf lib.types.singleLineStr;
+        domain = lib.mkOption {
+          type = lib.types.singleLineStr;
           description = "Domain to nest this service behind on nginx";
-          default = [ cfgNgx.baseHost ];
+          default = cfgNgx.baseHost;
+          example = "bla.com";
+        };
+
+        extraDomains = lib.mkOption {
+          type = lib.types.listOf lib.types.singleLineStr;
+          description = "Extra domains to nest this service behind on nginx";
+          default = [ ];
           example = [
             "bla.com"
             "foo.bar"
@@ -95,7 +102,7 @@ let
                 + (if builtins.isFunction extraConfig then extraConfig d else extraConfig)
               );
             };
-          }) cfg.domains
+          }) ([ cfg.domain ] ++ cfg.extraDomains)
         );
       };
     };
