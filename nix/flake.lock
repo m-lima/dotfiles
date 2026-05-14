@@ -831,46 +831,38 @@
         "zig": "zig"
       },
       "locked": {
-        "lastModified": 1777558399,
-        "narHash": "sha256-UzoVA86emKowcN04veora/nrkWckYRo1nmsAl3NVAbI=",
+        "lastModified": 1778775831,
+        "narHash": "sha256-LgerCVQEbZVzWwDS2Pz/Rd/oz8WSXO2C3CrCHUSGuQY=",
         "owner": "m-lima",
         "repo": "wifidog",
-        "rev": "4d60b3797473b2c1c938a73c622dcb2b75be3538",
+        "rev": "7eec4fe3f10cfc7115f79bc880dcf5a67ddc7f48",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "nix-005",
+        "ref": "nix-006",
         "repo": "wifidog",
         "type": "github"
       }
     },
     "zig": {
       "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
         "nixpkgs": [
           "wifidog",
           "nixpkgs"
-        ],
-        "systems": [
-          "wifidog",
-          "flake-utils",
-          "systems"
         ]
       },
       "locked": {
-        "lastModified": 1774441590,
-        "narHash": "sha256-8cMeRjQOqOzwYmZdH7cV75PeXOGf74RDGR9IsFX+7j0=",
-        "owner": "mitchellh",
-        "repo": "zig-overlay",
-        "rev": "e8d24a6b03faf3824103b6fc986c1afa7c90c7c1",
+        "lastModified": 1778745234,
+        "narHash": "sha256-j9VAckbCAcSC/w1BIyhqjmMh5F+HOQhFGoJ+bFuW5OI=",
+        "owner": "silversquirl",
+        "repo": "zig-flake",
+        "rev": "798a913f4e8d5851db78fe65eb7ef42840bff58d",
         "type": "github"
       },
       "original": {
-        "owner": "mitchellh",
-        "repo": "zig-overlay",
+        "owner": "silversquirl",
+        "repo": "zig-flake",
         "type": "github"
       }
     }

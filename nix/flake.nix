@@ -169,13 +169,12 @@
       };
     };
     wifidog = {
-      url = "github:m-lima/wifidog?ref=nix-005";
+      url = "github:m-lima/wifidog?ref=nix-006";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
         treefmt-nix.follows = "treefmt-nix";
         helper.follows = "nix-template";
-        zig.inputs.flake-compat.follows = "flake-compat";
       };
     };
     criscelo = {
