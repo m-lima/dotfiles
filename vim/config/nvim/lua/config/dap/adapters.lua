@@ -31,13 +31,21 @@ local codelldb = function()
       end
 
       if #executables > 0 then
-        local options = { '0. Manual' }
-        for i, v in ipairs(executables) do
-          table.insert(options, i .. '. ' .. v)
-        end
-        local option = vim.fn.inputlist(options)
-        if option > 0 then
-          return executables[option]
+        local routine = coroutine.running()
+
+        vim.ui.select(
+          executables,
+          {
+            prompt = 'Select executable:',
+          },
+          function(choice)
+            coroutine.resume(routine, choice)
+          end
+        )
+
+        local option = coroutine.yield()
+        if option then
+          return option
         end
       end
 
@@ -47,6 +55,58 @@ local codelldb = function()
       else
         return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
       end
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+    args = function()
+      return require('util').parse_args(vim.fn.input('Args: '))
+    end,
+    runInTerminal = false,
+  } }
+
+  dap.configurations.zig = { {
+    name = 'Debug',
+    type = 'codelldb',
+    request = 'launch',
+    program = function()
+      print('Printing paths..')
+      local executables = {}
+      local paths = vim.fn.system('zig build print-path')
+      for line in paths:gmatch('[^\r\n]+') do
+        local name = vim.fs.basename(line)
+        for i, v in ipairs(executables) do
+          if v == name then
+            executables[i][1] = executables[i][2]
+            name = line
+            break
+          end
+        end
+        table.insert(executables, {name, line})
+      end
+
+      if #executables > 0 then
+        local routine = coroutine.running()
+
+        vim.ui.select(
+          executables,
+          {
+            prompt = 'Select executable:',
+            format_item = function(item)
+              return item[1]
+            end,
+          },
+          function(choice)
+            coroutine.resume(routine, choice[2])
+          end
+        )
+
+        local option = coroutine.yield()
+        if option then
+          return option
+        end
+      end
+
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd(), 'file')
     end,
     cwd = '${workspaceFolder}',
     stopOnEntry = false,
