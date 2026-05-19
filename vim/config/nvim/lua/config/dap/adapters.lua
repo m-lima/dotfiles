@@ -1,5 +1,10 @@
 local dap = require('dap')
 
+local getcwd = function(name)
+    local lsps = vim.lsp.get_clients({ bufnr = bufnr, name = name })
+    return (lsps and lsps[1] and lsps[1].root_dir) or vim.fn.getcwd()
+end
+
 local codelldb = function()
   dap.adapters.codelldb = {
     type = 'server',
@@ -11,52 +16,102 @@ local codelldb = function()
   }
 
   dap.configurations.rust = { {
-    name = 'Launch',
+    name = 'Debug',
     type = 'codelldb',
     request = 'launch',
     program = function()
+      print('Rust DAP: Building workspace..')
+      local routine = coroutine.running()
+
+      local output = {}
       local executables = {}
+      local option = nil
 
-      if vim.fn.filereadable('Cargo.toml') == 1 then
-        print('Building workspace..')
-        local build_output = vim.fn.system('cargo build --workspace --message-format=json')
-        for line in build_output:gmatch('[^\r\n]+') do
-          local ok, json = pcall(vim.fn.json_decode, line)
-          if ok then
-            if type(json) == 'table' and json.executable ~= vim.NIL and json.executable ~= nil then
-              table.insert(executables, json.executable)
+      local cwd = getcwd('rust_analyzer')
+
+      local ok, err = pcall(
+        vim.fn.jobstart,
+        { 'cargo', 'build', '--workspace', '--message-format=json' },
+        {
+          cwd = cwd,
+          on_stdout = function(pid, stdout)
+            for _, v in ipairs(stdout) do
+              table.insert(output, {v, false})
             end
+          end,
+          on_stderr = function(pid, stderr)
+            for _, v in ipairs(stderr) do
+              table.insert(output, {v, true})
+            end
+          end,
+          on_exit = function(pid, status)
+            coroutine.resume(routine, status == 0)
+          end
+        }
+      )
+
+      if not ok then
+        if err then vim.notify(err, vim.log.levels.WARN) end
+        goto bail
+      end
+
+      ok = coroutine.yield();
+
+      if not output or #output == 0 then
+        goto bail
+      end
+
+      if not ok then
+        for _, err in ipairs(output) do
+          if err[2] then vim.notify(err[1], vim.log.levels.WARN) end
+        end
+        goto bail
+      end
+
+      for _, line in ipairs(output) do
+        if line[2] then goto nextline end
+        local ok, json = pcall(vim.fn.json_decode, line[1])
+        if ok then
+          if type(json) == 'table' and json.executable ~= vim.NIL and json.executable ~= nil then
+            local name = vim.fs.basename(json.executable)
+            for i, v in ipairs(executables) do
+              if v == name then
+                executables[i][1] = executables[i][2]
+                name = json.executable
+                break
+              end
+            end
+            table.insert(executables, {name, json.executable})
           end
         end
+        ::nextline::
       end
 
-      if #executables > 0 then
-        local routine = coroutine.running()
+      if #executables == 0 then
+        goto bail
+      end
 
-        vim.ui.select(
-          executables,
-          {
-            prompt = 'Select executable:',
-          },
-          function(choice)
-            coroutine.resume(routine, choice)
-          end
-        )
-
-        local option = coroutine.yield()
-        if option then
-          return option
+      vim.ui.select(
+        executables,
+        {
+          prompt = 'Select executable:',
+          format_item = function(item) return item[1] end,
+        },
+        function(choice)
+          coroutine.resume(routine, choice and choice[2])
         end
+      )
+
+      option = coroutine.yield()
+      if option then
+        return option
       end
 
-      local cargo_target = os.getenv('CARGO_TARGET_DIR')
-      if cargo_target then
-        return vim.fn.input('Path to executable: ', cargo_target .. '/debug/', 'file')
-      else
-        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
-      end
+      ::bail::
+      local cargo_target = os.getenv('CARGO_TARGET_DIR') or cwd
+      return vim.fn.input('Path to executable: ', cargo_target .. '/target/debug/', 'file')
     end,
-    cwd = '${workspaceFolder}',
+    cwd = function() return getcwd('rust_analyzer') end,
     stopOnEntry = false,
     args = function()
       return require('util').parse_args(vim.fn.input('Args: '))
@@ -76,10 +131,13 @@ local codelldb = function()
       local executables = {}
       local option = nil
 
+      local cwd = getcwd('zls')
+
       local ok, err = pcall(
         vim.fn.jobstart,
         { 'zig', 'build', 'print-path' },
         {
+          cwd = cwd,
           on_stderr = function(pid, stderr)
             for _, v in ipairs(stderr) do
               table.insert(output, v)
@@ -129,9 +187,7 @@ local codelldb = function()
         executables,
         {
           prompt = 'Select executable:',
-          format_item = function(item)
-            return item[1]
-          end,
+          format_item = function(item) return item[1] end,
         },
         function(choice)
           coroutine.resume(routine, choice and choice[2])
@@ -144,9 +200,9 @@ local codelldb = function()
       end
 
       ::bail::
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd(), 'file')
+      return vim.fn.input('Path to executable: ', cwd, 'file')
     end,
-    cwd = '${workspaceFolder}',
+    cwd = function() return getcwd('zls') end,
     stopOnEntry = false,
     args = function()
       return require('util').parse_args(vim.fn.input('Args: '))
