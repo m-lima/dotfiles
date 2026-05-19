@@ -69,43 +69,81 @@ local codelldb = function()
     type = 'codelldb',
     request = 'launch',
     program = function()
-      print('Printing paths..')
+      print('Zig DAP: Printing paths..')
+      local routine = coroutine.running()
+
+      local output = {}
       local executables = {}
-      local paths = vim.fn.system('zig build print-path')
-      for line in paths:gmatch('[^\r\n]+') do
-        local name = vim.fs.basename(line)
-        for i, v in ipairs(executables) do
-          if v == name then
-            executables[i][1] = executables[i][2]
-            name = line
-            break
+      local option = nil
+
+      local ok, err = pcall(
+        vim.fn.jobstart,
+        { 'zig', 'build', 'print-path' },
+        {
+          on_stderr = function(pid, stderr)
+            for _, v in ipairs(stderr) do
+              table.insert(output, v)
+            end
+          end,
+          on_exit = function(pid, status)
+            coroutine.resume(routine, status == 0)
           end
-        end
-        table.insert(executables, {name, line})
+        }
+      )
+
+      if not ok then
+        if err then vim.notify(err, vim.log.levels.WARN) end
+        goto bail
       end
 
-      if #executables > 0 then
-        local routine = coroutine.running()
+      ok = coroutine.yield();
 
-        vim.ui.select(
-          executables,
-          {
-            prompt = 'Select executable:',
-            format_item = function(item)
-              return item[1]
-            end,
-          },
-          function(choice)
-            coroutine.resume(routine, choice[2])
+      if not output or #output == 0 then
+        goto bail
+      end
+
+      if not ok then
+        for _, err in ipairs(output) do vim.notify(err, vim.log.levels.WARN) end
+        goto bail
+      end
+
+      for _, line in ipairs(output) do
+        if line and #line > 0 then
+          local name = vim.fs.basename(line)
+          for i, v in ipairs(executables) do
+            if v == name then
+              executables[i][1] = executables[i][2]
+              name = line
+              break
+            end
           end
-        )
-
-        local option = coroutine.yield()
-        if option then
-          return option
+          table.insert(executables, {name, line})
         end
       end
 
+      if #executables == 0 then
+        goto bail
+      end
+
+      vim.ui.select(
+        executables,
+        {
+          prompt = 'Select executable:',
+          format_item = function(item)
+            return item[1]
+          end,
+        },
+        function(choice)
+          coroutine.resume(routine, choice and choice[2])
+        end
+      )
+
+      option = coroutine.yield()
+      if option then
+        return option
+      end
+
+      ::bail::
       return vim.fn.input('Path to executable: ', vim.fn.getcwd(), 'file')
     end,
     cwd = '${workspaceFolder}',
