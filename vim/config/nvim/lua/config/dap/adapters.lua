@@ -1,11 +1,13 @@
 local dap = require('dap')
 
 local getcwd = function(name)
-    local lsps = vim.lsp.get_clients({ bufnr = bufnr, name = name })
-    return (lsps and lsps[1] and lsps[1].root_dir) or vim.fn.getcwd()
+  local lsps = vim.lsp.get_clients({ bufnr = bufnr, name = name })
+  return (lsps and lsps[1] and lsps[1].root_dir) or vim.fn.getcwd()
 end
 
 local codelldb = function()
+  local last_args = ''
+
   dap.adapters.codelldb = {
     type = 'server',
     port = '58525',
@@ -36,12 +38,12 @@ local codelldb = function()
           cwd = cwd,
           on_stdout = function(pid, stdout)
             for _, v in ipairs(stdout) do
-              table.insert(output, {v, false})
+              table.insert(output, { v, false })
             end
           end,
           on_stderr = function(pid, stderr)
             for _, v in ipairs(stderr) do
-              table.insert(output, {v, true})
+              table.insert(output, { v, true })
             end
           end,
           on_exit = function(pid, status)
@@ -81,7 +83,7 @@ local codelldb = function()
                 break
               end
             end
-            table.insert(executables, {name, json.executable})
+            table.insert(executables, { name, json.executable })
           end
         end
         ::nextline::
@@ -114,7 +116,8 @@ local codelldb = function()
     cwd = function() return getcwd('rust_analyzer') end,
     stopOnEntry = false,
     args = function()
-      return require('util').parse_args(vim.fn.input('Args: '))
+      last_args = vim.fn.input('Args: ', last_args)
+      return require('util').parse_args(last_args)
     end,
     runInTerminal = false,
   } }
@@ -175,7 +178,7 @@ local codelldb = function()
               break
             end
           end
-          table.insert(executables, {name, line})
+          table.insert(executables, { name, line })
         end
       end
 
@@ -205,7 +208,8 @@ local codelldb = function()
     cwd = function() return getcwd('zls') end,
     stopOnEntry = false,
     args = function()
-      return require('util').parse_args(vim.fn.input('Args: '))
+      last_args = vim.fn.input('Args: ', last_args)
+      return require('util').parse_args(last_args)
     end,
     runInTerminal = false,
   } }
@@ -216,6 +220,8 @@ end
 
 local python = function()
   local python_path = vim.fn.exepath('python3')
+  local last_args = ''
+  local last_script = ''
   if python_path then
     dap.adapters.python = {
       type = 'executable',
@@ -230,7 +236,18 @@ local python = function()
       name = 'Python',
       type = 'python',
       request = 'launch',
-      program = vim.fn.bufname,
+      program = function()
+        if #last_script == 0 then
+          last_script = vim.fn.input('Script: ', getcwd('pyright'), 'file')
+        else
+          last_script = vim.fn.input('Script: ', last_script, 'file')
+        end
+        return last_script
+      end,
+      args = function()
+        last_args = vim.fn.input('Args: ', last_args)
+        return require('util').parse_args(last_args)
+      end,
     } }
   end
 end
