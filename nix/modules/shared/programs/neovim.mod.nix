@@ -30,6 +30,7 @@ let
       pkg = [
         pkgs.typescript-language-server
         pkgs.vscode-langservers-extracted
+        pkgs.biome
       ];
       setup = "require('config.lspconfig.servers.js').setup()";
       dependencies = [ ];
