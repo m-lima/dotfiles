@@ -147,7 +147,7 @@
       };
     };
     simpalt = {
-      url = "github:m-lima/simpalt?ref=nix-001";
+      url = "github:m-lima/simpalt?ref=nix-002";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";

@@ -71,6 +71,7 @@
       };
       programs = {
         flakerpl.enable = true;
+        nixshell.enable = true;
         git = {
           overrides = {
             "~/code/cog" = "cog.age";

@@ -25,6 +25,7 @@
       };
       programs = {
         flakerpl.enable = true;
+        nixshell.enable = true;
         # TODO
         coreutils.enable = true;
         simpalt = {

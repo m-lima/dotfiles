@@ -86,6 +86,7 @@
       programs = {
         direnv.enable = true;
         flakerpl.enable = true;
+        nixshell.enable = true;
         simpalt = {
           symbol = "ɳ";
         };
