@@ -28,6 +28,16 @@ local tsls = {
   }
 }
 
+local biome = {
+  features = {
+    format = function()
+      vim.lsp.buf.format({
+        async = false,
+      })
+    end,
+  },
+}
+
 local no_format = {
   features = {
     format = false,
@@ -39,6 +49,7 @@ return {
     local register = require('config.lspconfig.register').register
     register('eslint', no_format)
     register('ts_ls', tsls)
+    register('biome', biome)
     if with_volar then
       register('volar', no_format)
     end
