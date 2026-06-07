@@ -55,7 +55,7 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (cfg.enable && builtins.length cfg.endgame > 0) {
     users.users = {
       telegraf.extraGroups = [
         "nextcloud"
