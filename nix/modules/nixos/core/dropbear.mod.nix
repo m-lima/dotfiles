@@ -50,7 +50,7 @@ in
       ssh = {
         enable = true;
         port = cfg.port;
-        authorizedKeys =
+        authorizedKeys = map (key: ''command="systemctl default" ${key}'') (
           cfg.authorizedKeys
           ++ (lib.optionals cfg.authorizeWheel (
             lib.concatLists (
@@ -58,15 +58,13 @@ in
                 name: user: if lib.elem "wheel" user.extraGroups then user.openssh.authorizedKeys.keys else [ ]
               ) config.users.users
             )
-          ));
+          ))
+        );
         hostKeys = [
           "/etc/ssh/ssh_host_ed25519_key"
           "/etc/ssh/ssh_host_rsa_key"
         ];
       };
-      postCommands = ''
-        echo 'cryptsetup-askpass' >> /root/.profile
-      '';
     };
   };
 }

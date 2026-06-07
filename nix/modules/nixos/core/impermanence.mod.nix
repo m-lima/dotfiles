@@ -3,6 +3,7 @@ path:
   lib,
   config,
   util,
+  pkgs,
   ...
 }:
 let
@@ -71,44 +72,62 @@ in
       services.snapper.mounts = lib.mkAfter [ "persist" ];
     };
 
-    boot.initrd.postDeviceCommands = lib.mkIf cfg.wipe.enable (
-      lib.mkAfter (
-        ''
-          mkdir /btrfs
-          mount -o noatime,compress=zstd:3 ${cfg.wipe.device} /btrfs
+    boot.initrd.systemd.services.btrfs-wipe-root = lib.mkIf cfg.wipe.enable {
+      description = "Wipe and recreate BTRFS root subvolume";
 
-          delete_subvolume_recursively() {
-              IFS=$'\n'
-              for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
-                  delete_subvolume_recursively "/btrfs/$i"
-              done
-              btrfs subvolume delete "$1"
-          }
-        ''
-        + (
-          if cfg.wipe.retainRoot > 0 then
-            ''
-              if [[ -e /btrfs/${cfgDisko.mounts.root.name} ]]; then
-                  mkdir -p /btrfs/old
-                  timestamp=$(date --date="@$(stat -c %Y /btrfs/@)" "+%Y-%m-%d_%H:%M:%S")
-                  mv /btrfs/${cfgDisko.mounts.root.name} "/btrfs/old/$timestamp"
-              fi
+      wantedBy = [ "initrd.target" ];
 
-              for i in $(find /btrfs/old/ -maxdepth 1 -mtime +${toString cfg.wipe.retainRoot}); do
-                  delete_subvolume_recursively "$i"
-              done
-            ''
-          else
-            ''
-              delete_subvolume_recursively /btrfs/${cfgDisko.mounts.root.name}
-            ''
-        )
-        + ''
-          btrfs subvolume create /btrfs/${cfgDisko.mounts.root.name}
-          umount /btrfs
-        ''
+      after = [ "cryptsetup.target" ];
+      before = [ "sysroot.mount" ];
+
+      path = with pkgs; [
+        btrfs-progs
+        coreutils
+        findutils
+        util-linux
+      ];
+
+      serviceConfig = {
+        Type = "oneshot";
+      };
+
+      script = ''
+        mkdir -p /btrfs
+        mount -o noatime,compress=zstd:3 ${cfg.wipe.device} /btrfs
+
+        delete_subvolume_recursively() {
+            IFS=$'\n'
+            for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+                delete_subvolume_recursively "/btrfs/$i"
+            done
+            btrfs subvolume delete "$1"
+        }
+      ''
+      + (
+        if cfg.wipe.retainRoot > 0 then
+          ''
+            if [[ -e /btrfs/${cfgDisko.mounts.root.name} ]]; then
+                mkdir -p /btrfs/old
+                timestamp=$(date --date="@$(stat -c %Y /btrfs/@)" "+%Y-%m-%d_%H:%M:%S")
+                mv /btrfs/${cfgDisko.mounts.root.name} "/btrfs/old/$timestamp"
+            fi
+
+            for i in $(find /btrfs/old/ -maxdepth 1 -mtime +${toString cfg.wipe.retainRoot}); do
+                delete_subvolume_recursively "$i"
+            done
+          ''
+        else
+          ''
+            if [[ -e /btrfs/${cfgDisko.mounts.root.name} ]]; then
+                delete_subvolume_recursively /btrfs/${cfgDisko.mounts.root.name}
+            fi
+          ''
       )
-    );
+      + ''
+        btrfs subvolume create /btrfs/${cfgDisko.mounts.root.name}
+        umount /btrfs
+      '';
+    };
 
     # Make persistent fileSystems available at boot
     fileSystems = {

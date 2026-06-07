@@ -68,6 +68,11 @@ in
       ${secret "cloudToken"} = lib.mkIf cfg.scrapers.cloud {
         rekeyFile = ./_secrets/cloudToken.age;
       };
+      ${secret "grafanaKey"} = {
+        rekeyFile = ./_secrets/grafanaKey.age;
+        owner = "grafana";
+        group = "grafana";
+      };
     };
 
     services = {
@@ -82,6 +87,7 @@ in
 
           security = {
             admin_email = builtins.head cfg.endgame;
+            secret_key = "$__file{${config.age.secrets.${secret "grafanaKey"}.path}}";
           };
 
           users = {

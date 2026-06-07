@@ -66,7 +66,7 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (cfg.enable && builtins.length cfg.users > 0) {
     users = {
       users = {
         ${user} = {

@@ -110,6 +110,8 @@ in
         neovim = {
           enable = true;
           package = pkgs.neovim-unwrapped;
+          withRuby = false;
+          withPython3 = false;
           plugins =
             with pkgs.vimPlugins;
             [
@@ -123,7 +125,7 @@ in
               lightspeed-nvim
               nvim-treesitter-textobjects
               lualine-nvim
-              fugitive
+              vim-fugitive
               gitsigns-nvim
               telescope-nvim
               neo-tree-nvim

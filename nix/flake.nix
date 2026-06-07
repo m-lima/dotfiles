@@ -3,7 +3,7 @@
 
   inputs = {
     # NixOs
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # Transient dependencies
@@ -50,7 +50,7 @@
       };
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -63,7 +63,7 @@
       };
     };
     nix-darwin = {
-      url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
+      url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -136,7 +136,7 @@
       };
     };
     ragenix = {
-      url = "github:m-lima/ragenix?ref=nix-001";
+      url = "github:m-lima/ragenix?ref=nix-002";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
@@ -178,7 +178,7 @@
       };
     };
     criscelo = {
-      url = "git+file:///home/kinto/code/web/criscelo";
+      url = "git+ssh://git@github.com/m-lima/criscelo";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
