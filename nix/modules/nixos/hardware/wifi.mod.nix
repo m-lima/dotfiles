@@ -14,7 +14,7 @@ in
   config = lib.mkIf cfg.enable {
     networking.wireless = {
       enable = true;
-      userControlled.enable = true;
+      userControlled = true;
       # TDOO: Don't assume impermanence
       secretsFile = "${config.celo.modules.core.disko.mounts.persist.mountpoint}/secrets/wifi.env";
       # TODO: Use ragenix

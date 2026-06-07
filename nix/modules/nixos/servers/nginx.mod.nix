@@ -20,25 +20,14 @@ in
     tls = lib.mkEnableOption "Automatically generate certificates";
 
     acmeEmail = lib.mkOption {
-      type = lib.types.nullOr lib.types.singleLineStr;
+      type = lib.types.singleLineStr;
       description = "Email to use for ACME registration";
-      default = util.secret.rageOr config /${rootDir}/secrets/general/email.rage null;
-    };
-
-    enableAcme = lib.mkOption {
-      type = lib.types.bool;
-      readOnly = true;
-      visible = false;
-      default = cfg.tls && cfg.baseHost != "localhost" && cfg.baseHost != config.celo.host.id;
+      default = util.secret.rageOr config /${rootDir}/secrets/general/email.rage "";
     };
   };
 
   config = lib.mkIf cfg.enable {
     assertions = [
-      {
-        assertion = cfg.enableAcme -> cfg.acmeEmail != null;
-        message = "Need to specify a hostName to have TLS termination";
-      }
       {
         assertion = cfg.tls -> config.services.nginx.enable;
         message = "Need to enable nginx to have TLS termination";
@@ -79,14 +68,14 @@ in
     ]
     ++ (lib.optional cfg.tls 443);
 
-    security = lib.mkIf cfg.enableAcme {
+    security = lib.mkIf cfg.tls {
       acme = {
         acceptTerms = true;
         defaults.email = cfg.acmeEmail;
       };
     };
 
-    environment = lib.mkIf cfg.enableAcme {
+    environment = lib.mkIf cfg.tls {
       persistence = util.withImpermanence config {
         global.directories = [
           {

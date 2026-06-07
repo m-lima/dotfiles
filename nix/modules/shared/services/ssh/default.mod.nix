@@ -50,7 +50,7 @@ in
       example = [ ./id_ed25519_key ];
       default = [ ];
     };
-    extraHosts = (options.home-manager.users.type.getSubOptions [ ]).programs.ssh.matchBlocks;
+    extraHosts = (options.home-manager.users.type.getSubOptions [ ]).programs.ssh.settings;
   };
 
   config =
@@ -139,7 +139,7 @@ in
           enable = true;
           enableDefaultConfig = false;
           includes = [ config.age.secrets.${util.secret.mkPath path "hosts"}.path ];
-          matchBlocks = cfg.extraHosts // {
+          settings = cfg.extraHosts // {
             "*" = {
               userKnownHostsFile = "~/.local/share/ssh/known_hosts";
             };

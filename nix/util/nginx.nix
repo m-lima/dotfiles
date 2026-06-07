@@ -91,7 +91,7 @@ let
           map (d: {
             "${cfg.hostName}.${d}" = {
               forceSSL = cfg.tls;
-              enableACME = cfgNgx.enableAcme;
+              enableACME = cfgNgx.tls;
               http2 = true;
               http3 = true;
               locations = lib.mkAfter (

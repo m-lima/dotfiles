@@ -50,7 +50,7 @@ let
     nix = {
       pkg = [
         pkgs.nil
-        pkgs.nixfmt-rfc-style
+        pkgs.nixfmt
       ];
       setup = "require('config.lspconfig.servers.nix')";
       dependencies = [ ];

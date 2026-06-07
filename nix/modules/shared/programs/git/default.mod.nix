@@ -75,7 +75,7 @@ in
                 	path = ''
               + (
                 if builtins.isAttrs value then
-                  "${config.home-manager.users.${userName}.xdg.configHome}/${toConfigFile key}"
+                  "${(util.xdg config).configHome}/${toConfigFile key}"
                 else
                   "${config.age.secrets.${util.secret.mkPath path (md5 key)}.path}"
               );
