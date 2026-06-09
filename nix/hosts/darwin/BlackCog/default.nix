@@ -31,7 +31,7 @@
         simpalt = {
           # TODO
           enable = true;
-          symbol = "●";
+          symbol = "◉";
         };
         # TODO
         git.enable = true;
