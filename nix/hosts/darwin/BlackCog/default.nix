@@ -4,7 +4,7 @@
 }:
 {
   # TODO: Required for now because of agenix
-  # nixpkgs.hostPlatform = "aarch64-darwin";
+  nixpkgs.hostPlatform = "aarch64-darwin";
   celo = {
     profiles = {
       system.enable = true;
