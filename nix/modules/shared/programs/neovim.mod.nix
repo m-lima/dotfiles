@@ -96,13 +96,14 @@ in
     environment.systemPackages = with pkgs; [ neovim ];
 
     environment.etc = {
-      "xdg/nvim/init.vim".text =
+      "xdg/nvim/sysinit.vim".text =
         with builtins;
         ""
         + readFile /${rootDir}/../vim/config/base/options.vim
         + readFile /${rootDir}/../vim/config/nvim/options.vim
         + readFile /${rootDir}/../vim/config/base/mapping.vim
         + readFile /${rootDir}/../vim/config/nvim/mapping.vim;
+      "xdg/nvim/colors/simpalt.vim".source = /${rootDir}/../vim/simpalt.vim;
     };
 
     home-manager = util.withHome config {
@@ -110,8 +111,13 @@ in
         neovim = {
           enable = true;
           package = pkgs.neovim-unwrapped;
+
           withRuby = false;
+          withPerl = false;
+          withNodeJs = false;
           withPython3 = false;
+
+          sideloadInitLua = true;
           plugins =
             with pkgs.vimPlugins;
             [
@@ -162,43 +168,36 @@ in
       };
 
       xdg.configFile = {
-        "nvim/init.vim".text =
-          with builtins;
-          ""
-          + readFile /${rootDir}/../vim/config/base/options.vim
-          + readFile /${rootDir}/../vim/config/nvim/options.vim
-          + readFile /${rootDir}/../vim/config/base/mapping.vim
-          + readFile /${rootDir}/../vim/config/nvim/mapping.vim
-          + ''
-            lua <<EOF
-            require('config.cmp')
-            require('config.comment')
-            require('config.dap')
-            require('config.dap.ui')
-            require('config.fugitive')
-            require('config.gitsigns')
-            require('config.iron')
-            require('config.lightspeed')
-            require('config.lspconfig')
-            require('config.lua_out')
-            require('config.lualine')
-            require('config.neo_tree')
-            require('config.telescope')
-            require('config.toggleterm')
-            require('config.treesitter.none')
-            require('config.undotree')
-            require('config.render_markdown')
+        "nvim/init.vim".text = ''
+          lua <<EOF
+          require('config.cmp')
+          require('config.comment')
+          require('config.dap')
+          require('config.dap.ui')
+          require('config.fugitive')
+          require('config.gitsigns')
+          require('config.iron')
+          require('config.lightspeed')
+          require('config.lspconfig')
+          require('config.lua_out')
+          require('config.lualine')
+          require('config.neo_tree')
+          require('config.telescope')
+          require('config.toggleterm')
+          require('config.treesitter.highlight')
+          require('config.treesitter.none')
+          require('config.undotree')
+          require('config.render_markdown')
 
-            -- Personal
-            require('plugin.breadcrumbs')
-            require('plugin.buffer_stack')
-            require('plugin.dupe_comment')
-            require('plugin.overlength')
-          ''
-          + (lib.strings.concatMapStringsSep "\n" (l: lsps.${l}.setup) cfg.lsps)
-          + readFile /${rootDir}/../vim/config/nvim/filetypes.lua
-          + "\nEOF";
-        "nvim/colors/simpalt.vim".source = /${rootDir}/../vim/simpalt.vim;
+          -- Personal
+          require('plugin.breadcrumbs')
+          require('plugin.buffer_stack')
+          require('plugin.dupe_comment')
+          require('plugin.overlength')
+        ''
+        + (lib.strings.concatMapStringsSep "\n" (l: lsps.${l}.setup) cfg.lsps)
+        + builtins.readFile /${rootDir}/../vim/config/nvim/filetypes.lua
+        + "\nEOF";
         "nvim/lua".source = /${rootDir}/../vim/config/nvim/lua;
       };
     };

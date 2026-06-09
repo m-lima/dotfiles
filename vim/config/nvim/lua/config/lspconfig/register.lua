@@ -88,20 +88,7 @@ local make_on_attach = function(overrides)
     end
 
     if opts.codelens and client.server_capabilities.codeLensProvider then
-      vim.api.nvim_create_autocmd(
-        {
-          'BufEnter',
-          'CursorHold',
-          'InsertLeave',
-        },
-        {
-          desc = 'Refresh codelens',
-          group = augroup(),
-          buffer = bufnr,
-          callback = function() vim.lsp.codelens.refresh({ bufnr = bufnr }) end,
-        }
-      )
-      vim.lsp.codelens.refresh({ bufnr = bufnr })
+      vim.lsp.codelens.enable(true, { bufrn = bufnr })
     end
 
     if opts.format then

@@ -1,11 +1,8 @@
 return {
   setup = function(ensure_install, ignore_install)
-    require('nvim-treesitter.configs').setup({
+    require('nvim-treesitter').setup({
       ensure_installed = ensure_install,
       ignore_install = ignore_install,
-      highlight = {
-        enable = true
-      },
       indent = {
         enable = true
       },

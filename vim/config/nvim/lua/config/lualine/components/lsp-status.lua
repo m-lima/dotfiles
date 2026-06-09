@@ -96,7 +96,7 @@ function lsp_status:register_request()
     local name = method:match('/(.*)')
 
     for _, client in pairs(clients) do
-      if client.id and client.supports_method(method) then
+      if client.id and client:supports_method(method) then
         self:get_client(client.id).requests[id] = name
       end
     end
@@ -129,7 +129,7 @@ function lsp_status:register_request()
     local name = method:match('/(.*)')
 
     for _, client in pairs(clients) do
-      if client.id and client.supports_method(method) then
+      if client.id and client:supports_method(method) then
         self:get_client(client.id).requests[id] = name
       end
     end
@@ -160,7 +160,7 @@ function lsp_status:register_request()
     local name = method:match('/(.*)')
 
     for _, client in pairs(clients) do
-      if client.id and client.supports_method(method) then
+      if client.id and client:supports_method(method) then
         self:get_client(client.id).requests[id] = name
       end
     end

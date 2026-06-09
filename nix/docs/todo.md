@@ -60,3 +60,13 @@
 - [x] Alacritty font / zoom [Using a triple bind instead]
 - [x] Alacritty keys for mac
 - [x] ragenix plugin is not loading
+
+# 26.05
+
+- [ ] 26.05 Impermanence
+- [ ] 26.05 Grafo
+- [ ] 26.05 WiFi
+- [ ] 26.05 Nginx
+- [ ] 26.05 Git
+- [x] 26.05 SSH
+- [x] 26.05 Neovim

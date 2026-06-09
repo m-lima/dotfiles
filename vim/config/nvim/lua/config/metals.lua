@@ -12,20 +12,7 @@ config.on_attach = function(client, bufnr)
   local augroup = vim.api.nvim_create_augroup('pluginLsp_' .. client.name .. bufnr, { clear = true })
 
   -- Codelens
-  vim.api.nvim_create_autocmd(
-    {
-      'BufEnter',
-      'CursorHold',
-      'InsertLeave',
-    },
-    {
-      desc = 'Refresh codelens',
-      group = augroup,
-      buffer = bufnr,
-      callback = function() vim.lsp.codelens.refresh({ bufnr = bufnr }) end,
-    }
-  )
-  vim.lsp.codelens.refresh({ bufnr = bufnr })
+  vim.lsp.codelens.enable(true, { bufnr = bufnr })
 
   -- Highlighting
   vim.api.nvim_create_autocmd(
