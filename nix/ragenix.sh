@@ -16,6 +16,7 @@ ACTION:
 IDENTITY:
   Defaults to /etc/ssh/ssh_host_ed25519_key for decryption,
   and /etc/ssh/ssh_host_ed25519_key.pub for decryption
+  If passed 'all' for encryption, it will encrypt for all know pubkeys
 EOF
 }
 
