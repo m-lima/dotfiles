@@ -8,6 +8,10 @@
   celo = {
     profiles = {
       system.enable = true;
+      base.enable = true;
+      core.enable = true;
+      dev.enable = true;
+      ui.enable = true;
     };
 
     modules = {
@@ -26,20 +30,10 @@
       programs = {
         flakerpl.enable = true;
         nixshell.enable = true;
-        # TODO
-        coreutils.enable = true;
         simpalt = {
-          # TODO
-          enable = true;
           symbol = "◉";
         };
-        # TODO
-        git.enable = true;
-        # TODO
-        zsh.enable = true;
-        # TODO
         nali = {
-          enable = true;
           entries = {
             cd = "~/code";
             nx = "~/code/dotfiles/nix";
@@ -49,60 +43,25 @@
             cc = "~/CeloCloud";
           };
         };
-        # TODO
-        neovim.enable = true;
-        # TODO
-        # TODO
-        curl.enable = true;
-        # TODO
-        bat.enable = true;
-        # TODO
-        jq.enable = true;
-        # TODO
-        less.enable = true;
-        # TODO
-        lazygit.enable = true;
-        # TODO
-        rage.enable = true;
-        # TODO
-        rg.enable = true;
-        # TODO
-        xxd.enable = true;
-        # TODO
-        delta.enable = true;
-        # TODO
-        fd.enable = true;
-        # TODO
-        fzf.enable = true;
-        # TODO
-        zoxide.enable = true;
-        # TODO
-        direnv.enable = true;
-        # TODO
-        tmux.enable = true;
+
         # TODO
         skull.enable = true;
-        # TODO
-        ui.ghostty.enable = true;
-        # TODO
-        ui.fonts.hack.enable = true;
-        # TODO
-        ui.spotify.enable = true;
 
         # NEW
-        pstree.enable = true;
-        nmap.enable = true;
-        yq.enable = true;
-        k9s.enable = true;
+        aws.enable = true;
+        az.enable = true;
+        coreutils.enable = true;
         gcloud.enable = true;
         gh.enable = true;
-        az.enable = true;
-        aws.enable = true;
+        k9s.enable = true;
         kubectl.enable = true;
         kubelogin.enable = true;
+        nmap.enable = true;
+        pstree.enable = true;
+        yq.enable = true;
       };
+
       services = {
-        # TODO
         ssh = {
           enable = true;
           listen = false;
