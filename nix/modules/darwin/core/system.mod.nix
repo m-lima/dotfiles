@@ -19,6 +19,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    environment.variables.XDG_CONFIG_DIRS = [ "/etc/xdg" ];
+
     system.activationScripts.text =
       let
         rsyncArgs = "--archive --checksum --chmod=-w --copy-unsafe-links --delete";
