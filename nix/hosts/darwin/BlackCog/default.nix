@@ -112,10 +112,8 @@
               user = "celo";
             };
             "coallt" = {
-              extraOptions = {
-                RequestTTY = "yes";
-                RemoteCommand = "tmux new -A";
-              };
+              RequestTTY = "yes";
+              RemoteCommand = "tmux new -A";
             };
           };
         };
