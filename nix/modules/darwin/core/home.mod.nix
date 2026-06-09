@@ -32,8 +32,10 @@ in
                 target = "${user.homeDirectory}/Applications/Home Manager Trampolines";
               in
               inputs.home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-                mkdir -p "${target}"
-                ${pkgs.rsync}/bin/rsync ${rsyncArgs} "${source}/" "${target}"
+                if [ -d "${source}" ]; then
+                  mkdir -p "${target}"
+                  ${pkgs.rsync}/bin/rsync ${rsyncArgs} "${source}/" "${target}"
+                fi
               '';
           };
         };
