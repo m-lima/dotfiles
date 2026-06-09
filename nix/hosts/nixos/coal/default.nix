@@ -90,9 +90,6 @@
         };
         skull.enable = true;
         ui = {
-          firefox = {
-            multiAccount = true;
-          };
           kde = {
             enable = true;
             insomnia = true;

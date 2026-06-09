@@ -44,8 +44,8 @@
           };
         };
 
-        # TODO
         skull.enable = true;
+        ui.slack.enable = true;
 
         # NEW
         aws.enable = true;

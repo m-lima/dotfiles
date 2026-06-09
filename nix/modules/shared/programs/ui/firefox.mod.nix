@@ -11,7 +11,9 @@ let
 in
 {
   options = util.mkOptions path {
-    multiAccount = lib.mkEnableOption "multi-account containers";
+    multiAccount = lib.mkEnableOption "multi-account containers" // {
+      default = true;
+    };
   };
 
   config = util.enforceHome path config cfg.enable {
