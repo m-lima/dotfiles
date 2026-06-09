@@ -80,18 +80,23 @@ in
       after = [ "cryptsetup.target" ];
       before = [ "sysroot.mount" ];
 
-      path = with pkgs; [
-        btrfs-progs
-        coreutils
-        findutils
-        util-linux
-      ];
-
       serviceConfig = {
         Type = "oneshot";
       };
 
       script = ''
+        export PATH="${
+          pkgs.lib.makeBinPath (
+            with pkgs;
+            [
+              btrfs-progs
+              coreutils
+              findutils
+              util-linux
+            ]
+          )
+        }:$PATH"
+
         mkdir -p /btrfs
         mount -o noatime,compress=zstd:3 ${cfg.wipe.device} /btrfs
 

@@ -63,10 +63,10 @@
 
 # 26.05
 
-- [ ] 26.05 Impermanence
-- [ ] 26.05 Grafo
-- [ ] 26.05 WiFi
-- [ ] 26.05 Nginx
-- [ ] 26.05 Git
+- [x] 26.05 Impermanence
+- [x] 26.05 WiFi
+- [x] 26.05 Grafo
+- [x] 26.05 Nginx
+- [x] 26.05 Git
 - [x] 26.05 SSH
 - [x] 26.05 Neovim
