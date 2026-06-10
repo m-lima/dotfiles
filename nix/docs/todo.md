@@ -53,7 +53,8 @@
 
 # Darwin
 
-- [ ] Fix the profiles (or have just a couple of them for the most basic stuff)
+- [ ] Add Blank rust project
+- [x] Fix the profiles (or have just a couple of them for the most basic stuff)
 - [x] Currently playing on tmux
 - [x] Alacritty home/end [Need to validate outside of tmux]
 - [x] zsh bind key mismatch [Need to validate that it is fully covered]
