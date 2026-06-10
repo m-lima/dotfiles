@@ -20,6 +20,7 @@
         agenix = {
           identityPath = "${config.celo.modules.core.user.homeDirectory}/.ssh/id_ed25519";
         };
+        darwin.enable = true;
         home = {
           stateVersion = "26.05";
         };
