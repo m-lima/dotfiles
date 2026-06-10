@@ -11,6 +11,7 @@
       base.enable = true;
       core.enable = true;
       dev.enable = true;
+      kube.enable = true;
       ui.enable = true;
     };
 
@@ -48,14 +49,7 @@
         ui.slack.enable = true;
 
         # NEW
-        aws.enable = true;
-        az.enable = true;
         coreutils.enable = true;
-        gcloud.enable = true;
-        gh.enable = true;
-        k9s.enable = true;
-        kubectl.enable = true;
-        kubelogin.enable = true;
         nmap.enable = true;
         pstree.enable = true;
         yq.enable = true;
@@ -68,7 +62,6 @@
           extraHosts = {
             "coall coallt" = {
               hostname = "10.0.0.10";
-              user = "celo";
             };
             "coallt" = {
               RequestTTY = "yes";
