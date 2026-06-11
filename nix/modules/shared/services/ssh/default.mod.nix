@@ -42,12 +42,30 @@ in
       default = true;
     };
     extraKeys = lib.mkOption {
-      type = lib.types.listOf lib.types.path;
+      type = lib.types.listOf (
+        lib.types.submodule {
+          options = {
+            private = lib.mkOption {
+              type = lib.types.path;
+              description = "Private side of the key. Should be agenix encrypted and contain the `.age` extension";
+            };
+            public = lib.mkOption {
+              type = lib.types.path;
+              description = "Public side of the key. Should be agenix encrypted and contain the `.pub` extension";
+            };
+          };
+        }
+      );
       description = ''
         List of additional keypairs.
-        The path will have '.age' appended and treated as the private side with agenix, and will have '.pub' appended for the public side.
+        The private and public side must share the same name, with different extensions.
         It is important to use a name recognizable by OpenSSH'';
-      example = [ ./id_ed25519_key ];
+      example = [
+        {
+          private = ./id_ed25519_key.age;
+          public = ./id_ed25519_key.pub;
+        }
+      ];
       default = [ ];
     };
     extraHosts = (options.home-manager.users.type.getSubOptions [ ]).programs.ssh.settings;
@@ -55,13 +73,21 @@ in
 
   config =
     let
-      listToAttrs = mapper: list: builtins.listToAttrs (map mapper cfg.extraKeys);
+      listToAttrs = mapper: list: builtins.listToAttrs (map mapper list);
     in
     lib.mkIf cfg.enable {
       assertions = [
         {
           assertion = builtins.hasAttr "*" cfg.extraHosts == false;
           message = "Cannot use '*' as an extra host";
+        }
+        {
+          assertion =
+            let
+              cleanName = suffix: name: lib.strings.removeSuffix suffix (builtins.baseNameOf name);
+            in
+            builtins.all (k: (cleanName ".age" k.private) == (cleanName ".pub" k.public)) cfg.extraKeys;
+          message = "Extra keys must have have the same name, just different extensions `.age` and `.pub`";
         }
       ];
 
@@ -114,10 +140,10 @@ in
         };
       }
       // (listToAttrs (name: {
-        name = util.secret.mkPath path (builtins.baseNameOf name);
+        name = util.secret.mkPath path (builtins.baseNameOf name.private);
         value = {
-          rekeyFile = name + ".age";
-          path = "${user.homeDirectory}/.ssh/${builtins.baseNameOf name}";
+          rekeyFile = name.private;
+          path = "${user.homeDirectory}/.ssh/${builtins.baseNameOf name.private}";
           mode = "600";
           owner = user.userName;
           symlink = false;
@@ -129,9 +155,9 @@ in
           ".ssh/id_ed25519.pub".source = ./_secrets/${secret}.pub;
         }
         // (listToAttrs (name: {
-          name = ".ssh/${builtins.baseNameOf name}.pub";
+          name = ".ssh/${builtins.baseNameOf name.public}";
           value = {
-            source = name + ".pub";
+            source = name.public;
           };
         }) cfg.extraKeys);
 

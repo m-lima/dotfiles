@@ -60,6 +60,12 @@
         ssh = {
           enable = true;
           listen = false;
+          extraKeys = [
+            {
+              private = ./_secrets/services/ssh/cog_id_ed25519.age;
+              public = ./_secrets/services/ssh/cog_id_ed25519.pub;
+            }
+          ];
           extraHosts = {
             "coall coallt" = {
               hostname = "10.0.0.10";

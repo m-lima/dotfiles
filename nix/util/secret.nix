@@ -1,7 +1,11 @@
 { lib }:
 let
   mkPath =
-    path: name: lib.strings.concatStringsSep "." (builtins.tail (builtins.tail path)) + ".${name}";
+    path: name:
+    let
+      cleanName = if lib.hasSuffix ".age" name then lib.strings.removeSuffix ".age" name else name;
+    in
+    lib.strings.concatStringsSep "." (builtins.tail (builtins.tail path)) + ".${cleanName}";
 
   rage =
     config: secret:
