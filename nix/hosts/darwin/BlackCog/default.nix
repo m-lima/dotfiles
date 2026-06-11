@@ -46,6 +46,12 @@
           };
         };
 
+        git = {
+          overrides = {
+            "~/code/cog" = ./_secrets/programs/git/cog.age;
+          };
+        };
+
         skull.enable = true;
         ui.slack.enable = true;
 
