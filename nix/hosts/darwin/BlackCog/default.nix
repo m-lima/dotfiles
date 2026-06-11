@@ -73,11 +73,17 @@
             }
           ];
           extraHosts = {
+            "cog.github.com" = {
+              HostName = "github.com";
+              User = "git";
+              IdentityFile = "~/.ssh/cog_id_ed25519";
+              IdentitiesOnly = true;
+            };
             "coall coallt" = {
-              hostname = "10.0.0.10";
+              HostName = "10.0.0.10";
             };
             "coallt" = {
-              RequestTTY = "yes";
+              RequestTTY = true;
               RemoteCommand = "tmux new -A";
             };
           };
