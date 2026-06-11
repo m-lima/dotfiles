@@ -74,6 +74,7 @@ in
   config =
     let
       listToAttrs = mapper: list: builtins.listToAttrs (map mapper list);
+      cleanName = suffix: name: lib.strings.removeSuffix suffix (builtins.baseNameOf name);
     in
     lib.mkIf cfg.enable {
       assertions = [
@@ -82,11 +83,9 @@ in
           message = "Cannot use '*' as an extra host";
         }
         {
-          assertion =
-            let
-              cleanName = suffix: name: lib.strings.removeSuffix suffix (builtins.baseNameOf name);
-            in
-            builtins.all (k: (cleanName ".age" k.private) == (cleanName ".pub" k.public)) cfg.extraKeys;
+          assertion = builtins.all (
+            k: (cleanName ".age" k.private) == (cleanName ".pub" k.public)
+          ) cfg.extraKeys;
           message = "Extra keys must have have the same name, just different extensions `.age` and `.pub`";
         }
       ];
@@ -143,7 +142,7 @@ in
         name = util.secret.mkPath path (builtins.baseNameOf name.private);
         value = {
           rekeyFile = name.private;
-          path = "${user.homeDirectory}/.ssh/${builtins.baseNameOf name.private}";
+          path = "${user.homeDirectory}/.ssh/${cleanName ".age" name.private}";
           mode = "600";
           owner = user.userName;
           symlink = false;
