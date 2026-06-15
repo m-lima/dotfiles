@@ -14,7 +14,6 @@
       creation.enable = true;
       dev.enable = true;
       disko.enable = true;
-      nextcloud.enable = true;
       ui.enable = true;
     };
 

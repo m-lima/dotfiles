@@ -104,7 +104,7 @@ in
     concatAttrs
     gitRev
     ;
-  load = import ./load.nix { inherit lib mkOptions getOptions; };
+  load = import ./load.nix { inherit lib; };
   secret = import ./secret.nix { inherit lib; };
   nginx = import ./nginx.nix { inherit lib mkPath getOptions; };
   systemd = import ./systemd.nix { inherit lib; };

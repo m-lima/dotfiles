@@ -223,10 +223,14 @@
 
           modules =
             hostModules
-            ++ util.load.modules ./modules/shared
-            ++ util.load.modules ./modules/nixos
-            ++ util.load.profiles ./profiles/shared
-            ++ util.load.profiles ./profiles/nixos
+            ++ util.load.modules [
+              ./modules/shared
+              ./modules/nixos
+            ]
+            ++ util.load.profiles [
+              ./profiles/shared
+              ./profiles/nixos
+            ]
             ++ [
               agenix.nixosModules.default
               agenix-rekey.nixosModules.default
@@ -244,11 +248,14 @@
 
           modules =
             hostModules
-            ++ util.load.modules ./modules/shared
-            ++ util.load.modules ./modules/darwin
-            ++ util.load.profiles ./profiles/shared
-            # TODO: Address this
-            # ++ util.load.profiles ./profiles/darwin
+            ++ util.load.modules [
+              ./modules/shared
+              ./modules/darwin
+            ]
+            ++ util.load.profiles [
+              ./profiles/shared
+              ./profiles/darwin
+            ]
             ++ [
               agenix.darwinModules.default
               agenix-rekey.darwinModules.default

@@ -1,7 +1,5 @@
 {
   lib,
-  getOptions,
-  mkOptions,
 }:
 let
   findFiles =
@@ -28,28 +26,47 @@ let
     in
     lib.flatten innerFindModules;
 
-  mkProfile = path: config: profile: {
-    options = mkOptions path { description = "${lib.last path} profile"; };
-    config.celo.modules = lib.mkIf (getOptions path config).enable profile;
+  mkProfile = name: config: profile: {
+    config.celo.modules = lib.mkIf config.celo.profiles.${name}.enable profile;
   };
 
   modules =
-    root:
-    map ({ file, path }: (import file) path) (
-      findFiles "mod" root [
-        "celo"
-        "modules"
-      ]
-    );
+    roots:
+    let
+      allRoots = lib.flatten (
+        map (
+          root:
+          findFiles "mod" root [
+            "celo"
+            "modules"
+          ]
+        ) roots
+      );
+    in
+    map ({ file, path }: (import file) path) allRoots;
 
   profiles =
-    root:
-    map ({ file, path }: { config, ... }: mkProfile path config (import file)) (
-      findFiles "pro" root [
-        "celo"
-        "profiles"
-      ]
-    );
+    roots:
+    let
+      allRoots = lib.flatten (
+        map (
+          root:
+          findFiles "pro" root [
+            "celo"
+            "profiles"
+          ]
+        ) roots
+      );
+      names = lib.lists.uniqueStrings (map ({ file, path }: lib.last path) allRoots);
+
+      options = map (name: {
+        options.celo.profiles.${name}.enable = lib.mkEnableOption "${name} profile";
+      }) names;
+      configs = map (
+        { file, path }: { config, ... }: mkProfile (lib.last path) config (import file)
+      ) allRoots;
+    in
+    options ++ configs;
 in
 {
   inherit

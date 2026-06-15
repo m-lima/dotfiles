@@ -2,6 +2,7 @@ path:
 {
   config,
   util,
+  pkgs,
   ...
 }:
 let
@@ -9,10 +10,9 @@ let
 in
 {
   config = util.enforceHome path config cfg.enable {
-    environment.persistence = util.withImpermanence config {
-      home.directories = [
-        ".cache/keepassxc"
-        ".config/keepassxc"
+    home-manager = {
+      home.packages = [
+        (pkgs.callPackage ./nextcloud.pkg.nix { })
       ];
     };
   };
