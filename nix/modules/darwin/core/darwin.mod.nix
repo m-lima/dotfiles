@@ -35,6 +35,7 @@ in
           orientation = "left";
           show-process-indicators = false;
           show-recents = false;
+          showAppExposeGestureEnabled = true;
           static-only = true;
           tilesize = 32;
         };
