@@ -49,6 +49,7 @@ in
           StageManagerHideWidgets = true;
           StandardHideWidgets = true;
         };
+        universalaccess.closeViewScrollWheelToggle = true;
         CustomUserPreferences = {
           "com.apple.Spotlight" = {
             # Hide from the menu bar
