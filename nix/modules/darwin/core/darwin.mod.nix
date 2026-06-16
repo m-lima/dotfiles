@@ -7,6 +7,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  cfgUi = config.celo.modules.programs.ui;
 in
 {
   options = util.mkOptions path {
@@ -15,6 +16,7 @@ in
       description = "User to which apply the darwin nix changes";
       default = config.celo.modules.core.user.userName;
     };
+    dynamicDock = lib.mkEnableOption "only show open apps in the dock";
   };
 
   config = lib.mkIf cfg.enable {
@@ -33,12 +35,37 @@ in
           largesize = 56;
           magnification = true;
           orientation = "left";
-          show-process-indicators = false;
           show-recents = false;
           showAppExposeGestureEnabled = true;
-          static-only = true;
           tilesize = 32;
-        };
+        }
+        // (
+          if cfg.dynamicDock then
+            {
+              show-process-indicators = false;
+              static-only = true;
+              persistent-apps = [ ];
+            }
+          else
+            {
+              show-process-indicators = true;
+              static-only = false;
+              persistent-apps =
+                (lib.optional cfgUi.firefox.enable {
+                  app = "/Users/${cfg.primaryUser}/Applications/Home Manager Apps/Firefox ESR.app";
+                })
+                ++ (lib.optional cfgUi.slack.enable {
+                  app = "/Users/${cfg.primaryUser}/Applications/Home Manager Apps/Slack.app";
+                })
+                ++ (lib.optional cfgUi.ghostty.enable {
+                  app = "/Users/${cfg.primaryUser}/Applications/Home Manager Apps/Ghostty.app";
+                })
+                ++ [
+                  { app = "/System/Applications/Mail.app"; }
+                  { app = "/System/Applications/Calendar.app"; }
+                ];
+            }
+        );
         iCal."first day of week" = "Sunday";
         NSGlobalDomain = {
           AppleInterfaceStyle = "Dark";
