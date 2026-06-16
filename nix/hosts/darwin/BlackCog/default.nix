@@ -55,6 +55,7 @@
         skull.enable = true;
 
         # NEW
+        cursor.enable = true;
         coreutils.enable = true;
         nmap.enable = true;
         pstree.enable = true;
