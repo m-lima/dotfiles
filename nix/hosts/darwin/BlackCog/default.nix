@@ -53,13 +53,17 @@
         };
 
         skull.enable = true;
-        ui.slack.enable = true;
 
         # NEW
         coreutils.enable = true;
         nmap.enable = true;
         pstree.enable = true;
         yq.enable = true;
+
+        ui = {
+          blank.enable = true;
+          slack.enable = true;
+        };
       };
 
       services = {

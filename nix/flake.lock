@@ -55,6 +55,39 @@
         "type": "github"
       }
     },
+    "blank": {
+      "inputs": {
+        "crane": [
+          "crane"
+        ],
+        "fenix": [
+          "fenix"
+        ],
+        "helper": [
+          "nix-template"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781572471,
+        "narHash": "sha256-gqdeNengs/3LRLJl7IGhuo+e+5kEErVX2mn2fcmkAvE=",
+        "owner": "m-lima",
+        "repo": "blank",
+        "rev": "8bd99d061d5c91d720501fb20ca1d5875dda18bf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "m-lima",
+        "ref": "nix-001",
+        "repo": "blank",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1780532242,
@@ -639,6 +672,7 @@
       "inputs": {
         "agenix": "agenix",
         "agenix-rekey": "agenix-rekey",
+        "blank": "blank",
         "crane": "crane",
         "criscelo": "criscelo",
         "disko": "disko",

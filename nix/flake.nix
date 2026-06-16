@@ -91,6 +91,16 @@
     };
 
     # Local dependencies
+    blank = {
+      url = "github:m-lima/blank?ref=nix-001";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        crane.follows = "crane";
+        fenix.follows = "fenix";
+        helper.follows = "nix-template";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
     elo = {
       url = "github:m-lima/elo?ref=nix-001";
       inputs = {

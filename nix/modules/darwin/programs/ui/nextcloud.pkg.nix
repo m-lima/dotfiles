@@ -35,7 +35,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
     mkdir -p $out/Applications
-    mv Applications/${finalAttrs.pname}.app $out/Applications/
+    mv Applications/${finalAttrs.pname}.app $out/Applications/.
     makeWrapper $out/Applications/${finalAttrs.pname}.app/Contents/MacOS/${finalAttrs.pname} $out/bin/${finalAttrs.pname}
     runHook postInstall
   '';
