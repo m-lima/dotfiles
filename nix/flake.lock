@@ -363,11 +363,9 @@
     "gomod2nix": {
       "inputs": {
         "flake-utils": [
-          "wifidog",
           "flake-utils"
         ],
         "nixpkgs": [
-          "wifidog",
           "nixpkgs"
         ]
       },
@@ -462,6 +460,39 @@
         "owner": "m-lima",
         "ref": "nix-001",
         "repo": "ipifier",
+        "type": "github"
+      }
+    },
+    "msaler": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "gomod2nix": [
+          "gomod2nix"
+        ],
+        "helper": [
+          "nix-template"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781692502,
+        "narHash": "sha256-/wIv2U8nkvcf2KFlwakRhbNsIZmXTrewDxCAWlikLvs=",
+        "owner": "m-lima",
+        "repo": "msaler",
+        "rev": "ec6dc6b4c0ac110c5ffb1b515ba875d8f1915b1a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "m-lima",
+        "ref": "nix-001",
+        "repo": "msaler",
         "type": "github"
       }
     },
@@ -718,9 +749,11 @@
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
+        "gomod2nix": "gomod2nix",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "ipifier": "ipifier",
+        "msaler": "msaler",
         "nix-darwin": "nix-darwin",
         "nix-template": "nix-template",
         "nixpkgs": "nixpkgs",
@@ -889,7 +922,9 @@
         "flake-utils": [
           "flake-utils"
         ],
-        "gomod2nix": "gomod2nix",
+        "gomod2nix": [
+          "gomod2nix"
+        ],
         "helper": [
           "nix-template"
         ],

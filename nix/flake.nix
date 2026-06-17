@@ -18,6 +18,13 @@
     };
     flake-compat.url = "github:edolstra/flake-compat";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    gomod2nix = {
+      url = "github:nix-community/gomod2nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
 
     # Dependencies
     agenix = {
@@ -134,6 +141,16 @@
         treefmt-nix.follows = "treefmt-nix";
       };
     };
+    msaler = {
+      url = "github:m-lima/msaler?ref=nix-001";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+        helper.follows = "nix-template";
+        treefmt-nix.follows = "treefmt-nix";
+        gomod2nix.follows = "gomod2nix";
+      };
+    };
     passer = {
       url = "github:m-lima/passer?ref=nix-002";
       inputs = {
@@ -196,6 +213,7 @@
         flake-utils.follows = "flake-utils";
         treefmt-nix.follows = "treefmt-nix";
         helper.follows = "nix-template";
+        gomod2nix.follows = "gomod2nix";
       };
     };
     criscelo = {

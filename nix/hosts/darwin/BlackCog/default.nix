@@ -57,6 +57,7 @@
         # NEW
         cursor.enable = true;
         coreutils.enable = true;
+        msaler.enable = true;
         nmap.enable = true;
         pstree.enable = true;
         yq.enable = true;
