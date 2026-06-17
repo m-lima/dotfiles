@@ -584,6 +584,42 @@
         "type": "github"
       }
     },
+    "peanut": {
+      "inputs": {
+        "crane": [
+          "crane"
+        ],
+        "fenix": [
+          "fenix"
+        ],
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "helper": [
+          "nix-template"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781686436,
+        "narHash": "sha256-5URf1uibOKwhaL6yiil6A+5tH3JqbTq0Ex5+EX4DVtQ=",
+        "owner": "m-lima",
+        "repo": "peanut",
+        "rev": "99a0c190ad56340a35f6968f45dfe09ca500c330",
+        "type": "github"
+      },
+      "original": {
+        "owner": "m-lima",
+        "ref": "nix-001",
+        "repo": "peanut",
+        "type": "github"
+      }
+    },
     "plasma-manager": {
       "inputs": {
         "home-manager": [
@@ -690,6 +726,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "passer": "passer",
+        "peanut": "peanut",
         "plasma-manager": "plasma-manager",
         "ragenix": "ragenix",
         "sddm-sugar-candy-nix": "sddm-sugar-candy-nix",

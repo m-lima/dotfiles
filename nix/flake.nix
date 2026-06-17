@@ -145,6 +145,17 @@
         treefmt-nix.follows = "treefmt-nix";
       };
     };
+    peanut = {
+      url = "github:m-lima/peanut?ref=nix-001";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        crane.follows = "crane";
+        fenix.follows = "fenix";
+        flake-utils.follows = "flake-utils";
+        helper.follows = "nix-template";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
     ragenix = {
       url = "github:m-lima/ragenix?ref=nix-002";
       inputs = {

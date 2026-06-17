@@ -6,6 +6,7 @@
     fzf.enable = true;
     jq.enable = true;
     lazygit.enable = true;
+    peanut.enable = true;
     rage.enable = true;
     rg.enable = true;
     simpalt.enable = true;
