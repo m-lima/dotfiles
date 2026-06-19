@@ -5,7 +5,6 @@ path:
   util,
   pkgs,
   inputs,
-  rootDir,
   ...
 }:
 let
@@ -15,6 +14,7 @@ let
   skull = inputs.skull.packages.${pkgs.stdenv.hostPlatform.system};
   user = "skull";
   group = user;
+  secret = util.secret.mkPath path;
 in
 {
   imports = nginx.server {
@@ -32,16 +32,20 @@ in
       (nginx.extras.proxy {
         socket = "unix:/run/skull/socket";
         location = "/api/";
-        endgame = true;
-        autoLogin = true;
+        endgame = {
+          enable = true;
+          autoLogin = true;
+        };
       })
       (nginx.extras.proxy {
         socket = "unix:/run/skull/socket";
         location = "/ws/";
         proxyPath = "ws/";
         ws = true;
-        endgame = true;
-        autoLogin = false;
+        endgame = {
+          enable = true;
+          autoLogin = false;
+        };
       })
     ];
   };
@@ -53,12 +57,6 @@ in
       description = "Base path for Skull";
     };
 
-    users = lib.mkOption {
-      type = lib.types.nonEmptyListOf lib.types.singleLineStr;
-      default = util.secret.rage config /${rootDir}/secrets/general/email.rage;
-      description = "Users with access to Skull";
-    };
-
     chart = lib.mkOption {
       type = lib.types.singleLineStr;
       default = "";
@@ -66,7 +64,7 @@ in
     };
   };
 
-  config = lib.mkIf (cfg.enable && builtins.length cfg.users > 0) {
+  config = lib.mkIf cfg.enable {
     users = {
       users = {
         ${user} = {
@@ -84,6 +82,14 @@ in
       };
     };
 
+    age.secrets = {
+      ${secret "users"} = {
+        rekeyFile = ./_secrets/users.age;
+        owner = user;
+        group = user;
+      };
+    };
+
     systemd = {
       services.skull = {
         after = [ "network-online.target" ];
@@ -96,7 +102,7 @@ in
           ExecStart = builtins.concatStringsSep " " [
             "${skull.server}/bin/skull-server"
             "--socket ${toString cfg.socket}"
-            "--users ${pkgs.writeText "users" (lib.concatStringsSep "\n" cfg.users)}"
+            "--users ${config.age.secrets.${secret "users"}.path}"
             "--create"
             "-vv"
             "${cfg.home}"

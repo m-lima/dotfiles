@@ -3,34 +3,33 @@ path:
   lib,
   config,
   util,
-  rootDir,
   ...
 }:
 let
   cfg = util.getOptions path config;
-  cfgEndgame = config.celo.modules.servers.endgame;
   group = "server_static";
   nginx = util.nginx path config;
 in
 {
   imports = nginx.server {
     name = "static";
-    endgame =
-      let
-        rage = util.secret.rage config /${rootDir}/secrets/general/email.rage;
-      in
-      if builtins.length rage > 0 then rage else cfgEndgame.enable;
     locations = {
       "/" = {
         extraConfig = "autoindex on;";
         root = cfg.home;
       };
-
-      "/private" = lib.mkIf nginx.endgame.isActive {
-        extraConfig = "autoindex on;" + (nginx.endgame.extraConfig true);
+    }
+    // (lib.optionalAttrs cfg.withPrivate {
+      "/private" = {
+        extraConfig = "autoindex on;";
         root = cfg.home;
+        endgame = {
+          enable = true;
+          autoLogin = true;
+          whitelist = ./_secrets/users.age;
+        };
       };
-    };
+    });
   };
 
   options = util.mkOptions path {
@@ -44,6 +43,10 @@ in
       type = lib.types.listOf lib.types.singleLineStr;
       description = "Users that can modify the contents of static";
       default = [ config.celo.modules.core.user.userName ];
+    };
+
+    withPrivate = lib.mkEnableOption "private section under `/private`" // {
+      default = true;
     };
   };
 

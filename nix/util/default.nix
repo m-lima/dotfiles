@@ -88,6 +88,10 @@ let
   concatAttrs = builtins.foldl' (acc: curr: acc // curr) { };
 
   gitRev = flake.shortRev or flake.dirtyShortRev or flake.lastModified or "unknown";
+
+  load = import ./load.nix { inherit lib; };
+  secret = import ./secret.nix { inherit lib; };
+  systemd = import ./systemd.nix { inherit lib; };
 in
 {
   inherit
@@ -103,9 +107,17 @@ in
     extractCompdef
     concatAttrs
     gitRev
+
+    load
+    secret
+    systemd
     ;
-  load = import ./load.nix { inherit lib; };
-  secret = import ./secret.nix { inherit lib; };
-  nginx = import ./nginx.nix { inherit lib mkPath getOptions; };
-  systemd = import ./systemd.nix { inherit lib; };
+  nginx = import ./nginx.nix {
+    inherit
+      lib
+      mkPath
+      getOptions
+      ;
+    mkSecretPath = secret.mkPath;
+  };
 }

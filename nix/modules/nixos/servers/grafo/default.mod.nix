@@ -5,7 +5,6 @@ path:
   options,
   util,
   pkgs,
-  rootDir,
   ...
 }:
 let
@@ -18,8 +17,11 @@ in
 {
   imports = nginx.server {
     name = "grafo";
-    endgame = util.secret.rage config /${rootDir}/secrets/general/email.rage;
-    extraConfig = nginx.endgame.extraConfig true;
+    endgame = {
+      enable = true;
+      autoLogin = true;
+      whitelist = ./_secrets/users.age;
+    };
     extras = [
       (nginx.extras.proxy {
         socket = "unix:/var${socket}";
@@ -55,7 +57,7 @@ in
     };
   };
 
-  config = lib.mkIf (cfg.enable && builtins.length cfg.endgame > 0) {
+  config = lib.mkIf cfg.enable {
     users.users = {
       telegraf.extraGroups = [
         "nextcloud"
@@ -65,6 +67,11 @@ in
     };
 
     age.secrets = {
+      ${secret "adminEmail"} = {
+        rekeyFile = ./_secrets/adminEmail.age;
+        owner = "grafana";
+        group = "grafana";
+      };
       ${secret "cloudToken"} = lib.mkIf cfg.scrapers.cloud {
         rekeyFile = ./_secrets/cloudToken.age;
       };
@@ -86,7 +93,7 @@ in
           };
 
           security = {
-            admin_email = builtins.head cfg.endgame;
+            admin_email = "$__file{${config.age.secrets.${secret "adminEmail"}.path}}";
             secret_key = "$__file{${config.age.secrets.${secret "grafanaKey"}.path}}";
           };
 

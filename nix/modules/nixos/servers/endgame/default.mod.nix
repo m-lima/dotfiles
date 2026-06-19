@@ -34,7 +34,6 @@ in
       default = ./_secrets/client_id.age;
     };
 
-    # TODO: Allow passing in a file to use with agenix
     clientSecret = lib.mkOption {
       type = lib.types.either lib.types.path lib.types.singleLineStr;
       description = "OIDC client secret";

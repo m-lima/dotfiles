@@ -32,7 +32,9 @@ in
         ws = true;
         location = "/ws/";
         proxyPath = "ws/";
-        endgame = true;
+        endgame = {
+          enable = true;
+        };
       })
     ];
   };
