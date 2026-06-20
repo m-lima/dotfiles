@@ -24,7 +24,7 @@
         };
         dropbear = {
           enable = true;
-          port = util.secret.rageOr config ./_secrets/core/dropbear/port.rage 22;
+          port = util.secret.rage.orElse config ./_secrets/core/dropbear/port.rage 22;
         };
         impermanence = {
           retain.user.directories = [
@@ -51,7 +51,7 @@
         nginx = {
           enable = true;
           tls = true;
-          baseHost = util.secret.rageOptional config ./_secrets/servers/nginx/baseHost.rage;
+          baseHost = util.secret.rage.mkIf config ./_secrets/servers/nginx/baseHost.rage;
         };
         endgame = {
           enable = true;
@@ -63,14 +63,14 @@
         ipe.enable = true;
         passer = {
           enable = true;
-          extraDomains = util.secret.rageOptional config ./_secrets/servers/passer/domains.rage;
+          extraDomains = util.secret.rage.mkIf config ./_secrets/servers/passer/domains.rage;
         };
         skull.enable = true;
         static.enable = true;
-        criscelo = {
+        criscelo = util.secret.rage.mkMapIf config ./_secrets/servers/criscelo/domain.rage (domain: {
+          inherit domain;
           enable = true;
-          domain = util.secret.rageOr config ./_secrets/servers/criscelo/domain.rage "invalid.host";
-        };
+        });
       };
       services = {
         postgres = {
@@ -79,7 +79,7 @@
         };
         ssh = {
           enable = true;
-          ports = util.secret.rage config ./_secrets/services/ssh/ports.rage;
+          ports = util.secret.rage.mkIf config ./_secrets/services/ssh/ports.rage;
           security = "sshguard";
         };
       };

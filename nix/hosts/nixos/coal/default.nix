@@ -42,7 +42,7 @@
         nginx = {
           enable = true;
           tls = true;
-          baseHost = util.secret.rageOptional config ./_secrets/servers/nginx/baseHost.rage;
+          baseHost = util.secret.rage.mkIf config ./_secrets/servers/nginx/baseHost.rage;
         };
         endgame = {
           enable = true;
@@ -112,6 +112,6 @@
     };
     defaultGateway = "10.0.0.1";
     nameservers = [ "10.0.0.1" ];
-    firewall.allowedTCPPorts = util.secret.rageOptional config ./_secrets/core/networking/firewall.rage;
+    firewall.allowedTCPPorts = util.secret.rage.mkIf config ./_secrets/core/networking/firewall.rage;
   };
 }

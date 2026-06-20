@@ -7,7 +7,7 @@ let
     in
     lib.strings.concatStringsSep "." (builtins.tail (builtins.tail path)) + ".${cleanName}";
 
-  rage =
+  optional =
     config: secret:
     if builtins.hasAttr "decrypt" builtins then
       let
@@ -22,25 +22,36 @@ let
     else
       builtins.warn "Ragenix is not yet initialized. Skipping ${secret}" [ ];
 
-  rageOptional =
-    config: secret:
-    let
-      maybeSecret = rage config secret;
-    in
-    lib.mkIf (builtins.length maybeSecret > 0) (builtins.head maybeSecret);
-
-  rageOr =
+  orElse =
     config: secret: default:
     let
-      maybeSecret = rage config secret;
+      maybeSecret = optional config secret;
     in
     if builtins.length maybeSecret > 0 then builtins.head maybeSecret else default;
+
+  mapOrElse =
+    config: secret: mapper: default:
+    let
+      maybeSecret = map mapper (optional config secret);
+    in
+    if builtins.length maybeSecret > 0 then builtins.head maybeSecret else default;
+
+  mkIf = config: secret: orElse config secret (lib.mkIf false { });
+
+  mkMapIf =
+    config: secret: mapper:
+    mapOrElse config secret mapper (lib.mkIf false { });
+
 in
 {
-  inherit
-    mkPath
-    rage
-    rageOptional
-    rageOr
-    ;
+  inherit mkPath;
+  rage = {
+    inherit
+      optional
+      orElse
+      mapOrElse
+      mkIf
+      mkMapIf
+      ;
+  };
 }
