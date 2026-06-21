@@ -46,7 +46,6 @@
         };
         endgame = {
           enable = true;
-          bin = true;
           key = ./_secrets/servers/endgame/key.age;
         };
         jelly = {
@@ -88,6 +87,7 @@
           symbol = "₵";
         };
         skull.enable = true;
+        endgame.enable = true;
         ui = {
           kde = {
             enable = true;

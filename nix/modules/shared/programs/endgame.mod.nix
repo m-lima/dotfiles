@@ -8,7 +8,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-  msaler = inputs.msaler.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  endgame = inputs.endgame.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 {
   options = util.mkOptionsEnable path;
@@ -16,7 +16,7 @@ in
   config = util.enforceHome path config cfg.enable {
     home-manager = {
       home.packages = [
-        msaler
+        endgame
       ];
     };
   };

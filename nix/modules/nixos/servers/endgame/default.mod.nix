@@ -11,18 +11,13 @@ let
   cfg = util.getOptions path config;
   cfgNgx = config.celo.modules.servers.nginx;
   cfgSysNgx = config.services.nginx;
-  endgame = {
-    bin = inputs.endgame.packages.${pkgs.stdenv.hostPlatform.system}.default;
-    module = inputs.endgame.module.${pkgs.stdenv.hostPlatform.system};
-  };
+  endgame = inputs.endgame.module.${pkgs.stdenv.hostPlatform.system};
   secretKey = util.secret.mkPath path "key";
   secretClientId = util.secret.mkPath path "clientId";
   secretClientSecret = util.secret.mkPath path "clientSecret";
 in
 {
   options = util.mkOptions path {
-    bin = lib.mkEnableOption "Install the cookie generator";
-
     key = lib.mkOption {
       type = lib.types.either lib.types.path lib.types.singleLineStr;
       description = "Key to use for endgame encryption (cookie & state)";
@@ -83,10 +78,6 @@ in
       };
     };
 
-    home-manager = util.withHome config {
-      home.packages = [ endgame.bin ];
-    };
-
     services.nginx = {
       commonHttpConfig = lib.mkAfter ''
         endgame_key ${
@@ -112,7 +103,7 @@ in
 
       package = pkgs.nginx.override (prev: {
         modules = prev.modules ++ [
-          endgame.module
+          endgame
           # Needed for the redirect `set_unescape_uri`
           pkgs.nginxModules.develkit
           pkgs.nginxModules.set-misc

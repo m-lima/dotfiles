@@ -53,6 +53,7 @@
         };
 
         skull.enable = true;
+        endgame.enable = true;
 
         # NEW
         cursor.enable = true;
