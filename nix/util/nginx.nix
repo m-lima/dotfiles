@@ -20,7 +20,7 @@ let
         if option.autoLogin then "endgame_auto_login on;" else "endgame_auto_login off;"
       ))
       (lib.optionalString (option.whitelist != null)
-        "include ${config.age.secrets.${mkSecretPath path name}.path};"
+        "include ${config.age.secrets.${mkSecretName name}.path};"
       )
     ];
   location = {
@@ -28,6 +28,24 @@ let
       name: (isEndgameActive cfg.endgame.locations.${name}) || (isEndgameActive cfg.endgame.root);
     mkEndgameExtraConfig = name: mkEndgameExtraConfig cfg.endgame.locations.${name} name;
   };
+
+  mkSecretName =
+    name:
+    mkSecretPath path (
+      cfg.hostName
+      + "."
+      + (lib.stringAsChars (
+        c:
+        if c == " " then
+          "_"
+        else if c == "/" then
+          "-"
+        else if builtins.match "[a-zA-Z0-9~\.]" c != null then
+          c
+        else
+          "#"
+      ) name)
+    );
 
   baseServer =
     # Name of the server [string]
@@ -151,7 +169,7 @@ let
         );
 
         age.secrets = {
-          ${mkSecretPath path "root"} =
+          ${mkSecretName "root"} =
             lib.mkIf (isEndgameActive cfg.endgame.root && cfg.endgame.root.whitelist != null)
               {
                 rekeyFile = cfg.endgame.root.whitelist;
@@ -162,7 +180,7 @@ let
         // (builtins.listToAttrs (
           map
             (l: {
-              name = mkSecretPath path l;
+              name = mkSecretName l;
               value = {
                 rekeyFile = cfg.endgame.locations.${l}.whitelist;
                 owner = "nginx";
