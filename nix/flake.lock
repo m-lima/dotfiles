@@ -214,16 +214,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1773684774,
-        "narHash": "sha256-MeCNOOG7+ikOngrwHg30qjwGZM+q0MtVhx4jGhN/wrA=",
+        "lastModified": 1782042380,
+        "narHash": "sha256-sddgbfHiAanJsnKx4BsfVsT75dd2KfwS8f2fz7QTfHc=",
         "owner": "m-lima",
         "repo": "elo",
-        "rev": "1038ddd547bf4a9800d75832e63831884db9f4fd",
+        "rev": "2652b54d77da5899662b91b1f8138536685097ad",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "nix-001",
+        "ref": "nix-002",
         "repo": "elo",
         "type": "github"
       }
@@ -601,16 +601,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1778668673,
-        "narHash": "sha256-MKZh04mTfKi7vaBNB7aZ8LO82bH5b3t33IKE5+CsiEM=",
+        "lastModified": 1782049344,
+        "narHash": "sha256-lFzQ41p/F9gnEOwQMzSnp3voQFKBff0smkxsW/aaOvk=",
         "owner": "m-lima",
         "repo": "passer",
-        "rev": "292d487ecfe24de132adc4837873492b91a9fece",
+        "rev": "95624e669892b0bf216e0d933c2dd90e0031b524",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "nix-002",
+        "ref": "nix-003",
         "repo": "passer",
         "type": "github"
       }
@@ -868,16 +868,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1774298480,
-        "narHash": "sha256-GwmdQRZxGGaTzzX+T9pTKEKiGHPoGHNJcgeuy8raWp8=",
+        "lastModified": 1782044006,
+        "narHash": "sha256-4I+F15wc9mKyHPhx91Eaq28su02mqkgxxDU3LShd124=",
         "owner": "m-lima",
         "repo": "skull",
-        "rev": "909441b8b1cbde3956e9aa226165ab3c11f83dcb",
+        "rev": "a5c207071cd5b0c1700bb9810938a24a3369d88a",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "nix-001",
+        "ref": "nix-002",
         "repo": "skull",
         "type": "github"
       }

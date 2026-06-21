@@ -109,7 +109,7 @@
       };
     };
     elo = {
-      url = "github:m-lima/elo?ref=nix-001";
+      url = "github:m-lima/elo?ref=nix-002";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
@@ -152,7 +152,7 @@
       };
     };
     passer = {
-      url = "github:m-lima/passer?ref=nix-002";
+      url = "github:m-lima/passer?ref=nix-003";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
@@ -196,7 +196,7 @@
       };
     };
     skull = {
-      url = "github:m-lima/skull?ref=nix-001";
+      url = "github:m-lima/skull?ref=nix-002";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
