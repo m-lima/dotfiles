@@ -56,12 +56,6 @@ in
       default = "/srv/skull";
       description = "Base path for Skull";
     };
-
-    chart = lib.mkOption {
-      type = lib.types.singleLineStr;
-      default = "";
-      description = "Link to charts";
-    };
   };
 
   config = lib.mkIf cfg.enable {
