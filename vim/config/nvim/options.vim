@@ -1,3 +1,8 @@
+" Enable OSC52
+if has('nvim-0.11') && (!empty($SSH_TTY) || !empty($SSH_CLIENT))
+  let g:clipboard = 'osc52'
+endif
+
 " Flash yanked text
 augroup optionsYankHighlight
   autocmd!

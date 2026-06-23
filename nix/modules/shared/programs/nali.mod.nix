@@ -139,7 +139,7 @@ in
               if [ "$1" ]
               then
                 case "$1" in
-                  ${lib.concatStringsSep "\n" (
+                  ${builtins.concatStringsSep "\n" (
                     lib.mapAttrsToList (k: v: ''${k}) eval cd "${v}/$2"; return ;;'') cfg.entries
                   )}
                 esac
@@ -155,13 +155,13 @@ in
               if (( CURRENT == 2 ))
               then
                 local list=( ${
-                  lib.concatStringsSep " " (lib.mapAttrsToList (k: v: ''"${k}:${v}"'') cfg.entries)
+                  builtins.concatStringsSep " " (lib.mapAttrsToList (k: v: ''"${k}:${v}"'') cfg.entries)
                 } )
                 _describe 'targets' list
               elif (( CURRENT == 3 ))
               then
                 case "$words[2]" in
-                  ${lib.concatStringsSep "\n" (
+                  ${builtins.concatStringsSep "\n" (
                     lib.mapAttrsToList (k: v: ''${k}) eval _path_files -W "${v}" -/; return ;;'') cfg.entries
                   )}
                 esac

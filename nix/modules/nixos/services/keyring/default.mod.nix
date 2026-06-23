@@ -56,7 +56,7 @@ in
         gnome-keyring-daemon-start = pkgs.writeShellScriptBin "gnome-keyring-daemon-start" (
           "exec ${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --foreground --unlock"
           + lib.optionalString (cfg.components != [ ]) (
-            " --components=" + lib.concatStringsSep "," cfg.components
+            " --components=" + builtins.concatStringsSep "," cfg.components
           )
           + " < ${config.age.secrets.${util.secret.mkPath path "password"}.path}"
         );

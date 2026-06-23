@@ -5,7 +5,7 @@ let
     let
       cleanName = if lib.hasSuffix ".age" name then lib.strings.removeSuffix ".age" name else name;
     in
-    lib.strings.concatStringsSep "." (builtins.tail (builtins.tail path)) + ".${cleanName}";
+    builtins.concatStringsSep "." (builtins.tail (builtins.tail path)) + ".${cleanName}";
 
   optional =
     config: secret:

@@ -51,7 +51,7 @@ in
         xdg.configFile =
           let
             toConfigFile = name: "git/${md5 name}";
-            mapAttrsToLines = mapper: attrs: lib.concatStringsSep "\n" (lib.mapAttrsToList mapper attrs);
+            mapAttrsToLines = mapper: attrs: builtins.concatStringsSep "\n" (lib.mapAttrsToList mapper attrs);
             parseOption = key: value: "${key} = ${value}";
             parseOptions = mapAttrsToLines parseOption;
             parseSection = key: value: ''

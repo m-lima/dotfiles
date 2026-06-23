@@ -79,7 +79,7 @@ let
 
   extractCompdef =
     string:
-    lib.concatStringsSep "\n" (
+    builtins.concatStringsSep "\n" (
       builtins.filter (s: builtins.isString s && lib.hasPrefix "compdef " s) (
         builtins.split "[[:space:]]*\n[[:space:]]*" string
       )

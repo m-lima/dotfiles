@@ -117,7 +117,6 @@ in
           withNodeJs = false;
           withPython3 = false;
 
-          sideloadInitLua = true;
           plugins =
             with pkgs.vimPlugins;
             [
@@ -164,40 +163,41 @@ in
             ]
             ++ lib.flatten (map (l: lsps.${l}.dependencies) cfg.lsps);
           extraPackages = lib.flatten (map (l: lsps.${l}.pkg) cfg.lsps);
+
+          initLua = builtins.concatStringsSep "\n" [
+            ''
+              require('config.cmp')
+              require('config.comment')
+              require('config.dap')
+              require('config.dap.ui')
+              require('config.fugitive')
+              require('config.gitsigns')
+              require('config.iron')
+              require('config.lightspeed')
+              require('config.lspconfig')
+              require('config.lua_out')
+              require('config.lualine')
+              require('config.neo_tree')
+              require('config.telescope')
+              require('config.toggleterm')
+              require('config.treesitter.highlight')
+              require('config.treesitter.none')
+              require('config.undotree')
+              require('config.render_markdown')
+
+              -- Personal
+              require('plugin.breadcrumbs')
+              require('plugin.buffer_stack')
+              require('plugin.dupe_comment')
+              require('plugin.overlength')
+            ''
+            (lib.strings.concatMapStringsSep "\n" (l: lsps.${l}.setup) cfg.lsps)
+            (builtins.readFile /${rootDir}/../vim/config/nvim/filetypes.lua)
+          ];
         };
       };
 
       xdg.configFile = {
-        "nvim/init.vim".text = ''
-          lua <<EOF
-          require('config.cmp')
-          require('config.comment')
-          require('config.dap')
-          require('config.dap.ui')
-          require('config.fugitive')
-          require('config.gitsigns')
-          require('config.iron')
-          require('config.lightspeed')
-          require('config.lspconfig')
-          require('config.lua_out')
-          require('config.lualine')
-          require('config.neo_tree')
-          require('config.telescope')
-          require('config.toggleterm')
-          require('config.treesitter.highlight')
-          require('config.treesitter.none')
-          require('config.undotree')
-          require('config.render_markdown')
-
-          -- Personal
-          require('plugin.breadcrumbs')
-          require('plugin.buffer_stack')
-          require('plugin.dupe_comment')
-          require('plugin.overlength')
-        ''
-        + (lib.strings.concatMapStringsSep "\n" (l: lsps.${l}.setup) cfg.lsps)
-        + builtins.readFile /${rootDir}/../vim/config/nvim/filetypes.lua
-        + "\nEOF";
         "nvim/lua".source = /${rootDir}/../vim/config/nvim/lua;
       };
     };
