@@ -34,6 +34,7 @@ in
         proxyPath = "ws/";
         endgame = {
           enable = true;
+          autoLogin = false;
         };
       })
     ];
