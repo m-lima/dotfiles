@@ -56,10 +56,6 @@
         static.enable = true;
       };
       services = {
-        ipifier = {
-          enable = true;
-          configuration = ./_secrets/services/ipifier/config.age;
-        };
         ssh = {
           enable = true;
           extraHosts = {
