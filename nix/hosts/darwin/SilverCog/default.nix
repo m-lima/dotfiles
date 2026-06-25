@@ -119,8 +119,15 @@
           enable = true;
           listen = false;
           extraHosts = {
+            "titanl titanlt" = {
+              HostName = "10.0.0.10";
+            };
+            "titanlt" = {
+              RequestTTY = true;
+              RemoteCommand = "tmux new -A";
+            };
             "coall coallt" = {
-              hostname = "10.0.0.10";
+              hostname = "10.0.0.11";
               user = "celo";
             };
             "coallt" = {

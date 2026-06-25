@@ -59,7 +59,18 @@
         #   enable = true;
         #   configuration = ./_secrets/services/ipifier/config.age;
         # };
-        ssh.enable = true;
+        ssh = {
+          enable = true;
+          extraHosts = {
+            "coall coallt" = {
+              HostName = "10.0.0.11";
+            };
+            "coallt" = {
+              RequestTTY = true;
+              RemoteCommand = "tmux new -A";
+            };
+          };
+        };
         mdns.enable = true;
       };
       programs = {
@@ -96,17 +107,17 @@
   };
 
   networking = {
-    # interfaces.wlp3s0 = {
-    #   ipv4.addresses = [
-    #     {
-    #       address = "10.0.0.10";
-    #       prefixLength = 24;
-    #     }
-    #   ];
-    #   useDHCP = false;
-    # };
+    interfaces.enp8s0 = {
+      ipv4.addresses = [
+        {
+          address = "10.0.0.10";
+          prefixLength = 24;
+        }
+      ];
+      useDHCP = false;
+    };
     defaultGateway = "10.0.0.1";
     nameservers = [ "10.0.0.1" ];
-    # firewall.allowedTCPPorts = util.secret.rage.mkIf config ./_secrets/core/networking/firewall.rage;
+    firewall.allowedTCPPorts = util.secret.rage.mkIf config ./_secrets/core/networking/firewall.rage;
   };
 }

@@ -86,8 +86,15 @@
               IdentityFile = "~/.ssh/cog_id_ed25519";
               IdentitiesOnly = true;
             };
-            "coall coallt" = {
+            "titanl titanlt" = {
               HostName = "10.0.0.10";
+            };
+            "titanlt" = {
+              RequestTTY = true;
+              RemoteCommand = "tmux new -A";
+            };
+            "coall coallt" = {
+              HostName = "10.0.0.11";
             };
             "coallt" = {
               RequestTTY = true;

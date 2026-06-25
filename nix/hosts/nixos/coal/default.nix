@@ -60,7 +60,18 @@
           enable = true;
           configuration = ./_secrets/services/ipifier/config.age;
         };
-        ssh.enable = true;
+        ssh = {
+          enable = true;
+          extraHosts = {
+            "coall coallt" = {
+              HostName = "10.0.0.11";
+            };
+            "coallt" = {
+              RequestTTY = true;
+              RemoteCommand = "tmux new -A";
+            };
+          };
+        };
         mdns.enable = true;
         wifidog = {
           enable = true;
@@ -104,7 +115,7 @@
     interfaces.wlp3s0 = {
       ipv4.addresses = [
         {
-          address = "10.0.0.10";
+          address = "10.0.0.11";
           prefixLength = 24;
         }
       ];
