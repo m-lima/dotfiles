@@ -6,15 +6,15 @@ base=$(dirname $(realpath "${0}"))
 
 if [ -z "${1}" ]; then
   echo "[31mHost name not provided. Available hosts:[m" >&2
-  ls ${base}/hosts | xargs -I{} echo {}
+  ls ${base}/hosts/nixos | xargs -I{} echo {}
   exit 1
 fi
 
 host=${1}
 
-if ! [ -d "${base}/hosts/${host}" ]; then
+if ! [ -d "${base}/hosts/nixos/${host}" ]; then
   echo "[31mHost not yet configured. Available hosts:[m" >&2
-  ls ${base}/hosts | xargs -I{} echo {}
+  ls ${base}/hosts/nixos | xargs -I{} echo {}
   exit 1
 fi
 
@@ -49,8 +49,8 @@ function mount {
 function mkHardwareConfig {
   echo "[34mMaking hardware config[m"
 
-  if [ -f "${base}/hosts/${host}/hardware-configuration.nix" ]; then
-    echo -n "[33mWARNING!![m There already exists a hardware configuration at ${base}/hosts/${host}/hardware-configuration.nix. Proceed? [y/N/a] "
+  if [ -f "${base}/hosts/nixos/${host}/hardware-configuration.nix" ]; then
+    echo -n "[33mWARNING!![m There already exists a hardware configuration at ${base}/hosts/nixos/${host}/hardware-configuration.nix. Proceed? [y/N/a] "
     read input
     case "${input}" in
       [Yy]) ;;
@@ -59,7 +59,7 @@ function mkHardwareConfig {
     esac
   fi
   nixos-generate-config --no-filesystems --root /mnt
-  cp /mnt/etc/nixos/hardware-configuration.nix "${base}/hosts/${host}/."
+  cp /mnt/etc/nixos/hardware-configuration.nix "${base}/hosts/nixos/${host}/."
 }
 
 function mkpass {
@@ -207,7 +207,7 @@ case "${2}" in
     format && mkHardwareConfig && mkpass && mksshid && rekey && prepare_persist
     ;;
   "all")
-    format && mkHardwareConfig && mkpass && mksshid && rekey && prepare_persist && vi "${base}/hosts/${host}/default.nix" && install
+    format && mkHardwareConfig && mkpass && mksshid && rekey && prepare_persist && vi "${base}/hosts/nixos/${host}/default.nix" && install
     ;;
   *)
     shift
