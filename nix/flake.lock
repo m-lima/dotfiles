@@ -449,16 +449,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1767729305,
-        "narHash": "sha256-lFy+1/A30nbtXRKTn/VsEHZ25fL25OS1rMA+OQaNp/4=",
+        "lastModified": 1782423813,
+        "narHash": "sha256-3SIBHVe8PQn9vAs25XTFm8YuXl4G7rRWg617p0KqOXw=",
         "owner": "m-lima",
         "repo": "ipifier",
-        "rev": "f731625c3425a61436c9c6662755c096d80b40d6",
+        "rev": "532de6c6ce0f806aa4f62ff134db09e8f39ba3ea",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "nix-001",
+        "ref": "nix-002",
         "repo": "ipifier",
         "type": "github"
       }
