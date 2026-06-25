@@ -30,6 +30,7 @@ in
         ActivityMonitor.IconType = 5;
         controlcenter = {
           Bluetooth = true;
+          Sound = true;
         };
         dock = {
           largesize = 56;
@@ -66,6 +67,9 @@ in
                 ];
             }
         );
+        trackpad = {
+          ForceSuppressed = true;
+        };
         iCal."first day of week" = "Sunday";
         NSGlobalDomain = {
           AppleInterfaceStyle = "Dark";
