@@ -67,7 +67,7 @@ let
               };
               autoLogin = lib.mkOption {
                 type = lib.types.nullOr lib.types.bool;
-                description = "Enable endgame auto login";
+                description = "Enable endgame auto login. In the C module, it defaults to `true`";
                 default = null;
               };
               whitelist = lib.mkOption {
