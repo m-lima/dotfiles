@@ -1,4 +1,5 @@
 {
+  lib,
   config,
   util,
   ...
@@ -105,6 +106,12 @@
       };
     };
   };
+
+  # Getting random freezes. This is an attempt to mitigate it
+  boot.kernelParams = lib.mkAfter [
+    "processor.max_cstate=1"
+    "idle=nowait"
+  ];
 
   networking = {
     interfaces.enp8s0 = {
