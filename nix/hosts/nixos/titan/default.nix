@@ -38,23 +38,31 @@
           persist = true;
         };
       };
-      # servers = {
-      #   nginx = {
-      #     enable = true;
-      #     tls = true;
-      #     baseHost = util.secret.rage.mkIf config ./_secrets/servers/nginx/baseHost.rage;
-      #   };
-      #   endgame = {
-      #     enable = true;
-      #     key = ./_secrets/servers/endgame/key.age;
-      #   };
-      #   jelly = {
-      #     enable = true;
-      #     hardwareAcceleration = "intel-modern";
-      #   };
-      #   grafo.enable = true;
-      #   static.enable = true;
-      # };
+      servers = {
+        nginx =
+          let
+            host = util.secret.rage.orElse config ./_secrets/servers/nginx/baseHost.rage "";
+          in
+          {
+            enable = true;
+            tls = true;
+            baseHost = lib.mkIf (host != "") host;
+            proxyProtocol = true;
+            streams = lib.mkIf (host != "") [
+              {
+                host = "coal.${host}";
+                target = "10.0.0.11";
+                proxyProtocol = true;
+              }
+            ];
+          };
+        endgame = {
+          enable = true;
+          key = ./_secrets/servers/endgame/key.age;
+        };
+        grafo.enable = true;
+        static.enable = true;
+      };
       services = {
         ipifier = {
           enable = true;
