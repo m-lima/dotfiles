@@ -43,6 +43,7 @@
           enable = true;
           tls = true;
           baseHost = util.secret.rage.mkIf config ./_secrets/servers/nginx/baseHost.rage;
+          proxyProtocol = true;
         };
         endgame = {
           enable = true;

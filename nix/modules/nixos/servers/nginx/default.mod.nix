@@ -75,7 +75,7 @@ in
         message = "Need to enable nginx to have TLS termination";
       }
       {
-        assertion = cfg.tls -> cfg.proxyProtocol != false;
+        assertion = cfg.proxyProtocol != false -> cfg.tls;
         message = "Cannot set proxy protocol if there is no TLS traffic";
       }
       {
