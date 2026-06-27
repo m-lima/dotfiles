@@ -29,6 +29,7 @@
         system = {
           timeZone = "Europe/Amsterdam";
           stateVersion = "26.05";
+          latest = false;
         };
       };
       hardware = {
@@ -120,6 +121,19 @@
     "processor.max_cstate=1"
     "idle=nowait"
   ];
+
+  hardware.graphics.enable = true;
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia = {
+    open = false;
+    modesetting.enable = true;
+
+    # For GTX 1080 (GP104)
+    # Obtained with `lspci | rg VGA`
+    # Checked in https://www.nvidia.com/en-us/drivers/unix/legacy-gpu/
+    # or searched for on the "All drivers" page
+    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+  };
 
   networking = {
     interfaces.enp8s0 = {
