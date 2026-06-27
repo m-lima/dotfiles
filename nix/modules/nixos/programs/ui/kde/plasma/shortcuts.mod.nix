@@ -52,8 +52,8 @@ in
             "Window One Desktop Down" = "Meta+Shift+Down";
             "Window One Desktop Up" = "Meta+Shift+Up";
             "Window One Desktop to the Right" = "Meta+Shift+Right";
-            "Window to Next Screen" = "";
-            "Window to Previous Screen" = "";
+            "Window to Next Screen" = "Meta+Ctrl+Tab";
+            "Window to Previous Screen" = "Meta+Shift+Ctrl+Tab";
             "view_actual_size" = "Meta+)";
             "view_zoom_in" = "Meta++";
             "view_zoom_out" = "Meta+_";
