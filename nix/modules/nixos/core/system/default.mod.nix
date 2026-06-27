@@ -17,6 +17,10 @@ in
       example = "24.11";
       type = lib.types.nonEmptyStr;
     };
+
+    latest = lib.mkEnableOption "bleeding edge kernel" // {
+      default = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -26,7 +30,7 @@ in
     boot = {
       # Use the latest linux packages
       # Update by `nix-channel --update` or `nixos-rebuild boot --upgrade`
-      kernelPackages = pkgs.linuxPackages_latest;
+      kernelPackages = if cfg.latest then pkgs.linuxPackages_latest else pkgs.linuxPackages;
 
       # Use the systemd-boot EFI boot loader.
       loader =
