@@ -207,6 +207,35 @@ in
               "17" = ",";
             };
           };
+          "com.apple.symbolichotkeys" = {
+            AppleSymbolicHotKeys = {
+              # 79: Move left a space (Ctrl + Left Arrow)
+              "79" = {
+                enabled = true;
+                value = {
+                  parameters = [
+                    65535
+                    123
+                    262144
+                  ];
+                  type = "standard";
+                };
+              };
+
+              # 81: Move right a space (Ctrl + Right Arrow)
+              "81" = {
+                enabled = true;
+                value = {
+                  parameters = [
+                    65535
+                    124
+                    262144
+                  ];
+                  type = "standard";
+                };
+              };
+            };
+          };
         };
       };
     };
