@@ -109,8 +109,11 @@
             enable = true;
             insomnia = true;
           };
+          games = {
+            steam.enable = true;
+            minecraft.enable = true;
+          };
           slack.enable = true;
-          steam.enable = true;
         };
       };
     };
