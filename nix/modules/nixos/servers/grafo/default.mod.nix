@@ -13,6 +13,7 @@ let
   secret = util.secret.mkPath path;
   nginx = util.nginx path config;
   socket = "/run/grafana/socket";
+  influxdbSocket = "/run/influxdb/socket";
 in
 {
   imports = nginx.server {
@@ -62,6 +63,7 @@ in
       telegraf.extraGroups = [
         "nextcloud"
         "nginx"
+        "influxdb"
       ];
       ${config.services.nginx.user}.extraGroups = [ "grafana" ];
     };
@@ -146,7 +148,15 @@ in
         };
       };
 
-      influxdb.enable = true;
+      influxdb = {
+        enable = true;
+        settings = {
+          http = {
+            unix-socket-enabled = true;
+            bind-socket = influxdbSocket;
+          };
+        };
+      };
 
       telegraf = {
         enable = true;
@@ -157,7 +167,7 @@ in
           outputs = {
             influxdb = [
               {
-                urls = [ "http://127.0.0.1:8086" ];
+                urls = [ "unix://${influxdbSocket}" ];
                 database = "telegraf";
               }
             ];
@@ -209,6 +219,13 @@ in
     };
 
     systemd.services = {
+      influxdb = {
+        serviceConfig = {
+          RuntimeDirectory = "influxdb";
+          RuntimeDirectoryMode = "0755";
+        };
+      };
+
       influxdb-setup = {
         description = "Setup InfluxDB Databases and Retention";
 
@@ -273,7 +290,8 @@ in
           [ -z "$ACTION" ] && ACTION="boot"
           [ -z "$STORE" ] && STORE="unknown"
 
-          ${pkgs.curl}/bin/curl -sS -XPOST "http://127.0.0.1:8086/write?db=telegraf" \
+          ${pkgs.curl}/bin/curl -sS --unix-socket ${influxdbSocket} \
+            -XPOST "http://127.0.0.1/write?db=telegraf" \
             --data-binary "nixos_rebuild,action=$ACTION store=\"$STORE\",rev=\"${toString util.gitRev}\",value=1"
         '';
       };
