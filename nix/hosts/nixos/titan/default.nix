@@ -118,8 +118,8 @@
 
   # Getting random freezes. This is an attempt to mitigate it
   boot.kernelParams = lib.mkAfter [
-    "processor.max_cstate=1"
-    "idle=nowait"
+    "processor.max_cstate=5"
+    "rcu_nocbs=0-15"
   ];
 
   hardware.graphics.enable = true;
