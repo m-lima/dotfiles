@@ -42,7 +42,7 @@
             cg = "~/code/cog";
             mc = "~/Misc";
             dw = "~/Downloads";
-            cc = "~/CeloCloud";
+            cc = "~/Library/CloudStorage/Nextcloud-marcelo@cloud․mrcelo․com";
           };
         };
 
