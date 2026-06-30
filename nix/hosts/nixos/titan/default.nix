@@ -138,6 +138,20 @@
     package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
   };
 
+  # For dropbear
+  boot.initrd = {
+    availableKernelModules = [ "igb" ];
+    systemd.network = {
+      enable = true;
+      networks."10-static" = {
+        matchConfig.Name = "enp8s0";
+        address = [ "10.0.0.10/24" ];
+        gateway = [ "10.0.0.1" ];
+        dns = [ "10.0.0.1" ];
+      };
+    };
+  };
+
   networking = {
     interfaces.enp8s0 = {
       ipv4.addresses = [
