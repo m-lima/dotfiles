@@ -31,6 +31,7 @@
           stateVersion = "26.05";
           latest = false;
         };
+        memtest.enable = true;
       };
       hardware = {
         bluetooth.enable = true;
