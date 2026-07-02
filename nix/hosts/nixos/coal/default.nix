@@ -59,7 +59,19 @@
       services = {
         ssh = {
           enable = true;
+          extraKeys = [
+            {
+              private = ./_secrets/services/ssh/cog_id_ed25519.age;
+              public = ./_secrets/services/ssh/cog_id_ed25519.pub;
+            }
+          ];
           extraHosts = {
+            "cog.github.com" = {
+              HostName = "github.com";
+              User = "git";
+              IdentityFile = "~/.ssh/cog_id_ed25519";
+              IdentitiesOnly = true;
+            };
             "coall coallt" = {
               HostName = "10.0.0.11";
             };

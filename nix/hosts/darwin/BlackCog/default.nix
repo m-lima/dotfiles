@@ -53,7 +53,7 @@
 
         git = {
           overrides = {
-            "~/code/cog" = ./_secrets/programs/git/cog.age;
+            "~/code/cog" = "cog.age";
           };
         };
 
