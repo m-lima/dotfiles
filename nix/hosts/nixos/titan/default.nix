@@ -167,6 +167,7 @@
 
   networking = {
     interfaces.enp8s0 = {
+      wakeOnLan.enable = true;
       ipv4.addresses = [
         {
           address = "10.0.0.10";
