@@ -70,7 +70,7 @@ local make_on_attach = function(overrides)
     local opts = vim.tbl_deep_extend(
       'force',
       {
-        codelens = true,
+        codelens = false,
         format = true,
         highlight = true,
         inlay = true,
