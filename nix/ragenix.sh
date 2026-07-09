@@ -14,8 +14,8 @@ ACTION:
     Decrypt INPUT into OUTPUT using IDENTITY, where all parameters are paths
 
 IDENTITY:
-  Defaults to /etc/ssh/ssh_host_ed25519_key for decryption,
-  and /etc/ssh/ssh_host_ed25519_key.pub for decryption
+  Defaults to /etc/ssh/ssh_host_ed25519_key for decryption, and
+  /etc/ssh/ssh_host_ed25519_key.pub for encryption
   If passed 'all' for encryption, it will encrypt for all know pubkeys
 EOF
 }
