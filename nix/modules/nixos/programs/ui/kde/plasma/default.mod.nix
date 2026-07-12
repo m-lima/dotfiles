@@ -40,9 +40,11 @@ in
         };
 
         # Show all applications on TaskSwitcher
-        configFile."kwinrc" = {
-          TabBox = {
-            DesktopMode = 0;
+        configFile = {
+          kwinrc = {
+            TabBox = {
+              DesktopMode = 0;
+            };
           };
         };
 
