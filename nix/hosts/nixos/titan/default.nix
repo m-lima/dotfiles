@@ -132,12 +132,7 @@
     };
   };
 
-  # Getting random freezes. This is an attempt to mitigate it
-  boot.kernelParams = lib.mkAfter [
-    "processor.max_cstate=5"
-    "rcu_nocbs=0-15"
-  ];
-
+  # Use proprietary Nvidia drivers
   hardware.graphics.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
@@ -152,6 +147,7 @@
   };
 
   # For dropbear
+  # Enable static IP in initrd
   boot.initrd = {
     availableKernelModules = [ "igb" ];
     systemd.network = {
@@ -165,6 +161,7 @@
     };
   };
 
+  # Fixed IP for regular network
   networking = {
     interfaces.enp8s0 = {
       wakeOnLan.enable = true;
@@ -178,6 +175,8 @@
     };
     defaultGateway = "10.0.0.1";
     nameservers = [ "10.0.0.1" ];
+
+    # Extra firewall rules
     firewall.allowedTCPPorts = util.secret.rage.mkIf config ./_secrets/core/networking/firewall.rage;
   };
 }
