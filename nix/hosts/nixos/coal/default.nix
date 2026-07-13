@@ -24,7 +24,6 @@
           luks = true;
           swap = "8G";
         };
-        dropbear.enable = true;
         system = {
           timeZone = "Europe/Amsterdam";
           stateVersion = "24.05";
@@ -118,6 +117,7 @@
           kde = {
             enable = true;
             insomnia = true;
+            autoLogin = true;
           };
           games = {
             steam.enable = true;
