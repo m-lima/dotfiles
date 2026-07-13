@@ -1,6 +1,5 @@
 path:
 {
-  lib,
   config,
   util,
   ...
@@ -13,8 +12,7 @@ in
     environment.persistence = util.withImpermanence config {
       home.files = [
         ".config/kwinoutputconfig.json"
-      ]
-      ++ (lib.optional (!cfg.useGnomeKeyring) ".config/kwalletrc");
+      ];
 
       home.directories = [
         "Documents"

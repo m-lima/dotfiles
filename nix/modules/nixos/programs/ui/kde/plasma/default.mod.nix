@@ -46,6 +46,14 @@ in
               DesktopMode = 0;
             };
           };
+
+          kwalletrc = {
+            Wallet = {
+              "Default Wallet" = "kdewallet";
+              "First Use" = false;
+              "Use One Wallet" = true;
+            };
+          };
         };
 
         session.sessionRestore = {
