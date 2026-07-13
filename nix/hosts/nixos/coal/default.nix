@@ -36,6 +36,12 @@
           enable = true;
           persist = true;
         };
+        staticip = {
+          enable = true;
+          interface = "wlp3s0";
+          ip = "10.0.0.11";
+          gateway = "10.0.0.1";
+        };
         wifi.enable = true;
       };
       servers = {
@@ -122,18 +128,5 @@
     };
   };
 
-  networking = {
-    interfaces.wlp3s0 = {
-      ipv4.addresses = [
-        {
-          address = "10.0.0.11";
-          prefixLength = 24;
-        }
-      ];
-      useDHCP = false;
-    };
-    defaultGateway = "10.0.0.1";
-    nameservers = [ "10.0.0.1" ];
-    firewall.allowedTCPPorts = util.secret.rage.mkIf config ./_secrets/core/networking/firewall.rage;
-  };
+  networking.firewall.allowedTCPPorts = util.secret.rage.mkIf config ./_secrets/core/networking/firewall.rage;
 }
