@@ -121,6 +121,7 @@
           kde = {
             enable = true;
             insomnia = true;
+            autoLogin = true;
           };
           games = {
             steam.enable = true;
