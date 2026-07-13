@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   util,
   ...
@@ -24,6 +25,7 @@
           luks = true;
           swap = "8G";
         };
+        dropbear.enable = true;
         system = {
           timeZone = "Europe/Amsterdam";
           stateVersion = "24.05";
@@ -40,6 +42,11 @@
           interface = "wlp3s0";
           ip = "10.0.0.11";
           gateway = "10.0.0.1";
+          initrdModules = [
+            "ccm"
+            "ctr"
+            "rtw89_8852be"
+          ];
         };
         wifi.enable = true;
       };
@@ -127,6 +134,31 @@
       };
     };
   };
+
+  boot.initrd =
+    let
+      interface = config.celo.modules.hardware.staticip.interface;
+      wpaConf = pkgs.runCommand "wpa_initrd.conf" { } ''
+        sed '/ctrl_interface_group=/d' ${config.environment.etc."wpa_supplicant/nixos.conf".source} > $out
+      '';
+    in
+    {
+      secrets = {
+        "/etc/wpa_supplicant/wpa_supplicant-${interface}.conf" = "${wpaConf}";
+        "/persist/secrets/wifi.env" = "/persist/secrets/wifi.env";
+      };
+
+      systemd = {
+        packages = [ pkgs.wpa_supplicant ];
+        initrdBin = [ pkgs.wpa_supplicant ];
+        targets.initrd.wants = [ "wpa_supplicant@${interface}.service" ];
+
+        services."wpa_supplicant@" = {
+          unitConfig.DefaultDependencies = false;
+          serviceConfig.RuntimeDirectory = "wpa_supplicant/control";
+        };
+      };
+    };
 
   networking.firewall.allowedTCPPorts = util.secret.rage.mkIf config ./_secrets/core/networking/firewall.rage;
 }
