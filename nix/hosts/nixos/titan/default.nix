@@ -39,6 +39,15 @@
           enable = true;
           persist = true;
         };
+        staticip = {
+          enable = true;
+          interface = "enp8s0";
+          ip = "10.0.0.10";
+          gateway = "10.0.0.1";
+          wakeOnLan = true;
+          initrdModules = [ "igb" ];
+
+        };
       };
       servers = {
         nginx =
@@ -147,37 +156,6 @@
     package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
   };
 
-  # For dropbear
-  # Enable static IP in initrd
-  boot.initrd = {
-    availableKernelModules = [ "igb" ];
-    systemd.network = {
-      enable = true;
-      networks."10-static" = {
-        matchConfig.Name = "enp8s0";
-        address = [ "10.0.0.10/24" ];
-        gateway = [ "10.0.0.1" ];
-        dns = [ "10.0.0.1" ];
-      };
-    };
-  };
-
-  # Fixed IP for regular network
-  networking = {
-    interfaces.enp8s0 = {
-      wakeOnLan.enable = true;
-      ipv4.addresses = [
-        {
-          address = "10.0.0.10";
-          prefixLength = 24;
-        }
-      ];
-      useDHCP = false;
-    };
-    defaultGateway = "10.0.0.1";
-    nameservers = [ "10.0.0.1" ];
-
-    # Extra firewall rules
-    firewall.allowedTCPPorts = util.secret.rage.mkIf config ./_secrets/core/networking/firewall.rage;
-  };
+  # Extra firewall rules
+  networking.firewall.allowedTCPPorts = util.secret.rage.mkIf config ./_secrets/core/networking/firewall.rage;
 }
