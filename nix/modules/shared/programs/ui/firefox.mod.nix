@@ -14,6 +14,9 @@ in
     multiAccount = lib.mkEnableOption "multi-account containers" // {
       default = true;
     };
+    keepass = lib.mkEnableOption "keepass integration" // {
+      default = config.celo.modules.programs.ui.keepass.enable;
+    };
   };
 
   config = util.enforceHome path config cfg.enable {
@@ -59,6 +62,12 @@ in
               // (lib.optionalAttrs cfg.multiAccount {
                 "@testpilot-containers" = {
                   install_url = "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/latest.xpi";
+                  installation_mode = "force_installed";
+                };
+              })
+              // (lib.optionalAttrs cfg.keepass {
+                "keepassxc-browser@keepassxc.org" = {
+                  install_url = "https://addons.mozilla.org/firefox/downloads/latest/keepassxc-browser/latest.xpi";
                   installation_mode = "force_installed";
                 };
               });

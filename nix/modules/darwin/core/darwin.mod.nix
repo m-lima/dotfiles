@@ -17,9 +17,18 @@ in
       default = config.celo.modules.core.user.userName;
     };
     dynamicDock = lib.mkEnableOption "only show open apps in the dock";
+    touchId = lib.mkEnableOption "touch ID" // {
+      default = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {
+    security = lib.mkIf cfg.touchId {
+      pam.services.sudo_local = {
+        touchIdAuth = true;
+        reattach = true;
+      };
+    };
     system = {
       primaryUser = cfg.primaryUser;
       keyboard = {
