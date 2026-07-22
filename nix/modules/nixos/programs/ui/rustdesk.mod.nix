@@ -11,12 +11,12 @@ in
 {
   config = util.enforceHome path config cfg.enable {
     home-manager = {
-      home.packages = [ pkgs.slack ];
+      home.packages = [ pkgs.rustdesk-flutter ];
     };
 
     environment.persistence = util.withImpermanence config {
       home.directories = [
-        ".config/Slack"
+        ".config/rustdesk"
       ];
     };
   };

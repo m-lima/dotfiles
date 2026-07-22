@@ -136,6 +136,7 @@
             steam.enable = true;
             minecraft.enable = true;
           };
+          rustdesk.enable = true;
           slack.enable = true;
         };
       };

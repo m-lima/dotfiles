@@ -70,6 +70,7 @@
 
         ui = {
           blank.enable = true;
+          rustdesk.enable = true;
           slack.enable = true;
         };
       };
