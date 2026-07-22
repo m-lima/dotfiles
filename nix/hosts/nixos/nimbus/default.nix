@@ -77,6 +77,10 @@
           enable = true;
           subvolume = false;
         };
+        rustdesk = {
+          enable = true;
+          host = util.secret.rage.mkIf config ./_secrets/services/rustdesk/host.rage;
+        };
         ssh = {
           enable = true;
           ports = util.secret.rage.mkIf config ./_secrets/services/ssh/ports.rage;
