@@ -104,9 +104,6 @@ in
       package = pkgs.nginx.override (prev: {
         modules = prev.modules ++ [
           endgame
-          # Needed for the redirect `set_unescape_uri`
-          pkgs.nginxModules.develkit
-          pkgs.nginxModules.set-misc
         ];
       });
     };
@@ -120,46 +117,41 @@ in
       endgame_client_callback_url https://${cfg.hostName}.${domain}/callback;
     '';
     locations = {
-      "= /logout" = domain: {
-        extraConfig = ''
-          add_header Set-Cookie 'endgame=;Path=/;Domain=${domain};Max-Age=0;Secure;HttpOnly;SameSite=lax';
-
-          if ($arg_redirect ~ .+) {
-            set_unescape_uri $decoded_url $arg_redirect;
-            return 302 $decoded_url;
-          }
-
-          default_type text/plain;
-          return 200 'Logged Out';
-        '';
-
-      };
-
       "= /login" = {
         extraConfig = ''
           endgame on;
           endgame_auto_login on;
-          endgame_redirect here redirect;
-          try_files /nonexistent @finalize;
+          endgame_redirect redirect;
+          try_files /nonexistent @finalize-login;
+        '';
+      };
+
+      "@finalize-login" = {
+        extraConfig = ''
+          default_type text/plain;
+          return 200 'Logged In';
+        '';
+      };
+
+      "= /logout" = {
+        extraConfig = ''
+          endgame logout;
+          endgame_redirect redirect;
+          try_files /nonexistent @finalize-logout;
+        '';
+      };
+
+      "@finalize-logout" = {
+        extraConfig = ''
+          default_type text/plain;
+          return 200 'Logged Out';
         '';
       };
 
       "= /reset" = domain: {
         extraConfig = ''
           endgame reset;
-          endgame_redirect https://${cfg.hostName}.${domain}/login redirect;
-        '';
-      };
-
-      "@finalize" = {
-        extraConfig = ''
-          if ($arg_redirect ~ .+) {
-            set_unescape_uri $decoded_url $arg_redirect;
-            return 302 $decoded_url;
-          }
-
-          default_type text/plain;
-          return 200 'Logged In';
+          endgame_redirect redirect https://${cfg.hostName}.${domain}/login;
         '';
       };
 

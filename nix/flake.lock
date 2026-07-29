@@ -250,16 +250,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1778186886,
-        "narHash": "sha256-AwHErp3y8MHOq6tRVsri5Ximv6R3BXttQhXU+KLLj8o=",
+        "lastModified": 1785282928,
+        "narHash": "sha256-F59HVtdY44pQREVYxMEehg2rDmQY4dOGyKp48zpve7w=",
         "owner": "m-lima",
         "repo": "endgame",
-        "rev": "69a961385664b03f7d053da3eb81c39cbff534f8",
+        "rev": "13078feb3ea1723be2645fe31dca384fdebb22e6",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "nix-004",
+        "ref": "nix-005",
         "repo": "endgame",
         "type": "github"
       }
