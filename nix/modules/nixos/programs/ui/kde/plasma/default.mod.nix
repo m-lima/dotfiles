@@ -37,6 +37,16 @@ in
             number = 4;
             rows = 2;
           };
+
+          titlebarButtons = {
+            left = [
+              "more-window-actions"
+              "application-menu"
+              "on-all-desktops"
+              "keep-above-windows"
+              "hide-from-screencast"
+            ];
+          };
         };
 
         # Show all applications on TaskSwitcher

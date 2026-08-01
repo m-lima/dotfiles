@@ -16,6 +16,12 @@ in
     insomnia = lib.mkEnableOption "insomnia mode";
     useGnomeKeyring = lib.mkEnableOption "gnome-keyring instead of kwallet";
     autoLogin = lib.mkEnableOption "autoLogin";
+    panelCount = lib.mkOption {
+      type = lib.types.ints.positive;
+      default = 1;
+      description = "Number of screens that should have the taskbar";
+      example = 2;
+    };
   };
 
   imports = [

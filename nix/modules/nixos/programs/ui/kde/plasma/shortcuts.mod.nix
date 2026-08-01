@@ -36,6 +36,7 @@ in
         shortcuts = {
           kwin = {
             "Window Fullscreen" = "Meta+Shift+F";
+            "Window Above Other Windows" = "Meta+Shift+Ctrl+F";
             "Window Close" = [
               "Meta+Shift+Q"
               "Alt+F4"

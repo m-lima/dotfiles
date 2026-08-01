@@ -131,6 +131,7 @@
             enable = true;
             insomnia = true;
             autoLogin = true;
+            panelCount = 2;
           };
           games = {
             steam.enable = true;
