@@ -1,0 +1,245 @@
+---
+description: Rust coding style
+globs: "**/*.{rs,toml}"
+alwaysApply: false
+---
+
+# Rust code style
+
+Follow these patterns when editing Rust code. Prefer them over inventing new conventions.
+
+## Linting
+
+All crates (bins and libs) must pass Clippy at **pedantic** level:
+
+```bash
+cargo clippy --all-targets -- -D warnings -D clippy::pedantic
+```
+
+For workspaces, add `--workspace` (or scope to affected crates).
+
+- Do not rely only on `#![deny(...)]` in individual `main.rs` files; command-line `-D` flags are the standard check.
+- Fix or justify every warning; pedantic lints are not optional.
+- Common pedantic patterns: prefer method names over redundant closures (`values().all(Vec::is_empty)`); trailing `;` when a block's last statement returns `()` but is not the block's final expression.
+
+## Cargo and workspace (when applicable)
+
+Not every project is a workspace. When using one:
+
+### Shared metadata
+
+- **`[workspace.package]`** holds shared `edition` and `version`. Member crates inherit with dot notation — do not repeat literals unless there is a deliberate exception.
+
+```toml
+# member Cargo.toml
+[package]
+name = "my-crate"
+edition.workspace = true
+version.workspace = true
+```
+
+Use `edition.workspace = true` and `version.workspace = true`, not `edition = "2024"` / `version = "0.1.0"` in members.
+
+### Dependencies: workspace first, dot notation in members
+
+- **Declare versions and features once** in root `[workspace.dependencies]` (external crates and `path` workspace crates).
+- In a member crate, **reference workspace deps with dot notation** — do not repeat version strings or paths.
+
+```toml
+# root [workspace.dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+my-lib.path = "crates/my-lib"
+
+# member [dependencies]
+serde.workspace = true
+serde_json.workspace = true
+my-lib.workspace = true
+```
+
+- Prefer **`dep.workspace = true`** and **`dep.path = "…"`** (in the root file) over inline tables when there is nothing else to set.
+- Use an inline table **`{ version = "…", features = […] }`** in **`[workspace.dependencies]`** when you need `features`, `default-features`, or other fields. Members still use `dep.workspace = true`.
+- **Crate-only dependencies** (used in one member, not shared) may stay in that crate's `[dependencies]` with a version inline. If a dep becomes shared, move it to `[workspace.dependencies]` and switch members to `.workspace = true`.
+- Do not add `path = "../…"` in member `Cargo.toml` for in-repo crates — register the path in `[workspace.dependencies]` and use `crate-name.workspace = true`.
+
+### Workspace layout conventions
+
+- **`resolver = "2"`** on the root workspace.
+- Shared libraries under **`crates/`**; binaries at repo root or nested paths as listed in `members`.
+- **`default-members`** limits what `cargo build` builds by default (faster dev builds). Heavy or optional crates can be workspace members but not default members.
+
+### Adding a dependency (workspace)
+
+1. Add the crate (version, features, or `path`) to root `[workspace.dependencies]`.
+2. Add `name.workspace = true` to the member's `[dependencies]`.
+3. Run `cargo clippy` for affected crates.
+
+### Formatting
+
+- No project `rustfmt.toml` unless the project already has one — use **`rustfmt` defaults**.
+
+## Imports and paths
+
+**Default: fully-qualified paths** for external crates — at file scope, inside functions, and inside blocks. Do not use `use` to pull external items into scope.
+
+**Never import a prelude.** Do not write `use some_crate::prelude::*`, `use crate::prelude::*`, or any other prelude glob/import. The **only** prelude in effect is the standard one (implicit). Fully qualify everything else from external crates.
+
+```rust
+// Good — standard prelude used implicitly; external items fully qualified
+fn load(path: &str) -> Result<Vec<u8>, Error> { ... }
+axum::extract::State(state): axum::extract::State<std::sync::Arc<state::State>>
+
+// Never — crate or library preludes
+use axum::prelude::*;
+use tokio::prelude::*;
+use crate::prelude::*;
+
+// Never — external `use` at any scope
+use axum::extract::State;
+use std::collections::HashMap;
+```
+
+### `use` for internal modules only
+
+`use` is permitted **only** for **internal** references — modules within the same crate via `super::` or `crate::`. Import **modules** (or parent modules), not individual types or functions:
+
+```rust
+use super::{retry, state};
+use super::handler::cache;
+```
+
+Then call `retry::with_retry`, `cache::Cache`, `state::State`.
+
+The sole exception to "no external `use`" is trait imports — see below.
+
+### `crate::` vs `super::`
+
+When reaching sibling or parent modules inside the same crate:
+
+- Prefer **`super::`** for **one** parent step — paths stay relative to the module tree and survive moves more often.
+- **Avoid long `super::` chains** (e.g. `super::super::super::error`). Not forbidden, but a smell: prefer a shorter path before writing three or more `super::` in a row.
+
+When a path would need multiple `super::` segments:
+
+1. **Try `crate::` first** — if it is shorter or clearer (e.g. `crate::server::error::Error` vs `super::super::error::Error`).
+2. **Otherwise consider a `use` in a parent module** — re-export or import the module once at `handler/mod.rs` or `server/mod.rs` so children can use `super::error` or `super::state`. Do **not** add parent `use` aliases for a **single** reference in one leaf file; use `crate::` or a local path there instead.
+
+Do not use `crate::` for external dependencies — only for modules within the same package.
+
+### Trait `use as _` — repetition and minimal scope
+
+`use SomeTrait as _` is the **only** permitted external `use`. It is allowed **only** when the trait's methods are invoked **many times** in the same scope and fully qualifying each call would be noisy.
+
+- If the trait is needed once (or only a few times), use UFCS or the full path — do not import the trait.
+- Place the import in the **smallest scope** that covers all those calls: a `for` loop body, a block, or a function — never file scope.
+
+```rust
+// One-shot: fully qualified
+axum::extract::FromRequestParts::from_request_parts(&mut parts, state).await?;
+
+// Many calls in one fn: import at fn scope
+fn handler(...) -> ... {
+    use axum::extract::FromRequestParts as _;
+    // ...
+}
+
+// Many calls in one loop only: import in that block
+for item in items {
+    use SomeTrait as _;
+    // ...
+}
+```
+
+## Type aliases
+
+- Use a type alias **only** when the fully qualified type is too long or is repeated many times in one module.
+- Per-error-module pattern when warranted:
+
+```rust
+// RHS must be qualified — the alias shadows prelude `Result`
+pub type Result<T = ()> = std::result::Result<T, Error>;
+```
+
+- Use `crate::error::Result` without `()` when there is no success value; use `crate::error::Result<T>` when there is.
+- Do not alias types prematurely "for convenience" if the full path is readable once or twice.
+
+## Module layout
+
+- Split by concern (`error.rs`, `cache.rs`, `params.rs`, `retry.rs`) rather than growing a single `mod.rs`.
+- Place helpers next to the data they operate on (e.g. methods on a cache struct live in the cache module).
+- Sibling modules under a parent (`handler`, `retry`, `state`) reflect **roles**, not nesting depth — do not bury shared infrastructure inside `handler` when it belongs beside it.
+- `pub(super) mod …` when a submodule is part of the parent folder's internal API; private `mod …` when only the immediate parent needs it.
+
+## Visibility
+
+- `pub(super)` for items shared within a module tree (e.g. handler + state), not `pub` unless external crates need them.
+- `pub(crate)` only when another module in the same package must access the item.
+- Keep fields `pub(super)` on extractors and state when only the parent module tree reads them.
+
+## Cloning and ownership
+
+- **Call sites own cloning.** Pass references when the callee only reads; pass owned values when the callee needs ownership.
+- Do not hide allocations behind helpers (e.g. a getter that clones cursors for the caller). The caller should write `.clone()` where ownership is required.
+- **Do not clone just to satisfy the borrow checker.** If a `.clone()` is only there to extend a lifetime or dodge a borrow conflict, prefer fixing the real issue: add explicit lifetimes, restructure the function, narrow scopes, or pass references so ownership is clear. Clone when the algorithm genuinely needs a duplicate (retry body, concurrent use, owned storage), not as a default escape hatch.
+- Functions that take `&T` and internally allocate or clone should be rare and obvious from name/docs; default expectation is that **the caller** clones before the call if an owned value is needed downstream.
+- Clone per-iteration inputs in retry or loop bodies when each attempt needs its own copy (URL, headers, request body) — at the call site or in the loop, visibly.
+
+## Async and tracing
+
+- For **async traits**, prefer native **`async fn` in traits** when the compiler and trait design allow (static dispatch, no `dyn` on the async methods). Use the **`async_trait`** crate only when you need it (e.g. `dyn Trait` with async methods, or other constraints native async traits cannot meet).
+- Put `#[tracing::instrument(...)]` on entrypoints and I/O boundaries.
+- Use `skip_all` when arguments are large or logged elsewhere; add `fields(...)` for identifiers that matter in traces.
+- Use `err` on spans where failures should record the error (Rust 2021+ / tracing instrument).
+- `tracing::info!` for normal flow; `warn` / `error` at failure sites with structured fields (`%` Display, `?` Debug).
+
+## Control flow
+
+- Early `return` / `return Err(...)` for invalid input or hard failures.
+- `let Some(x) = … else { … };` and `let … else` for option/result branching when it clarifies the happy path.
+- Explicit `match` arms when variants carry different meaning (do not collapse distinct outcomes into a single catch-all without reason).
+- Small block expressions for localized setup when it avoids extra bindings polluting the outer scope.
+
+### Function references over closures
+
+Prefer passing **function references** over closures when the callback only forwards arguments:
+
+```rust
+// Good
+values.iter().all(String::is_empty)
+items.iter().map(process_item)
+
+// Avoid
+values.iter().all(|s| s.is_empty())
+items.iter().map(|i| process_item(i))
+```
+
+If a closure exists only to adapt arity or match a signature, consider rewriting the **callee** so a function reference fits. Do **not** add a thin wrapper fn just for that. If rewriting the callee would make it less readable or smellier, keep the closure — closures are for real capture, non-trivial logic, or when conforming the callee is not worth it.
+
+## Errors (structural style)
+
+- Define error enums with `thiserror`; put `#[error("…")]` messages in the type for logs and debugging.
+- Map foreign errors with `map_err` at the point of failure; use `?` in functions returning the crate's `Result`.
+- Small constructors on `Error` (e.g. wrapping `IntoResponse` rejections) live in `impl Error` in the same module as the enum.
+- Traits implemented on `Error` (e.g. retry classification) live in `error.rs` or next to the trait definition — not scattered across handlers.
+
+## Formatting
+
+- `rustfmt` defaults; no manual style fights.
+- Break long parameter lists, `match` arms, and chains across lines.
+- `mod` declarations grouped at the top of the file; module `use super::…` immediately after when needed.
+
+## Checklist
+
+Before finishing Rust changes:
+
+1. [ ] `cargo clippy --all-targets -- -D warnings -D clippy::pedantic` passes (add `--workspace` when applicable).
+2. [ ] New or changed deps (workspace): version/features in root `[workspace.dependencies]`; members use `dep.workspace = true`.
+3. [ ] External paths fully qualified; `use` only for internal modules (`super::` / `crate::`); **no prelude imports** (standard prelude only).
+4. [ ] Trait `use as _` only when invoked many times in one scope, at the smallest enclosing scope; otherwise UFCS / full paths.
+5. [ ] Function references over forwarding closures; rewrite callee only when it stays readable — no thin wrappers.
+6. [ ] No `super::super::…` chains without checking a shorter `crate::` path first.
+7. [ ] Type aliases only where fully qualified types are too long or heavily repeated.
+8. [ ] Clones are explicit at call sites; no hidden allocation in accessors; no clone-only borrow-checker fixes.
+9. [ ] Async traits use native `async fn` where possible; `async_trait` only when required.
+10. [ ] New logic lives in the appropriate submodule; visibility is `pub(super)` / `pub(crate)` by default.
+11. [ ] Tracing on handlers and I/O helpers where failures matter.
