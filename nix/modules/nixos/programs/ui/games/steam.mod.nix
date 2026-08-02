@@ -20,6 +20,7 @@ in
     environment.persistence = util.withImpermanence config {
       home.directories = [
         ".local/share/Steam"
+        ".steam"
       ];
     };
   };
