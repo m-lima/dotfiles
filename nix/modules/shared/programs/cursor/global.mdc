@@ -90,6 +90,47 @@ Show proposed changes in chat (diff or new files) first.
 Do not apply them until the user approves.
 Never "implement while explaining" in the same turn as a plan.
 
-# IMPORTANT
+# CRITICAL — INCREMENTAL DELIVERY (even with approval)
 
-Avoid many file changes at once. If you are about to modify multiple files, consider pausing between each file if the changes are more than 50 lines in total.
+Approval to edit does **not** mean "land the whole plan in one turn."
+
+## Before the first edit
+
+State the **full** intended scope up front:
+
+- ordered list of files you expect to touch
+- rough size (files count, ~lines)
+- delivery plan in batches
+
+If the user approved a step from a larger plan, implement **only that step** unless they explicitly widened scope.
+
+## Batch limits (default)
+
+Unless the user explicitly asks for a single large change, deliver in batches:
+
+| Threshold | Default action |
+|-----------|----------------|
+| **> 1 file** | Split into logical batches; do not edit all files in one turn |
+| **> 50 lines** total across the task | Pause after each batch; summarize and wait for "continue" |
+| **> 3 files** in one batch | Stop — split into smaller batches first |
+
+A batch is one logical unit (e.g. "add `lake/error.rs` + `lake/mod.rs` skeleton", then "add `session.rs`", then "wire `main`").
+
+## After each batch
+
+1. Stop editing.
+2. Report: what changed, what's left, any blockers.
+3. Ask: **"Continue with the next batch?"** — unless the user already said to do the full task in one go.
+
+## Self-check (mandatory before each batch)
+
+- Am I touching more than one logical unit right now?
+- Am I past 50 lines or 3 files in this batch?
+- Did I state the full file list before starting?
+
+If yes to the first two and the user didn't ask for a big bang → **stop and batch**.
+
+## Exceptions
+
+- User explicitly says: "do it all at once", "single PR", "don't stop between files"
+- Trivially tiny follow-up in the **same** file (e.g. fix a typo from the prior batch)
