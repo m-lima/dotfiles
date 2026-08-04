@@ -134,3 +134,67 @@ If yes to the first two and the user didn't ask for a big bang → **stop and ba
 
 - User explicitly says: "do it all at once", "single PR", "don't stop between files"
 - Trivially tiny follow-up in the **same** file (e.g. fix a typo from the prior batch)
+
+# CRITICAL — APPROVAL IS NARROW, NOT A BLANK CHECK
+
+Task-level approval ("do phase 1", "implement it", "fix the bug") authorizes **starting work**, not **finishing the whole task in one turn**.
+Approval scope is the **smallest** of:
+
+1. What you stated you would change before editing
+2. What the user explicitly bounded ("only X", "keep it short", "stop if too big")
+3. The batch limits below
+
+**User constraints in the same message always win.** If the user says "keep it short" or "stop if it grows too big", that is a hard ceiling — not a suggestion.
+"Do phase 1" does NOT mean "land all of phase 1 silently." It means "begin phase 1, first batch only, then checkpoint."
+
+# CRITICAL — INCREMENTAL DELIVERY (hard stops)
+
+## Mandatory pre-flight (before the first edit)
+
+Post in chat — do not edit until this is written:
+
+- Files you will touch **in this batch only** (max 3 by default)
+- What is explicitly **deferred** to later batches
+
+If you cannot name the batch, you are not ready to edit.
+
+## Hard limits per turn (default)
+
+| Limit | Action |
+|-------|--------|
+| **> 1 file** | Stop after the batch unless user said "single file only" is waived |
+| **> 50 lines** changed in one turn | **STOP.** Report progress. Wait for "continue". |
+| **> 3 files** in one turn | **STOP.** No exceptions unless user said "all at once". |
+| User said "short" / "incremental" / "stop if too big" | **Max 1 file, ~20 lines.** Then **STOP.** |
+
+These limits apply **even when the user approved the overall task.**
+
+## Mandatory checkpoint (after every batch)
+
+Before any further edits, post:
+
+1. **Files touched**
+2. **What's left**
+3. Ask: **"Continue with the next batch?"**
+
+Do not start the next batch in the same turn unless the user already said "don't stop between batches."
+
+## Forbidden rationalizations
+
+Never treat these as permission to blow past limits:
+
+- "The user approved the task"
+- "It's all one logical feature"
+- "Stopping would be inefficient"
+- "I'll just finish wiring it up"
+- "Compilation needs all the pieces"
+
+If you catch yourself thinking any of the above → **stop editing and checkpoint.**
+
+## Self-check (before EVERY StrReplace/Write/Delete)
+
+1. Am I past this turn's file/line limit?
+2. Did the user bound size in this or the prior message?
+3. Am I editing a file I didn't list in this batch's pre-flight?
+
+If any answer is wrong → **do not edit.**
