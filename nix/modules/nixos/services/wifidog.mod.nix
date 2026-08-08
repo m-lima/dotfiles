@@ -108,6 +108,7 @@ in
           SupplementaryGroups = [
             "wheel"
             "telegraf"
+            "wpa_supplicant"
           ];
           ProtectSystem = "full";
           PrivateTmp = false;
