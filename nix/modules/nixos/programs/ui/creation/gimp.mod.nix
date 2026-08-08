@@ -1,6 +1,5 @@
 path:
 {
-  lib,
   config,
   util,
   pkgs,
@@ -15,7 +14,7 @@ in
   config = util.enforceHome path config cfg.enable {
     home-manager = {
       home = {
-        packages = with pkgs; [ gimp ];
+        packages = [ pkgs.gimp ];
       };
     };
   };
