@@ -133,6 +133,12 @@
           creation = {
             lmms.enable = true;
           };
+          ghostty = {
+            size = {
+              width = 240;
+              height = 80;
+            };
+          };
           kde = {
             enable = true;
             insomnia = true;

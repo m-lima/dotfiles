@@ -18,6 +18,18 @@ in
     tmuxStart = lib.mkEnableOption "wrap the terminal in a tmux session by default" // {
       default = tmuxCfg.enable;
     };
+    size = {
+      width = lib.mkOption {
+        type = lib.types.ints.u16;
+        description = "Width of the initial screen";
+        default = 122;
+      };
+      height = lib.mkOption {
+        type = lib.types.ints.u16;
+        description = "Height of the initial screen";
+        default = 44;
+      };
+    };
     pkg = lib.mkOption {
       readOnly = true;
       visible = false;
@@ -65,8 +77,8 @@ in
             macos-titlebar-style = "hidden";
 
             window-padding-balance = true;
-            window-width = 122;
-            window-height = 44;
+            window-width = cfg.size.width;
+            window-height = cfg.size.height;
 
             cursor-style = "block";
             cursor-style-blink = false;
