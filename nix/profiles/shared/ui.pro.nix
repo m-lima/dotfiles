@@ -6,5 +6,6 @@
     keepass.enable = true;
     nextcloud.enable = true;
     spotify.enable = true;
+    vlc.enable = true;
   };
 }
