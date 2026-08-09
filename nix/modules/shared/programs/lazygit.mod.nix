@@ -16,7 +16,7 @@ in
 
   config = util.enforceHome path config cfg.enable {
     home-manager = {
-      home.packages = with pkgs; [ lazygit ];
+      home.packages = [ pkgs.lazygit ];
 
       programs = lib.mkIf celo.programs.zsh.enable {
         zsh.initContent = builtins.readFile /${rootDir}/../zsh/config/programs/lazygit.zsh;

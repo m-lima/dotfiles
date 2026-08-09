@@ -12,7 +12,7 @@ in
 {
   config = util.enforceHome path config cfg.enable {
     home-manager = {
-      home.packages = with pkgs; [ hyprpaper ];
+      home.packages = [ pkgs.hyprpaper ];
 
       services = {
         hyprpaper = {

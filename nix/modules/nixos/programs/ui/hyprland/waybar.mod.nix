@@ -15,7 +15,7 @@ in
 
   config = util.enforceHome path config cfg.enable {
     home-manager = {
-      home.packages = with pkgs; [ waybar ];
+      home.packages = [ pkgs.waybar ];
 
       # Fix for start ordering
       # By default the Unit starts after `graphical-session-pre`

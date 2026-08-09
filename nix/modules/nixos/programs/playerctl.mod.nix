@@ -21,7 +21,7 @@ in
     ];
 
     home-manager = {
-      home.packages = with pkgs; [ playerctl ];
+      home.packages = [ pkgs.playerctl ];
     };
   };
 }

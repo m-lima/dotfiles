@@ -13,7 +13,7 @@ in
 
   config = util.enforceHome path config cfg.enable {
     home-manager = {
-      home.packages = with pkgs; [ azure-cli ];
+      home.packages = [ pkgs.azure-cli ];
     };
   };
 }

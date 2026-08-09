@@ -20,17 +20,15 @@ in
         enable = true;
         # Will be loaded by our own scripts
         enableCompletion = false;
-        interactiveShellInit =
-          with builtins;
-          lib.mkBefore (
-            ""
-            + readFile /${rootDir}/../zsh/config/base/colors.zsh
-            + readFile /${rootDir}/../zsh/config/base/completion.zsh
-            + readFile /${rootDir}/../zsh/config/base/history.zsh
-            + readFile /${rootDir}/../zsh/config/base/keys.zsh
-            + readFile /${rootDir}/../zsh/config/base/misc.zsh
-            + readFile /${rootDir}/../zsh/config/programs/ls.zsh
-          );
+        interactiveShellInit = lib.mkBefore (
+          ""
+          + builtins.readFile /${rootDir}/../zsh/config/base/colors.zsh
+          + builtins.readFile /${rootDir}/../zsh/config/base/completion.zsh
+          + builtins.readFile /${rootDir}/../zsh/config/base/history.zsh
+          + builtins.readFile /${rootDir}/../zsh/config/base/keys.zsh
+          + builtins.readFile /${rootDir}/../zsh/config/base/misc.zsh
+          + builtins.readFile /${rootDir}/../zsh/config/programs/ls.zsh
+        );
       };
     };
 

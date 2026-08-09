@@ -14,7 +14,7 @@ in
 
   config = util.enforceHome path config cfg.enable {
     home-manager = {
-      home.packages = with pkgs; [ jq ];
+      home.packages = [ pkgs.jq ];
     };
   };
 }

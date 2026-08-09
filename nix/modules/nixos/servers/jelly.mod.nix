@@ -56,11 +56,11 @@ in
       graphics = {
         enable = true;
 
-        extraPackages = with pkgs; [
-          intel-ocl
-          intel-media-driver
-          intel-compute-runtime
-          vpl-gpu-rt
+        extraPackages = [
+          pkgs.intel-ocl
+          pkgs.intel-media-driver
+          pkgs.intel-compute-runtime
+          pkgs.vpl-gpu-rt
         ];
       };
     };

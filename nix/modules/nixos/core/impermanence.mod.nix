@@ -86,15 +86,12 @@ in
 
       script = ''
         export PATH="${
-          pkgs.lib.makeBinPath (
-            with pkgs;
-            [
-              btrfs-progs
-              coreutils
-              findutils
-              util-linux
-            ]
-          )
+          pkgs.lib.makeBinPath ([
+            pkgs.btrfs-progs
+            pkgs.coreutils
+            pkgs.findutils
+            pkgs.util-linux
+          ])
         }:$PATH"
 
         mkdir -p /btrfs

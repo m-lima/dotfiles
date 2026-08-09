@@ -43,11 +43,9 @@ in
       md5 = builtins.hashString "md5";
     in
     lib.mkIf cfg.enable {
-      environment.systemPackages = with pkgs; [ git ];
+      environment.systemPackages = [ pkgs.git ];
 
       home-manager = util.withHome config {
-        home.packages = with pkgs; [ git ];
-
         xdg.configFile =
           let
             toConfigFile = name: "git/${md5 name}";

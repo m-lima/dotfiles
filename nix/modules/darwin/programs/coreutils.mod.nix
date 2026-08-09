@@ -13,6 +13,6 @@ in
   options = util.mkOptionsEnable path;
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ coreutils ];
+    environment.systemPackages = [ pkgs.coreutils ];
   };
 }

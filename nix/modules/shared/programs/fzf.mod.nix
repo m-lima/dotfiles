@@ -16,7 +16,7 @@ in
 
   config = util.enforceHome path config cfg.enable {
     home-manager = {
-      home.packages = with pkgs; [ fzf ];
+      home.packages = [ pkgs.fzf ];
 
       programs = {
         fzf = {

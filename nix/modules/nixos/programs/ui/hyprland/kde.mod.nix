@@ -13,13 +13,13 @@ in
 {
   config = util.enforceHome path config cfg.enable {
     home-manager = {
-      home.packages = with pkgs; [
-        breeze-icons
-        dolphin
-        kcalc
-        kdePackages.kwallet-pam
-        kdePackages.kwalletmanager
-        okular
+      home.packages = [
+        pkgs.breeze-icons
+        pkgs.dolphin
+        pkgs.kcalc
+        pkgs.kdePackages.kwallet-pam
+        pkgs.kdePackages.kwalletmanager
+        pkgs.okular
       ];
 
       wayland.windowManager.hyprland = {

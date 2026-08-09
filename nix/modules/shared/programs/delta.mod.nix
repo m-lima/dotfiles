@@ -16,7 +16,7 @@ in
 
   config = util.enforceHome path config cfg.enable {
     home-manager = {
-      home.packages = with pkgs; [ delta ];
+      home.packages = [ pkgs.delta ];
 
       xdg = lib.mkIf celo.programs.git.enable {
         # TODO: Colors are off

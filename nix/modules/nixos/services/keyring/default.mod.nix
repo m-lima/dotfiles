@@ -63,9 +63,9 @@ in
         );
       in
       {
-        home.packages = with pkgs; [
-          gnome-keyring
-          gnome-keyring-daemon-start
+        home.packages = [
+          pkgs.gnome-keyring
+          pkgs.gnome-keyring-daemon-start
         ];
 
         systemd.user.services.gnome-keyring = {

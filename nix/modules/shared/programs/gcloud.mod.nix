@@ -7,12 +7,9 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-  gcloud = pkgs.google-cloud-sdk.withExtraComponents (
-    with pkgs.google-cloud-sdk.components;
-    [
-      gke-gcloud-auth-plugin
-    ]
-  );
+  gcloud = pkgs.google-cloud-sdk.withExtraComponents [
+    pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin
+  ];
 in
 {
   options = util.mkOptionsEnable path;

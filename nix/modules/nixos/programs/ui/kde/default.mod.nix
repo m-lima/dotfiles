@@ -103,12 +103,12 @@ in
       };
     };
 
-    environment.plasma6.excludePackages = with pkgs.kdePackages; [
-      elisa
-      kate
-      khelpcenter
-      konsole
-      plasma-browser-integration
+    environment.plasma6.excludePackages = [
+      pkgs.kdePackages.elisa
+      pkgs.kdePackages.kate
+      pkgs.kdePackages.khelpcenter
+      pkgs.kdePackages.konsole
+      pkgs.kdePackages.plasma-browser-integration
     ];
   };
 }

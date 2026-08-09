@@ -93,16 +93,15 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ neovim ];
+    environment.systemPackages = [ pkgs.neovim ];
 
     environment.etc = {
       "xdg/nvim/sysinit.vim".text =
-        with builtins;
         ""
-        + readFile /${rootDir}/../vim/config/base/options.vim
-        + readFile /${rootDir}/../vim/config/nvim/options.vim
-        + readFile /${rootDir}/../vim/config/base/mapping.vim
-        + readFile /${rootDir}/../vim/config/nvim/mapping.vim;
+        + builtins.readFile /${rootDir}/../vim/config/base/options.vim
+        + builtins.readFile /${rootDir}/../vim/config/nvim/options.vim
+        + builtins.readFile /${rootDir}/../vim/config/base/mapping.vim
+        + builtins.readFile /${rootDir}/../vim/config/nvim/mapping.vim;
       "xdg/nvim/colors/simpalt.vim".source = /${rootDir}/../vim/simpalt.vim;
     };
 
@@ -117,51 +116,49 @@ in
           withNodeJs = false;
           withPython3 = false;
 
-          plugins =
-            with pkgs.vimPlugins;
-            [
-              vim-repeat
-              plenary-nvim
-              nvim-web-devicons
-              nui-nvim
-              vim-surround
-              comment-nvim
-              ReplaceWithRegister
-              lightspeed-nvim
-              nvim-treesitter-textobjects
-              lualine-nvim
-              vim-fugitive
-              gitsigns-nvim
-              telescope-nvim
-              neo-tree-nvim
-              # project-nvim
-              telescope-fzf-native-nvim
-              telescope-ui-select-nvim
-              telescope-dap-nvim
-              nvim-treesitter.withAllGrammars
-              nvim-lspconfig
-              # mason stuff
-              # none-ls
-              nvim-dap
-              nvim-nio
-              nvim-dap-ui
-              nvim-cmp
-              cmp-nvim-lsp
-              cmp-nvim-lsp-signature-help
-              cmp-buffer
-              cmp-path
-              cmp-cmdline
-              cmp-tmux
-              luasnip
-              cmp_luasnip
-              # vim-todo-lists
-              # vsession
-              toggleterm-nvim
-              undotree
-              render-markdown-nvim
-              iron-nvim
-            ]
-            ++ lib.flatten (map (l: lsps.${l}.dependencies) cfg.lsps);
+          plugins = [
+            pkgs.vimPlugins.vim-repeat
+            pkgs.vimPlugins.plenary-nvim
+            pkgs.vimPlugins.nvim-web-devicons
+            pkgs.vimPlugins.nui-nvim
+            pkgs.vimPlugins.vim-surround
+            pkgs.vimPlugins.comment-nvim
+            pkgs.vimPlugins.ReplaceWithRegister
+            pkgs.vimPlugins.lightspeed-nvim
+            pkgs.vimPlugins.nvim-treesitter-textobjects
+            pkgs.vimPlugins.lualine-nvim
+            pkgs.vimPlugins.vim-fugitive
+            pkgs.vimPlugins.gitsigns-nvim
+            pkgs.vimPlugins.telescope-nvim
+            pkgs.vimPlugins.neo-tree-nvim
+            # project-nvim
+            pkgs.vimPlugins.telescope-fzf-native-nvim
+            pkgs.vimPlugins.telescope-ui-select-nvim
+            pkgs.vimPlugins.telescope-dap-nvim
+            pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+            pkgs.vimPlugins.nvim-lspconfig
+            # mason stuff
+            # none-ls
+            pkgs.vimPlugins.nvim-dap
+            pkgs.vimPlugins.nvim-nio
+            pkgs.vimPlugins.nvim-dap-ui
+            pkgs.vimPlugins.nvim-cmp
+            pkgs.vimPlugins.cmp-nvim-lsp
+            pkgs.vimPlugins.cmp-nvim-lsp-signature-help
+            pkgs.vimPlugins.cmp-buffer
+            pkgs.vimPlugins.cmp-path
+            pkgs.vimPlugins.cmp-cmdline
+            pkgs.vimPlugins.cmp-tmux
+            pkgs.vimPlugins.luasnip
+            pkgs.vimPlugins.cmp_luasnip
+            # vim-todo-lists
+            # vsession
+            pkgs.vimPlugins.toggleterm-nvim
+            pkgs.vimPlugins.undotree
+            pkgs.vimPlugins.render-markdown-nvim
+            pkgs.vimPlugins.iron-nvim
+          ]
+          ++ lib.flatten (map (l: lsps.${l}.dependencies) cfg.lsps);
           extraPackages = lib.flatten (map (l: lsps.${l}.pkg) cfg.lsps);
 
           initLua = builtins.concatStringsSep "\n" [
