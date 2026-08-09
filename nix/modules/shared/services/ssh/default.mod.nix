@@ -8,6 +8,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  xdg = util.xdg config;
   home = config.celo.modules.core.home;
   user = config.celo.modules.core.user;
   secret = config.celo.host.id;
@@ -166,7 +167,7 @@ in
           includes = [ config.age.secrets.${util.secret.mkPath path "hosts"}.path ];
           settings = cfg.extraHosts // {
             "*" = {
-              userKnownHostsFile = "~/.local/share/ssh/known_hosts";
+              userKnownHostsFile = "${xdg.abs "dataHome"}/ssh/known_hosts";
             };
           };
         };

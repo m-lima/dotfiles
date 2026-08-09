@@ -7,6 +7,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  xdg = util.xdg config;
   hyprCfg = config.celo.modules.programs.ui.hyprland;
 in
 {
@@ -22,9 +23,9 @@ in
 
     environment.persistence = util.withImpermanence config {
       home.directories = [
-        "${(util.xdg config).configHome}/mozilla/firefox"
+        "${xdg.rel "configHome"}/mozilla/firefox"
+        "${xdg.rel "cacheHome"}/mozilla/firefox"
         ".mozilla"
-        ".cache/mozilla"
         "Downloads"
       ];
     };

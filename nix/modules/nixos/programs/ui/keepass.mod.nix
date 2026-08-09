@@ -7,6 +7,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  xdg = util.xdg config;
 in
 {
 
@@ -17,8 +18,8 @@ in
 
     environment.persistence = util.withImpermanence config {
       home.directories = [
-        ".cache/keepassxc"
-        ".config/keepassxc"
+        "${xdg.rel "cacheHome"}/keepassxc"
+        "${xdg.rel "configHome"}/keepassxc"
       ];
     };
   };

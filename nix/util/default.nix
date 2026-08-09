@@ -75,7 +75,11 @@ let
       };
     };
 
-  xdg = config: config.home-manager.users.${config.celo.modules.core.user.userName}.xdg;
+  xdg = config: rec {
+    raw = config.home-manager.users.${config.celo.modules.core.user.userName}.xdg;
+    abs = value: if builtins.isList value then lib.getAttrFromPath value raw else raw.${value};
+    rel = value: lib.removePrefix "${config.celo.modules.core.user.homeDirectory}/" (abs value);
+  };
 
   extractCompdef =
     string:

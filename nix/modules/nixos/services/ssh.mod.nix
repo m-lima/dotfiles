@@ -8,6 +8,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  xdg = util.xdg config;
   home = config.celo.modules.core.home;
   user = config.celo.modules.core.user;
   userGroup = config.users.users.${user.userName}.group;
@@ -53,7 +54,7 @@ in
         "/etc/ssh/ssh_host_ed25519_key.pub"
       ];
 
-      home.directories = [ ".local/share/ssh" ];
+      home.directories = [ "${xdg.rel "dataHome"}/ssh" ];
     };
 
     systemd = lib.mkIf impermanence.enable {

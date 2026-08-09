@@ -8,6 +8,7 @@ path:
 }:
 let
   cfg = config.celo.modules.programs.ui.hyprland;
+  xdg = util.xdg config;
 in
 {
   options = util.mkOptionsEnable path;
@@ -72,7 +73,7 @@ in
                 format = "{}";
                 format-alt = "{} {alt}";
                 tooltip-format = "{alt}";
-                exec = "${(util.xdg config).dataHome}/hypr/player.sh";
+                exec = "${xdg "dataHome"}/hypr/player.sh";
               };
 
               idle_inhibitor = {
@@ -155,7 +156,7 @@ in
 
               "custom/power" = {
                 format = "";
-                on-click = "${(util.xdg config).dataHome}/hypr/power.sh";
+                on-click = "${xdg "dataHome"}/hypr/power.sh";
               };
             };
           };

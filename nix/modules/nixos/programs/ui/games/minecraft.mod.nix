@@ -7,6 +7,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  xdg = util.xdg config;
 in
 {
   options = util.mkOptionsEnable path;
@@ -18,7 +19,7 @@ in
 
     environment.persistence = util.withImpermanence config {
       home.directories = [
-        ".local/share/PrismLauncher"
+        "${xdg.rel "dataHome"}/PrismLauncher"
       ];
     };
   };

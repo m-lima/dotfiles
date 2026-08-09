@@ -8,6 +8,7 @@ path:
 }:
 let
   cfg = config.celo.modules.programs.ui.hyprland;
+  xdg = util.xdg config;
 in
 {
   config = util.enforceHome path config cfg.enable {
@@ -33,10 +34,10 @@ in
 
     environment.persistence = util.withImpermanence config {
       home.directories = [
-        ".local/share/kwalletd"
+        "${xdg.rel "dataHome"}/kwalletd"
       ];
       home.files = [
-        ".config/kwalletrc"
+        "${xdg.rel "configHome"}/kwalletrc"
       ];
     };
   };

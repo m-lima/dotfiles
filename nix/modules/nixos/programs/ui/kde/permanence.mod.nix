@@ -6,12 +6,13 @@ path:
 }:
 let
   cfg = config.celo.modules.programs.ui.kde;
+  xdg = util.xdg config;
 in
 {
   config = util.enforceHome path config cfg.enable {
     environment.persistence = util.withImpermanence config {
       home.files = [
-        ".config/kwinoutputconfig.json"
+        "${xdg.rel "configHome"}/kwinoutputconfig.json"
       ];
 
       home.directories = [
@@ -21,7 +22,7 @@ in
         "Videos"
       ]
       ++ [
-        (if cfg.useGnomeKeyring then ".local/share/keyrings" else ".local/share/kwalletd")
+        (if cfg.useGnomeKeyring then "${xdg.rel "dataHome"}/keyrings" else "${xdg.rel "dataHome"}/kwalletd")
       ];
     };
   };

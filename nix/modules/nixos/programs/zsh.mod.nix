@@ -9,6 +9,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  xdg = util.xdg config;
   home = config.celo.modules.core.home;
 in
 {
@@ -32,7 +33,7 @@ in
       # Only home-manager sets this path
       home = lib.mkIf home.enable {
         directories = [
-          ".local/share/zsh"
+          "${xdg.rel "dataHome"}/zsh"
         ];
       };
     };

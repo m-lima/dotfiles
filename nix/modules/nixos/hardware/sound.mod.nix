@@ -7,6 +7,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  xdg = util.xdg config;
 in
 {
   options = util.mkOptions path {
@@ -24,7 +25,7 @@ in
     };
 
     environment.persistence = util.withImpermanence config {
-      home.directories = lib.optional cfg.persist ".local/state/wireplumber";
+      home.directories = lib.optional cfg.persist "${xdg.rel "dataHome"}/wireplumber";
     };
   };
 }

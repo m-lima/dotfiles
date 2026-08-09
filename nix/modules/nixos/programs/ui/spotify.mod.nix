@@ -7,6 +7,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  xdg = util.xdg config;
   hyprCfg = config.celo.modules.programs.ui.hyprland;
 in
 {
@@ -28,8 +29,8 @@ in
 
     environment.persistence = util.withImpermanence config {
       home.directories = [
-        ".config/spotify"
-        ".cache/spotify"
+        "${xdg.rel "configHome"}/spotify"
+        "${xdg.rel "cacheHome"}/spotify"
       ];
     };
   };

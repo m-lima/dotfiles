@@ -116,7 +116,7 @@ in
 
           bind =
             let
-              hyprData = (util.xdg config).dataHome;
+              hyprData = util.xdgAbs config "dataHome";
             in
             [
               # Top-level commands

@@ -8,6 +8,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  xdg = util.xdg config;
   host = config.celo.host.id;
   user = config.celo.modules.core.user;
   kdeCfg = config.celo.modules.programs.ui.kde;
@@ -39,7 +40,7 @@ in
     ];
 
     environment.persistence = util.withImpermanence config {
-      home.directories = [ ".local/share/keyrings" ];
+      home.directories = [ "${xdg.rel "dataHome"}/keyrings" ];
     };
 
     age.secrets = {

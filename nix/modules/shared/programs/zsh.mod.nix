@@ -9,6 +9,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  xdg = util.xdg config;
 in
 {
   options = util.mkOptionsEnable path;
@@ -50,7 +51,7 @@ in
             ignoreAllDups = true;
             expireDuplicatesFirst = true;
             extended = true;
-            path = "$HOME/.local/share/zsh/history";
+            path = "${xdg.abs "dataHome"}/zsh/history";
           };
         };
       };
