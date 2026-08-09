@@ -119,6 +119,8 @@
             cd = "~/code";
             nx = "~/code/dotfiles/nix";
             cg = "~/code/cog";
+            dw = "~/Downloads";
+            cc = "~/CeloCloud";
           };
         };
         playerctl.enable = true;

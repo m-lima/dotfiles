@@ -43,8 +43,8 @@
                 cd = "~/code";
                 nx = "~/code/dotfiles/nix";
                 cg = "~/code/cog";
-                mc = "~/Misc";
                 dw = "~/Downloads";
+                mc = "~/Misc";
               }
             ]
             ++ (util.secret.rage.optional config ./_secrets/programs/nali/cloud.rage)
