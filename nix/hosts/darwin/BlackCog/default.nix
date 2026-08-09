@@ -1,6 +1,5 @@
 {
   config,
-  util,
   ...
 }:
 {
@@ -37,18 +36,14 @@
           symbol = "◉";
         };
         nali = {
-          entries = util.concatAttrs (
-            [
-              {
-                cd = "~/code";
-                nx = "~/code/dotfiles/nix";
-                cg = "~/code/cog";
-                dw = "~/Downloads";
-                mc = "~/Misc";
-              }
-            ]
-            ++ (util.secret.rage.optional config ./_secrets/programs/nali/cloud.rage)
-          );
+          entries = {
+            cd = "~/code";
+            nx = "~/code/dotfiles/nix";
+            cg = "~/code/cog";
+            dw = "~/Downloads";
+            cc = "~/CeloCloud";
+            mc = "~/Misc";
+          };
         };
 
         git = {
