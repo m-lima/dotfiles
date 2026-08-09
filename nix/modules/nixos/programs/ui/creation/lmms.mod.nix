@@ -60,13 +60,13 @@ in
         '';
       in
       [
-        ''C "${paths.lmmsrc}" 0644 - - - "${lmmsrc}"''
+        ''C "${paths.lmmsrc}" 0644 - - - ${lmmsrc}''
       ];
 
+    celo.modules.programs.ui.creation.persist = true;
     environment.persistence = util.withImpermanence config {
       home.directories = [
         paths.dataRel
-        "creation"
       ];
     };
   };

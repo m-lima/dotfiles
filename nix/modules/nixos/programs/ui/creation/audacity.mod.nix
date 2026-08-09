@@ -7,6 +7,7 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  xdg = util.xdg config;
 in
 {
   options = util.mkOptionsEnable path;
@@ -16,6 +17,14 @@ in
       home = {
         packages = [ pkgs.audacity ];
       };
+    };
+
+    celo.modules.programs.ui.creation.persist = true;
+    environment.persistence = util.withImpermanence config {
+      home.directories = [
+        "${xdg.rel "configHome"}/audacity"
+        "${xdg.rel "dataHome"}/audacity"
+      ];
     };
   };
 }
