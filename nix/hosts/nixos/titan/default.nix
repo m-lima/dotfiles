@@ -130,6 +130,9 @@
         skull.enable = true;
         endgame.enable = true;
         ui = {
+          creation = {
+            lmms.enable = true;
+          };
           kde = {
             enable = true;
             insomnia = true;
