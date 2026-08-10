@@ -67,6 +67,10 @@
           blank.enable = true;
           rustdesk.enable = true;
           slack.enable = true;
+
+          creation = {
+            inkscape.enable = true;
+          };
         };
       };
 
