@@ -196,7 +196,7 @@ local search_for_config = function(path, server, config)
 end
 
 local load_override = function(server)
-  return function(config)
+  return function(_, config)
     local cfg = search_for_config(vim.fn.expand('%:p'), server, config)
     if cfg and cfg.settings ~= nil then
       config.settings = vim.tbl_deep_extend('force', config.settings, cfg.settings)
@@ -209,7 +209,7 @@ local base_opts = function(server, opts)
   return vim.tbl_deep_extend('force', {
     capabilities = cmp_capabilities,
     on_attach = make_on_attach(opts and opts.features),
-    on_new_config = load_override(server),
+    before_init = load_override(server),
   }, opts or {})
 end
 
