@@ -122,15 +122,10 @@
             "titanl titanlt" = {
               HostName = "10.0.0.10";
             };
-            "titanlt" = {
-              RequestTTY = true;
-              RemoteCommand = "tmux new -A";
-            };
             "coall coallt" = {
-              hostname = "10.0.0.11";
-              user = "celo";
+              HostName = "10.0.0.11";
             };
-            "coallt" = {
+            "titanlt coallt" = {
               RequestTTY = "yes";
               RemoteCommand = "tmux new -A";
             };
