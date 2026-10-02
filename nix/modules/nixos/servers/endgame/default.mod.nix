@@ -41,6 +41,12 @@ in
       default = "https://accounts.google.com/";
     };
 
+    sessionName = lib.mkOption {
+      type = lib.types.singleLineStr;
+      description = "Name of the cookie to use for the session";
+      default = "endgame";
+    };
+
     sessionTtl = lib.mkOption {
       type = lib.types.singleLineStr;
       description = "How long should the session last for (see https://nginx.org/en/docs/syntax.html)";
@@ -96,6 +102,7 @@ in
             "raw ${cfg.clientSecret}"
         };
         endgame_discovery_url ${cfg.discoveryUrl};
+        endgame_session_name ${cfg.sessionName};
         endgame_session_domain ${cfgNgx.baseHost};
         endgame_session_ttl ${cfg.sessionTtl};
         endgame_client_callback_url https://${cfg.hostName}.${cfgNgx.baseHost}/callback;

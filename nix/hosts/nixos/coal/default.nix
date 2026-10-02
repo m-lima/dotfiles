@@ -60,6 +60,7 @@
         endgame = {
           enable = true;
           key = ./_secrets/servers/endgame/key.age;
+          sessionName = "coalEndgame";
         };
         jelly = {
           enable = true;
