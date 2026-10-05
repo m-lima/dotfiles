@@ -73,6 +73,11 @@
         });
       };
       services = {
+        headscale.enable = true;
+        tailscale = {
+          enable = true;
+          exitNode = true;
+        };
         postgres = {
           enable = true;
           subvolume = false;
