@@ -30,6 +30,7 @@ in
         "2606:4700:4700::1001"
       ];
     };
+    expose = lib.mkEnableOption "opening port 53";
   };
 
   config = lib.mkIf cfg.enable {
@@ -70,9 +71,21 @@ in
 
     };
 
+    networking.firewall = lib.mkIf cfg.expose {
+      allowedTCPPorts = [ 53 ];
+      allowedUDPPorts = [ 53 ];
+    };
+
+    systemd.tmpfiles.rules = lib.optional config.celo.modules.core.impermanence.enable "d /var/lib/private 0700 root root - -";
+
     environment.persistence = util.withImpermanence config {
       global.directories = [
-        "/var/lib/private/AdGuardHome"
+        {
+          directory = "/var/lib/private/AdGuardHome";
+          user = "nobody";
+          group = "nogroup";
+          mode = "0755";
+        }
       ];
     };
   };

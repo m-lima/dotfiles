@@ -42,6 +42,7 @@
           interface = "wlp3s0";
           ip = "10.0.0.11";
           gateway = "10.0.0.1";
+          nameservers = [ "10.0.0.10" ];
           initrdModules = [
             "ccm"
             "ctr"
@@ -95,6 +96,7 @@
           };
         };
         mdns.enable = true;
+        tailscale.enable = true;
         wifidog = {
           enable = true;
           target = "10.0.0.1";

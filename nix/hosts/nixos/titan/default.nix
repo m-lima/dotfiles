@@ -44,9 +44,9 @@
           interface = "enp8s0";
           ip = "10.0.0.10";
           gateway = "10.0.0.1";
+          nameservers = [ "127.0.0.1" ];
           wakeOnLan = true;
           initrdModules = [ "igb" ];
-
         };
       };
       servers = {
@@ -75,6 +75,10 @@
         static.enable = true;
       };
       services = {
+        adguard = {
+          enable = true;
+          expose = true;
+        };
         ipifier = {
           enable = true;
           configuration = ./_secrets/services/ipifier/config.age;
@@ -104,6 +108,10 @@
           };
         };
         mdns.enable = true;
+        tailscale = {
+          enable = true;
+          exitNode = true;
+        };
       };
       programs = {
         cursor.enable = true;

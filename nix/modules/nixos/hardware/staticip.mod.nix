@@ -18,9 +18,14 @@ in
       type = lib.types.singleLineStr;
       description = "Static value to use as IP";
     };
+    nameservers = lib.mkOption {
+      type = lib.types.nonEmptyListOf lib.types.singleLineStr;
+      description = "IP of the DNS resolver";
+      default = [ cfg.gateway ];
+    };
     gateway = lib.mkOption {
       type = lib.types.singleLineStr;
-      description = "Gateway for the network and DNS resolver";
+      description = "Gateway for the network";
     };
     wakeOnLan = lib.mkEnableOption "wake-on-lan";
     initrdModules = lib.mkOption {
@@ -46,7 +51,7 @@ in
         useDHCP = false;
       };
       defaultGateway = cfg.gateway;
-      nameservers = [ cfg.gateway ];
+      nameservers = cfg.nameservers;
     };
 
     boot = lib.mkIf (cfg.initrdModules != [ ]) {
