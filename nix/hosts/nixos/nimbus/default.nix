@@ -73,7 +73,14 @@
         });
       };
       services = {
-        headscale.enable = true;
+        adguard.enable = true;
+        headscale = {
+          enable = true;
+          nameservers = [
+            "100.64.0.1"
+            "fd7a:115c:a1e0::1"
+          ];
+        };
         tailscale = {
           enable = true;
           exitNode = true;
