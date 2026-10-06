@@ -75,6 +75,7 @@
       };
 
       services = {
+        tailscale.enable = true;
         ssh = {
           enable = true;
           listen = false;

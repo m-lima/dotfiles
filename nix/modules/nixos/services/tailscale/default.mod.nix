@@ -8,25 +8,13 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-  loginServer = util.secret.rage.orElse config ./_secrets/loginServer.rage "";
 in
 {
-
-  options = util.mkOptions path {
-    exitNode = lib.mkOption {
-      type = lib.types.bool;
-      description = "Use this node as an exit node";
-      default = false;
-    };
-  };
-
   config = lib.mkIf cfg.enable {
     services = {
       tailscale = {
-        enable = true;
-        useRoutingFeatures = "both";
-        extraUpFlags = [
-          "--login-server ${loginServer}"
+        useRoutingFeatures = if cfg.exitNode then "both" else "client";
+        extraSetFlags = [
           "--accept-routes"
         ]
         ++ (lib.optional cfg.exitNode "--advertise-exit-node");
