@@ -86,10 +86,10 @@
               IdentityFile = "~/.ssh/cog_id_ed25519";
               IdentitiesOnly = true;
             };
-            "titanl titanlt" = {
+            "titan titant" = {
               HostName = "10.0.0.10";
             };
-            "titanlt" = {
+            "titant" = {
               RequestTTY = true;
               RemoteCommand = "tmux new -A";
             };
