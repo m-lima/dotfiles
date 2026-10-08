@@ -14,36 +14,47 @@ let
   userGroup = config.users.users.${user.userName}.group;
   secret = config.celo.host.id;
   impermanence = config.celo.modules.core.impermanence;
+  hasTotp = builtins.isPath cfg.totp;
 in
 {
   options = util.mkPath path {
     ports = options.services.openssh.ports;
-    security = lib.mkOption {
-      type = lib.types.enum [
-        "none"
-        "nopassword"
-        "sshguard"
-        "both"
-      ];
-      default = "nopassword";
+    totp = lib.mkOption {
+      type = lib.types.nullOr lib.types.path;
+      default = null;
       description = ''
-        What method of security to use: block password logins, enable sshguard, both, or none
+        Agenix encrypted file for the TOTP configuration.
+        Can be generated with `nix-shell -p google-authenticator --run google-authenticator`.
+
+        Recommended settings:
+        * Enable rate-limit
+        * Disable timeskew compensation
+        * Disable reuse
       '';
     };
+    sshguard = lib.mkEnableOption "SSH guard";
   };
 
   config = lib.mkIf cfg.enable {
     services = {
       openssh = lib.mkIf cfg.listen {
         ports = cfg.ports;
-        settings = lib.mkIf (cfg.security == "nopassword" || cfg.security == "both") {
+        settings = {
           PasswordAuthentication = false;
-        };
+        }
+        // (lib.optionalAttrs hasTotp {
+          KbdInteractiveAuthentication = true;
+        });
       };
-      sshguard = lib.mkIf (cfg.security == "sshguard" || cfg.security == "both") {
+      sshguard = lib.mkIf cfg.sshguard {
         enable = true;
         services = lib.mkAfter [ "sshd-session" ];
       };
+    };
+
+    security.pam.services.sshd = lib.mkIf hasTotp {
+      googleAuthenticator.enable = true;
+      unixAuth = lib.mkForce true;
     };
 
     environment.persistence = util.withImpermanence config {
@@ -58,17 +69,23 @@ in
     };
 
     systemd = lib.mkIf impermanence.enable {
-      tmpfiles.rules = [
-        "d ${user.homeDirectory}/.ssh 0755 ${user.userName} ${userGroup}"
-      ];
+      tmpfiles.rules = [ "d ${user.homeDirectory}/.ssh 0755 ${user.userName} ${userGroup}" ];
     };
 
     age.secrets = {
       ${util.secret.mkPath path secret} = lib.mkIf home.enable {
-        group = config.users.users.${user.userName}.group;
+        group = userGroup;
       };
       ${util.secret.mkPath path "hosts"} = lib.mkIf home.enable {
-        group = config.users.users.${user.userName}.group;
+        group = userGroup;
+      };
+      ${util.secret.mkPath path "totp"} = lib.mkIf hasTotp {
+        rekeyFile = cfg.totp;
+        owner = user.userName;
+        group = userGroup;
+        mode = "400";
+        path = "${user.homeDirectory}/.google_authenticator";
+        symlink = false;
       };
     };
   };
