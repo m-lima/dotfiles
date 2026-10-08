@@ -107,7 +107,6 @@
             };
           };
         };
-        mdns.enable = true;
         tailscale = {
           enable = true;
           exitNode = true;

@@ -95,7 +95,6 @@
             };
           };
         };
-        mdns.enable = true;
         tailscale.enable = true;
         wifidog = {
           enable = true;
