@@ -10,13 +10,7 @@ let
   cfg = util.getOptions path config;
 in
 {
-  options = util.mkOptions path {
-    exitNode = lib.mkOption {
-      type = lib.types.bool;
-      description = "Use this node as an exit node";
-      default = false;
-    };
-  };
+  options = util.mkOptionsEnable path;
 
   config = lib.mkIf cfg.enable {
     services.tailscale.enable = true;
