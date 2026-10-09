@@ -131,11 +131,9 @@
           };
         };
         playerctl.enable = true;
-        simpalt = {
-          symbol = "τ";
-        };
         skull.enable = true;
         endgame.enable = true;
+        zsh.simpalt.symbol = "τ";
         ui = {
           creation = {
             lmms.enable = true;

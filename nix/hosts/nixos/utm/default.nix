@@ -35,10 +35,8 @@
         };
       };
       programs = {
-        simpalt = {
-          symbol = "μ";
-        };
         skull.enable = true;
+        zsh.simpalt.symbol = "μ";
       };
     };
   };

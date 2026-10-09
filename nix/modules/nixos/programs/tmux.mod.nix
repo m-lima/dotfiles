@@ -14,7 +14,7 @@ in
 {
   config = lib.mkIf cfg.enable (
     util.mkPath path {
-      currentlyPlaying = lib.mkIf playerctl.enable ''
+      currentlyPlaying = lib.mkIf (playerctl.enable && !cfg.simpalt) ''
         for p in $(playerctl -l); do
           case $(playerctl -p "$p" status 2> /dev/null) in
             "Playing")

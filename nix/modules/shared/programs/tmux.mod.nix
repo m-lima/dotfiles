@@ -4,12 +4,15 @@ path:
   config,
   util,
   pkgs,
+  inputs,
   rootDir,
   ...
 }:
 let
   celo = config.celo.modules;
   cfg = util.getOptions path config;
+  simpaltPkg = inputs.simpalt.packages.${pkgs.stdenv.hostPlatform.system}.tmux;
+  hasCurrentlyPlaying = cfg.currentlyPlaying != "";
 in
 {
   options = util.mkOptions path {
@@ -24,9 +27,19 @@ in
       description = "Script to the currently playing media";
       default = "";
     };
+    simpalt = lib.mkEnableOption "simpalt status" // {
+      default = true;
+    };
   };
 
   config = util.enforceHome path config cfg.enable {
+    assertions = [
+      {
+        assertion = (hasCurrentlyPlaying -> !cfg.simpalt) && (cfg.simpalt -> !hasCurrentlyPlaying);
+        message = "When simpalt is enabled, 'currentlyPlaying' has no impact";
+      }
+    ];
+
     home-manager = {
       home.packages = [ cfg.pkg ];
 
@@ -45,20 +58,21 @@ in
           executable = true;
         };
         "tmux/script/status_right.sh" = {
-          text = builtins.concatStringsSep "\n" [
-            "#!${pkgs.bash}/bin/bash"
-            (lib.optionalString celo.programs.simpalt.enable (
-              builtins.readFile /${rootDir}/../tmux/script/status/simpalt.sh
-            ))
-            (lib.optionalString (cfg.currentlyPlaying != "") ''
-              playing=$(${cfg.currentlyPlaying})
-              if [ -n "$playing" ]
-              then
-                echo -n "#[fg=colour234]#[fg=colour37,bg=colour234] ''${playing:0:64} "
-              fi
-            '')
-            (builtins.readFile /${rootDir}/../tmux/script/status/time.sh)
-          ];
+          text =
+            if cfg.simpalt then
+              ''exec ${simpaltPkg}/bin/simpalt-tmux s "$1"''
+            else
+              builtins.concatStringsSep "\n" [
+                "#!${pkgs.bash}/bin/bash"
+                (lib.optionalString (cfg.currentlyPlaying != "") ''
+                  playing=$(${cfg.currentlyPlaying})
+                  if [ -n "$playing" ]
+                  then
+                    echo -n "#[fg=colour234]#[fg=colour37,bg=colour234] ''${playing:0:64} "
+                  fi
+                '')
+                (builtins.readFile /${rootDir}/../tmux/script/status/time.sh)
+              ];
           executable = true;
         };
       };

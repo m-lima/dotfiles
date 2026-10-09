@@ -32,9 +32,6 @@
       programs = {
         flakerpl.enable = true;
         nixshell.enable = true;
-        simpalt = {
-          symbol = "◉";
-        };
         nali = {
           entries = {
             cd = "~/code";
@@ -54,6 +51,7 @@
 
         skull.enable = true;
         endgame.enable = true;
+        zsh.simpalt.symbol = "◉";
 
         # NEW
         cursor.enable = true;

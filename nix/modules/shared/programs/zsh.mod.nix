@@ -4,15 +4,33 @@ path:
   config,
   util,
   pkgs,
+  inputs,
   rootDir,
   ...
 }:
 let
   cfg = util.getOptions path config;
   xdg = util.xdg config;
+  simpaltPkg = inputs.simpalt.lib.${pkgs.stdenv.hostPlatform.system}.zsh;
 in
 {
-  options = util.mkOptionsEnable path;
+  options = util.mkOptions path {
+    simpalt = {
+      enable = lib.mkEnableOption "simpalt prompt" // {
+        default = true;
+      };
+      toggleBinding = lib.mkOption {
+        type = lib.types.singleLineStr;
+        description = "Keybinding to toggle between long and short rendering";
+        default = "^T";
+      };
+      symbol = lib.mkOption {
+        description = "Symbol to identify the host in the prompt";
+        example = "₵";
+        type = lib.types.str;
+      };
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     programs = {
@@ -43,6 +61,11 @@ in
             enable = true;
             highlight = "fg=blue";
           };
+
+          initContent = lib.mkIf cfg.simpalt.enable (simpaltPkg {
+            symbol = cfg.simpalt.symbol;
+            toggleBinding = cfg.simpalt.toggleBinding;
+          });
 
           # TODO: This is repeating stuff from the root to avoid the override from homemanager
           history = {

@@ -14,7 +14,7 @@ in
 {
   config = lib.mkIf cfg.enable (
     util.mkPath path {
-      currentlyPlaying = lib.mkIf spotify.enable ''
+      currentlyPlaying = lib.mkIf (spotify.enable && !cfg.simpalt) ''
         osascript -e '
         tell application "System Events"
           set process_list to (name of every process)

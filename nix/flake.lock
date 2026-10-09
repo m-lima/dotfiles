@@ -806,16 +806,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1784977465,
-        "narHash": "sha256-pmmvzpYrSH1Xnrmp8BmnPEpATqlCufHNxu10nEYYLT0=",
+        "lastModified": 1790337686,
+        "narHash": "sha256-6CPiTb7cP8qOq0KgIdOUQVeAIQZfN5rDyERNHHrucnE=",
         "owner": "m-lima",
         "repo": "simpalt",
-        "rev": "e519f843e76bd5c667599da903f9009aeef94bb0",
+        "rev": "f9542aca5d345e12400504592e3ad78689285e4f",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "nix-004",
+        "ref": "nix-005",
         "repo": "simpalt",
         "type": "github"
       }

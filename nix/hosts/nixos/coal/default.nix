@@ -119,11 +119,9 @@
           };
         };
         playerctl.enable = true;
-        simpalt = {
-          symbol = "₵";
-        };
         skull.enable = true;
         endgame.enable = true;
+        zsh.simpalt.symbol = "₵";
         ui = {
           kde = {
             enable = true;

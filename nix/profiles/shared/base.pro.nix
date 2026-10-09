@@ -9,7 +9,6 @@
     peanut.enable = true;
     rage.enable = true;
     rg.enable = true;
-    simpalt.enable = true;
     tmux.enable = true;
     xxd.enable = true;
     zoxide.enable = true;
