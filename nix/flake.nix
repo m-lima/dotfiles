@@ -37,6 +37,7 @@
       url = "github:oddlama/agenix-rekey";
       inputs = {
         nixpkgs.follows = "nixpkgs";
+        flake-compat.follows = "flake-compat";
         flake-parts.follows = "flake-parts";
         treefmt-nix.follows = "treefmt-nix";
         pre-commit-hooks.inputs.flake-compat.follows = "flake-compat";
