@@ -9,7 +9,7 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "RustDesk";
-  version = "1.4.9";
+  version = "1.5.0";
   nativeBuildInputs = [
     undmg
     unzip
@@ -21,7 +21,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     in
     fetchurl {
       url = "https://github.com/${name}/${name}/releases/download/${finalAttrs.version}/${name}-${finalAttrs.version}-aarch64.dmg";
-      hash = "sha256-95NVl7JH1CyPKi7XEXap9YaAGM2eGjO4CWQYpmjIyvA=";
+      hash = "sha256-OSmwpDIefQ9WGjFwWXmL6ILWXezFloHrdwYfjv5W+/Q=";
     };
 
   sourceRoot = ".";

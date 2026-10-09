@@ -12,7 +12,7 @@ in
 {
   config = util.enforceHome path config cfg.enable {
     home-manager = {
-      programs.firefox.package = lib.mkForce (pkgs.callPackage ./firefox.pkg.nix { });
+      programs.firefox.package = (pkgs.callPackage ./firefox.pkg.nix { });
     };
   };
 }

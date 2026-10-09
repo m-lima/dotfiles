@@ -9,11 +9,11 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "Nextcloud";
-  version = "33.0.5";
+  version = "34.0.5";
 
   src = fetchurl {
     url = "https://github.com/nextcloud-releases/desktop/releases/download/v${finalAttrs.version}/Nextcloud-${finalAttrs.version}.pkg";
-    hash = "sha256-PmpWhz80x7YFgF7/VxNEQ1H8aagAbDZg6NJsjw98L+0=";
+    hash = "sha256-MLnfK7ONnFECGL92M+2Q1kB8CPSWGK7hTF/Vt6WS8XU=";
   };
 
   sourceRoot = ".";

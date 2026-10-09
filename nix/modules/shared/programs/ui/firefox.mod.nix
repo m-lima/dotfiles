@@ -3,7 +3,6 @@ path:
   lib,
   config,
   util,
-  pkgs,
   ...
 }:
 let
@@ -24,8 +23,6 @@ in
       programs = {
         firefox = {
           enable = true;
-          package = pkgs.firefox-esr;
-          configPath = "${(util.xdg config).abs "configHome"}/mozilla/firefox";
 
           policies =
             let

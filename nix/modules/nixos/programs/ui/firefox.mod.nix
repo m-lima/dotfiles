@@ -3,6 +3,7 @@ path:
   lib,
   config,
   util,
+  pkgs,
   ...
 }:
 let
@@ -13,6 +14,11 @@ in
 {
   config = util.enforceHome path config cfg.enable {
     home-manager = {
+      programs.firefox = {
+        package = pkgs.firefox-esr;
+        configPath = "${(util.xdg config).abs "configHome"}/mozilla/firefox";
+      };
+
       wayland.windowManager.hyprland = lib.mkIf hyprCfg.enable {
         settings = {
           "$browser" = "firefox-esr";
