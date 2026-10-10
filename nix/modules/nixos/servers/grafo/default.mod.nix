@@ -18,11 +18,15 @@ in
 {
   imports = nginx.server {
     name = "grafo";
-    endgame = {
-      enable = true;
-      autoLogin = true;
-      whitelist = ./_secrets/users.age;
-    };
+    endgame =
+      if cfg.disableAuth then
+        null
+      else
+        {
+          enable = true;
+          autoLogin = true;
+          whitelist = ./_secrets/users.age;
+        };
     extras = [
       (nginx.extras.proxy {
         socket = "unix:/var${socket}";
@@ -36,6 +40,8 @@ in
   };
 
   options = util.mkOptions path {
+    disableAuth = lib.mkEnableOption "disable endgame login and allow all users";
+
     retention = lib.mkOption {
       type = lib.types.int;
       description = "Retention of the timeseries data in days";
@@ -106,16 +112,26 @@ in
           auth = {
             disable_login_form = true;
           };
-
-          "auth.proxy" = {
-            enabled = true;
-            header_name = "X-EMAIL";
-            header_property = "email";
-            auto_sign_up = false;
-            headers = "Name:X-GIVEN-NAME";
-            enable_login_token = false;
-          };
-        };
+        }
+        // (
+          if cfg.disableAuth then
+            {
+              "auth.anonymous" = {
+                enabled = true;
+              };
+            }
+          else
+            {
+              "auth.proxy" = {
+                enabled = true;
+                header_name = "X-EMAIL";
+                header_property = "email";
+                auto_sign_up = false;
+                headers = "Name:X-GIVEN-NAME";
+                enable_login_token = false;
+              };
+            }
+        );
 
         provision = {
           enable = true;

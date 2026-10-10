@@ -46,7 +46,7 @@ in
     };
 
     withPrivate = lib.mkEnableOption "private section under `/private`" // {
-      default = true;
+      default = config.celo.modules.servers.endgame.enable;
     };
   };
 

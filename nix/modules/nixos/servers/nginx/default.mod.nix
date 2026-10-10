@@ -18,6 +18,12 @@ in
       default = "localhost";
     };
 
+    bindAddress = lib.mkOption {
+      type = lib.types.singleLineStr;
+      description = "Address to bind to by default";
+      default = "0.0.0.0";
+    };
+
     tls = lib.mkEnableOption "automatically generate certificates";
 
     acmeEmail = lib.mkOption {
@@ -103,31 +109,29 @@ in
                           'src:$remote_addr '
                           'req:[$request_method $request_uri ''${request_length}b] '
                           'res:[$status ''${bytes_sent}b ''${request_time}s] '
-                          'usr:[$endgame_email $endgame_given_name $endgame_family_name $http_user_agent]'
+      ''
+      + (lib.optionalString config.celo.modules.servers.endgame.enable "'usr:[$endgame_email $endgame_given_name $endgame_family_name $http_user_agent]'")
+      + ''
                         '}';
 
         access_log syslog:server=unix:/dev/log main;
         more_clear_headers Server;
       '';
 
-      defaultListen =
-        if cfg.proxyProtocol != false then
-          [
-            { addr = "0.0.0.0"; }
-            {
-              addr = "0.0.0.0";
-              port = toPort cfg.proxyProtocol;
-              ssl = true;
-              proxyProtocol = true;
-            }
-          ]
-        else
-          [ ];
+      defaultListen = [
+        { addr = cfg.bindAddress; }
+      ]
+      ++ (lib.optional (cfg.proxyProtocol != false) {
+        addr = cfg.bindAddress;
+        port = toPort cfg.proxyProtocol;
+        ssl = true;
+        proxyProtocol = true;
+      });
 
       virtualHosts = {
         ${cfg.baseHost} = {
           default = true;
-          rejectSSL = true;
+          rejectSSL = cfg.tls;
           extraConfig = "return 444;";
         };
       }

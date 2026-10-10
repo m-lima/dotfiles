@@ -50,28 +50,15 @@
         };
       };
       servers = {
-        nginx =
-          let
-            host = util.secret.rage.orElse config ./_secrets/servers/nginx/baseHost.rage "";
-          in
-          {
-            enable = true;
-            tls = true;
-            baseHost = lib.mkIf (host != "") host;
-            proxyProtocol = true;
-            streams = lib.mkIf (host != "") [
-              {
-                host = "coal.${host}";
-                target = "10.0.0.11";
-                proxyProtocol = true;
-              }
-            ];
-          };
-        endgame = {
+        nginx = {
           enable = true;
-          key = ./_secrets/servers/endgame/key.age;
+          baseHost = util.secret.rage.mkIf config ./_secrets/servers/nginx/baseHost.rage;
+          bindAddress = "100.64.0.5";
         };
-        grafo.enable = true;
+        grafo = {
+          enable = true;
+          disableAuth = true;
+        };
         static.enable = true;
       };
       services = {

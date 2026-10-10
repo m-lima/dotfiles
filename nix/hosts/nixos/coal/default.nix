@@ -54,20 +54,17 @@
       servers = {
         nginx = {
           enable = true;
-          tls = true;
           baseHost = util.secret.rage.mkIf config ./_secrets/servers/nginx/baseHost.rage;
-          proxyProtocol = true;
-        };
-        endgame = {
-          enable = true;
-          key = ./_secrets/servers/endgame/key.age;
-          sessionName = "coalEndgame";
+          bindAddress = "100.64.0.4";
         };
         jelly = {
           enable = true;
           hardwareAcceleration = "intel-modern";
         };
-        grafo.enable = true;
+        grafo = {
+          enable = true;
+          disableAuth = true;
+        };
         static.enable = true;
       };
       services = {
