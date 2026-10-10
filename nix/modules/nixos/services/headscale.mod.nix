@@ -10,6 +10,7 @@ let
   cfgNgx = config.celo.modules.servers.nginx;
   nginx = util.nginx path config;
   name = "vepeene";
+  dnsSecret = util.secret.mkPath path "dns";
 in
 {
   imports = nginx.server {
@@ -38,6 +39,11 @@ in
         "2606:4700:4700::1001"
       ];
     };
+    dns = lib.mkOption {
+      type = lib.types.nullOr lib.types.path;
+      description = "Path to agenix encrypted extra DNS records";
+      default = null;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -52,6 +58,13 @@ in
       }
     ];
 
+    age.secrets = lib.mkIf (builtins.isPath cfg.dns) {
+      ${dnsSecret} = {
+        rekeyFile = cfg.dns;
+        owner = "headscale";
+      };
+    };
+
     services.headscale = {
       enable = true;
       port = cfg.port;
@@ -63,6 +76,7 @@ in
           override_local_dns = true;
           base_domain = "celo";
           nameservers.global = cfg.nameservers;
+          extra_records_path = lib.mkIf (builtins.isPath cfg.dns) config.age.secrets.${dnsSecret}.path;
         };
       };
     };
