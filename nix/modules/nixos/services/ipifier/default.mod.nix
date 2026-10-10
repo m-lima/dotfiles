@@ -20,11 +20,18 @@ in
       type = lib.types.path;
       description = "Path to the configuration file agenix encrypted";
       example = "./options.json";
+      default = ./_secrets/config.age;
     };
 
     period = lib.mkOption {
       type = lib.types.singleLineStr;
       description = "Period to run the update";
+      default = "10min";
+    };
+
+    skew = lib.mkOption {
+      type = lib.types.singleLineStr;
+      description = "Maximum delay to randomly add to the period";
       default = "10min";
     };
   };
@@ -57,6 +64,7 @@ in
         timerConfig = {
           OnBootSec = cfg.period;
           OnUnitActiveSec = cfg.period;
+          RandomizedDelaySec = cfg.skew;
           Persistent = true;
         };
       };

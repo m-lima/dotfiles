@@ -68,6 +68,7 @@
         static.enable = true;
       };
       services = {
+        ipifier.enable = true;
         ssh = {
           enable = true;
           extraKeys = [

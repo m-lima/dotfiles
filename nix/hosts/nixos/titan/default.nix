@@ -1,5 +1,4 @@
 {
-  lib,
   config,
   util,
   ...
@@ -66,10 +65,7 @@
           enable = true;
           expose = true;
         };
-        ipifier = {
-          enable = true;
-          configuration = ./_secrets/services/ipifier/config.age;
-        };
+        ipifier.enable = true;
         ssh = {
           enable = true;
           extraKeys = [
