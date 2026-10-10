@@ -32,7 +32,9 @@ in
         * Disable reuse
       '';
     };
-    sshguard = lib.mkEnableOption "SSH guard";
+    sshguard = lib.mkEnableOption "SSH guard" // {
+      default = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {

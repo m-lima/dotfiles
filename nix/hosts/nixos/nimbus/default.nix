@@ -97,7 +97,6 @@
           enable = true;
           ports = util.secret.rage.mkIf config ./_secrets/services/ssh/ports.rage;
           totp = ./_secrets/services/ssh/totp.age;
-          sshguard = true;
         };
       };
       programs = {
