@@ -149,6 +149,12 @@ in
                 httpMode = "GET";
               };
             }
+            {
+              name = "Loki";
+              type = "loki";
+              access = "proxy";
+              url = "http://127.0.0.1:3100";
+            }
           ];
 
           dashboards.settings.providers = [
@@ -235,10 +241,36 @@ in
     };
 
     systemd.services = {
+      telegraf = {
+        serviceConfig = util.systemd.base // {
+          ProcSubset = "all";
+          ProtectProc = "default";
+
+          IPAddressAllow = "localhost";
+          PrivateNetwork = false;
+          RestrictAddressFamilies = [
+            "AF_INET"
+            "AF_INET6"
+            "AF_NETLINK"
+            "AF_UNIX"
+          ];
+        };
+      };
+
       influxdb = {
-        serviceConfig = {
+        serviceConfig = util.systemd.base // {
           RuntimeDirectory = "influxdb";
           RuntimeDirectoryMode = "0755";
+
+          ReadWritePaths = [ "/var/db/influxdb" ];
+
+          IPAddressAllow = "localhost";
+          PrivateNetwork = false;
+          RestrictAddressFamilies = [
+            "AF_INET"
+            "AF_INET6"
+            "AF_UNIX"
+          ];
         };
       };
 

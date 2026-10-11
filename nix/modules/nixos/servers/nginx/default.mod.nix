@@ -7,6 +7,11 @@ path:
 }:
 let
   cfg = util.getOptions path config;
+  grafo =
+    let
+      c = config.celo.modules.servers.grafo;
+    in
+    c.enable && c.scrapers.nginx;
   streamPort = 8484;
   toPort = option: if option == true then 8443 else option;
 in
@@ -102,7 +107,7 @@ in
       recommendedProxySettings = true;
       recommendedTlsSettings = cfg.tls;
 
-      statusPage = true;
+      statusPage = grafo;
       commonHttpConfig = ''
         log_format main '{'
                           'dst:$host '
@@ -135,6 +140,11 @@ in
           extraConfig = "return 444;";
         };
       }
+      // (lib.optionalAttrs grafo {
+        localhost = {
+          listen = [ { addr = "127.0.0.1"; } ];
+        };
+      })
       // (builtins.listToAttrs (
         map (s: {
           name = ".${s.host}";
