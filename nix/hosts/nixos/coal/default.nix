@@ -65,6 +65,7 @@
         grafo = {
           enable = true;
           disableAuth = true;
+          loki = true;
         };
         torr.enable = true;
         static.enable = true;
