@@ -60,11 +60,13 @@
         jelly = {
           enable = true;
           hardwareAcceleration = "intel-modern";
+          websockets = true;
         };
         grafo = {
           enable = true;
           disableAuth = true;
         };
+        torr.enable = true;
         static.enable = true;
       };
       services = {
