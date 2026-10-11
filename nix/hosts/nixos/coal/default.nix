@@ -133,6 +133,15 @@
           };
           slack.enable = true;
         };
+        waker = {
+          enable = true;
+          hosts = {
+            titan = {
+              mac = "60:45:cb:9b:37:b0";
+              ip = "10.0.0.10";
+            };
+          };
+        };
       };
     };
   };
