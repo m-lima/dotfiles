@@ -120,6 +120,7 @@ in
             {
               "auth.anonymous" = {
                 enabled = true;
+                org_role = "Editor";
               };
             }
           else
@@ -144,6 +145,7 @@ in
               type = "influxdb";
               access = "proxy";
               url = "http://127.0.0.1:8086";
+              uid = "influxdb-local";
               database = "telegraf";
               isDefault = true;
 
@@ -151,13 +153,14 @@ in
                 httpMode = "GET";
               };
             }
-            {
-              name = "Loki";
-              type = "loki";
-              access = "proxy";
-              url = "http://127.0.0.1:3100";
-            }
-          ];
+          ]
+          ++ (lib.optional cfg.loki {
+            name = "Loki";
+            type = "loki";
+            access = "proxy";
+            url = "http://127.0.0.1:3100";
+            uid = "loki-local";
+          });
 
           dashboards.settings.providers = [
             {
@@ -544,18 +547,18 @@ in
       };
 
       etc."grafana-dashboards/overview.json" =
-        if cfg.scrapers.wifidog then
-          {
-            source = ./overview.json;
-          }
-        else
-          {
-            text = builtins.toJSON (
-              builtins.mapAttrs (k: v: if k == "panels" then builtins.filter (p: p.id != 5) v else v) (
-                builtins.fromJSON (builtins.readFile ./overview.json)
-              )
-            );
-          };
+        # if cfg.scrapers.wifidog then
+        {
+          source = ./overview.json;
+        };
+      # else
+      #   {
+      #     text = builtins.toJSON (
+      #       builtins.mapAttrs (k: v: if k == "panels" then builtins.filter (p: p.id != 5) v else v) (
+      #         builtins.fromJSON (builtins.readFile ./overview.json)
+      #       )
+      #     );
+      #   };
     };
   };
 }
