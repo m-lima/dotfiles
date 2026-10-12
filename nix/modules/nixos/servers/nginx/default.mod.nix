@@ -183,6 +183,10 @@ in
         '';
     };
 
+    systemd.services.nginx.after = lib.mkIf config.celo.modules.services.tailscale.enable [
+      "tailscaled.target"
+    ];
+
     networking.firewall.allowedTCPPorts = [
       80
     ]
