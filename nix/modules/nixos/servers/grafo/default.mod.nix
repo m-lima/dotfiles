@@ -572,7 +572,7 @@ in
                     tab:
                     if tab.spec.title == "Resources" then
                       (util.mapDeep tab [ "spec" "layout" "spec" "items" ] (
-                        builtins.filter (item: (builtins.any (n: n == item.spec.element.name) names))
+                        builtins.filter (item: !(builtins.any (n: n == item.spec.element.name) names))
                       ))
                     else
                       tab
