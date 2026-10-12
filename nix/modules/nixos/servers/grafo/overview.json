@@ -316,7 +316,7 @@
                 "legend": {
                   "calcs": [],
                   "displayMode": "list",
-                  "placement": "right",
+                  "placement": "bottom",
                   "showLegend": true
                 },
                 "tooltip": {
@@ -1544,7 +1544,7 @@
                 "legend": {
                   "calcs": [],
                   "displayMode": "list",
-                  "placement": "right",
+                  "placement": "bottom",
                   "showLegend": true
                 },
                 "tooltip": {
@@ -1736,8 +1736,8 @@
                           "kind": "ElementReference",
                           "name": "panel-8"
                         },
-                        "height": 6,
-                        "width": 24,
+                        "height": 8,
+                        "width": 12,
                         "x": 0,
                         "y": 17
                       }
@@ -1749,10 +1749,10 @@
                           "kind": "ElementReference",
                           "name": "panel-10"
                         },
-                        "height": 6,
-                        "width": 24,
-                        "x": 0,
-                        "y": 23
+                        "height": 8,
+                        "width": 12,
+                        "x": 12,
+                        "y": 17
                       }
                     }
                   ]
