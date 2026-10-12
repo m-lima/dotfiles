@@ -119,7 +119,7 @@ in
       + ''
                         '}';
 
-        access_log syslog:server=unix:/dev/log main;
+        access_log syslog:server=unix:/dev/log,tag=nginx main;
         more_clear_headers Server;
       '';
 

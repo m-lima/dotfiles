@@ -246,6 +246,9 @@ in
 
       alloy = lib.mkIf cfg.loki {
         enable = true;
+        extraFlags = [
+          "--disable-reporting"
+        ];
         configPath = pkgs.writeText "config.alloy" ''
           discovery.relabel "journal_metadata" {
             targets = []
@@ -263,6 +266,13 @@ in
             rule {
               source_labels = ["__journal_priority"]
               target_label  = "level"
+            }
+
+            rule {
+              source_labels = ["unit"]
+              regex = "^nginx\\.service$"
+              target_label = "service_name"
+              replacement = "nginx"
             }
           }
 
