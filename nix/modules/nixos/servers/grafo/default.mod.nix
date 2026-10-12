@@ -566,23 +566,30 @@ in
             raw = builtins.fromJSON (builtins.readFile ./overview.json);
             remove = {
               layout =
-                name: prev:
+                names: prev:
                 util.mapDeep prev [ "spec" "layout" "spec" "tabs" ] (
                   map (
                     tab:
                     if tab.spec.title == "Resources" then
                       (util.mapDeep tab [ "spec" "layout" "spec" "items" ] (
-                        builtins.filter (item: item.spec.element.name != name)
+                        builtins.filter (item: (builtins.any (n: n == item.spec.element.name) names))
                       ))
                     else
                       tab
                   )
                 );
-              element = name: prev: util.mapDeep prev [ "spec" "elements" name ] null;
+              element =
+                names: prev: util.mapDeep prev [ "spec" "elements" ] (elements: removeAttrs elements names);
             };
             panel = {
-              wifidog = "panel-5";
-              loki = "panel-8";
+              wifidog = [
+                "panel-5"
+              ];
+              loki = [
+                "panel-8"
+                "panel-9"
+                "panel-10"
+              ];
             };
             filter = {
               wifidog =
