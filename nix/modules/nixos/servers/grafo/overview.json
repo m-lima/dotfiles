@@ -231,7 +231,7 @@
                       "spec": {
                         "direction": "backward",
                         "editorMode": "builder",
-                        "expr": "topk(5, sum by(service_name) (rate({host=\"localhost\"} |= `` [15m])))",
+                        "expr": "topk(5, sum by(service_name) (rate({host=\"localhost\", service_name=~\"$service\"} |= `` [15m])))",
                         "legendFormat": "{{service_name}}",
                         "queryType": "range"
                       },
