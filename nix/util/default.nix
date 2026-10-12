@@ -93,6 +93,27 @@ let
 
   gitRev = flake.shortRev or flake.dirtyShortRev or flake.lastModified or "unknown";
 
+  mapDeep =
+    attr: path: mapper:
+    let
+      field = builtins.head path;
+    in
+    attr
+    // {
+      ${field} =
+        if builtins.isNull mapper then
+          if builtins.length path > 2 then
+            mapDeep attr.${field} (builtins.tail path) mapper
+          else
+            removeAttrs attr.${field} path
+        else if builtins.length path > 1 then
+          mapDeep attr.${field} (builtins.tail path) mapper
+        else if builtins.isFunction mapper then
+          mapper attr.${field}
+        else
+          mapper;
+    };
+
   load = import ./load.nix { inherit lib; };
   secret = import ./secret.nix { inherit lib; };
   systemd = import ./systemd.nix { inherit lib; };
@@ -111,6 +132,7 @@ in
     extractCompdef
     concatAttrs
     gitRev
+    mapDeep
 
     load
     secret

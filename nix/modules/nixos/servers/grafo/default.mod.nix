@@ -554,29 +554,55 @@ in
         else
           let
             raw = builtins.fromJSON (builtins.readFile ./overview.json);
-            wifidog =
-              if cfg.scrapers.wifidog then
-                raw
-              else
-                raw
-                // {
-                  spec = raw.spec // {
-                    elements = removeAttrs raw.spec.elements [ "panel-5" ];
-                  };
-                };
-            final =
-              if cfg.loki then
-                wifidog
-              else
-                wifidog
-                // {
-                  spec = wifidog.spec // {
-                    layout = builtins.head wifidog.spec.layout.spec.tabs;
-                  };
-                };
+            remove = {
+              layout =
+                name: prev:
+                util.mapDeep prev [ "spec" "layout" "spec" "tabs" ] (
+                  map (
+                    tab:
+                    if tab.spec.title == "Resources" then
+                      (util.mapDeep tab [ "spec" "layout" "spec" "items" ] (
+                        builtins.filter (item: item.spec.element.name != name)
+                      ))
+                    else
+                      tab
+                  )
+                );
+              element = name: prev: util.mapDeep prev [ "spec" "elements" name ] null;
+            };
+            panel = {
+              wifidog = "panel-5";
+              loki = "panel-8";
+            };
+            filter = {
+              wifidog =
+                prev:
+                if cfg.scrapers.wifidog then
+                  prev
+                else
+                  lib.pipe prev [
+                    (remove.layout panel.wifidog)
+                    (remove.element panel.wifidog)
+                  ];
+
+              loki =
+                prev:
+                if cfg.loki then
+                  prev
+                else
+                  lib.pipe prev [
+                    (remove.layout panel.loki)
+                    (remove.element panel.loki)
+                    (prev: util.mapDeep prev [ "spec" "layout" ] (builtins.head prev.spec.layout.spec.tabs).spec.layout)
+                  ];
+            };
           in
           {
-            text = builtins.toJSON final;
+            text = lib.pipe raw [
+              filter.wifidog
+              filter.loki
+              builtins.toJSON
+            ];
           };
     };
   };
