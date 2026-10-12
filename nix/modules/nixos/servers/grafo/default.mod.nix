@@ -547,18 +547,37 @@ in
       };
 
       etc."grafana-dashboards/overview.json" =
-        # if cfg.scrapers.wifidog then
-        {
-          source = ./overview.json;
-        };
-      # else
-      #   {
-      #     text = builtins.toJSON (
-      #       builtins.mapAttrs (k: v: if k == "panels" then builtins.filter (p: p.id != 5) v else v) (
-      #         builtins.fromJSON (builtins.readFile ./overview.json)
-      #       )
-      #     );
-      #   };
+        if cfg.scrapers.wifidog && cfg.loki then
+          {
+            source = ./overview.json;
+          }
+        else
+          let
+            raw = builtins.fromJSON (builtins.readFile ./overview.json);
+            wifidog =
+              if cfg.scrapers.wifidog then
+                raw
+              else
+                raw
+                // {
+                  spec = raw.spec // {
+                    elements = removeAttrs raw.spec.elements [ "panel-5" ];
+                  };
+                };
+            final =
+              if cfg.loki then
+                wifidog
+              else
+                wifidog
+                // {
+                  spec = wifidog.spec // {
+                    layout = builtins.head wifidog.spec.layout.spec.tabs;
+                  };
+                };
+          in
+          {
+            text = builtins.toJSON final;
+          };
     };
   };
 }
