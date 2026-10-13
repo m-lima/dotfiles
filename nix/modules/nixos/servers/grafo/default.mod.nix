@@ -30,10 +30,6 @@ in
     extras = [
       (nginx.extras.proxy {
         socket = "unix:/var${socket}";
-      })
-      (nginx.extras.proxy {
-        location = "/api/live/";
-        socket = "unix:/var${socket}";
         ws = true;
       })
     ];
