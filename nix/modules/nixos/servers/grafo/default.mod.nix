@@ -63,7 +63,9 @@ in
       };
     };
 
-    loki = lib.mkEnableOption "redirecting logs to Loki";
+    loki = lib.mkEnableOption "redirecting logs to Loki" // {
+      default = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -589,6 +591,7 @@ in
                 "panel-8"
                 "panel-9"
                 "panel-10"
+                "panel-12"
               ];
             };
             filter = {
@@ -610,7 +613,6 @@ in
                   lib.pipe prev [
                     (remove.layout panel.loki)
                     (remove.element panel.loki)
-                    (prev: util.mapDeep prev [ "spec" "layout" ] (builtins.head prev.spec.layout.spec.tabs).spec.layout)
                   ];
             };
           in
