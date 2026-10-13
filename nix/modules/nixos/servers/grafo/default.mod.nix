@@ -100,6 +100,8 @@ in
             socket_mode = "0660";
           };
 
+          dashboards.default_home_dashboard_path = "/etc/grafana-dashboards/overview.json";
+
           security = {
             admin_email = "$__file{${config.age.secrets.${secret "adminEmail"}.path}}";
             secret_key = "$__file{${config.age.secrets.${secret "grafanaKey"}.path}}";
