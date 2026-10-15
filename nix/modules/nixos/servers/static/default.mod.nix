@@ -56,7 +56,7 @@ in
       groups.${group} = { };
     };
 
-    environment.persistence = util.withImpermanence config {
+    environment.persistence = util.given.impermanence config {
       global.directories = [
         (
           if builtins.length cfg.users > 0 then

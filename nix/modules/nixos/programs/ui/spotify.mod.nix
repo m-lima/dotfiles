@@ -11,7 +11,7 @@ let
   hyprCfg = config.celo.modules.programs.ui.hyprland;
 in
 {
-  config = util.enforceHome path config cfg.enable {
+  config = util.given.enforcedHome path config cfg.enable {
     assertions = [
       {
         assertion = config.celo.modules.hardware.sound.enable;
@@ -27,7 +27,7 @@ in
       };
     };
 
-    environment.persistence = util.withImpermanence config {
+    environment.persistence = util.given.impermanence config {
       home.directories = [
         "${xdg.rel "configHome"}/spotify"
         "${xdg.rel "cacheHome"}/spotify"

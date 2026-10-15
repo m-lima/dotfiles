@@ -9,11 +9,11 @@ let
   xdg = util.xdg config;
 in
 {
-  config = util.enforceHome path config cfg.enable {
+  config = util.given.enforcedHome path config cfg.enable {
 
     celo.modules.programs.ui.creation.persist = true;
 
-    environment.persistence = util.withImpermanence config {
+    environment.persistence = util.given.impermanence config {
       home.directories = [
         "${xdg.rel "configHome"}/audacity"
         "${xdg.rel "dataHome"}/audacity"

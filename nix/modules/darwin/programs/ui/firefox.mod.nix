@@ -10,7 +10,7 @@ let
   cfg = util.getOptions path config;
 in
 {
-  config = util.enforceHome path config cfg.enable {
+  config = util.given.enforcedHome path config cfg.enable {
     home-manager = {
       programs.firefox.package = (pkgs.callPackage ./firefox.pkg.nix { });
     };

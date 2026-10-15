@@ -202,7 +202,7 @@ in
     };
 
     environment = lib.mkIf cfg.tls {
-      persistence = util.withImpermanence config {
+      persistence = util.given.impermanence config {
         global.directories = [
           {
             directory = "/var/lib/acme";

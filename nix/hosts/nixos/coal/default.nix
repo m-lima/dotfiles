@@ -5,8 +5,6 @@
   ...
 }:
 {
-  imports = [ ./hardware-configuration.nix ];
-
   celo = {
     profiles = {
       system.enable = true;

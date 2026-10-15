@@ -12,7 +12,7 @@ let
   hyprCfg = config.celo.modules.programs.ui.hyprland;
 in
 {
-  config = util.enforceHome path config cfg.enable {
+  config = util.given.enforcedHome path config cfg.enable {
     home-manager = {
       programs.firefox = {
         package = pkgs.firefox-esr;
@@ -27,7 +27,7 @@ in
 
     };
 
-    environment.persistence = util.withImpermanence config {
+    environment.persistence = util.given.impermanence config {
       home.directories = [
         "${xdg.rel "configHome"}/mozilla/firefox"
         "${xdg.rel "cacheHome"}/mozilla/firefox"

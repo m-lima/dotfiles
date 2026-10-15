@@ -26,7 +26,7 @@ in
 
   imports = [
     {
-      config = util.enforceHome path config cfg.useGnomeKeyring {
+      config = util.given.enforcedHome path config cfg.useGnomeKeyring {
         services.gnome.gnome-keyring.enable = true;
 
         security.pam.services.sddm = {
@@ -46,7 +46,7 @@ in
     }
   ];
 
-  config = util.enforceHome path config cfg.enable {
+  config = util.given.enforcedHome path config cfg.enable {
     services = {
       displayManager = {
         sddm = {

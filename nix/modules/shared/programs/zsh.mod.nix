@@ -52,7 +52,7 @@ in
 
     environment.shellAliases = lib.mkForce { };
 
-    home-manager = util.withHome config {
+    home-manager = util.given.home config {
       programs = {
         zsh = {
           enable = true;

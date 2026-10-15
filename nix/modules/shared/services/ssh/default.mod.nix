@@ -150,7 +150,7 @@ in
         };
       }) cfg.extraKeys);
 
-      home-manager = util.withHome config {
+      home-manager = util.given.home config {
         home.file = {
           ".ssh/id_ed25519.pub".source = ./_secrets/${secret}.pub;
         }

@@ -78,7 +78,7 @@ in
 
     systemd.tmpfiles.rules = lib.optional config.celo.modules.core.impermanence.enable "d /var/lib/private 0700 root root - -";
 
-    environment.persistence = util.withImpermanence config {
+    environment.persistence = util.given.impermanence config {
       global.directories = [
         {
           directory = "/var/lib/private/AdGuardHome";

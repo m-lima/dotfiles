@@ -17,7 +17,7 @@ in
       }
     )
     // {
-      home-manager = util.withHome config {
+      home-manager = util.given.home config {
         wayland.windowManager.hyprland = lib.mkIf hyprCfg.enable {
           settings = {
             "$terminal" = "${cfg.pkg}/bin/alacritty";

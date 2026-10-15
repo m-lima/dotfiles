@@ -12,7 +12,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    home-manager = util.withHome config {
+    home-manager = util.given.home config {
       programs = {
         zsh = {
           # Darwin doesn't have the `shellAliases` option, so we use home-manager

@@ -10,7 +10,7 @@ in
 {
   options = util.mkOptionsEnable path;
 
-  config = util.enforceHome path config cfg.enable {
+  config = util.given.enforcedHome path config cfg.enable {
     home-manager = {
       programs.k9s.enable = true;
     };

@@ -12,12 +12,12 @@ in
 {
   options = util.mkOptionsEnable path;
 
-  config = util.enforceHome path config cfg.enable {
+  config = util.given.enforcedHome path config cfg.enable {
     home-manager = {
       home.packages = [ pkgs.prismlauncher ];
     };
 
-    environment.persistence = util.withImpermanence config {
+    environment.persistence = util.given.impermanence config {
       home.directories = [
         "${xdg.rel "dataHome"}/PrismLauncher"
       ];

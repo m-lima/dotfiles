@@ -105,7 +105,7 @@ in
       "xdg/nvim/colors/simpalt.vim".source = /${rootDir}/../vim/simpalt.vim;
     };
 
-    home-manager = util.withHome config {
+    home-manager = util.given.home config {
       programs = {
         neovim = {
           enable = true;

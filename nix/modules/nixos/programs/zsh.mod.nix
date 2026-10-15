@@ -29,7 +29,7 @@ in
 
     users.defaultUserShell = pkgs.zsh;
 
-    environment.persistence = util.withImpermanence config {
+    environment.persistence = util.given.impermanence config {
       # Only home-manager sets this path
       home = lib.mkIf home.enable {
         directories = [

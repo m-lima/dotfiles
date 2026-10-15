@@ -23,7 +23,7 @@ in
 {
   options = util.mkOptionsEnable path;
 
-  config = util.enforceHome path config cfg.enable {
+  config = util.given.enforcedHome path config cfg.enable {
     assertions = [
       {
         assertion = config.services.pipewire.enable;
@@ -64,7 +64,7 @@ in
       ];
 
     celo.modules.programs.ui.creation.persist = true;
-    environment.persistence = util.withImpermanence config {
+    environment.persistence = util.given.impermanence config {
       home.directories = [
         paths.dataRel
       ];

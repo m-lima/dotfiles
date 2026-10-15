@@ -31,7 +31,7 @@ in
     };
   };
 
-  config = util.enforceHome path config cfg.enable {
+  config = util.given.enforcedHome path config cfg.enable {
     assertions = [
       {
         assertion = !kdeCfg.enable;
@@ -39,7 +39,7 @@ in
       }
     ];
 
-    environment.persistence = util.withImpermanence config {
+    environment.persistence = util.given.impermanence config {
       home.directories = [ "${xdg.rel "dataHome"}/keyrings" ];
     };
 

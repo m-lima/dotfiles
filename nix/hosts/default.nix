@@ -10,15 +10,28 @@
   for =
     kind:
     let
-      # [Util] Returns a list of attr names that pass the filter
-      filterAttrNames =
+      # [Util] Returns a list of attr names whose value pass the filter
+      filterAttrValues =
         filter: attrs: builtins.filter (name: filter attrs.${name}) (builtins.attrNames attrs);
 
       # Gets the host ids for a given kind
       # I.e. the directory name under `./${kind}`
       #
       # Returns a list of id strings
-      hostIds = filterAttrNames (x: x == "directory") (builtins.readDir ./${kind});
+      hostIds = filterAttrValues (x: x == "directory") (builtins.readDir ./${kind});
+
+      # Loads the extra users of a given host
+      # I.e. the modules like `./${kind}/${hostId}/extraUsers/<USER>/default.nix`
+      #
+      # Returns a list of user modules with the name injected
+      users =
+        id:
+        if builtins.pathExists ./${kind}/${id}/extraUsers then
+          map (u: (import ./${kind}/${id}/extraUsers/${u}) u) (
+            filterAttrValues (x: x == "directory") (builtins.readDir ./${kind}/${id}/extraUsers)
+          )
+        else
+          [ ];
 
       # Loads the definition of a host id
       # The definition comes from importing `./${kind}/${id}`
@@ -34,7 +47,11 @@
       };
 
       # Builds a list of modules to load for this configuration
-      # Takes the host id and definition and adds default configuration values and ragenix configuration
+      # It does three things:
+      # * Takes the host id and definition
+      # * Adds default configuration values and ragenix configuration
+      # * Imports the REQUIRED hardware-configuration
+      # * Imports any extra users
       #
       # Returns
       # {
@@ -45,6 +62,7 @@
         name = host.id;
         value = [
           host.definition
+          ./${kind}/${host.id}/hardware-configuration.nix
           (
             { lib, config, ... }:
             {
@@ -76,7 +94,8 @@
 
             }
           )
-        ];
+        ]
+        ++ (users host.id);
       };
     in
     builtins.listToAttrs (map toModules (map toDefinition hostIds));

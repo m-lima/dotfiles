@@ -28,53 +28,6 @@ let
       example = "ffa500";
     };
 
-  enforceHome =
-    path: config: enable:
-    {
-      assertions ? [ ],
-      home-manager ? { },
-      ...
-    }@settings:
-    lib.mkIf enable (
-      (removeAttrs settings [
-        "assertions"
-        "home-manager"
-      ])
-      // {
-        assertions = [
-          {
-            assertion = config.celo.modules.core.home.enable;
-            message = "${lib.last path} enabled without home-manager";
-          }
-        ]
-        ++ assertions;
-
-        home-manager = withHome config home-manager;
-      }
-    );
-
-  withHome =
-    config: settings:
-    let
-      core = config.celo.modules.core;
-    in
-    lib.mkIf core.home.enable { users.${core.user.userName} = settings; };
-
-  withImpermanence =
-    config:
-    {
-      global ? { },
-      home ? { },
-    }:
-    let
-      core = config.celo.modules.core;
-    in
-    lib.mkIf (builtins.hasAttr "impermanence" core && core.impermanence.enable) {
-      ${config.celo.modules.core.disko.mounts.persist.mountpoint} = global // {
-        users.${core.user.userName} = lib.mkIf core.user.enable home;
-      };
-    };
-
   xdg = config: rec {
     raw = config.home-manager.users.${config.celo.modules.core.user.userName}.xdg;
     abs = value: if builtins.isList value then lib.getAttrFromPath value raw else raw.${value};
@@ -114,6 +67,7 @@ let
           mapper;
     };
 
+  given = import ./given.nix { inherit lib; };
   load = import ./load.nix { inherit lib; };
   secret = import ./secret.nix { inherit lib; };
   systemd = import ./systemd.nix { inherit lib; };
@@ -125,15 +79,13 @@ in
     mkOptionsEnable
     getOptions
     mkColorOption
-    withHome
-    enforceHome
-    withImpermanence
     xdg
     extractCompdef
     concatAttrs
     gitRev
     mapDeep
 
+    given
     load
     secret
     systemd

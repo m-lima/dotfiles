@@ -171,7 +171,7 @@ in
             compdef _td td
           '';
         in
-        util.withHome config {
+        util.given.home config {
           programs = {
             zsh.initContent = (util.extractCompdef script) + "\n${td}";
           };

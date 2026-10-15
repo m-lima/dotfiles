@@ -533,7 +533,7 @@ in
     '';
 
     environment = {
-      persistence = util.withImpermanence config {
+      persistence = util.given.impermanence config {
         global.directories =
           let
             influxdb = config.services.influxdb;

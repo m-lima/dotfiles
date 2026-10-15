@@ -59,7 +59,7 @@ in
       unixAuth = lib.mkForce true;
     };
 
-    environment.persistence = util.withImpermanence config {
+    environment.persistence = util.given.impermanence config {
       global.files = [
         "/etc/ssh/ssh_host_rsa_key"
         "/etc/ssh/ssh_host_rsa_key.pub"

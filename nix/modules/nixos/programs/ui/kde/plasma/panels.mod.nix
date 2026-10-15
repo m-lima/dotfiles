@@ -10,7 +10,7 @@ let
   uiCfg = config.celo.modules.programs.ui;
 in
 {
-  config = util.enforceHome path config cfg.enable {
+  config = util.given.enforcedHome path config cfg.enable {
     home-manager = {
       programs.plasma = {
         panels = map (screen: {

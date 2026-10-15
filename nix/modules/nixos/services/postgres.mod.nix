@@ -60,7 +60,7 @@ in
     };
 
     environment = lib.mkIf (!cfg.subvolume) {
-      persistence = util.withImpermanence config {
+      persistence = util.given.impermanence config {
         global.directories = [
           {
             directory = dataDir;

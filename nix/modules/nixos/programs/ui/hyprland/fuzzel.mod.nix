@@ -10,7 +10,7 @@ let
   cfg = config.celo.modules.programs.ui.hyprland;
 in
 {
-  config = util.enforceHome path config cfg.enable {
+  config = util.given.enforcedHome path config cfg.enable {
     home-manager = {
       xdg.dataFile."hypr/power.sh" = {
         text = ''

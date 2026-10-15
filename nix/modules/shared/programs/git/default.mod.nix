@@ -45,7 +45,7 @@ in
     lib.mkIf cfg.enable {
       environment.systemPackages = [ pkgs.git ];
 
-      home-manager = util.withHome config {
+      home-manager = util.given.home config {
         xdg.configFile =
           let
             toConfigFile = name: "git/${md5 name}";

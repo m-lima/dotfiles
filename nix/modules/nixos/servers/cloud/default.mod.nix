@@ -121,7 +121,7 @@ in
     };
 
     environment = {
-      persistence = util.withImpermanence config {
+      persistence = util.given.impermanence config {
         global.directories = [
           {
             directory = config.services.redis.servers.nextcloud.settings.dir;

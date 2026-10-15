@@ -31,7 +31,7 @@ in
     };
   };
 
-  config = util.enforceHome path config cfg.enable {
+  config = util.given.enforcedHome path config cfg.enable {
     assertions = [
       {
         assertion = cfg.tmuxStart -> tmuxCfg.enable;

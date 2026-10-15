@@ -9,7 +9,7 @@ let
   cfg = util.getOptions path config;
 in
 {
-  config = util.enforceHome path config cfg.enable {
+  config = util.given.enforcedHome path config cfg.enable {
     home-manager = {
       home.packages = [
         (pkgs.callPackage ./rustdesk.pkg.nix { })

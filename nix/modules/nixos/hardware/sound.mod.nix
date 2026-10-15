@@ -24,7 +24,7 @@ in
       };
     };
 
-    environment.persistence = util.withImpermanence config {
+    environment.persistence = util.given.impermanence config {
       home.directories = lib.optional cfg.persist "${xdg.rel "dataHome"}/wireplumber";
     };
   };

@@ -18,7 +18,7 @@ in
       enable = true;
     };
 
-    environment.persistence = util.withImpermanence config {
+    environment.persistence = util.given.impermanence config {
       home.directories = [
         "${xdg.rel "dataHome"}/Steam"
         ".steam"

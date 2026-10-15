@@ -78,7 +78,7 @@ in
       };
     };
 
-    environment.persistence = util.withImpermanence config {
+    environment.persistence = util.given.impermanence config {
       global.directories = [
         {
           directory = cfg.home;
