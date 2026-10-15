@@ -387,19 +387,24 @@ in
     systemd = {
       services = {
         telegraf = {
-          serviceConfig = util.systemd.base // {
-            ProcSubset = "all";
-            ProtectProc = "default";
+          serviceConfig =
+            util.systemd.base
+            // {
+              ProcSubset = "all";
+              ProtectProc = "default";
 
-            IPAddressAllow = "localhost";
-            PrivateNetwork = false;
-            RestrictAddressFamilies = [
-              "AF_INET"
-              "AF_INET6"
-              "AF_NETLINK"
-              "AF_UNIX"
-            ];
-          };
+              IPAddressAllow = "localhost";
+              PrivateNetwork = false;
+              RestrictAddressFamilies = [
+                "AF_INET"
+                "AF_INET6"
+                "AF_NETLINK"
+                "AF_UNIX"
+              ];
+            }
+            // lib.optionalAttrs cfg.scrapers.cloud {
+              SystemCallFilter = builtins.filter (x: x != "~@memlock") util.systemd.baseConfig.SystemCallFilter;
+            };
         };
 
         influxdb = {
