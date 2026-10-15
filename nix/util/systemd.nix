@@ -34,6 +34,7 @@ let
     CapabilityBoundingSet = "";
 
     SystemCallArchitectures = "native";
+    SystemCallErrorNumber = "EPERM";
     SystemCallFilter = [
       "~@clock"
       "~@aio"
