@@ -572,7 +572,7 @@
                       "spec": {
                         "direction": "backward",
                         "editorMode": "code",
-                        "expr": "{host=\"localhost\", service_name=\"nginx\"} | pattern \"<_> nginx: {dst:<dst> src:<src> req:[<method> <url> <req_size>b] res:[<status> <res_size>b <latency>s]\" | status!=\"\" | status!=\"200\"",
+                        "expr": "{host=\"localhost\", service_name=\"nginx\"} | pattern \"<_> nginx: {dst:<dst> src:<src> req:[<method> <url> <req_size>b] res:[<status> <res_size>b <latency>s]\" | status!=\"\"",
                         "queryType": "range"
                       },
                       "version": "v0"
