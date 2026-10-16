@@ -8,7 +8,7 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "Slack";
-  version = "4.52.171";
+  version = "4.52.178";
   nativeBuildInputs = [
     undmg
     unzip
@@ -16,7 +16,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   src = fetchurl {
     url = "https://downloads.slack-edge.com/desktop-releases/mac/universal/${finalAttrs.version}/${finalAttrs.pname}-${finalAttrs.version}-macOS.dmg";
-    hash = "sha256-NpKHEr6tTeGQ2X7TlmGg1hHrSn6H8BK/RgOC6S7uI38=";
+    hash = "sha256-iQnCIrgFVSwYs+hkANxrkAf4i5mtuhC8IQ0513Z+EW8=";
   };
 
   sourceRoot = ".";
