@@ -10,6 +10,12 @@ path:
 let
   celo = config.celo.modules;
   cfg = util.getOptions path config;
+  custom = {
+    kotlin = {
+      lsp = pkgs.callPackage ./kotlin/lsp.pkg.nix { };
+      plugin = pkgs.callPackage ./kotlin/plugin.pkg.nix { };
+    };
+  };
   lsps = {
     cpp = {
       pkg = [ pkgs.clang-tools ];
@@ -34,6 +40,11 @@ let
       ];
       setup = "require('config.lspconfig.servers.js').setup()";
       dependencies = [ ];
+    };
+    kotlin = {
+      pkg = [ custom.kotlin.lsp ];
+      dependencies = [ custom.kotlin.plugin ];
+      setup = "require('config.lspconfig.register').register('kotlin', require('kotlin').setup({ }))";
     };
     lua = {
       pkg = [ pkgs.lua-language-server ];
@@ -115,6 +126,12 @@ in
           withPerl = false;
           withNodeJs = false;
           withPython3 = false;
+
+          extraWrapperArgs = lib.mkIf (builtins.any (n: n == "kotlin") cfg.lsps) [
+            "--set"
+            "KOTLIN_LSP_DIR"
+            "${custom.kotlin.lsp}/share/kotlin-lsp"
+          ];
 
           plugins = [
             pkgs.vimPlugins.vim-repeat
