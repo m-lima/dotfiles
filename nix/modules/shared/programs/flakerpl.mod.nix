@@ -17,18 +17,17 @@ in
       (
         let
           flake = "${config.celo.modules.core.user.homeDirectory}/code/dotfiles/nix";
+          arch = if pkgs.stdenv.isLinux then "nixos" else "darwin";
         in
         pkgs.writeShellScriptBin "nixrpl" ''
           nix --extra-experimental-features 'nix-command flakes' repl --impure --expr '# vim: set syntax=nix:
             let
               flake = builtins.getFlake "${flake}";
-              configuration = flake.${
-                if pkgs.stdenv.isLinux then "nixosConfigurations" else "darwinConfigurations"
-              }."${config.celo.host.id}";
+              configuration = flake.${arch}Configurations."${config.celo.host.id}";
               motd = "Loaded system flake `${flake}` for `${config.celo.host.id}`";
               scope =
                 assert configuration._type or null == "configuration";
-                assert configuration.class or "nixos" == "nixos";
+                assert configuration.class or "${arch}" == "${arch}";
                 configuration._module.args
                 // configuration._module.specialArgs
                 // {
