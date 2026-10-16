@@ -15,7 +15,7 @@ in
   config = util.given.enforcedHome path config cfg.enable {
     home-manager = {
       home = {
-        packages = [ pkgs.intellij.idea ];
+        packages = [ pkgs.jetbrains.idea ];
         file = {
           ".ideavimrc".text =
             ""
