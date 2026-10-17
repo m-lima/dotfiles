@@ -178,15 +178,20 @@ if vim.fn.has('win32') == 1 or vim.fn.has('win32unix') == 1 then
 end
 local lspconfig_file = path_separator .. '.vim' .. path_separator .. 'lspconfig.lua'
 
-local search_for_config = function(path, server, config)
+local search_for_config = function(path, server, client, root_dir_len)
   while path ~= path_separator and #path > 0 do
     path = string.gsub(path, '^(.*)' .. path_separator .. '.+$', '%1')
+
+    if root_dir_len and string.len(path) < root_dir_len then
+      return
+    end
+
     local maybe_config = path .. lspconfig_file
     local ok, cfg = pcall(dofile, maybe_config)
     if ok then
       vim.notify('Loaded LSP overrides from ' .. maybe_config, vim.log.levels.INFO)
       if type(cfg) == 'function' then
-        return cfg(server, config)
+        return cfg(server, client.config)
       end
       if type(cfg) == 'table' and cfg[server] ~= nil then
         return cfg[server]
@@ -196,12 +201,15 @@ local search_for_config = function(path, server, config)
 end
 
 local load_override = function(server)
-  return function(_, config)
-    local cfg = search_for_config(vim.fn.expand('%:p'), server, config)
+  return function(client)
+    local cfg = search_for_config(vim.fn.expand('%:p'), server, client, client.root_dir and string.len(client.root_dir))
     if cfg and cfg.settings ~= nil then
-      config.settings = vim.tbl_deep_extend('force', config.settings, cfg.settings)
+      client.config.settings = vim.tbl_deep_extend('force', client.config.settings, cfg.settings)
+      client.settings = vim.deepcopy(client.config.settings)
+      client:notify("workspace/didChangeConfiguration", {
+        settings = client.settings
+      })
     end
-    return config
   end
 end
 
@@ -209,7 +217,7 @@ local base_opts = function(server, opts)
   return vim.tbl_deep_extend('force', {
     capabilities = cmp_capabilities,
     on_attach = make_on_attach(opts and opts.features),
-    before_init = load_override(server),
+    on_init = load_override(server),
   }, opts or {})
 end
 
