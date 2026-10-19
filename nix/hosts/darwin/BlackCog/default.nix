@@ -40,6 +40,10 @@
             mc = "~/Misc";
           };
         };
+        neovim.lsps = {
+          kotlin.enable = true;
+          metals.enable = true;
+        };
 
         git = {
           overrides = {
