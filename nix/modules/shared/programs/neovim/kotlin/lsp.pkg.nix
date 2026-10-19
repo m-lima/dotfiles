@@ -25,9 +25,9 @@ let
   archiveHash =
     {
       "x86_64-linux" = "sha256-q4ykRV3C/F/hok2yvMxGwQQlTSxGUVXEJR7mXfjz98w=";
-      "aarch64-linux" = "sha256-cNlzWB9N1TZ2H7Crdro/t8TAOO3/S3qhEKOquzi3p/M=";
+      "aarch64-linux" = "sha256-UJmZAe+Lz6HlhWG2qNeCpy3qViD8+SpkEwgH+JJKVvw=";
       "x86_64-darwin" = "sha256-WeJVjDm5TA+hC6k7UmwMjZOgA7BylCAUTQEOSLBbeeA=";
-      "aarch64-darwin" = "sha256-NcjH8mRyuUaelIEkfZ74tOJpQiiEhNUm2an9tr0XUEI=";
+      "aarch64-darwin" = "sha256-6+8uE81K3E7J4ECEuEgACj7HqdKRfGTyaVdM4u/p7K0=";
     }
     .${system} or (throw "kotlin-lsp does not support ${system}");
 in

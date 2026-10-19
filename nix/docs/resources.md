@@ -23,3 +23,7 @@ And extract `gui`
 # Compare locales
 
 https://lh.2xlibre.net/locales/
+
+# Getting the hash for fetchUrl
+
+`nix store prefetch-file`
