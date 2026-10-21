@@ -8,7 +8,7 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "Firefox ESR";
-  version = "153.5.0esr";
+  version = "153.5.1esr";
   nativeBuildInputs = [
     undmg
     unzip
@@ -16,7 +16,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   src = fetchurl {
     url = "https://download-installer.cdn.mozilla.net/pub/firefox/releases/${finalAttrs.version}/mac/en-US/Firefox%20${finalAttrs.version}.dmg";
-    hash = "sha256-fRiGKBdcjQzgset451rxi3HHleKqWMJdTsthMw0uQhM=";
+    hash = "sha256-Km1htXru15vm0/iMX71Qvla/HvL92XvNF3nIEeuCfWo=";
   };
 
   sourceRoot = ".";
