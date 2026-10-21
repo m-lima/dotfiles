@@ -55,7 +55,7 @@
         endgame.enable = true;
         zsh.simpalt.symbol = "◉";
 
-        # NEW
+        bazel.enable = true;
         cursor.enable = true;
         coreutils.enable = true;
         msaler.enable = true;
