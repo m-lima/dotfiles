@@ -12,9 +12,9 @@ in
 {
   options = util.mkOptions path {
     primaryUser = lib.mkOption {
-      type = lib.types.nonEmptyStr;
+      type = lib.types.attrs;
       description = "User to which apply the darwin nix changes";
-      default = config.celo.modules.core.user.userName;
+      default = config.celo.modules.core.user;
     };
     dynamicDock = lib.mkEnableOption "only show open apps in the dock";
     touchId = lib.mkEnableOption "touch ID" // {
@@ -30,7 +30,7 @@ in
       };
     };
     system = {
-      primaryUser = cfg.primaryUser;
+      primaryUser = cfg.primaryUser.userName;
       keyboard = {
         enableKeyMapping = true;
         remapCapsLockToEscape = true;
@@ -62,13 +62,13 @@ in
               static-only = false;
               persistent-apps =
                 (lib.optional cfgUi.firefox.enable {
-                  app = "/Users/${cfg.primaryUser}/Applications/Home Manager Apps/Firefox ESR.app";
+                  app = "${cfg.primaryUser.homeDirectory}/Applications/Home Manager Apps/Firefox ESR.app";
                 })
                 ++ (lib.optional cfgUi.slack.enable {
-                  app = "/Users/${cfg.primaryUser}/Applications/Home Manager Apps/Slack.app";
+                  app = "${cfg.primaryUser.homeDirectory}/Applications/Home Manager Apps/Slack.app";
                 })
                 ++ (lib.optional cfgUi.ghostty.enable {
-                  app = "/Users/${cfg.primaryUser}/Applications/Home Manager Apps/Ghostty.app";
+                  app = "${cfg.primaryUser.homeDirectory}/Applications/Home Manager Apps/Ghostty.app";
                 })
                 ++ [
                   { app = "/System/Applications/Mail.app"; }
@@ -90,6 +90,7 @@ in
           StandardHideWidgets = true;
         };
         universalaccess.closeViewScrollWheelToggle = true;
+        screencapture.target = "preview";
         CustomUserPreferences = {
           "com.apple.Spotlight" = {
             # Hide from the menu bar
