@@ -2,6 +2,9 @@ local lua_ls = {
   features = {
     name = 'lua',
   },
+  root_markers = {
+    ".git",
+  },
   settings = {
     Lua = {
       runtime = {

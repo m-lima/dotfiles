@@ -2,6 +2,10 @@ local namespace = vim.api.nvim_create_namespace('mlima.inlay')
 local hl_mark = vim.api.nvim_get_hl_id_by_name('LspCodeLensMark')
 local hl_type = vim.api.nvim_get_hl_id_by_name('LspCodeLensType')
 local should_display_var_name = true
+local request = {
+  running = false,
+  next = nil,
+}
 
 local get_root = function(bufnr)
   local ok, parser = pcall(vim.treesitter.get_parser, bufnr)
@@ -88,7 +92,8 @@ local extract_virtual_text = function(value, root, ctx)
   end
 end
 
-local refresh = function()
+local refresh_action = function()
+  request.running = true
   vim.lsp.buf_request(
     0,
     'textDocument/inlayHint',
@@ -119,8 +124,23 @@ local refresh = function()
           )
         end
       end
+
+      if request.next then
+        vim.schedule(request.next)
+        request.next = nil
+      else
+        request.running = false
+      end
     end
   )
+end
+
+local refresh = function()
+  if request.running then
+    request.next = refresh_action
+  else
+    refresh_action()
+  end
 end
 
 local set_hl_group = function(name, for_mark)
