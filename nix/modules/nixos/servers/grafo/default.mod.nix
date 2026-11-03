@@ -274,6 +274,12 @@ in
               target_label = "service_name"
               replacement = "nginx"
             }
+
+            rule {
+              source_labels = ["__journal__systemd_unit"]
+              regex = "^loki\\.service$"
+              action = "drop"
+            }
           }
 
           loki.source.journal "read" {
