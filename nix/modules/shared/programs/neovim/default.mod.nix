@@ -15,6 +15,7 @@ let
       lsp = pkgs.callPackage ./kotlin/lsp.pkg.nix { };
       plugin = pkgs.callPackage ./kotlin/plugin.pkg.nix { };
     };
+    strudel.plugin = pkgs.callPackage ./strudel/plugin.pkg.nix { };
   };
   lsps = {
     cpp = {
@@ -79,13 +80,28 @@ let
       setup = "require('config.lspconfig.servers.zig')";
     };
   };
-in
-{
-  options = util.mkOptions path {
-    lsps = lib.mapAttrs (k: v: {
+  plugins = {
+    markdown = {
+      enable = false;
+      plugins = [ pkgs.vimPlugins.render-markdown-nvim ];
+      setup = "require('config.render_markdown')";
+    };
+    iron = {
+      enable = false;
+      plugins = [ pkgs.vimPlugins.iron-nvim ];
+      setup = "require('config.iron')";
+    };
+    strudel = {
+      enable = false;
+      plugins = [ custom.strudel.plugin ];
+      setup = "require('config.strudel')";
+    };
+  };
+  mkOptions = lib.mapAttrs (
+    k: v: {
       enable = lib.mkOption {
         type = lib.types.bool;
-        description = "Enable LSP for ${k}";
+        description = "Enable ${k}";
         default = v.enable or true;
       };
       pkgs = lib.mkOption {
@@ -108,12 +124,19 @@ in
         description = "Extra args to send to neovim upon launch";
         default = v.extraArgs or [ ];
       };
-    }) lsps;
+    }
+  );
+in
+{
+  options = util.mkOptions path {
+    lsps = mkOptions lsps;
+    plugins = mkOptions plugins;
   };
 
   config =
     let
       enabledLsps = lib.filterAttrs (_: v: v.enable) cfg.lsps;
+      enabledPlugins = lib.filterAttrs (_: v: v.enable) cfg.plugins;
     in
     lib.mkIf cfg.enable {
       environment.systemPackages = [ pkgs.neovim ];
@@ -139,7 +162,10 @@ in
             withNodeJs = false;
             withPython3 = false;
 
-            extraWrapperArgs = lib.flatten (lib.mapAttrsToList (_: v: v.extraArgs) enabledLsps);
+            extraWrapperArgs = lib.flatten (
+              (lib.mapAttrsToList (_: v: v.extraArgs) enabledLsps)
+              ++ (lib.mapAttrsToList (_: v: v.extraArgs) enabledPlugins)
+            );
 
             plugins = [
               pkgs.vimPlugins.vim-repeat
@@ -180,12 +206,14 @@ in
               # vsession
               pkgs.vimPlugins.toggleterm-nvim
               pkgs.vimPlugins.undotree
-              pkgs.vimPlugins.render-markdown-nvim
-              pkgs.vimPlugins.iron-nvim
             ]
-            ++ lib.flatten (lib.mapAttrsToList (_: v: v.plugins) enabledLsps);
+            ++ lib.flatten (lib.mapAttrsToList (_: v: v.plugins) enabledLsps)
+            ++ lib.flatten (lib.mapAttrsToList (_: v: v.plugins) enabledPlugins);
 
-            extraPackages = lib.flatten (lib.mapAttrsToList (_: v: v.pkgs) enabledLsps);
+            extraPackages = lib.flatten (
+              (lib.mapAttrsToList (_: v: v.pkgs) enabledLsps)
+              ++ (lib.mapAttrsToList (_: v: v.pkgs) enabledPlugins)
+            );
 
             initLua = builtins.concatStringsSep "\n" [
               ''
@@ -195,7 +223,6 @@ in
                 require('config.dap.ui')
                 require('config.fugitive')
                 require('config.gitsigns')
-                require('config.iron')
                 require('config.lightspeed')
                 require('config.lspconfig')
                 require('config.lua_out')
@@ -206,7 +233,6 @@ in
                 require('config.treesitter.highlight')
                 require('config.treesitter.none')
                 require('config.undotree')
-                require('config.render_markdown')
 
                 -- Personal
                 require('plugin.breadcrumbs')
@@ -215,6 +241,7 @@ in
                 require('plugin.overlength')
               ''
               (lib.strings.concatMapAttrsStringSep "\n" (_: v: v.setup) enabledLsps)
+              (lib.strings.concatMapAttrsStringSep "\n" (_: v: v.setup) enabledPlugins)
               (builtins.readFile /${rootDir}/../vim/config/nvim/filetypes.lua)
             ];
           };

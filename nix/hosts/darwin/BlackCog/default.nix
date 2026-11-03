@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   ...
 }:
 {
@@ -40,9 +41,14 @@
             mc = "~/Misc";
           };
         };
-        neovim.lsps = {
-          kotlin.enable = true;
-          metals.enable = true;
+        neovim = {
+          lsps = {
+            kotlin.enable = true;
+            metals.enable = true;
+          };
+          plugins = {
+            strudel.enable = true;
+          };
         };
 
         git = {
