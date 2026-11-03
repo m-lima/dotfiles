@@ -6,27 +6,35 @@
   ...
 }:
 
-stdenvNoCC.mkDerivation (finalAttrs: {
-  pname = "KeePassXC";
-  version = "2.7.12";
-  nativeBuildInputs = [
-    undmg
-    unzip
-  ];
-
-  src = fetchurl {
+stdenvNoCC.mkDerivation (
+  finalAttrs:
+  let
     url = "https://github.com/keepassxreboot/keepassxc/releases/download/${finalAttrs.version}/${finalAttrs.pname}-${finalAttrs.version}-arm64.dmg";
-    hash = "sha256-ZfT2NgcYDAoVeUtKQGj4XpntU5HIfB+5MSZI8bNv7UA=";
-  };
+  in
+  {
+    pname = "KeePassXC";
+    version = "2.8.0";
+    nativeBuildInputs = [
+      undmg
+      unzip
+    ];
 
-  sourceRoot = ".";
+    src = fetchurl {
+      inherit url;
+      hash = "sha256-Ij1cca5sEdSBksaf1YL9XxAEfpHrzrwBTeM6QlOblRk=";
+    };
 
-  installPhase = ''
-    runHook preInstall
-    mkdir -p $out/Applications
-    mv ${finalAttrs.pname}.app "$out/Applications/${finalAttrs.pname}.app"
-    runHook postInstall
-  '';
+    sourceRoot = ".";
 
-  outputs = [ "out" ];
-})
+    installPhase = ''
+      runHook preInstall
+      mkdir -p $out/Applications
+      mv ${finalAttrs.pname}.app "$out/Applications/${finalAttrs.pname}.app"
+      runHook postInstall
+    '';
+
+    outputs = [ "out" ];
+
+    passthru = { inherit url; };
+  }
+)

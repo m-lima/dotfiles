@@ -6,29 +6,37 @@
   ...
 }:
 
-stdenvNoCC.mkDerivation (finalAttrs: {
-  pname = "Inkscape";
-  version = "1.4.4";
-  nativeBuildInputs = [
-    undmg
-    unzip
-  ];
-
-  src = fetchurl {
+stdenvNoCC.mkDerivation (
+  finalAttrs:
+  let
     url = "https://media.inkscape.org/dl/resources/file/${finalAttrs.pname}-${finalAttrs.version}_arm64.dmg";
-    hash = "sha256-6sypSrAeWUZ83VRSooZ8NzRFD5pM+zNGlWzJsH808/E=";
-  };
+  in
+  {
+    pname = "Inkscape";
+    version = "1.4.4";
+    nativeBuildInputs = [
+      undmg
+      unzip
+    ];
 
-  sourceRoot = ".";
+    src = fetchurl {
+      inherit url;
+      hash = "sha256-6sypSrAeWUZ83VRSooZ8NzRFD5pM+zNGlWzJsH808/E=";
+    };
 
-  dontFixup = true;
+    sourceRoot = ".";
 
-  installPhase = ''
-    runHook preInstall
-    mkdir -p $out/Applications
-    mv ${finalAttrs.pname}.app "$out/Applications/${finalAttrs.pname}.app"
-    runHook postInstall
-  '';
+    dontFixup = true;
 
-  outputs = [ "out" ];
-})
+    installPhase = ''
+      runHook preInstall
+      mkdir -p $out/Applications
+      mv ${finalAttrs.pname}.app "$out/Applications/${finalAttrs.pname}.app"
+      runHook postInstall
+    '';
+
+    outputs = [ "out" ];
+
+    passthru = { inherit url; };
+  }
+)
