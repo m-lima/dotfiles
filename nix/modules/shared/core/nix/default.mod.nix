@@ -8,7 +8,9 @@ path:
 }:
 let
   cfg = util.getOptions path config;
-  cache = util.secret.rage.orElse /${rootDir}/secrets/shared/servers/nix/cache.rage "localhost";
+  cache =
+    util.secret.rage.orElse config /${rootDir}/secrets/shared/servers/nix/cache.rage
+      "localhost";
 in
 {
   options = util.mkOptions path { description = "home manager"; };
@@ -37,7 +39,7 @@ in
         access-tokens = util.secret.rage.mkIf config ./_secrets/access_tokens.rage;
 
         # Add cache
-        substituters = [ "httpe://${cache}" ];
+        substituters = [ "https://${cache}" ];
         trusted-public-keys = [ "${cache}:d5f3OptR3pkL3kUU1eElQxlISPWylkCGthlOZ9qt+Mw=" ];
       };
     };

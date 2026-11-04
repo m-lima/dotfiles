@@ -61,6 +61,7 @@
         elo.enable = true;
         grafo.enable = true;
         ipe.enable = true;
+        nixcache.enable = true;
         passer = {
           enable = true;
           extraDomains = util.secret.rage.mkIf config ./_secrets/servers/passer/domains.rage;
