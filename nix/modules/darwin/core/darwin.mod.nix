@@ -17,9 +17,7 @@ in
       default = config.celo.modules.core.user;
     };
     dynamicDock = lib.mkEnableOption "only show open apps in the dock";
-    touchId = lib.mkEnableOption "touch ID" // {
-      default = true;
-    };
+    touchId = lib.mkEnableOption "touch ID";
   };
 
   config = lib.mkIf cfg.enable {
