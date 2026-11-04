@@ -73,3 +73,19 @@ $ nix-shell -p net-tools --run 'sudo netstat -tulpn'
 ```
 $ systemd-analyze security [unit]
 ```
+
+# Find out which version of CPU microcode can be used
+
+Because nixos doesn't allow `/lib64/ld-linux-x86-64.so.2` to run, we need some extra steps
+
+First, get the ld from the store. Here, `cat` is a pretty common executable
+
+```
+$ ldd $(which cat)
+```
+
+It will print the `so` for `ld`
+
+```
+$ <ld.so> --help
+```
