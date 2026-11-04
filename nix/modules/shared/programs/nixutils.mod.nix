@@ -109,9 +109,13 @@ in
             fi
           fi
 
-          echo Matching nixpkgs from "$REFERENCE" to "$TARGET"
+          echo Matching locks from "$REFERENCE" to "$TARGET"
 
-          jq --slurpfile ref "$REFERENCE" '.nodes.nixpkgs = $ref[0].nodes.nixpkgs' "$TARGET" > /tmp/flake.lock && mv /tmp/flake.lock "$TARGET"
+          NODES=($(${pkgs.coreutils}/bin/sort <(${pkgs.jq}/bin/jq -r '.nodes | keys[]' "$REFERENCE") <(${pkgs.jq}/bin/jq -r '.nodes | keys[]' "$TARGET") | ${pkgs.coreutils}/bin/uniq -d | ${pkgs.gnugrep}/bin/grep -v root))
+
+          for node in $NODES; do
+            ${pkgs.jq}/bin/jq --slurpfile ref "$REFERENCE" '.nodes.'"$node"' = $ref[0].nodes.'"$node" "$TARGET" > /tmp/flake.lock && mv /tmp/flake.lock "$TARGET"
+          done
         '')
       ];
   };
