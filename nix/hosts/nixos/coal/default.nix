@@ -100,7 +100,6 @@
         };
       };
       programs = {
-        flakerpl.enable = true;
         nixshell.enable = true;
         git = {
           overrides = {

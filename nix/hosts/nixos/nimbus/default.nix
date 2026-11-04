@@ -101,7 +101,6 @@
       };
       programs = {
         direnv.enable = true;
-        flakerpl.enable = true;
         nixshell.enable = true;
         zsh.simpalt.symbol = "ɳ";
       };

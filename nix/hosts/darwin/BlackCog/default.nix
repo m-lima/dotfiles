@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   ...
 }:
 {
@@ -29,7 +28,6 @@
         };
       };
       programs = {
-        flakerpl.enable = true;
         nixshell.enable = true;
         nali = {
           entries = {

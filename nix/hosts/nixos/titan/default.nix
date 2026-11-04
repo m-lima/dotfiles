@@ -97,7 +97,6 @@
       };
       programs = {
         cursor.enable = true;
-        flakerpl.enable = true;
         nixshell.enable = true;
         git = {
           overrides = {
