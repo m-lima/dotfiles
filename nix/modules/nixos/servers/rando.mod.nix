@@ -11,14 +11,18 @@ let
   cfg = util.getOptions path config;
   nginx = util.nginx path config;
   name = "rando";
-  rando = inputs.rando.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  rando = inputs.rando.packages.${pkgs.stdenv.hostPlatform.system};
 in
 {
   imports = nginx.server {
     inherit name;
     extras = [
+      (nginx.extras.serve {
+        root = rando.webRoot.outPath;
+      })
       (nginx.extras.proxy {
         socket = "unix:/run/${name}/socket";
+        location = "/api/";
       })
     ];
   };
@@ -36,7 +40,7 @@ in
         serviceConfig = util.systemd.harden {
           Type = "simple";
           ExecStart = builtins.concatStringsSep " " [
-            "${rando}/bin/rando"
+            "${rando.server}/bin/rando"
             "--socket ${toString cfg.socket}"
             "-vvv"
           ];

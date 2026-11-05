@@ -731,16 +731,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1793907847,
-        "narHash": "sha256-jBZ3WiqnxtmkO1KZajZB6bEgxuMh2qHdZCDdIhE5NjE=",
+        "lastModified": 1793917324,
+        "narHash": "sha256-/V94BuPPsK+Qc/HoH3HUPXR9YEoMuNP4bF9D1j+kAqM=",
         "owner": "m-lima",
         "repo": "rando",
-        "rev": "9433ff99be610f5866039e7318c8178db2bfa662",
+        "rev": "447bc3c1387cfd3e68b2e1000b218aedfbb3e37b",
         "type": "github"
       },
       "original": {
         "owner": "m-lima",
-        "ref": "nix-001",
+        "ref": "nix-002",
         "repo": "rando",
         "type": "github"
       }
