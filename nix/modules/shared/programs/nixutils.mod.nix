@@ -31,6 +31,7 @@ in
               inherit flake;
             };
         '';
+        fg = util.sgr.fg;
       in
       [
         (pkgs.writeShellScriptBin "nixrpl" ''
@@ -49,7 +50,7 @@ in
           fi
 
           if (( $# != 1 )); then
-            echo "Expected an EXPR argument" >&2
+            echo "${fg.red}Error:${fg.reset} Expected an EXPR argument" >&2
             exit 1
           fi
 
@@ -82,14 +83,14 @@ in
           TARGET="./flake.lock"
           if (( $# > 0 )); then
             if [[ "$(basename "$1")" != "flake.lock" ]]; then
-              echo "Expected a flake.lock path argument as target" >&2
+              echo "${fg.red}Error:${fg.reset} Expected a flake.lock path argument as target" >&2
               exit 1
             else
               TARGET="$1"
             fi
 
             if ! [ -f "$TARGET" ]; then
-              echo "Expected a flake.lock target path argument" >&2
+              echo "${fg.red}Error:${fg.reset} Expected a flake.lock target path argument" >&2
               exit 1
             fi
           fi
@@ -97,25 +98,65 @@ in
           REFERENCE="$HOME/code/dotfiles/nix/flake.lock"
           if (( $# > 1 )); then
             if [[ "$(basename "$2")" != "flake.lock" ]]; then
-              echo "Expected a flake.lock path argument as reference" >&2
+              echo "${fg.red}Error:${fg.reset} Expected a flake.lock path argument as reference" >&2
               exit 1
             else
               REFERENCE="$2"
             fi
 
             if ! [ -f "$REFERENCE" ]; then
-              echo "Expected a flake.lock reference path argument" >&2
+              echo "${fg.red}Error:${fg.reset} Expected a flake.lock reference path argument" >&2
               exit 1
             fi
           fi
 
-          echo Matching locks from "$REFERENCE" to "$TARGET"
+          if [[ "$REFERENCE" == "$TARGET" ]]; then
+            echo "${fg.yellow}Warning:${fg.reset} The files are the same"
+            exit
+          fi
 
-          NODES=($(${pkgs.coreutils}/bin/sort <(${pkgs.jq}/bin/jq -r '.nodes | keys[]' "$REFERENCE") <(${pkgs.jq}/bin/jq -r '.nodes | keys[]' "$TARGET") | ${pkgs.coreutils}/bin/uniq -d | ${pkgs.gnugrep}/bin/grep -v root))
+          TEMP_FILE="$(mktemp)"
 
-          for node in $NODES; do
-            ${pkgs.jq}/bin/jq --slurpfile ref "$REFERENCE" '.nodes.'"$node"' = $ref[0].nodes.'"$node" "$TARGET" > /tmp/flake.lock && mv /tmp/flake.lock "$TARGET"
-          done
+          echo Matching locks from "${fg.white}$REFERENCE${fg.reset}" to "${fg.white}$TARGET${fg.reset}"
+
+          ${pkgs.jq}/bin/jq -s '
+            .[0] as $target |
+            .[1] as $ref |
+            reduce ($target.nodes | keys_unsorted[]) as $node (
+              [];
+              $target.nodes[$node].original as $original |
+              if $original != null then
+                ([ $ref.nodes[] | select(.original == $original and .locked != null) ][0]) as $match |
+                if $match != null then
+                  . += [$match.original]
+                else
+                  .
+                end
+              else
+                .
+              end
+            )
+          ' "$TARGET" "$REFERENCE"
+
+
+          ${pkgs.jq}/bin/jq -s '
+            .[0] as $target |
+            .[1] as $ref |
+            reduce ($target.nodes | keys_unsorted[]) as $node (
+              $target;
+              .nodes[$node].original as $original |
+              if $original != null then
+                ([ $ref.nodes[] | select(.original == $original and .locked != null) ][0]) as $match |
+                if $match != null then
+                  .nodes[$node].locked = $match.locked
+                else
+                  .
+                end
+              else
+                .
+              end
+            )
+          ' "$TARGET" "$REFERENCE" > "$TEMP_FILE" && mv "$TEMP_FILE" "$TARGET"
         '')
       ];
   };

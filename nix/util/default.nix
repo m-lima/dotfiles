@@ -71,6 +71,7 @@ let
   load = import ./load.nix { inherit lib; };
   secret = import ./secret.nix { inherit lib; };
   systemd = import ./systemd.nix { inherit lib; };
+  sgr = import ./sgr.nix;
 in
 {
   inherit
@@ -89,6 +90,7 @@ in
     load
     secret
     systemd
+    sgr
     ;
   nginx = import ./nginx.nix {
     inherit
