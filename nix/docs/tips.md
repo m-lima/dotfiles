@@ -89,3 +89,11 @@ It will print the `so` for `ld`
 ```
 $ <ld.so> --help
 ```
+
+# Upload derivation to the store
+
+```
+$ nix copy --to ssh://<host> -s <derivation>
+```
+
+Where `derivation` could be a `./result` or a global `/run/current-system`
