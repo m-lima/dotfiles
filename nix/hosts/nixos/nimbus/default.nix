@@ -66,6 +66,7 @@
           enable = true;
           extraDomains = util.secret.rage.mkIf config ./_secrets/servers/passer/domains.rage;
         };
+        rando.enable = true;
         skull.enable = true;
         static.enable = true;
         criscelo = util.secret.rage.mkMapIf config ./_secrets/servers/criscelo/domain.rage (domain: {

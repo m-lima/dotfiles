@@ -183,6 +183,17 @@
         treefmt-nix.follows = "treefmt-nix";
       };
     };
+    rando = {
+      url = "github:m-lima/rando?ref=nix-001";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        crane.follows = "crane";
+        fenix.follows = "fenix";
+        flake-utils.follows = "flake-utils";
+        helper.follows = "nix-template";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
     simpalt = {
       url = "github:m-lima/simpalt?ref=nix-005";
       inputs = {
