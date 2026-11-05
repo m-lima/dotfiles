@@ -30,6 +30,11 @@ in
       };
     };
 
+    nix.settings."trusted-users" = [
+      "root"
+      config.celo.modules.core.user.userName
+    ];
+
     services.nix-serve = {
       enable = true;
       secretKeyFile = config.age.secrets.${util.secret.mkPath path key}.path;
