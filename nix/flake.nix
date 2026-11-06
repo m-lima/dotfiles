@@ -184,7 +184,7 @@
       };
     };
     rando = {
-      url = "github:m-lima/rando?ref=nix-002";
+      url = "github:m-lima/rando?ref=nix-003";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         crane.follows = "crane";
