@@ -61,7 +61,9 @@ in
           };
           plasmashell = {
             "show-on-mouse-pos" = "Meta+Shift+V";
-            "next activity" = "";
+            "manage activities" = "Meta+Shift+R";
+            "next activity" = "Meta+Shift+S";
+            "previous activity" = "Meta+Shift+A";
           };
           "services/org.kde.krunner.desktop" = {
             _launch = [
