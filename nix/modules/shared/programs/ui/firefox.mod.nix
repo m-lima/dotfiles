@@ -16,6 +16,9 @@ in
     keepass = lib.mkEnableOption "keepass integration" // {
       default = config.celo.modules.programs.ui.keepass.enable;
     };
+    vimium = lib.mkEnableOption "vimium" // {
+      default = true;
+    };
   };
 
   config = util.given.enforcedHome path config cfg.enable {
@@ -65,6 +68,12 @@ in
               // (lib.optionalAttrs cfg.keepass {
                 "keepassxc-browser@keepassxc.org" = {
                   install_url = "https://addons.mozilla.org/firefox/downloads/latest/keepassxc-browser/latest.xpi";
+                  installation_mode = "force_installed";
+                };
+              })
+              // (lib.optionalAttrs cfg.vimium {
+                "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = {
+                  install_url = "https://addons.mozilla.org/firefox/downloads/latest/vimium-ff/latest.xpi";
                   installation_mode = "force_installed";
                 };
               });
