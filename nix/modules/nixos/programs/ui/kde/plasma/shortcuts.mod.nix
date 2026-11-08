@@ -7,20 +7,11 @@ path:
 }:
 let
   cfg = config.celo.modules.programs.ui.kde;
-  uiCfg = config.celo.modules.programs.ui;
 in
 {
   config = util.given.enforcedHome path config cfg.enable {
     home-manager = {
       programs.plasma = {
-        hotkeys.commands = lib.mkIf (uiCfg.ghostty.enable || uiCfg.alacritty.enable) {
-          "launch-terminal" = {
-            name = "Lauch terminal";
-            key = "Meta+T";
-            command = if uiCfg.ghostty.enable then "ghostty" else "alacritty";
-          };
-        };
-
         spectacle = {
           shortcuts = {
             launch = "Print";
@@ -55,6 +46,7 @@ in
             "Window One Desktop to the Right" = "Meta+Shift+Right";
             "Window to Next Screen" = "Meta+Ctrl+Tab";
             "Window to Previous Screen" = "Meta+Shift+Ctrl+Tab";
+            "Overview" = "";
             "view_actual_size" = "Meta+)";
             "view_zoom_in" = "Meta++";
             "view_zoom_out" = "Meta+_";
