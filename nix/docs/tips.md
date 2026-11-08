@@ -98,7 +98,17 @@ $ nix copy --to ssh://<host> -s <derivation>
 
 Where `derivation` could be a `./result` or a global `/run/current-system`
 
-# Find firefox add-on IDs
+# Firefox
+
+## Find firefox add-on IDs
 
 `https://addons.mozilla.org/api/v5/addons/search/?q=<NAME>`
 And extract `guid`
+
+## Keyboad shortcuts
+
+Goto [about:keyboard], make the changes, then:
+
+```
+$ cat ~/.config/mozilla/firefox/default/customKeys.json
+```
