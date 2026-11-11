@@ -112,3 +112,21 @@ Goto [about:keyboard], make the changes, then:
 ```
 $ cat ~/.config/mozilla/firefox/default/customKeys.json
 ```
+
+# Ad-hoc package
+
+There's, of course the classic
+
+```
+$ nix-shell -p <PKG>
+```
+
+which will use the `NIX_PATH` (similar to using `<nixpkgs>` resolved from `$ nix registry list`)
+
+To use the modern approach, it would be more like
+
+```
+$ nix shell nixpkgs#<PKG>
+$ nix shell nixpkgs-unstable#<PKG>
+$ nix shell github:NixOS/nixpkgs/nixpkgs-unstable#<PKG>
+```
