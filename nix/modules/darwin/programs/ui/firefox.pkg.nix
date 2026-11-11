@@ -13,7 +13,7 @@ stdenvNoCC.mkDerivation (
   in
   {
     pname = "Firefox ESR";
-    version = "153.6.0esr";
+    version = "153.7.0esr";
     nativeBuildInputs = [
       undmg
       unzip
@@ -21,7 +21,7 @@ stdenvNoCC.mkDerivation (
 
     src = fetchurl {
       inherit url;
-      hash = "sha256-5h9EkK5Mc7qKmP08VoL0DDw8MInjBwGNQ0FYP2BfaCg=";
+      hash = "sha256-PbNLm7ADQFKPbC5rmatGXrfyaVFq3krskWH7js2dyMM=";
     };
 
     sourceRoot = ".";
