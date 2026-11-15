@@ -76,12 +76,17 @@ in
       };
     };
 
+    systemd.tmpfiles.rules = [
+      "d ${cfg.home}/libraries/movies 2775 ${config.services.jellyfin.user} ${config.services.jellyfin.group} -"
+      "d ${cfg.home}/libraries/shows 2775 ${config.services.jellyfin.user} ${config.services.jellyfin.group} -"
+    ];
+
     environment.persistence = util.given.impermanence config {
       global.directories = [
         {
           directory = cfg.home;
-          group = config.services.jellyfin.user;
-          user = config.services.jellyfin.group;
+          user = config.services.jellyfin.user;
+          group = config.services.jellyfin.group;
         }
       ];
     };

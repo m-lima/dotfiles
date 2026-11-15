@@ -46,6 +46,12 @@ in
       };
     };
 
+    users.users = lib.mkIf config.celo.modules.servers.jelly.enable {
+      ${config.services.qbittorrent.user}.extraGroups = [
+        config.services.jellyfin.group
+      ];
+    };
+
     environment.persistence = util.given.impermanence config {
       global.directories = [
         config.services.qbittorrent.profileDir
