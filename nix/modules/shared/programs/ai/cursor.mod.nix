@@ -14,8 +14,8 @@ in
     rules = lib.mkOption {
       type = lib.types.attrsOf (lib.types.either lib.types.nonEmptyStr lib.types.path);
       default = {
-        global = ./global.mdc;
-        rust = ./rust.mdc;
+        global = ./rules/global.mdc;
+        rust = ./rules/rust.mdc;
       };
     };
   };

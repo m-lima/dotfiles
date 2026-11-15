@@ -55,12 +55,16 @@
           };
         };
 
+        ai = {
+          claude.enable = true;
+          cursor.enable = true;
+        };
+
         skull.enable = true;
         endgame.enable = true;
         zsh.simpalt.symbol = "◉";
 
         bazel.enable = true;
-        cursor.enable = true;
         coreutils.enable = true;
         msaler.enable = true;
         nmap.enable = true;

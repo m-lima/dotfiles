@@ -96,7 +96,10 @@
         };
       };
       programs = {
-        cursor.enable = true;
+        ai = {
+          claude.enable = true;
+          cursor.enable = true;
+        };
         nixshell.enable = true;
         git = {
           overrides = {
