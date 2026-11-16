@@ -16,8 +16,16 @@ in
     keepass = lib.mkEnableOption "keepass integration" // {
       default = config.celo.modules.programs.ui.keepass.enable;
     };
-    vimium = lib.mkEnableOption "vimium" // {
-      default = true;
+    vim = lib.mkOption {
+      type = lib.types.nullOr (
+        lib.types.enum [
+          "vimium"
+          "vimium-c"
+          "tridactyl"
+        ]
+      );
+      description = "Vim-style interface";
+      default = "vimium";
     };
   };
 
@@ -74,12 +82,31 @@ in
                   installation_mode = "force_installed";
                 };
               })
-              // (lib.optionalAttrs cfg.vimium {
-                "vimium-c@gdh1995.cn" = {
-                  install_url = "https://addons.mozilla.org/firefox/downloads/latest/vimium-c/latest.xpi";
-                  installation_mode = "force_installed";
-                };
-              });
+              // (
+                if cfg.vim == "vimium" then
+                  {
+                    "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = {
+                      install_url = "https://addons.mozilla.org/firefox/downloads/latest/vimium-ff/latest.xpi";
+                      installation_mode = "force_installed";
+                    };
+                  }
+                else if cfg.vim == "vimium-c" then
+                  {
+                    "vimium-c@gdh1995.cn" = {
+                      install_url = "https://addons.mozilla.org/firefox/downloads/latest/vimium-c/latest.xpi";
+                      installation_mode = "force_installed";
+                    };
+                  }
+                else if cfg.vim == "tridactyl" then
+                  {
+                    "tridactyl.vim@cmcaine.co.uk" = {
+                      install_url = "https://addons.mozilla.org/firefox/downloads/latest/tridactyl-vim/latest.xpi";
+                      installation_mode = "force_installed";
+                    };
+                  }
+                else
+                  { }
+              );
 
               SearchEngines = {
                 Add = [
